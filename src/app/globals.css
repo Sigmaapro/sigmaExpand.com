@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --erie: #212529;
+  --persian: #1c39bb;
+  --cadet: #adb5bd;
+  --uranian: #bde0fe;
+  --cursor-size: 28px;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent white flash before CSS/fonts load (FOUC). */
+  background-color: #212529;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: #212529;
+  @apply bg-erie text-cadet antialiased;
+  font-feature-settings: "kern" 1, "liga" 1;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: var(--font-display), "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.sigma-hero-title {
+  font-family: var(--font-display), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+/* Solid fallback when background-clip:text is unsupported (avoids invisible text). */
+.sigma-hero-wordmark {
+  color: #f1f3f5;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f1f3f5 42%,
+    #adb5bd 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 2px 28px rgba(28, 57, 187, 0.22));
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sigma-hero-wordmark {
+    color: transparent;
+  }
+}
+
+/* CTA block: same issue as wordmark when gradient + transparent without clip */
+.sigma-cta-wordmark {
+  color: #f8f9fa;
+  background-image: linear-gradient(90deg, #ffffff 0%, #adb5bd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sigma-cta-wordmark {
+    color: transparent;
+  }
+}
+
+.group:hover .sigma-cta-wordmark {
+  background-image: linear-gradient(90deg, #ffffff 0%, #bde0fe 100%);
+}
+
+.sigma-hero-eyebrow {
+  letter-spacing: 0.28em;
+}
+
+.sigma-body-measure {
+  max-width: 32rem;
+}
+
+@media (min-width: 1024px) {
+  .sigma-body-measure {
+    max-width: 26.5rem;
+  }
+}
+
+.sigma-hero-vignette {
+  background: radial-gradient(
+      ellipse 85% 70% at 18% 38%,
+      rgba(28, 57, 187, 0.14) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 55% at 92% 72%,
+      rgba(189, 224, 254, 0.05) 0%,
+      transparent 50%
+    );
+}
+
+.sigma-webgl-film {
+  background: linear-gradient(
+    165deg,
+    rgba(8, 10, 16, 0.55) 0%,
+    transparent 42%,
+    rgba(13, 18, 28, 0.35) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-hero-wordmark {
+    filter: none;
+  }
+}
+
+@media (min-width: 768px) and (pointer: fine) {
+  html.sigma-cursor-active body {
+    cursor: none;
+  }
+}
+
+::selection {
+  background: rgba(28, 57, 187, 0.35);
+  color: #f8f9fa;
+}
+
+.sigma-gradient-bg {
+  background: linear-gradient(
+    125deg,
+    #212529 0%,
+    #1a1d22 35%,
+    #1c2744 65%,
+    #1c39bb 100%
+  );
+  background-size: 200% 200%;
+  animation: sigma-gradient-move 28s ease-in-out infinite;
+}
+
+@keyframes sigma-gradient-move {
+  0%,
+  100% {
+    background-position: 0% 40%;
+  }
+  50% {
+    background-position: 100% 60%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-gradient-bg {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
+.sigma-grid {
+  background-image:
+    linear-gradient(rgba(173, 181, 189, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(173, 181, 189, 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(
+    ellipse 85% 75% at 50% 45%,
+    black 20%,
+    transparent 100%
+  );
+}
+
+.sigma-hero-sweep {
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(189, 224, 254, 0.07) 48%,
+    transparent 56%
+  );
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  animation: sigma-sweep-pos 16s ease-in-out infinite;
+}
+
+@keyframes sigma-sweep-pos {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.28;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 0.52;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-hero-sweep {
+    animation: none;
+    opacity: 0.35;
+    background-position: 50% 50%;
+  }
+}
+
+.sigma-line-glow {
+  box-shadow: 0 0 24px rgba(189, 224, 254, 0.12);
+}
+
+.text-gradient-uranian {
+  @apply bg-gradient-to-r from-white via-uranian to-cadet bg-clip-text text-transparent;
+}

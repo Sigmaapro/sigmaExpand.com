@@ -33,31 +33,6 @@ export type InsightPost = {
 /** Alias for editorial naming */
 export type InsightArticle = InsightPost;
 
-export type InsightsListingCopy = {
-  pageTitle: string;
-  pageSubtitle: string;
-  filterAllLabel: string;
-  readLabel: string;
-  relatedHeading: string;
-  backToInsights: string;
-  sigmaHome: string;
-  chromeNavAriaLabel: string;
-  categoryTablistAriaLabel: string;
-};
-
-export const insightsListingCopy: InsightsListingCopy = {
-  pageTitle: "Sigma Insights",
-  pageSubtitle:
-    "Market intelligence, execution breakdowns, and growth systems for Web3",
-  filterAllLabel: "All",
-  readLabel: "Read Insight",
-  relatedHeading: "Related insights",
-  backToInsights: "Insights",
-  sigmaHome: "Sigma",
-  chromeNavAriaLabel: "Insights",
-  categoryTablistAriaLabel: "Categories",
-};
-
 const cover = (path: string) =>
   `https://images.unsplash.com/${path}?auto=format&fit=crop&w=1600&q=80`;
 

@@ -210,3 +210,47 @@ body {
 .text-gradient-uranian {
   @apply bg-gradient-to-r from-white via-uranian to-cadet bg-clip-text text-transparent;
 }
+
+html[lang="fa"] body {
+  font-family:
+    var(--font-fa),
+    "Vazirmatn",
+    "Noto Sans Arabic",
+    "Tahoma",
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.85;
+  text-rendering: optimizeLegibility;
+}
+
+html[lang="fa"] .font-display,
+html[lang="fa"] .font-body,
+html[lang="fa"] .sigma-hero-title {
+  font-family:
+    var(--font-fa),
+    "Vazirmatn",
+    "Noto Sans Arabic",
+    "Tahoma",
+    "Segoe UI",
+    sans-serif;
+  letter-spacing: 0;
+}
+
+html[lang="fa"] .sigma-hero-eyebrow,
+html[lang="fa"] .sigma-hero-title,
+html[lang="fa"] .sigma-cta-wordmark {
+  letter-spacing: 0 !important;
+  text-transform: none;
+}
+
+html[lang="fa"] p,
+html[lang="fa"] h1,
+html[lang="fa"] h2,
+html[lang="fa"] h3,
+html[lang="fa"] h4,
+html[lang="fa"] h5,
+html[lang="fa"] h6,
+html[lang="fa"] span {
+  overflow-wrap: break-word;
+  word-break: normal;
+}

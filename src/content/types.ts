@@ -3,7 +3,7 @@
  * Visual layout lives in components; editors change data here (or future CMS).
  */
 
-export type LangCode = "EN" | "TR" | "ZH" | "FA";
+export type LangCode = "EN" | "TR" | "ZH" | "FA" | "ES" | "RU";
 
 export type NavContent = {
   system: string;
@@ -207,8 +207,37 @@ export type AboutContent = {
   description: string;
 };
 
+export type InsightsUiContent = {
+  pageTitle: string;
+  pageSubtitle: string;
+  pageEyebrow: string;
+  filterAllLabel: string;
+  readLabel: string;
+  relatedHeading: string;
+  backToInsights: string;
+  sigmaHome: string;
+  chromeNavAriaLabel: string;
+  categoryTablistAriaLabel: string;
+  featuredLabel: string;
+  emptyState: string;
+  insightBadge: string;
+  insightAriaLabel: string;
+  articleCtaMidHeading: string;
+  articleCtaMidSupporting: string;
+  articleCtaMidButton: string;
+  articleCtaEndHeading: string;
+  articleCtaEndSupporting: string;
+  articleCtaEndButton: string;
+  categories: {
+    growth: string;
+    distribution: string;
+    liquidity: string;
+  };
+};
+
 export type SiteTranslations = {
   nav: NavContent;
+  insights: InsightsUiContent;
   hero: HeroContent;
   whatIsSigma: WhatIsSigmaContent;
   about: AboutContent;

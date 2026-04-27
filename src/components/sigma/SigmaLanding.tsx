@@ -486,7 +486,7 @@ const AnimatedText = ({
   );
 };
 
-const HeroVisual = ({ logoSrc }: { logoSrc: string }) => {
+const HeroVisual = () => {
   const reduceMotion = useReducedMotion();
   const isNarrow = useIsMobile(768);
   const isTiny = useIsMobile(480);
@@ -528,27 +528,7 @@ const HeroVisual = ({ logoSrc }: { logoSrc: string }) => {
           y: reduceMotion || isNarrow ? 0 : parallax.y * parallaxMulY,
         }}
         transition={{ type: "spring", stiffness: 70, damping: 24, mass: 0.9 }}
-      >
-        <div className="origin-center will-change-transform md:scale-[1.05]">
-          <motion.img
-            src={logoSrc}
-            alt="SIGMA logo"
-            decoding="async"
-            className="mx-auto h-auto w-[clamp(11rem,78vw,20rem)] max-w-[min(100%,calc(100vw-1.5rem))] select-none object-contain opacity-[0.94] contrast-[1.03] drop-shadow-[0_0_28px_rgba(28,57,187,0.1)] drop-shadow-[0_12px_40px_rgba(0,0,0,0.22)] sm:w-[clamp(15rem,58vw,26.25rem)] sm:drop-shadow-[0_0_40px_rgba(28,57,187,0.14)] sm:drop-shadow-[0_16px_56px_rgba(0,0,0,0.28)] md:w-[clamp(20rem,50vw,36.25rem)] md:opacity-[0.97] lg:mx-0 lg:w-[clamp(23.625rem,47vw,45.9375rem)] lg:drop-shadow-[0_0_56px_rgba(28,57,187,0.16)] lg:drop-shadow-[0_20px_72px_rgba(0,0,0,0.32)]"
-            draggable={false}
-            animate={
-              reduceMotion || isNarrow
-                ? { y: 0, opacity: 0.92 }
-                : { y: [0, -6, 0], opacity: [0.88, 0.96, 0.88] }
-            }
-            transition={
-              reduceMotion || isNarrow
-                ? { duration: 0 }
-                : { duration: 13, repeat: Infinity, ease: "easeInOut" }
-            }
-          />
-        </div>
-      </motion.div>
+      />
       <div className="pointer-events-none absolute inset-0 z-[15]" aria-hidden>
         {Array.from({ length: sparkleCount }, (_, i) => (
           <motion.span
@@ -616,11 +596,14 @@ const TiltCard = ({
       onMouseLeave={handleMouseLeave}
       animate={{ rotateX: isNarrow ? 0 : rotate.x, rotateY: isNarrow ? 0 : rotate.y }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative overflow-hidden sharp-edge border border-[#adb5bd]/20 bg-[#212529]/80 p-6 backdrop-blur-md sm:p-8"
+      className="group relative flex h-full min-h-[16.75rem] flex-col overflow-hidden sharp-edge border border-[#adb5bd]/20 bg-[#212529]/80 p-6 backdrop-blur-md sm:p-8"
       style={{ transformStyle: isNarrow ? "flat" : "preserve-3d" }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#1c39bb]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <div className="relative z-10" style={{ transform: "translateZ(30px)" }}>
+      <div
+        className="relative z-10 flex h-full flex-col"
+        style={{ transform: "translateZ(30px)" }}
+      >
         <Icon className="mb-6 h-10 w-10 text-[#adb5bd] transition-colors duration-300 group-hover:text-[#bde0fe]" />
         <h3 className="mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl">
           {title}
@@ -640,11 +623,6 @@ const HeroSection = ({
   t: SiteTranslations;
   isRtl: boolean;
 }) => {
-  const heroLogoSrc =
-    t.hero.logoSrc?.trim().length > 0
-      ? t.hero.logoSrc.trim()
-      : siteSettings.defaultHeroLogoSrc;
-
   return (
   <section
     id="hero"
@@ -713,7 +691,7 @@ const HeroSection = ({
 
       <div className="relative z-10 order-1 min-h-0 w-full min-w-0 max-w-[min(100%,28rem)] justify-self-center sm:order-2 sm:max-w-none lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
         <div className="relative min-h-[min(180px,30svh)] w-full sm:min-h-[min(260px,38vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
-          <HeroVisual logoSrc={heroLogoSrc} />
+          <HeroVisual />
         </div>
       </div>
     </div>
@@ -835,7 +813,7 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
         </div>
 
         <div
-          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 auto-rows-fr gap-6 md:grid-cols-2 lg:grid-cols-4"
           style={{ perspective: "1000px" }}
         >
           {services.map((service, idx) => (
@@ -845,6 +823,7 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               viewport={{ once: true }}
+              className="h-full"
             >
               <TiltCard {...service} />
             </motion.div>
@@ -1430,6 +1409,7 @@ export default function SigmaLanding() {
       <WebGLBackground />
 
       <main
+        key={currentLang}
         className="relative z-10 max-w-[100vw] overflow-x-clip font-body selection:bg-[#1c39bb] selection:text-white"
         dir={isRtl ? "rtl" : "ltr"}
       >

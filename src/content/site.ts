@@ -70,6 +70,40 @@ const livePanelFA = {
   sendError: "شروع چت پشتیبانی ممکن نشد. دوباره تلاش کنید.",
 } as const;
 
+const livePanelES = {
+  panelTitle: "Soporte en vivo",
+  panelSubtitle: "Habla con soporte de Sigma",
+  panelAriaLabel: "Panel de soporte en vivo",
+  closeAria: "Cerrar panel de soporte",
+  namePlaceholder: "Nombre (opcional)",
+  emailPlaceholder: "Correo",
+  messagePlaceholder: "¿Cómo puede ayudarte soporte de Sigma?",
+  submit: "Iniciar conversación",
+  submitSending: "Enviando...",
+  successBody: "Mensaje enviado. Nuestro equipo te contactará pronto.",
+  footerNote: "Nuestro equipo responderá lo antes posible.",
+  validationError: "Ingresa correo y mensaje.",
+  invalidEmailError: "Ingresa un correo válido.",
+  sendError: "No se pudo iniciar el chat de soporte. Inténtalo de nuevo.",
+} as const;
+
+const livePanelRU = {
+  panelTitle: "Онлайн-поддержка",
+  panelSubtitle: "Свяжитесь с поддержкой Sigma",
+  panelAriaLabel: "Панель онлайн-поддержки",
+  closeAria: "Закрыть панель поддержки",
+  namePlaceholder: "Имя (необязательно)",
+  emailPlaceholder: "Email",
+  messagePlaceholder: "Чем поддержка Sigma может помочь?",
+  submit: "Начать диалог",
+  submitSending: "Отправка...",
+  successBody: "Сообщение отправлено. Команда скоро свяжется с вами.",
+  footerNote: "Мы ответим как можно скорее.",
+  validationError: "Введите email и сообщение.",
+  invalidEmailError: "Введите корректный email.",
+  sendError: "Не удалось начать чат поддержки. Попробуйте снова.",
+} as const;
+
 export const siteRestByLang: Record<LangCode, SiteRest> = {
   EN: {
     nav: {
@@ -82,6 +116,36 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       navCta: "Get Access",
       insights: "Insights",
       insightsAccessLabel: "Access",
+    },
+    insights: {
+      pageTitle: "Sigma Insights",
+      pageSubtitle:
+        "Market intelligence, execution breakdowns, and growth systems for Web3.",
+      pageEyebrow: "INSIGHTS",
+      filterAllLabel: "All",
+      readLabel: "Read Insight",
+      relatedHeading: "Related insights",
+      backToInsights: "Insights",
+      sigmaHome: "Sigma",
+      chromeNavAriaLabel: "Insights navigation",
+      categoryTablistAriaLabel: "Categories",
+      featuredLabel: "Featured",
+      emptyState: "No briefings in this view.",
+      insightBadge: "Sigma Insight",
+      insightAriaLabel: "Sigma insight",
+      articleCtaMidHeading: "Need growth infrastructure, not just marketing?",
+      articleCtaMidSupporting:
+        "Execution systems for acquisition, liquidity, and market reach.",
+      articleCtaMidButton: "Get Access",
+      articleCtaEndHeading: "Work with Sigma",
+      articleCtaEndSupporting:
+        "Connect users, liquidity, and network distribution through one strategic system.",
+      articleCtaEndButton: "Work with Sigma",
+      categories: {
+        growth: "Growth",
+        distribution: "Distribution",
+        liquidity: "Liquidity",
+      },
     },
     whatIsSigma: {
       label: "WHAT IS SIGMA",
@@ -211,6 +275,37 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       insights: "İçgörüler",
       insightsAccessLabel: "Erişim",
     },
+    insights: {
+      pageTitle: "Sigma İçgörüleri",
+      pageSubtitle:
+        "Web3 için pazar zekası, uygulama analizleri ve büyüme sistemleri.",
+      pageEyebrow: "İÇGÖRÜLER",
+      filterAllLabel: "Tümü",
+      readLabel: "İçgörüyü Oku",
+      relatedHeading: "İlgili içgörüler",
+      backToInsights: "İçgörüler",
+      sigmaHome: "Sigma",
+      chromeNavAriaLabel: "İçgörüler gezinmesi",
+      categoryTablistAriaLabel: "Kategoriler",
+      featuredLabel: "Öne Çıkan",
+      emptyState: "Bu görünümde bülten bulunmuyor.",
+      insightBadge: "Sigma İçgörüsü",
+      insightAriaLabel: "Sigma içgörüsü",
+      articleCtaMidHeading:
+        "Sadece pazarlama değil, büyüme altyapısına mı ihtiyacınız var?",
+      articleCtaMidSupporting:
+        "Edinim, likidite ve pazar erişimi için yürütme sistemleri.",
+      articleCtaMidButton: "Erişim Al",
+      articleCtaEndHeading: "Sigma ile çalışın",
+      articleCtaEndSupporting:
+        "Kullanıcıları, likiditeyi ve ağ dağıtımını tek bir stratejik sistemde birleştirin.",
+      articleCtaEndButton: "Sigma ile çalışın",
+      categories: {
+        growth: "Büyüme",
+        distribution: "Dağıtım",
+        liquidity: "Likidite",
+      },
+    },
     whatIsSigma: {
       label: "SIGMA NEDİR",
       headline: "Web3 İçin Stratejik Bir Büyüme Motoru",
@@ -337,6 +432,33 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       insights: "洞察",
       insightsAccessLabel: "接入",
     },
+    insights: {
+      pageTitle: "Sigma 洞察",
+      pageSubtitle: "面向 Web3 的市场情报、执行拆解与增长系统。",
+      pageEyebrow: "洞察",
+      filterAllLabel: "全部",
+      readLabel: "阅读洞察",
+      relatedHeading: "相关文章",
+      backToInsights: "洞察",
+      sigmaHome: "Sigma",
+      chromeNavAriaLabel: "洞察导航",
+      categoryTablistAriaLabel: "分类",
+      featuredLabel: "精选",
+      emptyState: "此视图暂无简报。",
+      insightBadge: "Sigma 洞察",
+      insightAriaLabel: "Sigma 洞察",
+      articleCtaMidHeading: "你需要的是增长基础设施，而不只是营销？",
+      articleCtaMidSupporting: "用于获客、流动性与市场触达的执行系统。",
+      articleCtaMidButton: "获取权限",
+      articleCtaEndHeading: "与 Sigma 合作",
+      articleCtaEndSupporting: "通过一个战略系统连接用户、流动性与网络分发。",
+      articleCtaEndButton: "与 Sigma 合作",
+      categories: {
+        growth: "增长",
+        distribution: "分发",
+        liquidity: "流动性",
+      },
+    },
     whatIsSigma: {
       label: "什么是 SIGMA",
       headline: "面向 Web3 的战略增长引擎",
@@ -447,6 +569,322 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     testimonials: [],
   },
+  ES: {
+    nav: {
+      system: "Sistema",
+      capabilities: "Capacidades",
+      network: "Red",
+      metrics: "Métricas",
+      sigmaPro: "Sigma Pro",
+      contact: "Contacto",
+      navCta: "Obtener acceso",
+      insights: "Insights",
+      insightsAccessLabel: "Acceso",
+    },
+    insights: {
+      pageTitle: "Insights de Sigma",
+      pageSubtitle:
+        "Inteligencia de mercado, análisis de ejecución y sistemas de crecimiento para Web3.",
+      pageEyebrow: "INSIGHTS",
+      filterAllLabel: "Todo",
+      readLabel: "Leer insight",
+      relatedHeading: "Insights relacionados",
+      backToInsights: "Insights",
+      sigmaHome: "Sigma",
+      chromeNavAriaLabel: "Navegación de insights",
+      categoryTablistAriaLabel: "Categorías",
+      featuredLabel: "Destacado",
+      emptyState: "No hay informes en esta vista.",
+      insightBadge: "Insight Sigma",
+      insightAriaLabel: "Insight de Sigma",
+      articleCtaMidHeading: "¿Necesitas infraestructura de crecimiento, no solo marketing?",
+      articleCtaMidSupporting:
+        "Sistemas de ejecución para adquisición, liquidez y alcance de mercado.",
+      articleCtaMidButton: "Obtener acceso",
+      articleCtaEndHeading: "Trabaja con Sigma",
+      articleCtaEndSupporting:
+        "Conecta usuarios, liquidez y distribución de red con un solo sistema estratégico.",
+      articleCtaEndButton: "Trabaja con Sigma",
+      categories: {
+        growth: "Crecimiento",
+        distribution: "Distribución",
+        liquidity: "Liquidez",
+      },
+    },
+    whatIsSigma: {
+      label: "QUÉ ES SIGMA",
+      headline: "Un motor estratégico de crecimiento para Web3",
+      description:
+        "Sigma conecta liquidez, usuarios y distribución en un sistema escalable.",
+      pillars: [
+        {
+          title: "Adquisición de usuarios",
+          description:
+            "De cero a traders de alta intención mediante embudos dirigidos.",
+        },
+        {
+          title: "Activación de liquidez",
+          description: "Convierte tráfico en volumen real y actividad sostenida.",
+        },
+        {
+          title: "Expansión de red",
+          description:
+            "Escala con KOLs, comunidades y alianzas estratégicas.",
+        },
+      ],
+    },
+    about: {
+      kicker: "NOSOTROS",
+      title: "NO NOS ADAPTAMOS AL FUTURO. LO INGENIERIZAMOS.",
+      description:
+        "Sigma opera en la intersección de finanzas de alta frecuencia, criptografía de nivel militar y redes distribuidas avanzadas.",
+    },
+    metrics: {
+      kicker: "Red",
+      title:
+        "Enrutamiento global, profundidad de liquidez y telemetría de nivel ejecución, diseñados para escalar.",
+      stats: [
+        { label: "Valor total bloqueado", target: 50, suffix: "B+" },
+        { label: "Nodos activos", target: 14, suffix: "K+" },
+        { label: "Latencia de red", target: 12, suffix: "ms" },
+      ],
+    },
+    network: {
+      kicker: "Red",
+      title: "Grafo de comunidad",
+      body: "Los nodos se alinean por incentivos compartidos. Sigma mapea la malla: confianza, rendimiento y estado verificable.",
+    },
+    sigmaPro: {
+      badge: "VIP · ACCESO ÉLITE",
+      title: "SigmaPRO",
+      description:
+        "Rendimiento privado, enrutamiento prioritario y operaciones de crecimiento dedicadas para equipos de alto volumen.",
+      bullets: [
+        "Mesa de crecimiento dedicada con playbooks respaldados por SLA",
+        "Enrutamiento prioritario en liquidez y distribución",
+        "Telemetría confidencial, reportes a medida y escalación directa",
+      ],
+      footnote: "El acceso es limitado y sujeto a calificación.",
+    },
+    contact: {
+      kicker: "CONTACTO",
+      title: "CONTACTA A SIGMA",
+      description:
+        "Alianzas, medios e instituciones: escribe al equipo o abre la lista completa de canales.",
+      emailCta: "Correo",
+      socialCta: "Canales y redes",
+      fallbackMailto: "mailto:hello@sigma.io",
+    },
+    contactHub: {
+      pageEyebrow: "SIGMA",
+      title: "Conectar",
+      subtitle:
+        "Canales oficiales, perfiles sociales y contacto directo en un hub único.",
+      backHome: "Volver a Sigma",
+      empty:
+        "Aún no hay enlaces configurados. Define las variables NEXT_PUBLIC_SOCIAL_* en tu entorno.",
+      labels: {
+        instagram: "Instagram",
+        x: "X",
+        linkedin: "LinkedIn",
+        telegram: "Telegram",
+        discord: "Discord",
+        email: "Correo",
+        website: "Sitio web",
+      },
+      footerLine: "© 2026 SIGMA",
+    },
+    cta: {
+      title: "INICIAR",
+      description: "ACCEDER AL SISTEMA",
+      primaryCta: "Entrar al ecosistema",
+      secondaryCta: "Solicitar briefing",
+      primaryHref: "#capabilities",
+      secondaryHref: "#contact",
+    },
+    ui: {
+      liveSupport: "Soporte en vivo",
+      liveSupportPanel: { ...livePanelES },
+      navChrome: {
+        brandAria: "SIGMA",
+        openMenuAria: "Abrir menú",
+        closeMenuAria: "Cerrar menú",
+        languageMenuAria: "Cambiar idioma",
+      },
+      logoAlt: "SIGMA",
+    },
+    footer: {
+      rights: "© 2026 PROTOCOLO SIGMA. TODOS LOS DERECHOS RESERVADOS.",
+      statusPrefix: "EST.SIS:",
+      statusValue: "ÓPTIMO",
+      tagline: "Web3 · Estratégico · Preciso",
+      navAriaLabel: "Pie de página",
+      links: [],
+    },
+    trustedBy: {
+      sectionLabel: "CONFIADO POR",
+      logos: [],
+    },
+    testimonials: [],
+  },
+  RU: {
+    nav: {
+      system: "Система",
+      capabilities: "Возможности",
+      network: "Сеть",
+      metrics: "Метрики",
+      sigmaPro: "Sigma Pro",
+      contact: "Контакты",
+      navCta: "Получить доступ",
+      insights: "Инсайты",
+      insightsAccessLabel: "Доступ",
+    },
+    insights: {
+      pageTitle: "Инсайты Sigma",
+      pageSubtitle:
+        "Рыночная аналитика, разборы исполнения и системы роста для Web3.",
+      pageEyebrow: "ИНСАЙТЫ",
+      filterAllLabel: "Все",
+      readLabel: "Читать инсайт",
+      relatedHeading: "Похожие инсайты",
+      backToInsights: "Инсайты",
+      sigmaHome: "Sigma",
+      chromeNavAriaLabel: "Навигация инсайтов",
+      categoryTablistAriaLabel: "Категории",
+      featuredLabel: "Главное",
+      emptyState: "В этом разделе пока нет материалов.",
+      insightBadge: "Инсайт Sigma",
+      insightAriaLabel: "Инсайт Sigma",
+      articleCtaMidHeading:
+        "Нужна инфраструктура роста, а не только маркетинг?",
+      articleCtaMidSupporting:
+        "Системы исполнения для привлечения, ликвидности и рыночного охвата.",
+      articleCtaMidButton: "Получить доступ",
+      articleCtaEndHeading: "Работайте с Sigma",
+      articleCtaEndSupporting:
+        "Объедините пользователей, ликвидность и сетевую дистрибуцию в одной стратегической системе.",
+      articleCtaEndButton: "Работайте с Sigma",
+      categories: {
+        growth: "Рост",
+        distribution: "Дистрибуция",
+        liquidity: "Ликвидность",
+      },
+    },
+    whatIsSigma: {
+      label: "ЧТО ТАКОЕ SIGMA",
+      headline: "Стратегический двигатель роста для Web3",
+      description:
+        "Sigma объединяет ликвидность, пользователей и дистрибуцию в единую масштабируемую систему.",
+      pillars: [
+        {
+          title: "Привлечение пользователей",
+          description: "От нуля до целевых трейдеров через точные воронки.",
+        },
+        {
+          title: "Активация ликвидности",
+          description: "Превращаем трафик в реальный объём и устойчивую активность.",
+        },
+        {
+          title: "Расширение сети",
+          description:
+            "Масштабирование через KOL, сообщества и стратегические партнёрства.",
+        },
+      ],
+    },
+    about: {
+      kicker: "О НАС",
+      title: "МЫ НЕ АДАПТИРУЕМСЯ К БУДУЩЕМУ. МЫ ЕГО ПРОЕКТИРУЕМ.",
+      description:
+        "Sigma работает на стыке высокочастотных финансов, криптографии военного уровня и распределённых сетей.",
+    },
+    metrics: {
+      kicker: "Сеть",
+      title:
+        "Глобальная маршрутизация, глубина ликвидности и телеметрия уровня исполнения, спроектированные для масштаба.",
+      stats: [
+        { label: "Общая заблокированная стоимость", target: 50, suffix: "B+" },
+        { label: "Активные узлы", target: 14, suffix: "K+" },
+        { label: "Задержка сети", target: 12, suffix: "ms" },
+      ],
+    },
+    network: {
+      kicker: "Сеть",
+      title: "Граф сообщества",
+      body: "Узлы выравниваются общими стимулами. Sigma картографирует mesh: доверие, пропускная способность и проверяемое состояние.",
+    },
+    sigmaPro: {
+      badge: "VIP · ЭЛИТНЫЙ ДОСТУП",
+      title: "SigmaPRO",
+      description:
+        "Приватная пропускная способность, приоритетная маршрутизация и выделенные операции роста для высокообъёмных команд.",
+      bullets: [
+        "Выделенный growth-деск с плейбуками и SLA",
+        "Приоритетная маршрутизация по ликвидности и дистрибуции",
+        "Конфиденциальная телеметрия, кастомная отчётность и прямая эскалация",
+      ],
+      footnote: "Доступ ограничен и предоставляется после квалификации.",
+    },
+    contact: {
+      kicker: "КОНТАКТЫ",
+      title: "СВЯЗАТЬСЯ С SIGMA",
+      description:
+        "Партнёрства, медиа и институциональные запросы — напишите команде или откройте полный список каналов.",
+      emailCta: "Почта",
+      socialCta: "Каналы и соцсети",
+      fallbackMailto: "mailto:hello@sigma.io",
+    },
+    contactHub: {
+      pageEyebrow: "SIGMA",
+      title: "Связаться",
+      subtitle:
+        "Официальные каналы, соцпрофили и прямые контакты в формате link-hub.",
+      backHome: "Назад к Sigma",
+      empty:
+        "Ссылки пока не настроены. Укажите переменные NEXT_PUBLIC_SOCIAL_* в окружении.",
+      labels: {
+        instagram: "Instagram",
+        x: "X",
+        linkedin: "LinkedIn",
+        telegram: "Telegram",
+        discord: "Discord",
+        email: "Почта",
+        website: "Сайт",
+      },
+      footerLine: "© 2026 SIGMA",
+    },
+    cta: {
+      title: "ЗАПУСК",
+      description: "ДОСТУП К СИСТЕМЕ",
+      primaryCta: "Войти в экосистему",
+      secondaryCta: "Запросить бриф",
+      primaryHref: "#capabilities",
+      secondaryHref: "#contact",
+    },
+    ui: {
+      liveSupport: "Онлайн-поддержка",
+      liveSupportPanel: { ...livePanelRU },
+      navChrome: {
+        brandAria: "SIGMA",
+        openMenuAria: "Открыть меню",
+        closeMenuAria: "Закрыть меню",
+        languageMenuAria: "Сменить язык",
+      },
+      logoAlt: "SIGMA",
+    },
+    footer: {
+      rights: "© 2026 ПРОТОКОЛ SIGMA. ВСЕ ПРАВА ЗАЩИЩЕНЫ.",
+      statusPrefix: "СТАТ.СИСТ:",
+      statusValue: "ОПТИМАЛЬНО",
+      tagline: "Web3 · Стратегия · Точность",
+      navAriaLabel: "Футер",
+      links: [],
+    },
+    trustedBy: {
+      sectionLabel: "НАМ ДОВЕРЯЮТ",
+      logos: [],
+    },
+    testimonials: [],
+  },
   FA: {
     nav: {
       system: "سیستم",
@@ -458,6 +896,36 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       navCta: "دریافت دسترسی",
       insights: "بینش‌ها",
       insightsAccessLabel: "دسترسی",
+    },
+    insights: {
+      pageTitle: "بینش‌های سیگما",
+      pageSubtitle:
+        "هوش بازار، کالبدشکافی اجرا و سیستم‌های رشد برای Web3.",
+      pageEyebrow: "بینش‌ها",
+      filterAllLabel: "همه",
+      readLabel: "مطالعه بینش",
+      relatedHeading: "بینش‌های مرتبط",
+      backToInsights: "بینش‌ها",
+      sigmaHome: "سیگما",
+      chromeNavAriaLabel: "ناوبری بینش‌ها",
+      categoryTablistAriaLabel: "دسته‌بندی‌ها",
+      featuredLabel: "ویژه",
+      emptyState: "در این نما گزارشی وجود ندارد.",
+      insightBadge: "بینش سیگما",
+      insightAriaLabel: "بینش سیگما",
+      articleCtaMidHeading: "به زیرساخت رشد نیاز دارید، نه فقط بازاریابی؟",
+      articleCtaMidSupporting:
+        "سیستم‌های اجرایی برای جذب، نقدینگی و دسترسی بازار.",
+      articleCtaMidButton: "دریافت دسترسی",
+      articleCtaEndHeading: "با سیگما همکاری کنید",
+      articleCtaEndSupporting:
+        "کاربران، نقدینگی و توزیع شبکه را در یک سیستم استراتژیک یکپارچه کنید.",
+      articleCtaEndButton: "با سیگما همکاری کنید",
+      categories: {
+        growth: "رشد",
+        distribution: "توزیع",
+        liquidity: "نقدینگی",
+      },
     },
     whatIsSigma: {
       label: "سیگما چیست",

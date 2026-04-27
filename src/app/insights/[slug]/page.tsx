@@ -5,11 +5,11 @@ import {
   getInsightBySlug,
   getInsightSlugs,
   getRelatedPosts,
-  insightsListingCopy,
 } from "@/content/insights";
 import { ArticleBody } from "@/components/insights/ArticleBody";
 import { InsightHero } from "@/components/insights/InsightHero";
 import { RelatedPosts } from "@/components/insights/RelatedPosts";
+import { siteTranslations } from "@/content/siteTranslations";
 import { getSiteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getInsightBySlug(slug);
-  if (!post) return { title: "Insight" };
+  if (!post) return { title: siteTranslations.EN.insights.pageTitle };
   const base = getSiteUrl();
   const canonical = `${base}/insights/${slug}`;
   const og = post.ogImage ?? post.coverImage;
@@ -54,11 +54,10 @@ export default async function InsightArticlePage({ params }: Props) {
   if (!post) notFound();
 
   const related = getRelatedPosts(post, 3);
-  const copy = insightsListingCopy;
 
   return (
     <article>
-      <InsightHero post={post} copy={copy} />
+      <InsightHero post={post} />
 
       <div className="mx-auto max-w-5xl px-3 pt-8 sm:px-6 sm:pt-10 lg:px-10">
         <div className="relative aspect-[16/10] max-h-[min(48vh,380px)] w-full min-w-0 overflow-hidden rounded-lg border border-white/[0.07] bg-[#151a22] sm:aspect-[2/1] sm:max-h-[min(56vh,520px)] sm:rounded-xl">
@@ -78,7 +77,7 @@ export default async function InsightArticlePage({ params }: Props) {
         <ArticleBody content={post.content} />
       </div>
 
-      <RelatedPosts posts={related} copy={copy} />
+      <RelatedPosts posts={related} />
     </article>
   );
 }

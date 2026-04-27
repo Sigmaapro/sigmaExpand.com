@@ -60,10 +60,42 @@ const FA: HeroContent = {
   scrollHint: "اسکرول",
 };
 
+const ES: HeroContent = {
+  eyebrow: "Infraestructura de crecimiento Web3",
+  title: "SIGMA",
+  subtitle: "Diseñado para mover usuarios, liquidez y mercados.",
+  supporting:
+    "Un motor basado en datos para adquisición de usuarios, activación de red y expansión escalable del mercado.",
+  primaryCta: "Empezar a escalar",
+  secondaryCta: "Ver el sistema",
+  primaryHref: "#connect",
+  secondaryHref: "#capabilities",
+  logoSrc:
+    "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
+  scrollHint: "Desplazar",
+};
+
+const RU: HeroContent = {
+  eyebrow: "Инфраструктура роста Web3",
+  title: "SIGMA",
+  subtitle: "Создано для движения пользователей, ликвидности и рынков.",
+  supporting:
+    "Движок на данных для привлечения пользователей, активации сети и масштабируемого расширения рынка.",
+  primaryCta: "Начать масштабирование",
+  secondaryCta: "Смотреть систему",
+  primaryHref: "#connect",
+  secondaryHref: "#capabilities",
+  logoSrc:
+    "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
+  scrollHint: "Прокрутка",
+};
+
 /** Hero — swap for CMS `fetch` later; keys mirror a typical headless hero document */
 export const heroByLang: Record<LangCode, HeroContent> = {
   EN,
   TR,
   ZH,
   FA,
+  ES,
+  RU,
 };

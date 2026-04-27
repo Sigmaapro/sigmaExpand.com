@@ -120,9 +120,73 @@ const FA: ServicesContent = {
   ],
 };
 
+const ES: ServicesContent = {
+  sectionLabel: "01 // ARQUITECTURA",
+  headline: "ECOSISTEMA CENTRAL",
+  cards: [
+    {
+      title: "PROTOCOLOS DE LIQUIDEZ",
+      description:
+        "Motores algorítmicos de market making diseñados para ejecución institucional con deslizamiento mínimo.",
+      icon: "activity",
+    },
+    {
+      title: "SEGURIDAD DE RED",
+      description:
+        "Mecanismos criptográficos de consenso diseñados para resistir vectores de ataque de nivel cuántico.",
+      icon: "shield",
+    },
+    {
+      title: "INFRAESTRUCTURA DE NODOS",
+      description:
+        "Redes bare-metal descentralizadas y distribuidas globalmente para alta disponibilidad.",
+      icon: "cpu",
+    },
+    {
+      title: "CONTRATOS INTELIGENTES",
+      description:
+        "Verificación formal y auditoría rigurosa de primitivas financieras complejas.",
+      icon: "code2",
+    },
+  ],
+};
+
+const RU: ServicesContent = {
+  sectionLabel: "01 // АРХИТЕКТУРА",
+  headline: "ЯДРО ЭКОСИСТЕМЫ",
+  cards: [
+    {
+      title: "ПРОТОКОЛЫ ЛИКВИДНОСТИ",
+      description:
+        "Алгоритмические движки маркет-мейкинга для исполнения сделок институционального уровня с минимальным проскальзыванием.",
+      icon: "activity",
+    },
+    {
+      title: "БЕЗОПАСНОСТЬ СЕТИ",
+      description:
+        "Криптографические механизмы консенсуса, рассчитанные на устойчивость к атакам квантового уровня.",
+      icon: "shield",
+    },
+    {
+      title: "ИНФРАСТРУКТУРА УЗЛОВ",
+      description:
+        "Децентрализованные глобально распределённые bare-metal сети для стабильного аптайма.",
+      icon: "cpu",
+    },
+    {
+      title: "СМАРТ-КОНТРАКТЫ",
+      description:
+        "Формальная верификация и строгий аудит сложных финансовых примитивов.",
+      icon: "code2",
+    },
+  ],
+};
+
 export const servicesByLang: Record<LangCode, ServicesContent> = {
   EN,
   TR,
   ZH,
   FA,
+  ES,
+  RU,
 };

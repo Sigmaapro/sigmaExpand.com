@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion, useTransform } from "framer-motion";
+import { useEffect } from "react";
 import { MagneticButton } from "./MagneticButton";
 import { FloatingParticles } from "./FloatingParticles";
 import { HeroBackdrop } from "./HeroBackdrop";
@@ -36,7 +37,7 @@ const staggerItem = {
 };
 
 export function Hero() {
-  const { t, isRtl } = useLanguage();
+  const { t, isRtl, language } = useLanguage();
   const h = t.hero;
   const { heroRef, heroScrollProgress } = useScrollBridge();
   const isMobile = useIsMobile();
@@ -60,6 +61,10 @@ export function Hero() {
     [0, -20],
     { clamp: true },
   );
+
+  useEffect(() => {
+    console.debug("[i18n] Hero render for", language);
+  }, [language]);
 
   return (
     <section ref={heroRef} className="relative h-[220vh]">

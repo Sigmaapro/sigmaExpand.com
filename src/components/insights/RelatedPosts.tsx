@@ -1,23 +1,38 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import type { InsightPost, InsightsListingCopy } from "@/content/insights";
+import type { InsightPost } from "@/content/insights";
+import type { LangCode } from "@/content/types";
+import { useLanguage } from "@/context/LanguageContext";
 
-function formatDate(iso: string) {
+const DATE_LOCALE: Record<LangCode, string> = {
+  EN: "en-US",
+  TR: "tr-TR",
+  ZH: "zh-CN",
+  FA: "fa-IR",
+  ES: "es-ES",
+  RU: "ru-RU",
+};
+
+function formatDate(iso: string, lang: LangCode) {
   const d = new Date(iso + "T12:00:00");
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(DATE_LOCALE[lang], {
     month: "short",
     day: "numeric",
     year: "numeric",
   }).format(d);
 }
 
-export function RelatedPosts({
-  posts,
-  copy,
-}: {
-  posts: InsightPost[];
-  copy: InsightsListingCopy;
-}) {
+function getCategoryLabel(category: string, t: ReturnType<typeof useLanguage>["t"]) {
+  if (category === "Growth") return t.insights.categories.growth;
+  if (category === "Distribution") return t.insights.categories.distribution;
+  if (category === "Liquidity") return t.insights.categories.liquidity;
+  return category;
+}
+
+export function RelatedPosts({ posts }: { posts: InsightPost[] }) {
+  const { t, lang } = useLanguage();
   if (posts.length === 0) return null;
 
   return (
@@ -30,7 +45,7 @@ export function RelatedPosts({
           id="related-posts"
           className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#1c39bb]"
         >
-          {copy.relatedHeading}
+          {t.insights.relatedHeading}
         </h2>
         <ul className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
@@ -50,7 +65,7 @@ export function RelatedPosts({
                 </div>
                 <div className="min-w-0 flex-1 py-1">
                   <p className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]">
-                    {post.category} · {formatDate(post.publishDate)}
+                    {getCategoryLabel(post.category, t)} · {formatDate(post.publishDate, lang)}
                   </p>
                   <p className="mt-1 font-display text-base font-semibold leading-snug text-[#f1f3f5] transition group-hover:text-[#bde0fe]">
                     {post.title}

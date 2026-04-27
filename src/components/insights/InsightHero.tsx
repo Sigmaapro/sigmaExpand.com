@@ -1,28 +1,35 @@
-import Link from "next/link";
-import type { InsightPost, InsightsListingCopy } from "@/content/insights";
+"use client";
 
-function formatDate(iso: string) {
+import Link from "next/link";
+import type { InsightPost } from "@/content/insights";
+import { useLanguage } from "@/context/LanguageContext";
+
+const DATE_LOCALE: Record<string, string> = {
+  EN: "en-US",
+  TR: "tr-TR",
+  ZH: "zh-CN",
+  FA: "fa-IR",
+  ES: "es-ES",
+  RU: "ru-RU",
+};
+
+function formatDate(iso: string, locale: string) {
   const d = new Date(iso + "T12:00:00");
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(locale, {
     month: "long",
     day: "numeric",
     year: "numeric",
   }).format(d);
 }
 
-export function InsightHero({
-  post,
-  copy,
-}: {
-  post: InsightPost;
-  copy: InsightsListingCopy;
-}) {
+export function InsightHero({ post }: { post: InsightPost }) {
+  const { t, lang } = useLanguage();
   return (
     <header className="border-b border-white/[0.06] px-3 pb-8 pt-6 sm:px-6 sm:pb-12 sm:pt-10 lg:px-10">
       <div className="mx-auto max-w-3xl">
         <nav className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6c757d] sm:text-[11px]">
           <Link href="/insights" className="text-[#8b939e] hover:text-[#bde0fe]">
-            {copy.backToInsights}
+            {t.insights.backToInsights}
           </Link>
           <span className="mx-2 opacity-50" aria-hidden>
             /
@@ -39,7 +46,9 @@ export function InsightHero({
           <span className="w-fit rounded-sm border border-[#1c39bb]/35 bg-[#1c39bb]/12 px-2 py-1 text-[#bde0fe]">
             {post.category}
           </span>
-          <time dateTime={post.publishDate}>{formatDate(post.publishDate)}</time>
+          <time dateTime={post.publishDate}>
+            {formatDate(post.publishDate, DATE_LOCALE[lang])}
+          </time>
           <span className="hidden sm:inline" aria-hidden>
             ·
           </span>

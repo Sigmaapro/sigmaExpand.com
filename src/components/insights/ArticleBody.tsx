@@ -58,7 +58,6 @@ export function ArticleBody({ content }: { content: InsightContentBlock[] }) {
               <ArticleCTA
                 key={i}
                 slot={block.slot}
-                label={block.label}
                 href={block.href}
               />
             );

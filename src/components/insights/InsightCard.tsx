@@ -1,10 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { InsightPost } from "@/content/insights";
+import type { LangCode } from "@/content/types";
 
-function formatDate(iso: string) {
+const DATE_LOCALE: Record<LangCode, string> = {
+  EN: "en-US",
+  TR: "tr-TR",
+  ZH: "zh-CN",
+  FA: "fa-IR",
+  ES: "es-ES",
+  RU: "ru-RU",
+};
+
+function formatDate(iso: string, lang: LangCode) {
   const d = new Date(iso + "T12:00:00");
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(DATE_LOCALE[lang], {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -14,9 +24,13 @@ function formatDate(iso: string) {
 export function InsightCard({
   post,
   readLabel,
+  lang,
+  categoryLabel,
 }: {
   post: InsightPost;
   readLabel: string;
+  lang: LangCode;
+  categoryLabel: string;
 }) {
   return (
     <article className="group flex min-h-0 flex-col overflow-hidden rounded-lg border border-white/[0.07] bg-[#0d1016]/80 transition-[border-color,box-shadow] duration-300 hover:border-[#1c39bb]/35 hover:shadow-[0_12px_48px_rgba(0,0,0,0.35)]">
@@ -33,13 +47,13 @@ export function InsightCard({
       <div className="flex min-h-0 flex-1 flex-col p-5 sm:p-6">
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <span className="rounded-sm border border-[#1c39bb]/40 bg-[#1c39bb]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#bde0fe]">
-            {post.category}
+            {categoryLabel}
           </span>
           <time
             dateTime={post.publishDate}
             className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]"
           >
-            {formatDate(post.publishDate)}
+            {formatDate(post.publishDate, lang)}
           </time>
           <span className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]">
             · {post.readTime}

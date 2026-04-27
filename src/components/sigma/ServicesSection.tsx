@@ -1,14 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function ServicesSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const cards = t.services.cards.map((c) => ({
     title: c.title,
     body: c.description,
   }));
+
+  useEffect(() => {
+    console.debug("[i18n] Services cards render for", language);
+  }, [language]);
 
   return (
     <section
@@ -32,7 +37,7 @@ export function ServicesSection() {
         </div>
 
         <div
-          className="grid gap-6 md:grid-cols-2"
+          className="grid auto-rows-fr gap-6 md:grid-cols-2"
           style={{ perspective: "1200px" }}
         >
           {cards.map((c, i) => (
@@ -49,10 +54,10 @@ export function ServicesSection() {
                 transition: { duration: 0.35 },
               }}
               style={{ transformStyle: "preserve-3d" }}
-              className="group relative border border-cadet/15 bg-erie/40 p-8 shadow-[0_0_0_1px_rgba(28,57,187,0)] transition-shadow hover:border-persian/35 hover:shadow-[0_0_48px_rgba(28,57,187,0.18)]"
+              className="group relative flex h-full min-h-[13.5rem] flex-col border border-cadet/15 bg-erie/40 p-8 shadow-[0_0_0_1px_rgba(28,57,187,0)] transition-shadow hover:border-persian/35 hover:shadow-[0_0_48px_rgba(28,57,187,0.18)]"
             >
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-persian/5 via-transparent to-uranian/5 opacity-0 transition-opacity group-hover:opacity-100" />
-              <div className="relative z-10">
+              <div className="relative z-10 flex h-full flex-col">
                 <h3 className="font-display text-xl font-bold text-white">
                   {c.title}
                 </h3>

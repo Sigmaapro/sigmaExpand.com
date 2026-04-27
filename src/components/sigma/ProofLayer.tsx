@@ -5,15 +5,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   clientLogos,
-  metrics,
-  partnerFeedbackCopy,
-  proofInNumbersCopy,
-  proofTrustedByCopy,
-  testimonials,
+  proofByLang,
   type ProofClientLogo,
   type ProofMetric,
   type ProofTestimonial,
 } from "@/content/proof";
+import { useLanguage } from "@/context/LanguageContext";
 
 function initialsFromName(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -151,6 +148,9 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
 }
 
 export function ProofLayer() {
+  const { lang } = useLanguage();
+  const proof = proofByLang[lang] ?? proofByLang.EN;
+
   return (
     <div className="relative z-10 border-t border-white/[0.04] bg-[#080a0f]/50">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.12]" aria-hidden />
@@ -162,10 +162,10 @@ export function ProofLayer() {
       >
         <div className="relative mx-auto max-w-[90rem] text-center">
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
-            {proofTrustedByCopy.sectionLabel}
+            {proof.trustedBy.sectionLabel}
           </p>
           <h2 className="mx-auto max-w-2xl font-display text-xl font-semibold uppercase leading-tight tracking-tight text-white text-balance sm:text-2xl md:text-3xl">
-            {proofTrustedByCopy.headline}
+            {proof.trustedBy.headline}
           </h2>
           <div className="mx-auto mt-10 flex max-w-5xl flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4 md:gap-5">
             {clientLogos.map((logo) => (
@@ -182,16 +182,16 @@ export function ProofLayer() {
       >
         <div className="relative mx-auto max-w-[90rem]">
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
-            {proofInNumbersCopy.sectionLabel}
+            {proof.proofInNumbers.sectionLabel}
           </p>
           <h2 className="max-w-3xl font-display text-xl font-semibold uppercase leading-tight tracking-tight text-white text-balance sm:text-2xl md:text-3xl">
-            {proofInNumbersCopy.headline}
+            {proof.proofInNumbers.headline}
           </h2>
           <div
             id="metrics"
             className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
           >
-            {metrics.map((m, i) => (
+            {proof.metrics.map((m, i) => (
               <MetricCard key={m.id} metric={m} index={i} />
             ))}
           </div>
@@ -205,13 +205,13 @@ export function ProofLayer() {
       >
         <div className="relative mx-auto max-w-[90rem]">
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
-            {partnerFeedbackCopy.sectionLabel}
+            {proof.partnerFeedback.sectionLabel}
           </p>
           <h2 className="max-w-3xl font-display text-xl font-semibold uppercase leading-tight tracking-tight text-white text-balance sm:text-2xl md:text-3xl">
-            {partnerFeedbackCopy.headline}
+            {proof.partnerFeedback.headline}
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-            {testimonials.map((item, idx) => (
+            {proof.testimonials.map((item, idx) => (
               <TestimonialCard key={item.id} item={item} index={idx} />
             ))}
           </div>

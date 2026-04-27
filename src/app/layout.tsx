@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Noto_Sans_Arabic, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ProductionAnalytics } from "@/components/ProductionAnalytics";
@@ -17,6 +17,13 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-fa",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -84,7 +91,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`min-h-screen bg-erie ${spaceGrotesk.variable} ${inter.variable}`}
+      className={`min-h-screen bg-erie ${spaceGrotesk.variable} ${inter.variable} ${notoSansArabic.variable}`}
     >
       <body className="min-h-screen bg-erie font-body text-cadet antialiased">
         <Providers>{children}</Providers>

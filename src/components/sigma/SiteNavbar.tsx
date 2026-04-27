@@ -4,13 +4,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Globe } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
 
 export function SiteNavbar() {
-  const { t, lang, setLang, isRtl } = useLanguage();
+  const { t, language, setLanguage, isRtl } = useLanguage();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    console.debug("[i18n] SiteNavbar render for", language);
+  }, [language]);
 
   return (
     <nav
@@ -64,7 +68,7 @@ export function SiteNavbar() {
             aria-label={t.ui.navChrome.languageMenuAria}
           >
             <Globe size={14} strokeWidth={2} aria-hidden />
-            <span>{lang}</span>
+            <span>{language}</span>
           </button>
 
           <AnimatePresence>
@@ -84,13 +88,13 @@ export function SiteNavbar() {
                     key={l.code}
                     type="button"
                     role="option"
-                    aria-selected={lang === l.code}
+                    aria-selected={language === l.code}
                     onClick={() => {
-                      setLang(l.code);
+                      setLanguage(l.code);
                       setOpen(false);
                     }}
                     className={`block w-full px-4 py-3 text-left font-body text-[11px] font-bold uppercase tracking-widest transition-colors rtl:text-right ${
-                      lang === l.code
+                      language === l.code
                         ? "bg-persian text-white"
                         : "text-cadet hover:bg-cadet/10 hover:text-white"
                     }`}

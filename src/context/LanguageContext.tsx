@@ -2,10 +2,8 @@
 
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState,
   type ReactNode,
 } from "react";
@@ -13,6 +11,10 @@ import type { LangCode, SiteTranslations } from "@/content/types";
 import { siteTranslations } from "@/content/siteTranslations";
 
 type LanguageContextValue = {
+  /** Preferred alias for clarity in consumers */
+  language: LangCode;
+  setLanguage: (l: LangCode) => void;
+  /** Backward-compatible fields */
   lang: LangCode;
   setLang: (l: LangCode) => void;
   t: SiteTranslations;
@@ -23,7 +25,16 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 const STORAGE_KEY = "sigma-lang";
 
-const LANG_CODES: LangCode[] = ["EN", "TR", "ZH", "FA"];
+const LANG_CODES: LangCode[] = ["EN", "TR", "ZH", "FA", "ES", "RU"];
+
+const HTML_LANG_BY_CODE: Record<LangCode, string> = {
+  EN: "en",
+  TR: "tr",
+  ZH: "zh-CN",
+  FA: "fa",
+  ES: "es",
+  RU: "ru",
+};
 
 function isLangCode(value: string): value is LangCode {
   return (LANG_CODES as readonly string[]).includes(value);
@@ -41,29 +52,33 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const setLang = useCallback((l: LangCode) => {
-    setLangState(l);
+  const setLang = (l: LangCode) => {
+    setLangState((prev) => (prev === l ? prev : l));
     try {
       localStorage.setItem(STORAGE_KEY, l);
     } catch {
       /* ignore */
     }
-  }, []);
+  };
 
-  const value = useMemo((): LanguageContextValue => {
-    return {
-      lang,
-      setLang,
-      t: siteTranslations[lang],
-      isRtl: lang === "FA",
-    };
-  }, [lang, setLang]);
+  const value: LanguageContextValue = {
+    language: lang,
+    setLanguage: setLang,
+    lang,
+    setLang,
+    t: siteTranslations[lang],
+    isRtl: lang === "FA",
+  };
 
   useEffect(() => {
     document.documentElement.dir = value.isRtl ? "rtl" : "ltr";
-    document.documentElement.lang =
-      lang === "ZH" ? "zh-CN" : lang.toLowerCase();
+    document.documentElement.lang = HTML_LANG_BY_CODE[lang];
   }, [value.isRtl, lang]);
+
+  useEffect(() => {
+    // Debug trace for verifying instant i18n reactivity.
+    console.debug("[i18n] language changed", lang);
+  }, [lang]);
 
   return (
     <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>

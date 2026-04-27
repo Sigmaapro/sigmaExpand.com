@@ -644,13 +644,23 @@ const HeroSection = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div
-            className={`mb-5 flex items-center gap-4 sm:mb-6 ${isRtl ? "flex-row-reverse" : ""}`}
-          >
-            <div className="h-px w-10 shrink-0 bg-gradient-to-r from-transparent via-[#adb5bd]/80 to-transparent sigma-line-glow sm:w-14" />
-            <span className="sigma-hero-eyebrow min-w-0 break-words text-[10px] font-semibold uppercase leading-snug text-[#d8dde2] sm:text-[11px]">
-              {t.hero.eyebrow}
-            </span>
+          {/* Eyebrow + accent: explicit order per direction so RTL aligns with the hero text block edge (no flex-row-reverse drift). */}
+          <div className="mb-5 flex w-full min-w-0 items-center gap-4 sm:mb-6">
+            {!isRtl ? (
+              <>
+                <div className="h-px w-10 shrink-0 bg-gradient-to-r from-transparent via-[#adb5bd]/80 to-transparent sigma-line-glow sm:w-14" />
+                <span className="sigma-hero-eyebrow min-w-0 break-words text-[10px] font-semibold uppercase leading-snug text-[#d8dde2] sm:text-[11px]">
+                  {t.hero.eyebrow}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="sigma-hero-eyebrow min-w-0 shrink break-words text-[10px] font-semibold uppercase leading-snug text-[#d8dde2] sm:text-[11px]">
+                  {t.hero.eyebrow}
+                </span>
+                <div className="h-px w-10 shrink-0 bg-gradient-to-l from-transparent via-[#adb5bd]/80 to-transparent sigma-line-glow sm:w-14" />
+              </>
+            )}
           </div>
 
           <h1

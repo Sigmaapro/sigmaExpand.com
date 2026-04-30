@@ -30,6 +30,7 @@ import {
 import type { ServiceIconId, SiteTranslations } from "@/content/types";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
 import { siteSettings } from "@/content/siteSettings";
+import { getAllInsightsPosts } from "@/content/insights";
 import { useLanguage } from "@/context/LanguageContext";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
 
@@ -225,7 +226,7 @@ const WebGLScene = () => {
     const group = new THREE.Group();
     scene.add(group);
 
-    const baseScale = isTablet ? 0.88 : 1.05;
+    const baseScale = isTablet ? 1.12 : 1.34;
 
     /**
      * Pass 1 — original platonic cluster (tet / oct): exact composition baseline.
@@ -258,7 +259,7 @@ const WebGLScene = () => {
       opacity: 0.17,
     });
 
-    const numShards = isTablet ? 36 : 56;
+    const numShards = isTablet ? 156 : 298;
     const shards: THREE.Mesh[] = [];
 
     for (let i = 0; i < numShards; i++) {
@@ -491,6 +492,7 @@ const HeroVisual = () => {
   const isNarrow = useIsMobile(768);
   const isTiny = useIsMobile(480);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const insightPreview = getAllInsightsPosts().slice(0, 3);
   const sparkleCount = isTiny ? 4 : isNarrow ? 6 : 22;
   const parallaxMul = isNarrow ? 3.5 : 10;
   const parallaxMulY = isNarrow ? 2.5 : 8;
@@ -528,7 +530,80 @@ const HeroVisual = () => {
           y: reduceMotion || isNarrow ? 0 : parallax.y * parallaxMulY,
         }}
         transition={{ type: "spring", stiffness: 70, damping: 24, mass: 0.9 }}
-      />
+      >
+        <motion.div
+          initial={{ opacity: 1, y: 8 }}
+          animate={
+            reduceMotion
+              ? { opacity: 1, y: 0 }
+              : { opacity: 1, y: [0, -6, 0] }
+          }
+          transition={
+            reduceMotion
+              ? { duration: 0 }
+              : { duration: 8.5, repeat: Infinity, ease: "easeInOut" }
+          }
+          className="group relative hidden w-full max-w-[min(35rem,88%)] overflow-hidden rounded-2xl border border-[#bde0fe]/[0.15] bg-[#0a0f18]/[0.44] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.16)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] md:block lg:max-w-[min(39rem,92%)] lg:p-5"
+        >
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.035)_38%,transparent_74%)]" />
+          <div className="relative z-10">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="inline-flex items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff]">
+                INSIGHTS
+              </span>
+              <div className="h-px w-16 bg-gradient-to-r from-[#1c39bb]/70 to-transparent" />
+            </div>
+
+            <h3 className="mb-4 font-display text-lg font-semibold tracking-tight text-white lg:text-xl">
+              Featured Intelligence
+            </h3>
+
+            <div className="space-y-2.5">
+              {insightPreview.map((post, idx) => (
+                <article
+                  key={post.slug}
+                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-2.5 transition-colors duration-300 group-hover:border-white/[0.11] group-hover:bg-white/[0.03]"
+                >
+                  <div className="mb-1.5 flex items-center justify-between gap-2">
+                    <span className="truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-[#bde0fe]/90">
+                      {post.category}
+                    </span>
+                    <span className="shrink-0 text-[10px] text-[#aab2ba]">
+                      {post.readTime}
+                    </span>
+                  </div>
+                  <h4 className="line-clamp-1 text-sm font-semibold text-[#edf1f5]">
+                    {post.title}
+                  </h4>
+                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#aeb5bd]">
+                    {post.excerpt}
+                  </p>
+                  {idx < insightPreview.length - 1 ? (
+                    <div className="mt-2 h-px bg-gradient-to-r from-[#bde0fe]/20 via-white/[0.06] to-transparent" />
+                  ) : null}
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-4 flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                {insightPreview.map((post, idx) => (
+                  <span
+                    key={`${post.slug}-${idx}`}
+                    className={`h-1.5 rounded-full ${
+                      idx === 0 ? "w-5 bg-[#bde0fe]/70" : "w-1.5 bg-white/[0.25]"
+                    }`}
+                  />
+                ))}
+              </div>
+              <InsightsNavLink className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#dce8f4] transition-colors hover:text-white">
+                View Insights
+                <ArrowUpRight className="size-3.5" strokeWidth={2} />
+              </InsightsNavLink>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
       <div className="pointer-events-none absolute inset-0 z-[15]" aria-hidden>
         {Array.from({ length: sparkleCount }, (_, i) => (
           <motion.span

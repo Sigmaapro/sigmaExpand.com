@@ -991,7 +991,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
 
   return (
     <section
-      id="contact"
+      id="contact-main"
       className="relative z-10 scroll-mt-24 border-t border-white/[0.06] bg-gradient-to-b from-[#0d1016] via-[#0a0c12] to-[#080a0f] px-4 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-28"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px max-w-3xl bg-gradient-to-r from-transparent via-[#1c39bb]/40 to-transparent opacity-80" />
@@ -1117,7 +1117,7 @@ const Navbar = () => {
   const scrollRafRef = useRef<number | null>(null);
 
   const primaryNav: {
-    id: Exclude<GlassNavId, "connect" | "contact">;
+    id: Exclude<GlassNavId, "connect">;
     icon: typeof Mail;
     label: string;
   }[] = [
@@ -1125,6 +1125,7 @@ const Navbar = () => {
     { id: "capabilities", icon: LayoutGrid, label: t.nav.capabilities },
     { id: "network", icon: Network, label: t.nav.network },
     { id: "sigmapro", icon: Sparkles, label: t.nav.sigmaPro },
+    { id: "contact", icon: Mail, label: t.nav.contact },
   ];
 
   const syncActiveFromScroll = useCallback(() => {
@@ -1148,7 +1149,7 @@ const Navbar = () => {
         current = id;
       }
     }
-    if (current === "connect" || current === "contact") {
+    if (current === "connect") {
       setGlassActive(null);
       return;
     }
@@ -1508,8 +1509,8 @@ export default function SigmaLanding() {
         <ProofLayer />
         <MidConversionCta isRtl={isRtl} lang={currentLang} />
         <SigmaProSection t={t} />
-        <ContactSection t={t} />
         <CTASection t={t} />
+        <ContactSection t={t} />
         <FinalConversionCta
           isRtl={isRtl}
           lang={currentLang}

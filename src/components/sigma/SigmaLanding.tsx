@@ -277,6 +277,50 @@ const WebGLScene = () => {
     const numShards = isTablet ? 156 : 298;
     const shards: THREE.Mesh[] = [];
 
+    const SIGMA_W = 2.8;
+    const SIGMA_H = 4.2;
+    const SIGMA_THICKNESS = 0.20;
+    const SIGMA_DEPTH = 0.05;
+
+    // Σ has FOUR strokes. Coordinates in 2D, Y axis goes UP.
+    // Top bar runs across the top. Bottom bar runs across the bottom.
+    // The vertex of the < shape is on the LEFT at y=0.
+    const sigmaSegments: Array<{ sx: number; sy: number; ex: number; ey: number }> = [
+      { sx:  SIGMA_W, sy:  SIGMA_H, ex: -SIGMA_W, ey:  SIGMA_H }, // top bar
+      { sx: -SIGMA_W, sy:  SIGMA_H, ex:  SIGMA_W, ey:  0       }, // upper diag TL -> vertex right
+      { sx:  SIGMA_W, sy:  0,       ex: -SIGMA_W, ey: -SIGMA_H }, // lower diag vertex -> BL
+      { sx:  SIGMA_W, sy: -SIGMA_H, ex: -SIGMA_W, ey: -SIGMA_H }, // bottom bar
+    ];
+
+    const sigmaSegmentLengths = sigmaSegments.map((s) =>
+      Math.hypot(s.ex - s.sx, s.ey - s.sy),
+    );
+    const sigmaTotalLength = sigmaSegmentLengths.reduce((a, b) => a + b, 0);
+
+    const sampleSigmaPoint = (): THREE.Vector3 => {
+      let pick = Math.random() * sigmaTotalLength;
+      let segIdx = 0;
+      for (let s = 0; s < sigmaSegments.length; s++) {
+        if (pick <= sigmaSegmentLengths[s]!) { segIdx = s; break; }
+        pick -= sigmaSegmentLengths[s]!;
+      }
+      const seg = sigmaSegments[segIdx]!;
+      const t = Math.random();
+      const x = seg.sx + (seg.ex - seg.sx) * t;
+      const y = seg.sy + (seg.ey - seg.sy) * t;
+
+      const dx = seg.ex - seg.sx;
+      const dy = seg.ey - seg.sy;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len;
+      const ny =  dx / len;
+
+      const jitter = (Math.random() - 0.5) * 2 * SIGMA_THICKNESS;
+      const z      = (Math.random() - 0.5) * 2 * SIGMA_DEPTH;
+
+      return new THREE.Vector3(x + nx * jitter, y + ny * jitter, z);
+    };
+
     for (let i = 0; i < numShards; i++) {
       const geometry = WEBGL_USE_SIGMA_SHARDS
         ? sigmaShardGeometries[i % sigmaShardGeometries.length]!
@@ -284,15 +328,8 @@ const WebGLScene = () => {
           ? octGeo!
           : tetGeo!;
       const mesh = new THREE.Mesh(geometry, material);
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-      const r = Math.random() * 2.85;
-
-      mesh.position.set(
-        r * Math.sin(phi) * Math.cos(theta),
-        r * Math.sin(phi) * Math.sin(theta),
-        r * Math.cos(phi),
-      );
+      const sigmaPos = sampleSigmaPoint();
+      mesh.position.copy(sigmaPos);
 
       mesh.userData = {
         initialPos: mesh.position.clone(),
@@ -526,7 +563,7 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
 
   return (
     <div
-      className="relative flex min-h-[min(220px,34svh)] w-full max-w-full -translate-y-1 items-center justify-center overflow-x-clip overflow-y-visible sm:min-h-[min(300px,42vh)] sm:overflow-x-visible sm:-translate-y-6 md:-translate-y-8 md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)] lg:-translate-y-[52px] xl:-translate-y-[60px] ltr:lg:-translate-x-4 ltr:xl:-translate-x-[1.125rem] rtl:lg:translate-x-4 rtl:xl:translate-x-[1.125rem]"
+      className="relative flex min-h-[min(220px,34svh)] w-full max-w-full -translate-y-1 items-center justify-center overflow-x-clip overflow-y-visible sm:min-h-[min(300px,42vh)] sm:overflow-x-visible sm:-translate-y-6 md:-translate-y-8 md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)] lg:-translate-y-[52px] xl:-translate-y-[60px]"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -539,7 +576,7 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_56%_44%_at_68%_52%,rgba(189,224,254,0.008),transparent_62%)] md:bg-[radial-gradient(ellipse_56%_44%_at_68%_52%,rgba(189,224,254,0.022),transparent_62%)]" />
       </div>
       <motion.div
-        className="relative z-10 flex w-full min-w-0 items-center justify-center px-1 sm:px-0"
+        className="relative z-10 flex w-full min-w-0 items-center justify-center px-1 sm:px-0 ltr:lg:justify-end rtl:lg:justify-start"
         animate={{
           x: reduceMotion || isNarrow ? 0 : parallax.x * parallaxMul,
           y: reduceMotion || isNarrow ? 0 : parallax.y * parallaxMulY,

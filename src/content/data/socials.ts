@@ -12,13 +12,13 @@ export type SocialPlatformKey =
 
 export const socials = {
   x: "https://x.com/sigmaapro",
-  instagram: "",
-  telegram: "",
-  linkedin: "",
-  youtube: "",
-  whatsapp: "",
-  discord: "",
-  tiktok: "",
+  instagram: "https://www.instagram.com/",
+  telegram: "https://telegram.org/",
+  linkedin: "https://www.linkedin.com/",
+  youtube: "https://www.youtube.com/",
+  whatsapp: "https://www.whatsapp.com/",
+  discord: "https://discord.com/",
+  tiktok: "https://www.tiktok.com/",
 } as const;
 
 export const contactEmail = "contact@sigma.com";

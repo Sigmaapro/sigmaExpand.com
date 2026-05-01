@@ -11,7 +11,7 @@ export type SocialPlatformKey =
   | "tiktok";
 
 export const socials = {
-  x: "",
+  x: "https://x.com/sigmaapro",
   instagram: "",
   telegram: "",
   linkedin: "",

@@ -3,7 +3,6 @@ import { Inter, Noto_Sans_Arabic, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ProductionAnalytics } from "@/components/ProductionAnalytics";
-import { StayConnectedSection } from "@/components/shared/StayConnectedSection";
 import { SITE_DEFAULT_DESCRIPTION } from "@/lib/site-seo";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -96,7 +95,6 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-erie font-body text-cadet antialiased">
         <Providers>{children}</Providers>
-        <StayConnectedSection />
         <ProductionAnalytics />
       </body>
     </html>

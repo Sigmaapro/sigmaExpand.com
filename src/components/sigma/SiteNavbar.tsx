@@ -4,17 +4,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Globe } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
 
 export function SiteNavbar() {
   const { t, language, setLanguage, isRtl } = useLanguage();
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    console.debug("[i18n] SiteNavbar render for", language);
-  }, [language]);
 
   return (
     <nav
@@ -37,24 +33,24 @@ export function SiteNavbar() {
       </Link>
 
       <div className="hidden items-center gap-8 md:flex">
-        <a
+        <Link
           href="/#about"
           className="font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white"
         >
           {t.nav.system}
-        </a>
-        <a
+        </Link>
+        <Link
           href="/#ecosystem"
           className="font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white"
         >
           {t.nav.capabilities}
-        </a>
-        <a
+        </Link>
+        <Link
           href="/#metrics"
           className="font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white"
         >
           {t.nav.metrics}
-        </a>
+        </Link>
       </div>
 
       <div className="flex items-center gap-4 md:gap-6">
@@ -107,12 +103,12 @@ export function SiteNavbar() {
           </AnimatePresence>
         </div>
 
-        <a
+        <Link
           href="/#connect"
           className="border border-white/20 px-4 py-2 font-body text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-erie"
         >
           {t.nav.navCta}
-        </a>
+        </Link>
       </div>
     </nav>
   );

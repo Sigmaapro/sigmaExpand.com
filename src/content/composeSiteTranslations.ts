@@ -1,13 +1,8 @@
 import type { LangCode, SiteTranslations } from "./types";
-import { heroByLang } from "./hero";
-import { servicesByLang } from "./services";
-import { siteRestByLang } from "./site";
+import { homePageContent } from "./pages/home";
+import { getLocalized } from "./_contentLocales";
 
 /** Assembles per-locale bundles from modular slices — replace body with CMS merge later */
 export function composeSiteTranslations(lang: LangCode): SiteTranslations {
-  return {
-    ...siteRestByLang[lang],
-    hero: heroByLang[lang],
-    services: servicesByLang[lang],
-  };
+  return getLocalized(homePageContent, lang);
 }

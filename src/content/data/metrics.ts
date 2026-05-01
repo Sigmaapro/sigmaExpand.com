@@ -1,3 +1,3 @@
 // This file is safe to edit for content updates (no code knowledge needed)
 
-export * from "../data/insights";
+export { proofMetrics as metricsData } from "../metrics";

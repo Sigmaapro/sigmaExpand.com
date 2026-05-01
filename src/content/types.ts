@@ -3,7 +3,20 @@
  * Visual layout lives in components; editors change data here (or future CMS).
  */
 
+import type { SocialPlatformKey } from "./socials";
+
 export type LangCode = "EN" | "TR" | "ZH" | "FA" | "ES" | "RU";
+
+/** Labels for homepage social grid (brand names may repeat across locales). */
+export type SocialPlatformLabelsMap = Record<SocialPlatformKey, string>;
+
+export type StayConnectedContent = {
+  kicker: string;
+  title: string;
+  description: string;
+  reachUsPrefix: string;
+  socialLabels: SocialPlatformLabelsMap;
+};
 
 export type NavContent = {
   system: string;
@@ -247,6 +260,8 @@ export type SiteTranslations = {
   network: NetworkSectionContent;
   sigmaPro: SigmaProContent;
   contact: ContactContent;
+  /** Homepage bottom contact / social strip (`#contact`) */
+  stayConnected: StayConnectedContent;
   /** Dedicated /contact hub page */
   contactHub: ContactHubContent;
   cta: CtaContent;

@@ -1,28 +1,13 @@
-export type SocialPlatformKey =
-  | "x"
-  | "instagram"
-  | "telegram"
-  | "linkedin"
-  | "youtube"
-  | "whatsapp"
-  | "discord"
-  | "tiktok";
+// This file is safe to edit for content updates (no code knowledge needed)
+
+import { socials, contactEmail, type SocialPlatformKey } from "./data/socials";
+
+export type { SocialPlatformKey };
 
 export type SocialLinks = Record<SocialPlatformKey, string>;
 
-/**
- * Centralized social media config.
- * Fill each URL to enable the platform card.
- */
-export const socialLinks: SocialLinks = {
-  x: "",
-  instagram: "",
-  telegram: "",
-  linkedin: "",
-  youtube: "",
-  whatsapp: "",
-  discord: "",
-  tiktok: "",
-};
+/** Backward-compatible alias used by existing components */
+export const socialLinks: SocialLinks = socials;
 
-export const socialContactEmail = "contact@sigma.com";
+/** Backward-compatible alias used by existing components */
+export const socialContactEmail = contactEmail;

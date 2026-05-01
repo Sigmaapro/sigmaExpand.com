@@ -211,6 +211,23 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       socialCta: "Channels & social",
       fallbackMailto: "mailto:hello@sigma.io",
     },
+    stayConnected: {
+      kicker: "CONTACT",
+      title: "Stay Connected with Sigma",
+      description:
+        "Follow Sigma across strategic channels for network updates, market intelligence, and direct communication with our growth infrastructure team.",
+      reachUsPrefix: "Reach us at",
+      socialLabels: {
+        x: "X",
+        instagram: "Instagram",
+        telegram: "Telegram",
+        linkedin: "LinkedIn",
+        youtube: "YouTube",
+        whatsapp: "WhatsApp",
+        discord: "Discord",
+        tiktok: "TikTok",
+      },
+    },
     contactHub: {
       pageEyebrow: "SIGMA",
       title: "Connect",
@@ -368,6 +385,23 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       socialCta: "Kanallar ve sosyal",
       fallbackMailto: "mailto:hello@sigma.io",
     },
+    stayConnected: {
+      kicker: "İLETİŞİM",
+      title: "Sigma ile bağlantıda kalın",
+      description:
+        "Ağ güncellemeleri, pazar istihbaratı ve büyüme altyapısı ekibimizle doğrudan iletişim için Sigma'yı stratejik kanallardan takip edin.",
+      reachUsPrefix: "Bize ulaşın:",
+      socialLabels: {
+        x: "X",
+        instagram: "Instagram",
+        telegram: "Telegram",
+        linkedin: "LinkedIn",
+        youtube: "YouTube",
+        whatsapp: "WhatsApp",
+        discord: "Discord",
+        tiktok: "TikTok",
+      },
+    },
     contactHub: {
       pageEyebrow: "SIGMA",
       title: "Bağlan",
@@ -518,6 +552,23 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       emailCta: "邮件",
       socialCta: "渠道与社交",
       fallbackMailto: "mailto:hello@sigma.io",
+    },
+    stayConnected: {
+      kicker: "联系",
+      title: "与 Sigma 保持连接",
+      description:
+        "通过战略渠道关注 Sigma，获取网络动态、市场情报，以及与增长基础设施团队的直接沟通。",
+      reachUsPrefix: "联系我们：",
+      socialLabels: {
+        x: "X",
+        instagram: "Instagram",
+        telegram: "Telegram",
+        linkedin: "LinkedIn",
+        youtube: "YouTube",
+        whatsapp: "WhatsApp",
+        discord: "Discord",
+        tiktok: "TikTok",
+      },
     },
     contactHub: {
       pageEyebrow: "SIGMA",
@@ -674,6 +725,23 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       emailCta: "Correo",
       socialCta: "Canales y redes",
       fallbackMailto: "mailto:hello@sigma.io",
+    },
+    stayConnected: {
+      kicker: "CONTACTO",
+      title: "Mantente conectado con Sigma",
+      description:
+        "Sigue a Sigma en canales estratégicos para actualizaciones de red, inteligencia de mercado y comunicación directa con el equipo de infraestructura de crecimiento.",
+      reachUsPrefix: "Escríbenos a",
+      socialLabels: {
+        x: "X",
+        instagram: "Instagram",
+        telegram: "Telegram",
+        linkedin: "LinkedIn",
+        youtube: "YouTube",
+        whatsapp: "WhatsApp",
+        discord: "Discord",
+        tiktok: "TikTok",
+      },
     },
     contactHub: {
       pageEyebrow: "SIGMA",
@@ -833,6 +901,23 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       socialCta: "Каналы и соцсети",
       fallbackMailto: "mailto:hello@sigma.io",
     },
+    stayConnected: {
+      kicker: "КОНТАКТЫ",
+      title: "Оставайтесь на связи с Sigma",
+      description:
+        "Следите за Sigma в стратегических каналах: обновления сети, рыночная аналитика и прямое общение с командой инфраструктуры роста.",
+      reachUsPrefix: "Напишите нам:",
+      socialLabels: {
+        x: "X",
+        instagram: "Instagram",
+        telegram: "Telegram",
+        linkedin: "LinkedIn",
+        youtube: "YouTube",
+        whatsapp: "WhatsApp",
+        discord: "Discord",
+        tiktok: "TikTok",
+      },
+    },
     contactHub: {
       pageEyebrow: "SIGMA",
       title: "Связаться",
@@ -988,6 +1073,23 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       emailCta: "ایمیل",
       socialCta: "کانال‌ها و شبکه‌ها",
       fallbackMailto: "mailto:hello@sigma.io",
+    },
+    stayConnected: {
+      kicker: "تماس",
+      title: "با سیگما در ارتباط بمانید",
+      description:
+        "سیگما را در کانال‌های استراتژیک دنبال کنید: به‌روزرسانی شبکه، هوش بازار و ارتباط مستقیم با تیم زیرساخت رشد.",
+      reachUsPrefix: "راه تماس:",
+      socialLabels: {
+        x: "X",
+        instagram: "Instagram",
+        telegram: "Telegram",
+        linkedin: "LinkedIn",
+        youtube: "YouTube",
+        whatsapp: "WhatsApp",
+        discord: "Discord",
+        tiktok: "TikTok",
+      },
     },
     contactHub: {
       pageEyebrow: "SIGMA",

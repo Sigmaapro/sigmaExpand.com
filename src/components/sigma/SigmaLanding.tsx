@@ -1,7 +1,17 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, type ComponentType } from "react";
 import Link from "next/link";
+import {
+  FaDiscord,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTelegram,
+  FaTiktok,
+  FaWhatsapp,
+  FaXTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
 import { LiveSupportButton } from "@/components/sigma/LiveSupportButton";
 import { ProofLayer } from "@/components/sigma/ProofLayer";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
@@ -28,6 +38,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { ServiceIconId, SiteTranslations } from "@/content/types";
+import {
+  socialContactEmail,
+  socialLinks,
+  type SocialPlatformKey,
+} from "@/content/socials";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
 import { siteSettings } from "@/content/siteSettings";
 import { getAllInsightsPosts } from "@/content/insights";
@@ -487,7 +502,7 @@ const AnimatedText = ({
   );
 };
 
-const HeroVisual = () => {
+const HeroVisual = ({ t }: { t: SiteTranslations }) => {
   const reduceMotion = useReducedMotion();
   const isNarrow = useIsMobile(768);
   const isTiny = useIsMobile(480);
@@ -549,13 +564,13 @@ const HeroVisual = () => {
           <div className="relative z-10">
             <div className="mb-3 flex items-center justify-between">
               <span className="inline-flex items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff]">
-                INSIGHTS
+                {t.insights.pageEyebrow}
               </span>
               <div className="h-px w-16 bg-gradient-to-r from-[#1c39bb]/70 to-transparent" />
             </div>
 
             <h3 className="mb-4 font-display text-lg font-semibold tracking-tight text-white lg:text-xl">
-              Featured Intelligence
+              {t.insights.featuredLabel}
             </h3>
 
             <div className="space-y-2.5">
@@ -597,7 +612,7 @@ const HeroVisual = () => {
                 ))}
               </div>
               <InsightsNavLink className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#dce8f4] transition-colors hover:text-white">
-                View Insights
+                {t.nav.insights}
                 <ArrowUpRight className="size-3.5" strokeWidth={2} />
               </InsightsNavLink>
             </div>
@@ -776,7 +791,7 @@ const HeroSection = ({
 
       <div className="relative z-10 order-1 min-h-0 w-full min-w-0 max-w-[min(100%,28rem)] justify-self-center sm:order-2 sm:max-w-none lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
         <div className="relative min-h-[min(180px,30svh)] w-full sm:min-h-[min(260px,38vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
-          <HeroVisual />
+          <HeroVisual t={t} />
         </div>
       </div>
     </div>
@@ -980,6 +995,31 @@ function readPublicEnvString(name: string): string | undefined {
   return (process.env as Record<string, string | undefined>)[name];
 }
 
+const CONTACT_SOCIAL_ORDER: SocialPlatformKey[] = [
+  "x",
+  "instagram",
+  "telegram",
+  "linkedin",
+  "youtube",
+  "whatsapp",
+  "discord",
+  "tiktok",
+];
+
+const SOCIAL_ICON_MAP: Record<
+  SocialPlatformKey,
+  ComponentType<{ className?: string }>
+> = {
+  x: FaXTwitter,
+  instagram: FaInstagram,
+  telegram: FaTelegram,
+  linkedin: FaLinkedinIn,
+  youtube: FaYoutube,
+  whatsapp: FaWhatsapp,
+  discord: FaDiscord,
+  tiktok: FaTiktok,
+};
+
 const ContactSection = ({ t }: { t: SiteTranslations }) => {
   const raw = readPublicEnvString("NEXT_PUBLIC_SOCIAL_EMAIL")?.trim();
   const mailto =
@@ -989,39 +1029,95 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
         : `mailto:${raw.replace(/^mailto:/i, "")}`
       : t.contact.fallbackMailto;
 
+  const sc = t.stayConnected;
+
   return (
     <section
-      id="contact-main"
+      id="contact"
       className="relative z-10 scroll-mt-24 border-t border-white/[0.06] bg-gradient-to-b from-[#0d1016] via-[#0a0c12] to-[#080a0f] px-4 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-28"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px max-w-3xl bg-gradient-to-r from-transparent via-[#1c39bb]/40 to-transparent opacity-80" />
-      <div className="relative mx-auto max-w-3xl text-center">
-        <p className="sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
-          {t.contact.kicker}
-        </p>
-        <h2 className="font-display text-2xl font-semibold uppercase tracking-tight text-balance text-white sm:text-3xl md:text-4xl">
-          {t.contact.title}
-        </h2>
-        <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">
-          {t.contact.description}
-        </p>
-        <div className="mt-10 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:mx-auto sm:flex-row sm:items-center sm:gap-4">
-          <a
-            href={mailto}
-            className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/20 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.25)] transition-[background,box-shadow,transform] hover:bg-[#1c39bb]/40 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] active:scale-[0.99] sm:w-auto sm:px-8"
-          >
-            <Mail className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-            {t.contact.emailCta}
-          </a>
-          <Link
-            href="/contact"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] active:scale-[0.99] sm:w-auto sm:px-8"
-          >
-            {t.contact.socialCta}
-            <ArrowUpRight className="size-4 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
-          </Link>
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
+            {sc.kicker}
+          </p>
+          <h2 className="font-display text-2xl font-semibold uppercase tracking-tight text-balance text-white sm:text-3xl md:text-4xl">
+            {sc.title}
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">
+            {sc.description}
+          </p>
+          <p className="mx-auto mt-6 max-w-2xl text-xs text-[#8f98a3] sm:text-sm">
+            {sc.reachUsPrefix}{" "}
+            <a
+              href={`mailto:${socialContactEmail}`}
+              className="font-medium text-[#d4e8ff] underline-offset-4 hover:underline"
+            >
+              {socialContactEmail}
+            </a>
+          </p>
+          <div className="mt-10 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:mx-auto sm:flex-row sm:items-center sm:gap-4">
+            <a
+              href={mailto}
+              className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/20 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.25)] transition-[background,box-shadow,transform] hover:bg-[#1c39bb]/40 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] active:scale-[0.99] sm:w-auto sm:px-8"
+            >
+              <Mail className="size-4 shrink-0" strokeWidth={2} aria-hidden />
+              {t.contact.emailCta}
+            </a>
+            <Link
+              href="/contact"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] active:scale-[0.99] sm:w-auto sm:px-8"
+            >
+              {t.contact.socialCta}
+              <ArrowUpRight className="size-4 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
+            </Link>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-14 grid w-full max-w-7xl grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
+          {CONTACT_SOCIAL_ORDER.map((key) => {
+            const Icon = SOCIAL_ICON_MAP[key];
+            const href = socialLinks[key].trim();
+            const enabled = href.length > 0;
+            const cardClass =
+              "group flex min-h-[76px] items-center gap-2.5 rounded-xl border px-3 py-3 transition-[transform,border-color,box-shadow,background-color] duration-250 " +
+              (enabled
+                ? "border-white/[0.1] bg-white/[0.03] text-[#e3edf8] hover:scale-[1.06] hover:border-[#6ea8ff]/50 hover:bg-[#1c39bb]/[0.14] hover:shadow-[0_0_28px_rgba(28,57,187,0.25)]"
+                : "cursor-not-allowed border-white/[0.06] bg-white/[0.015] text-[#6f7884] opacity-55");
+
+            const label = sc.socialLabels[key];
+            const content = (
+              <>
+                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.02] text-[#bde0fe] transition-colors group-hover:text-white">
+                  <Icon className="h-4.5 w-4.5" />
+                </span>
+                <span className="text-xs font-medium tracking-wide">{label}</span>
+              </>
+            );
+
+            if (!enabled) {
+              return (
+                <div key={key} className={cardClass} aria-disabled>
+                  {content}
+                </div>
+              );
+            }
+
+            return (
+              <Link
+                key={key}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cardClass}
+              >
+                {content}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

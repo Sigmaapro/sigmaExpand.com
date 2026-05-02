@@ -39,10 +39,10 @@ function FooterColumnBlock({
       <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
         {title}
       </h3>
-      <ul className="mt-3 space-y-2">
+      <ul className="mt-2 space-y-1.5 md:mt-3 md:space-y-2">
         {links.map((link) => {
           const common =
-            "text-[13px] leading-snug text-[#cfd6de] transition-colors hover:text-[#bde0fe] md:text-[#b6bcc4]";
+            "block break-words text-[13px] leading-snug text-[#cfd6de] transition-colors hover:text-[#bde0fe] md:text-[#b6bcc4]";
           if (link.disabled) {
             return (
               <li key={link.label}>
@@ -67,7 +67,7 @@ function FooterColumnBlock({
           }
           return (
             <li key={link.label}>
-              <Link href={link.href} className={`inline-block ${common}`}>
+              <Link href={link.href} className={common}>
                 {link.label}
               </Link>
             </li>
@@ -90,8 +90,8 @@ export function MarketingFooter() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px max-w-5xl bg-gradient-to-r from-transparent via-[#1c39bb]/35 to-transparent opacity-90" />
 
       <div className="mx-auto max-w-[90rem] px-5 py-10 sm:px-6 lg:px-10 lg:py-12">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:gap-8">
-          <div className="max-w-md">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:gap-8">
+          <div className="max-w-md min-w-0 lg:max-w-md">
             <div className="flex items-center gap-2.5">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center font-display text-[1.75rem] font-semibold leading-none text-white drop-shadow-[0_0_14px_rgba(189,224,254,0.18)]">
                 Σ
@@ -115,7 +115,10 @@ export function MarketingFooter() {
             </div>
           </div>
 
-          <nav aria-label={f.landmarkNav} className="grid gap-8 md:grid-cols-2 lg:contents">
+          <nav
+            aria-label={f.landmarkNav}
+            className="grid min-w-0 grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-5 md:gap-x-6 md:gap-y-8 lg:contents"
+          >
             <FooterColumnBlock title={f.columnPlatform.title} links={f.columnPlatform.links} />
             <FooterColumnBlock title={f.columnCompany.title} links={f.columnCompany.links} />
             <FooterColumnBlock title={f.columnResources.title} links={f.columnResources.links} />
@@ -123,32 +126,35 @@ export function MarketingFooter() {
               <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
                 {f.socialColumnTitle}
               </h3>
-              <ul className="mt-3 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-1" aria-label={f.landmarkSocial}>
+              <ul
+                className="mt-2 grid grid-cols-1 gap-x-2 gap-y-1.5 md:mt-3 md:gap-y-2"
+                aria-label={f.landmarkSocial}
+              >
                 {FOOTER_SOCIAL_ORDER.map((key) => {
                   const Icon = FOOTER_SOCIAL_ICON_MAP[key];
                   const href = socialLinks[key].trim();
                   const enabled = href.length > 0;
                   const label = f.socialLabels[key];
                   return (
-                    <li key={key}>
+                    <li key={key} className="min-w-0">
                       {enabled ? (
                         <a
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group flex items-center gap-2 rounded-lg py-1 text-[13px] text-[#cfd6de] transition-colors hover:text-white md:text-[#b6bcc4]"
+                          className="group flex min-h-[40px] items-center gap-2 rounded-lg py-0.5 text-[13px] leading-snug text-[#cfd6de] transition-colors hover:text-white md:min-h-0 md:py-1 md:text-[#b6bcc4]"
                         >
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.03] text-[#bde0fe] transition-colors group-hover:border-[#1c39bb]/40">
+                          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.03] text-[#bde0fe] transition-colors group-hover:border-[#1c39bb]/40">
                             <Icon className="size-3.5" />
                           </span>
-                          <span>{label}</span>
+                          <span className="min-w-0 break-words">{label}</span>
                         </a>
                       ) : (
-                        <span className="flex items-center gap-2 py-1 text-[13px] text-[#6f7884] opacity-50">
-                          <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.05] bg-white/[0.02]">
+                        <span className="flex min-h-[40px] items-center gap-2 py-0.5 text-[13px] leading-snug text-[#6f7884] opacity-50 md:min-h-0 md:py-1">
+                          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-white/[0.05] bg-white/[0.02]">
                             <Icon className="size-3.5" />
                           </span>
-                          {label}
+                          <span className="min-w-0 break-words">{label}</span>
                         </span>
                       )}
                     </li>

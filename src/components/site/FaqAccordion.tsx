@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import type { FaqItem } from "@/content/pages/faq";
+import type { FaqItem } from "@/content/global/marketing/faqContent";
 
 export function FaqAccordion({ items }: { items: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);

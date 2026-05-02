@@ -17,6 +17,7 @@ import { ProofLayer } from "@/components/sigma/ProofLayer";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
 import { MidConversionCta, FinalConversionCta } from "@/components/sigma/ConversionSections";
 import { BookCallModal } from "@/components/sigma/BookCallModal";
+import { HeroGlassCarousel } from "@/components/sigma/HeroGlassCarousel";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import * as THREE from "three";
 import {
@@ -42,7 +43,6 @@ import {
   socialLinks,
   type SocialPlatformKey,
 } from "@/content/socials";
-import { getAllInsightsPosts } from "@/content/insights";
 import { InsightsOuterLink } from "@/components/site/InsightsOuterLink";
 import { LanguageSwitcherButton } from "@/components/site/LanguageSwitcherButton";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
@@ -542,13 +542,10 @@ const AnimatedText = ({
 };
 
 const HeroVisual = ({ t }: { t: SiteTranslations }) => {
-  const { language } = useLanguage();
-  const H = getHomeSectionLinks(language);
   const reduceMotion = useReducedMotion();
   const isNarrow = useIsMobile(768);
   const isTiny = useIsMobile(480);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
-  const insightPreview = getAllInsightsPosts().slice(0, 3);
   const sparkleCount = isTiny ? 4 : isNarrow ? 6 : 22;
   const parallaxMul = isNarrow ? 3.5 : 10;
   const parallaxMulY = isNarrow ? 2.5 : 8;
@@ -602,63 +599,7 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
           className="group relative hidden w-full max-w-[min(35rem,88%)] overflow-hidden rounded-2xl border border-[#bde0fe]/[0.15] bg-[#0a0f18]/[0.44] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.16)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] md:block lg:max-w-[min(39rem,92%)] lg:p-5"
         >
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.035)_38%,transparent_74%)]" />
-          <div className="relative z-10">
-            <div className="mb-3 flex items-center justify-between">
-              <span className="inline-flex items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff]">
-                {t.insights.pageEyebrow}
-              </span>
-              <div className="h-px w-16 bg-gradient-to-r from-[#1c39bb]/70 to-transparent" />
-            </div>
-
-            <h3 className="mb-4 font-display text-lg font-semibold tracking-tight text-white lg:text-xl">
-              {t.insights.featuredLabel}
-            </h3>
-
-            <div className="space-y-2.5">
-              {insightPreview.map((post, idx) => (
-                <article
-                  key={post.slug}
-                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-2.5 transition-colors duration-300 group-hover:border-white/[0.11] group-hover:bg-white/[0.03]"
-                >
-                  <div className="mb-1.5 flex items-center justify-between gap-2">
-                    <span className="truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-[#bde0fe]/90">
-                      {post.category}
-                    </span>
-                    <span className="shrink-0 text-[10px] text-[#aab2ba]">
-                      {post.readTime}
-                    </span>
-                  </div>
-                  <h4 className="line-clamp-1 text-sm font-semibold text-[#edf1f5]">
-                    {post.title}
-                  </h4>
-                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#aeb5bd]">
-                    {post.excerpt}
-                  </p>
-                  {idx < insightPreview.length - 1 ? (
-                    <div className="mt-2 h-px bg-gradient-to-r from-[#bde0fe]/20 via-white/[0.06] to-transparent" />
-                  ) : null}
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-4 flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                {insightPreview.map((post, idx) => (
-                  <span
-                    key={`${post.slug}-${idx}`}
-                    className={`h-1.5 rounded-full ${
-                      idx === 0 ? "w-5 bg-[#bde0fe]/70" : "w-1.5 bg-white/[0.25]"
-                    }`}
-                  />
-                ))}
-              </div>
-              <SectionDeepLink
-                href={H.heroInsights.href}
-                label={H.heroInsights.label}
-                className="text-xs tracking-[0.14em] text-[#dce8f4] hover:text-white"
-              />
-            </div>
-          </div>
+          <HeroGlassCarousel t={t} />
         </motion.div>
       </motion.div>
       <div className="pointer-events-none absolute inset-0 z-[15]" aria-hidden>
@@ -883,7 +824,7 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
           ))}
         </div>
         <div className="mt-10 flex justify-center">
-          <SectionDeepLink href={H.whatIsSigma.href} label={H.whatIsSigma.label} />
+          <SectionDeepLink href={H.whatIsSigma.href} label={H.whatIsSigma.label} openInNewTab />
         </div>
       </div>
     </section>
@@ -917,7 +858,7 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
           {t.about.description}
         </motion.p>
         <div className="mt-8 flex justify-center sm:mt-10">
-          <SectionDeepLink href={H.about.href} label={H.about.label} />
+          <SectionDeepLink href={H.about.href} label={H.about.label} openInNewTab />
         </div>
       </div>
     </section>
@@ -987,7 +928,7 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
           ))}
         </div>
         <div className="mt-10 flex justify-center md:mt-14">
-          <SectionDeepLink href={H.capabilities.href} label={H.capabilities.label} />
+          <SectionDeepLink href={H.capabilities.href} label={H.capabilities.label} openInNewTab />
         </div>
       </div>
     </section>
@@ -1046,7 +987,7 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
               {t.sigmaPro.footnote}
             </p>
             <div className="mt-8 flex justify-center">
-              <SectionDeepLink href={H.sigmaPro.href} label={H.sigmaPro.label} />
+              <SectionDeepLink href={H.sigmaPro.href} label={H.sigmaPro.label} openInNewTab />
             </div>
           </div>
         </motion.div>
@@ -1116,8 +1057,8 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
             {sc.description}
           </p>
           <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <SectionDeepLink href={H.contact.href} label={H.contact.label} />
-            <SectionDeepLink href={H.faq.href} label={H.faq.label} />
+            <SectionDeepLink href={H.contact.href} label={H.contact.label} openInNewTab />
+            <SectionDeepLink href={H.faq.href} label={H.faq.label} openInNewTab />
           </div>
           <p className="mx-auto mt-6 max-w-2xl text-xs text-[#8f98a3] sm:text-sm">
             {sc.reachUsPrefix}{" "}

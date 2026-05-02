@@ -212,6 +212,8 @@ export type UiStrings = {
   navChrome: NavChromeStrings;
   /** Logo / brand image alt */
   logoAlt: string;
+  /** Section deep-link CTA (replaces “More info”) */
+  learnMore: string;
 };
 
 export type AboutContent = {
@@ -248,6 +250,14 @@ export type InsightsUiContent = {
   };
 };
 
+/** Hero glass card carousel — labels only; slide copy uses insights / services / proof slices */
+export type HeroCarouselContent = {
+  carouselAriaLabel: string;
+  ecosystemCtaLabel: string;
+  proofCtaLabel: string;
+  paginationDotLabels: readonly [string, string, string];
+};
+
 export type SiteTranslations = {
   nav: NavContent;
   insights: InsightsUiContent;
@@ -269,4 +279,5 @@ export type SiteTranslations = {
   footer: FooterContent;
   trustedBy: TrustedByContent;
   testimonials: Testimonial[];
+  heroCarousel: HeroCarouselContent;
 };

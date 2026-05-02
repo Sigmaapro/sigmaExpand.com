@@ -199,7 +199,7 @@ export function ProofLayer() {
             ))}
           </div>
           <div className="mt-10 flex justify-center sm:mt-12">
-            <SectionDeepLink href={H.proof.href} label={H.proof.label} />
+            <SectionDeepLink href={H.proof.href} label={H.proof.label} openInNewTab />
           </div>
         </div>
       </section>

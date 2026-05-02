@@ -1,12 +1,13 @@
 "use client";
 
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { privacyPageContentByLang } from "@/content/global/marketing/privacyContent";
+import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
-import { termsPageContentByLang } from "@/content/global/termsPage";
 
-export function TermsPageView() {
+export function PrivacyPageView() {
   const { language } = useLanguage();
-  const c = termsPageContentByLang[language] ?? termsPageContentByLang.EN;
+  const c = pickLang(privacyPageContentByLang, language);
 
   return (
     <MarketingSubpageScaffold>
@@ -22,16 +23,14 @@ export function TermsPageView() {
             {c.updatedLabel}: {c.updatedDate}
           </p>
         </header>
-        <div className="mt-12 space-y-10">
+        <div className="mt-12 space-y-8">
           {c.sections.map((s) => (
             <section
               key={s.title}
               className="rounded-2xl border border-white/[0.08] bg-[#07090f]/55 p-6 backdrop-blur-md sm:p-8"
             >
               <h2 className="font-display text-lg font-semibold text-white">{s.title}</h2>
-              <p className="mt-3 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">
-                {s.body}
-              </p>
+              <p className="mt-3 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{s.body}</p>
             </section>
           ))}
         </div>

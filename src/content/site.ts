@@ -1,6 +1,6 @@
 import type { LangCode, SiteTranslations } from "./types";
 
-export type SiteRest = Omit<SiteTranslations, "hero" | "services">;
+export type SiteRest = Omit<SiteTranslations, "hero" | "services" | "heroCarousel">;
 
 const livePanelEN = {
   panelTitle: "Live Support",
@@ -265,6 +265,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         languageMenuAria: "Change language",
       },
       logoAlt: "SIGMA",
+      learnMore: "Learn more",
     },
     footer: {
       rights: "© 2026 SIGMA PROTOCOL. ALL RIGHTS RESERVED.",
@@ -439,6 +440,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         languageMenuAria: "Dil seçin",
       },
       logoAlt: "SIGMA",
+      learnMore: "Daha fazla öğren",
     },
     footer: {
       rights: "© 2026 SIGMA PROTOKOLÜ. TÜM HAKLARI SAKLIDIR.",
@@ -605,6 +607,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         languageMenuAria: "选择语言",
       },
       logoAlt: "SIGMA",
+      learnMore: "了解更多",
     },
     footer: {
       rights: "© 2026 SIGMA 协议。保留所有权利。",
@@ -780,6 +783,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         languageMenuAria: "Cambiar idioma",
       },
       logoAlt: "SIGMA",
+      learnMore: "Saber más",
     },
     footer: {
       rights: "© 2026 PROTOCOLO SIGMA. TODOS LOS DERECHOS RESERVADOS.",
@@ -955,6 +959,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         languageMenuAria: "Сменить язык",
       },
       logoAlt: "SIGMA",
+      learnMore: "Узнать больше",
     },
     footer: {
       rights: "© 2026 ПРОТОКОЛ SIGMA. ВСЕ ПРАВА ЗАЩИЩЕНЫ.",
@@ -1128,6 +1133,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         languageMenuAria: "انتخاب زبان",
       },
       logoAlt: "SIGMA",
+      learnMore: "بیشتر بدانید",
     },
     footer: {
       rights: "© 2026 پروتکل سیگما. تمامی حقوق محفوظ است.",

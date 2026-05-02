@@ -14,7 +14,11 @@ import type { ComponentType } from "react";
 import { useCallback, useState, type FormEvent } from "react";
 import { CalendarPlus } from "lucide-react";
 import { BookCallModal } from "@/components/sigma/BookCallModal";
-import { contactSubpageContent } from "@/content/pages/contact-subpage";
+import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import {
+  contactSubpageContentByLang,
+} from "@/content/global/marketing/contactSubpageContent";
+import { pickLang } from "@/content/global/marketing/helpers";
 import {
   socialLinks,
   type SocialPlatformKey,
@@ -52,7 +56,7 @@ type FormState = "idle" | "loading" | "success" | "error";
 
 export function ContactSubpageView() {
   const { t, isRtl, language } = useLanguage();
-  const copy = contactSubpageContent;
+  const copy = pickLang(contactSubpageContentByLang, language);
   const sc = t.stayConnected;
 
   const [bookOpen, setBookOpen] = useState(false);
@@ -98,7 +102,7 @@ export function ContactSubpageView() {
   );
 
   return (
-    <>
+    <MarketingSubpageScaffold>
       <BookCallModal
         open={bookOpen}
         onClose={() => setBookOpen(false)}
@@ -263,6 +267,6 @@ export function ContactSubpageView() {
           </div>
         </section>
       </div>
-    </>
+    </MarketingSubpageScaffold>
   );
 }

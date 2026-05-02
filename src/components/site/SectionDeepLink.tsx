@@ -8,12 +8,15 @@ export function SectionDeepLink({
   label,
   className,
   external,
+  openInNewTab = false,
 }: {
   href: string;
   label: string;
   className?: string;
   /** Same-origin routes omit this; use for insights URL if external */
   external?: boolean;
+  /** Same-origin `next/link` only — adds `target` + `rel` when true */
+  openInNewTab?: boolean;
 }) {
   const isExternal = external ?? /^https?:\/\//i.test(href);
   const cls = [
@@ -41,7 +44,11 @@ export function SectionDeepLink({
   }
 
   return (
-    <Link href={href} className={cls}>
+    <Link
+      href={href}
+      className={cls}
+      {...(openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {inner}
     </Link>
   );

@@ -1,33 +1,12 @@
 import type { Metadata } from "next";
-import { getSiteUrl } from "@/lib/site-url";
-
-const contactTitle = "Connect";
-const contactDescription =
-  "Official channels, social profiles, and contact — Sigma Web3 growth infrastructure.";
+import type { ReactNode } from "react";
+import { contactSubpageMeta } from "@/content/pages/contact-subpage";
 
 export const metadata: Metadata = {
-  title: contactTitle,
-  description: contactDescription,
-  alternates: {
-    canonical: `${getSiteUrl()}/contact`,
-  },
-  openGraph: {
-    title: `${contactTitle} | Sigma`,
-    description: contactDescription,
-    url: `${getSiteUrl()}/contact`,
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${contactTitle} | Sigma`,
-    description: contactDescription,
-  },
+  title: contactSubpageMeta.title,
+  description: contactSubpageMeta.description,
 };
 
-export default function ContactLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ContactLayout({ children }: { children: ReactNode }) {
   return children;
 }

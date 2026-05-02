@@ -24,7 +24,6 @@ import {
   Cpu,
   Activity,
   ArrowUpRight,
-  Globe,
   Code2,
   Mail,
   Info,
@@ -43,9 +42,12 @@ import {
   socialLinks,
   type SocialPlatformKey,
 } from "@/content/socials";
-import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
-import { siteSettings } from "@/content/siteSettings";
 import { getAllInsightsPosts } from "@/content/insights";
+import { InsightsOuterLink } from "@/components/site/InsightsOuterLink";
+import { LanguageSwitcherButton } from "@/components/site/LanguageSwitcherButton";
+import { MarketingFooter } from "@/components/site/MarketingFooter";
+import { SectionDeepLink } from "@/components/site/SectionDeepLink";
+import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import { useLanguage } from "@/context/LanguageContext";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
 
@@ -540,6 +542,8 @@ const AnimatedText = ({
 };
 
 const HeroVisual = ({ t }: { t: SiteTranslations }) => {
+  const { language } = useLanguage();
+  const H = getHomeSectionLinks(language);
   const reduceMotion = useReducedMotion();
   const isNarrow = useIsMobile(768);
   const isTiny = useIsMobile(480);
@@ -648,10 +652,11 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
                   />
                 ))}
               </div>
-              <InsightsNavLink className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#dce8f4] transition-colors hover:text-white">
-                {t.nav.insights}
-                <ArrowUpRight className="size-3.5" strokeWidth={2} />
-              </InsightsNavLink>
+              <SectionDeepLink
+                href={H.heroInsights.href}
+                label={H.heroInsights.label}
+                className="text-xs tracking-[0.14em] text-[#dce8f4] hover:text-white"
+              />
             </div>
           </div>
         </motion.div>
@@ -838,6 +843,8 @@ const HeroSection = ({
 
 const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
   const pillars = t.whatIsSigma.pillars;
+  const { language } = useLanguage();
+  const H = getHomeSectionLinks(language);
 
   return (
     <section
@@ -875,36 +882,47 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
             </motion.div>
           ))}
         </div>
+        <div className="mt-10 flex justify-center">
+          <SectionDeepLink href={H.whatIsSigma.href} label={H.whatIsSigma.label} />
+        </div>
       </div>
     </section>
   );
 };
 
-const AboutSection = ({ t }: { t: SiteTranslations }) => (
-  <section
-    id="about"
-    className="relative z-10 flex min-h-0 scroll-mt-24 items-center justify-center px-4 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
-  >
-    <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
-    <div className="relative z-10 mx-auto max-w-4xl px-1 text-center sm:px-0">
-      <p className="sigma-hero-eyebrow mb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-8 sm:text-[11px]">
-        {t.about.kicker}
-      </p>
-      <AnimatedText
-        text={t.about.title}
-        className="justify-center font-display text-2xl font-semibold uppercase leading-[1.14] tracking-tight text-white sm:text-3xl sm:leading-[1.1] md:text-5xl lg:text-6xl"
-      />
-      <motion.p
-        initial={{ opacity: 1 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.15, duration: 0.6 }}
-        className="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] sm:mt-10 sm:text-base md:text-lg"
-      >
-        {t.about.description}
-      </motion.p>
-    </div>
-  </section>
-);
+const AboutSection = ({ t }: { t: SiteTranslations }) => {
+  const { language } = useLanguage();
+  const H = getHomeSectionLinks(language);
+
+  return (
+    <section
+      id="about"
+      className="relative z-10 flex min-h-0 scroll-mt-24 items-center justify-center px-4 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
+    >
+      <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
+      <div className="relative z-10 mx-auto max-w-4xl px-1 text-center sm:px-0">
+        <p className="sigma-hero-eyebrow mb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-8 sm:text-[11px]">
+          {t.about.kicker}
+        </p>
+        <AnimatedText
+          text={t.about.title}
+          className="justify-center font-display text-2xl font-semibold uppercase leading-[1.14] tracking-tight text-white sm:text-3xl sm:leading-[1.1] md:text-5xl lg:text-6xl"
+        />
+        <motion.p
+          initial={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.15, duration: 0.6 }}
+          className="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] sm:mt-10 sm:text-base md:text-lg"
+        >
+          {t.about.description}
+        </motion.p>
+        <div className="mt-8 flex justify-center sm:mt-10">
+          <SectionDeepLink href={H.about.href} label={H.about.label} />
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const SERVICE_ICON_MAP: Record<ServiceIconId, LucideIcon> = {
   activity: Activity,
@@ -921,6 +939,8 @@ const DEFAULT_SERVICE_ICONS: ServiceIconId[] = [
 ];
 
 const ServicesSection = ({ t }: { t: SiteTranslations }) => {
+  const { language } = useLanguage();
+  const H = getHomeSectionLinks(language);
   const services = t.services.cards.map((card, i) => {
     const iconId =
       card.icon ??
@@ -966,12 +986,17 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
             </motion.div>
           ))}
         </div>
+        <div className="mt-10 flex justify-center md:mt-14">
+          <SectionDeepLink href={H.capabilities.href} label={H.capabilities.label} />
+        </div>
       </div>
     </section>
   );
 };
 
 const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
+  const { language } = useLanguage();
+  const H = getHomeSectionLinks(language);
   const bullets = t.sigmaPro.bullets;
   return (
     <section
@@ -1020,6 +1045,9 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
             <p className="mt-10 max-w-2xl text-xs leading-relaxed text-[#868e96] md:text-[13px]">
               {t.sigmaPro.footnote}
             </p>
+            <div className="mt-8 flex justify-center">
+              <SectionDeepLink href={H.sigmaPro.href} label={H.sigmaPro.label} />
+            </div>
           </div>
         </motion.div>
       </div>
@@ -1058,6 +1086,8 @@ const SOCIAL_ICON_MAP: Record<
 };
 
 const ContactSection = ({ t }: { t: SiteTranslations }) => {
+  const { language } = useLanguage();
+  const H = getHomeSectionLinks(language);
   const raw = readPublicEnvString("NEXT_PUBLIC_SOCIAL_EMAIL")?.trim();
   const mailto =
     raw && raw.length > 0
@@ -1085,6 +1115,10 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
           <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">
             {sc.description}
           </p>
+          <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <SectionDeepLink href={H.contact.href} label={H.contact.label} />
+            <SectionDeepLink href={H.faq.href} label={H.faq.label} />
+          </div>
           <p className="mx-auto mt-6 max-w-2xl text-xs text-[#8f98a3] sm:text-sm">
             {sc.reachUsPrefix}{" "}
             <a
@@ -1204,45 +1238,8 @@ const SECTION_ORDER: GlassNavId[] = [
 const NAV_SCROLL_GAP = 112;
 const NAV_CLICK_SCROLL_LOCK_MS = 900;
 
-function InsightsNavLink({
-  className,
-  onNavigate,
-  children,
-}: {
-  className: string;
-  onNavigate?: () => void;
-  children: React.ReactNode;
-}) {
-  const href = siteSettings.insightsUrl;
-  if (href.startsWith("/")) {
-    return (
-      <Link
-        href={href}
-        onClick={onNavigate}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
-        {children}
-      </Link>
-    );
-  }
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={onNavigate}
-      className={className}
-    >
-      {children}
-    </a>
-  );
-}
-
 const Navbar = () => {
   const { t, lang: currentLang, setLang: setCurrentLang } = useLanguage();
-  const [langOpen, setLangOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [glassActive, setGlassActive] = useState<GlassNavId | null>(null);
   const navClickScrollingRef = useRef(false);
@@ -1444,75 +1441,34 @@ const Navbar = () => {
             </div>
           </div>
 
-          <InsightsNavLink className="hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-white/[0.1] bg-white/[0.03] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color,box-shadow] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px]">
-            <Newspaper
-              className="size-[15px] shrink-0 text-[#bde0fe]/80"
-              strokeWidth={2}
-              aria-hidden
+          <div className="ms-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 md:gap-4">
+            <InsightsOuterLink className="hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-white/[0.1] bg-white/[0.03] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color,box-shadow] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px]">
+              <Newspaper
+                className="size-[15px] shrink-0 text-[#bde0fe]/80"
+                strokeWidth={2}
+                aria-hidden
+              />
+              <span className="min-w-0 truncate">{t.nav.insights}</span>
+              <ArrowUpRight
+                className="size-3.5 shrink-0 opacity-55"
+                strokeWidth={2}
+                aria-hidden
+              />
+            </InsightsOuterLink>
+
+            <button
+              type="button"
+              onClick={() => goToSection("connect")}
+              className="hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.26)_0%,rgba(28,57,187,0.09)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_22px_rgba(28,57,187,0.14)] transition-[background,box-shadow,border-color,transform] hover:border-[#2a4acd]/70 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_28px_rgba(28,57,187,0.22)] active:scale-[0.99] md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px]"
+            >
+              {t.nav.navCta}
+            </button>
+
+            <LanguageSwitcherButton
+              currentLang={currentLang}
+              setLang={setCurrentLang}
+              ariaLabel={t.ui.navChrome.languageMenuAria}
             />
-            <span className="min-w-0 truncate">{t.nav.insights}</span>
-            <ArrowUpRight
-              className="size-3.5 shrink-0 opacity-55"
-              strokeWidth={2}
-              aria-hidden
-            />
-          </InsightsNavLink>
-
-          <button
-            type="button"
-            onClick={() => goToSection("connect")}
-            className="hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.26)_0%,rgba(28,57,187,0.09)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_22px_rgba(28,57,187,0.14)] transition-[background,box-shadow,border-color,transform] hover:border-[#2a4acd]/70 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_28px_rgba(28,57,187,0.22)] active:scale-[0.99] md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px]"
-          >
-            {t.nav.navCta}
-          </button>
-
-          <div className="ms-auto flex min-w-0 shrink-0 items-center gap-3 sm:gap-3.5 md:ms-0 md:gap-4">
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setLangOpen(!langOpen)}
-                className="inline-flex h-12 min-h-12 min-w-[4.5rem] max-w-[5.5rem] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[13px] font-semibold uppercase tracking-[0.06em] text-[#b8c0c8] transition-colors hover:border-white/18 hover:bg-white/[0.06] hover:text-white sm:h-14 sm:min-h-14 sm:min-w-[72px] sm:max-w-[88px] sm:gap-2 sm:px-4 sm:text-[15px]"
-                aria-label={t.ui.navChrome.languageMenuAria}
-                aria-expanded={langOpen}
-                aria-haspopup="listbox"
-              >
-                <Globe className="size-4 shrink-0" strokeWidth={2} />
-                <span>{currentLang}</span>
-              </button>
-
-              <AnimatePresence>
-                {langOpen ? (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute end-0 top-[calc(100%+10px)] z-[60] flex min-w-[140px] flex-col overflow-hidden rounded-lg border border-white/10 bg-[#0d1018]/95 shadow-2xl backdrop-blur-xl"
-                    role="listbox"
-                  >
-                    {LANGUAGE_SWITCHER_OPTIONS.map((lang) => (
-                      <button
-                        key={lang.code}
-                        type="button"
-                        role="option"
-                        aria-selected={currentLang === lang.code}
-                        onClick={() => {
-                          setCurrentLang(lang.code);
-                          setLangOpen(false);
-                        }}
-                        className={`px-4 py-3 text-start text-xs font-semibold uppercase tracking-[0.14em] transition-colors ${
-                          currentLang === lang.code
-                            ? "bg-[#1c39bb] text-white"
-                            : "text-[#adb5bd] hover:bg-white/[0.06] hover:text-white"
-                        }`}
-                      >
-                        {lang.label}
-                      </button>
-                    ))}
-                  </motion.div>
-                ) : null}
-              </AnimatePresence>
-            </div>
 
             <button
               type="button"
@@ -1586,7 +1542,7 @@ const Navbar = () => {
                 );
               })}
             </div>
-            <InsightsNavLink
+            <InsightsOuterLink
               onNavigate={() => setMobileOpen(false)}
               className="mt-2 flex min-h-[3.25rem] touch-manipulation items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-3.5 text-start text-[#d8dde3] transition-colors hover:bg-white/[0.06]"
             >
@@ -1601,7 +1557,7 @@ const Navbar = () => {
                 </span>
               </span>
               <ArrowUpRight className="size-4 shrink-0 opacity-45" />
-            </InsightsNavLink>
+            </InsightsOuterLink>
             <div className="mt-3 border-t border-white/[0.06] pt-3">
               <button
                 type="button"
@@ -1651,38 +1607,7 @@ export default function SigmaLanding() {
         />
       </main>
 
-      <footer
-        className="relative z-10 flex flex-col gap-4 border-t border-[#adb5bd]/10 bg-[#0a0c12] px-4 py-6 text-[10px] uppercase tracking-widest text-[#adb5bd] sm:px-8 sm:text-xs md:flex-row md:items-center md:justify-between md:px-12"
-        dir={isRtl ? "rtl" : "ltr"}
-      >
-        <div className="flex min-w-0 flex-col gap-3 md:max-w-[60%] md:flex-row md:items-center md:gap-6">
-          <span className="min-w-0 shrink-0 break-words text-[#adb5bd]">
-            {t.footer.rights}
-          </span>
-          {t.footer.links && t.footer.links.length > 0 ? (
-            <nav
-              className="flex min-w-0 flex-wrap gap-x-4 gap-y-2 text-[10px] md:text-xs"
-              aria-label={t.footer.navAriaLabel}
-            >
-              {t.footer.links.map((link) => (
-                <a
-                  key={`${link.label}-${link.href}`}
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
-                  className="text-[#8b939e] underline-offset-4 transition-colors hover:text-[#bde0fe] hover:underline"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-          ) : null}
-        </div>
-        <span className="shrink-0 whitespace-normal break-words md:whitespace-nowrap">
-          {t.footer.statusPrefix}{" "}
-          <span className="text-[#bde0fe]">{t.footer.statusValue}</span>
-        </span>
-      </footer>
+      <MarketingFooter />
 
       <LiveSupportButton label={t.ui.liveSupport} panel={t.ui.liveSupportPanel} />
 

@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { SITE_DEFAULT_DESCRIPTION } from "@/lib/site-seo";
 import { getSiteUrl } from "@/lib/site-url";
+import SigmaLanding from "@/components/sigma/SigmaLanding";
 
-// Isolate the heavy client tree in its own async chunk (more stable Webpack dev/HMR).
-const SigmaLanding = dynamic(() => import("@/components/sigma/SigmaLanding"), {
-  loading: () => (
-    <div
-      className="min-h-screen bg-erie font-body text-cadet antialiased"
-      style={{ backgroundColor: "#212529", minHeight: "100vh" }}
-      aria-busy="true"
-      aria-label="Loading"
-    />
-  ),
-});
+/**
+ * Static import avoids flaky Webpack dev runtime: `__webpack_modules__[moduleId] is not a function`
+ * when the async chunk for `dynamic()` fails to initialize after HMR/edits.
+ */
 
 export const metadata: Metadata = {
   title: { absolute: "Sigma — Web3 Growth Infrastructure" },

@@ -1,7 +1,10 @@
-"use client";
-
-import { ContactHub } from "@/components/sigma/ContactHub";
+import { ContactSubpageView } from "@/components/site/ContactSubpageView";
+import { InnerPageShell } from "@/components/site/InnerPageShell";
 
 export default function ContactPage() {
-  return <ContactHub />;
+  return (
+    <InnerPageShell>
+      <ContactSubpageView />
+    </InnerPageShell>
+  );
 }

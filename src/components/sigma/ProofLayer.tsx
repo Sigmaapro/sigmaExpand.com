@@ -10,6 +10,8 @@ import {
   type ProofMetric,
   type ProofTestimonial,
 } from "@/content/proof";
+import { SectionDeepLink } from "@/components/site/SectionDeepLink";
+import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import { useLanguage } from "@/context/LanguageContext";
 
 function initialsFromName(name: string) {
@@ -150,6 +152,7 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
 export function ProofLayer() {
   const { lang } = useLanguage();
   const proof = proofByLang[lang] ?? proofByLang.EN;
+  const H = getHomeSectionLinks(lang);
 
   return (
     <div className="relative z-10 border-t border-white/[0.04] bg-[#080a0f]/50">
@@ -194,6 +197,9 @@ export function ProofLayer() {
             {proof.metrics.map((m, i) => (
               <MetricCard key={m.id} metric={m} index={i} />
             ))}
+          </div>
+          <div className="mt-10 flex justify-center sm:mt-12">
+            <SectionDeepLink href={H.proof.href} label={H.proof.label} />
           </div>
         </div>
       </section>

@@ -36,13 +36,13 @@ function FooterColumnBlock({
 }) {
   return (
     <div className="min-w-0">
-      <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8b939e]">
+      <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
         {title}
       </h3>
       <ul className="mt-3 space-y-2">
         {links.map((link) => {
           const common =
-            "text-[13px] leading-snug text-[#b6bcc4] transition-colors hover:text-[#bde0fe]";
+            "text-[13px] leading-snug text-[#cfd6de] transition-colors hover:text-[#bde0fe] md:text-[#b6bcc4]";
           if (link.disabled) {
             return (
               <li key={link.label}>
@@ -100,10 +100,10 @@ export function MarketingFooter() {
                 Sigma
               </span>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-[#b6bcc4]">{f.brandTagline}</p>
-            <p className="mt-3 text-xs leading-relaxed text-[#6f7884]">{f.trustLine}</p>
+            <p className="mt-4 text-sm leading-relaxed text-[#cfd6de] md:text-[#b6bcc4]">{f.brandTagline}</p>
+            <p className="mt-3 text-xs leading-relaxed text-[#8f98a3] md:text-[#6f7884]">{f.trustLine}</p>
             <div className="mt-6 rounded-xl border border-white/[0.08] bg-[#05070c]/80 px-4 py-3">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8b939e]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#a0aab4] md:text-[#8b939e]">
                 {f.contactIntro}
               </p>
               <a
@@ -115,15 +115,15 @@ export function MarketingFooter() {
             </div>
           </div>
 
-          <nav aria-label={f.landmarkNav} className="grid gap-8 sm:grid-cols-2 lg:contents">
+          <nav aria-label={f.landmarkNav} className="grid gap-8 md:grid-cols-2 lg:contents">
             <FooterColumnBlock title={f.columnPlatform.title} links={f.columnPlatform.links} />
             <FooterColumnBlock title={f.columnCompany.title} links={f.columnCompany.links} />
             <FooterColumnBlock title={f.columnResources.title} links={f.columnResources.links} />
             <div className="min-w-0">
-              <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8b939e]">
+              <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
                 {f.socialColumnTitle}
               </h3>
-              <ul className="mt-3 grid grid-cols-2 gap-x-2 gap-y-2 sm:grid-cols-1" aria-label={f.landmarkSocial}>
+              <ul className="mt-3 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-1" aria-label={f.landmarkSocial}>
                 {FOOTER_SOCIAL_ORDER.map((key) => {
                   const Icon = FOOTER_SOCIAL_ICON_MAP[key];
                   const href = socialLinks[key].trim();
@@ -136,7 +136,7 @@ export function MarketingFooter() {
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group flex items-center gap-2 rounded-lg py-1 text-[13px] text-[#b6bcc4] transition-colors hover:text-white"
+                          className="group flex items-center gap-2 rounded-lg py-1 text-[13px] text-[#cfd6de] transition-colors hover:text-white md:text-[#b6bcc4]"
                         >
                           <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.03] text-[#bde0fe] transition-colors group-hover:border-[#1c39bb]/40">
                             <Icon className="size-3.5" />
@@ -160,19 +160,25 @@ export function MarketingFooter() {
         </div>
 
         <div className="mt-10 flex flex-col gap-4 border-t border-white/[0.06] pt-8 md:flex-row md:items-center md:justify-between">
-          <p className="text-[11px] text-[#6f7884]">{f.bottomCopyright}</p>
+          <p className="text-[11px] text-[#8f98a3] md:text-[#6f7884]">{f.bottomCopyright}</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px]">
-            <Link href={f.privacy.href} className="text-[#8b939e] transition-colors hover:text-[#bde0fe]">
+            <Link
+              href={f.privacy.href}
+              className="text-[#a0aab4] transition-colors hover:text-[#bde0fe] md:text-[#8b939e]"
+            >
               {f.privacy.label}
             </Link>
             {f.terms.disabled ? (
               <span className="cursor-not-allowed text-[#6f7884] opacity-50">{f.terms.label}</span>
             ) : (
-              <Link href={f.terms.href} className="text-[#8b939e] transition-colors hover:text-[#bde0fe]">
+              <Link
+                href={f.terms.href}
+                className="text-[#a0aab4] transition-colors hover:text-[#bde0fe] md:text-[#8b939e]"
+              >
                 {f.terms.label}
               </Link>
             )}
-            <span className="text-[#6f7884]">
+            <span className="text-[#8f98a3] md:text-[#6f7884]">
               {f.statusLabel}:{" "}
               <span className="font-medium text-[#8fdbb6]">{f.statusValue}</span>
             </span>

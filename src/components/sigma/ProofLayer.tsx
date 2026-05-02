@@ -87,11 +87,13 @@ function MetricCard({ metric, index }: { metric: ProofMetric; index: number }) {
       <p className="font-display text-2xl font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
         {metric.value}
       </p>
-      <p className="mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#8b939e] sm:text-xs">
+      <p className="mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e]">
         {metric.label}
       </p>
       {metric.note ? (
-        <p className="mt-2 text-xs leading-relaxed text-[#6c757d] sm:text-[13px]">{metric.note}</p>
+        <p className="mt-2 text-xs leading-relaxed text-[#9aa2ac] sm:text-[13px] md:text-[#6c757d]">
+          {metric.note}
+        </p>
       ) : null}
     </motion.article>
   );
@@ -108,9 +110,9 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
       className="flex min-h-0 flex-col rounded-xl border border-white/[0.07] bg-[#0c0f14]/90 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:p-7"
     >
       <blockquote className="min-w-0 flex-1 border-s-2 border-[#1c39bb]/45 ps-4 text-sm leading-relaxed text-[#e8eaed] sm:ps-5 sm:text-[15px] sm:leading-[1.68]">
-        <span className="text-[#6c757d]">“</span>
+        <span className="text-[#8a939e] md:text-[#6c757d]">“</span>
         {item.quote}
-        <span className="text-[#6c757d]">”</span>
+        <span className="text-[#8a939e] md:text-[#6c757d]">”</span>
       </blockquote>
       <div className="mt-8 flex min-w-0 flex-col gap-4 border-t border-white/[0.06] pt-6 sm:flex-row sm:flex-wrap sm:items-center">
         {item.avatarSrc ? (
@@ -127,7 +129,7 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
         )}
         <div className="min-w-0 flex-1">
           <p className="font-display text-sm font-semibold text-white">{item.name}</p>
-          <p className="mt-0.5 text-[11px] uppercase leading-snug tracking-[0.12em] text-[#868e96] sm:text-xs">
+          <p className="mt-0.5 text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96]">
             {item.role}
             {item.role && item.company ? " · " : null}
             {item.company}

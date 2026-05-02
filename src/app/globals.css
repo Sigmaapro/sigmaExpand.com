@@ -119,6 +119,41 @@ body {
   }
 }
 
+/* Mobile (<768px): higher legibility — gradient text often clips on WebKit; keep desktop unchanged. */
+@media (max-width: 767px) {
+  .sigma-hero-title {
+    line-height: 1.12;
+    letter-spacing: -0.034em;
+  }
+
+  .sigma-hero-wordmark {
+    color: #f8f9fa !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    filter: drop-shadow(0 2px 18px rgba(28, 57, 187, 0.38));
+  }
+
+  .sigma-cta-wordmark {
+    color: #f1f3f5 !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+  }
+
+  .group:hover .sigma-cta-wordmark {
+    color: #ffffff !important;
+    background: none !important;
+    background-image: none !important;
+  }
+
+  .sigma-body-measure {
+    max-width: 100%;
+  }
+}
+
 @media (min-width: 768px) and (pointer: fine) {
   html.sigma-cursor-active body {
     cursor: none;

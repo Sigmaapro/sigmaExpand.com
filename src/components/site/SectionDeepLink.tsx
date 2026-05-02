@@ -20,7 +20,10 @@ export function SectionDeepLink({
 }) {
   const isExternal = external ?? /^https?:\/\//i.test(href);
   const cls = [
-    "group inline-flex items-center gap-1.5 font-semibold uppercase tracking-[0.12em] text-[11px] text-[#7d8692] transition-colors hover:text-[#bde0fe]",
+    "group inline-flex items-center gap-1.5 font-semibold uppercase tracking-[0.12em] text-[11px] transition-colors",
+    "text-[#c8d2dc] underline decoration-[#6ea8ff]/45 underline-offset-[5px] drop-shadow-[0_0_14px_rgba(110,168,255,0.22)]",
+    "md:text-[#7d8692] md:no-underline md:decoration-transparent md:drop-shadow-none",
+    "hover:text-[#bde0fe]",
     className ?? "",
   ].join(" ");
 

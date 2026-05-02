@@ -167,8 +167,8 @@ const GlobalStyles = () => (
     }
     .sigma-landing-root #hero {
       min-height: min(100svh, 920px);
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-left: max(1rem, env(safe-area-inset-left, 0px));
+      padding-right: max(1rem, env(safe-area-inset-right, 0px));
       padding-bottom: 2rem;
       box-sizing: border-box;
     }
@@ -203,6 +203,12 @@ const GlobalStyles = () => (
 
     .glow-text {
       text-shadow: 0 0 20px rgba(189, 224, 254, 0.4);
+    }
+
+    @media (max-width: 767px) {
+      .glow-text {
+        text-shadow: 0 0 26px rgba(189, 224, 254, 0.55);
+      }
     }
   `}</style>
 );
@@ -520,7 +526,9 @@ const AnimatedText = ({
 }) => {
   const words = text.split(" ");
   return (
-    <motion.div className={`flex flex-wrap break-words ${className ?? ""}`}>
+    <motion.div
+      className={`flex max-w-full flex-wrap break-words [overflow-wrap:anywhere] max-md:gap-y-1 max-md:leading-relaxed ${className ?? ""}`}
+    >
       {words.map((word, i) => (
         <motion.span
           key={`${word}-${i}`}
@@ -532,7 +540,7 @@ const AnimatedText = ({
             ease: [0.16, 1, 0.3, 1],
           }}
           viewport={{ once: true, margin: "-100px" }}
-          className="mb-1 mr-3 max-w-full break-words rtl:mr-0 rtl:ml-3"
+          className="mb-1 mr-3 max-w-full break-words [word-break:normal] rtl:mr-0 rtl:ml-3"
         >
           {word}
         </motion.span>
@@ -596,7 +604,7 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
               ? { duration: 0 }
               : { duration: 8.5, repeat: Infinity, ease: "easeInOut" }
           }
-          className="group relative hidden w-full max-w-[min(35rem,88%)] overflow-hidden rounded-2xl border border-[#bde0fe]/[0.15] bg-[#0a0f18]/[0.44] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.16)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] md:block lg:max-w-[min(39rem,92%)] lg:p-5"
+          className="group relative block w-full max-w-full overflow-hidden rounded-2xl border border-[#bde0fe]/[0.15] bg-[#0a0f18]/[0.44] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.16)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] md:max-w-[min(35rem,88%)] lg:max-w-[min(39rem,92%)] lg:p-5"
         >
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.035)_38%,transparent_74%)]" />
           <HeroGlassCarousel t={t} />
@@ -681,7 +689,7 @@ const TiltCard = ({
         <h3 className="mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl">
           {title}
         </h3>
-        <p className="text-sm leading-relaxed text-[#adb5bd]">{desc}</p>
+        <p className="text-sm leading-relaxed text-[#c5ccd4] md:text-[#adb5bd]">{desc}</p>
       </div>
       <div className="absolute left-0 top-0 h-2 w-2 border-l border-t border-[#bde0fe] opacity-0 transition-opacity group-hover:opacity-100" />
       <div className="absolute bottom-0 right-0 h-2 w-2 border-b border-r border-[#bde0fe] opacity-0 transition-opacity group-hover:opacity-100" />
@@ -699,7 +707,7 @@ const HeroSection = ({
   return (
   <section
     id="hero"
-    className="relative flex min-h-[min(100svh,920px)] scroll-mt-24 items-center overflow-x-clip px-3 pb-10 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.5rem))] sm:px-6 sm:pb-14 sm:pt-28 md:min-h-screen md:px-16 md:pt-32 lg:px-24"
+    className="relative flex min-h-[min(100svh,920px)] scroll-mt-24 items-center overflow-x-clip px-4 pb-10 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.5rem))] sm:px-6 sm:pb-14 sm:pt-28 md:min-h-screen md:px-16 md:pt-32 lg:px-24"
   >
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
       <div className="absolute inset-0 bg-sigma-mesh opacity-[0.1] sm:opacity-[0.16] md:opacity-[0.2]" />
@@ -707,7 +715,7 @@ const HeroSection = ({
       <div className="absolute inset-0 sigma-hero-vignette opacity-[0.35] sm:opacity-[0.45] md:opacity-[0.55]" />
     </div>
     <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-16 lg:gap-y-10 xl:gap-x-24">
-      <div className="relative z-20 order-2 flex min-w-0 max-w-xl flex-col justify-center sm:order-1 lg:order-none lg:max-w-none lg:pe-4">
+      <div className="relative z-20 order-2 flex w-full min-w-0 max-w-full flex-col justify-center sm:order-1 md:max-w-xl lg:order-none lg:max-w-none lg:pe-4">
         <div
           className={`absolute -top-2 hidden h-[calc(100%+1rem)] w-px bg-gradient-to-b from-[#1c39bb]/50 via-[#1c39bb]/15 to-transparent lg:block ${isRtl ? "-right-3" : "-left-3"}`}
           aria-hidden
@@ -737,7 +745,7 @@ const HeroSection = ({
           </div>
 
           <h1
-            className={`sigma-hero-title mb-5 break-words text-[clamp(2.25rem,10.5vw,3.75rem)] font-semibold uppercase leading-[1.06] tracking-tight text-balance sm:mb-6 sm:text-6xl sm:leading-none md:text-8xl lg:mb-6 lg:text-[5.25rem] xl:text-[5.75rem] ${
+            className={`sigma-hero-title mb-5 max-w-full break-words text-[clamp(1.7rem,8.5vw,2.65rem)] font-semibold uppercase leading-[1.1] tracking-tight text-balance [overflow-wrap:anywhere] sm:mb-6 sm:text-6xl sm:leading-none md:text-8xl lg:mb-6 lg:text-[5.25rem] xl:text-[5.75rem] ${
               isRtl ? "text-white glow-text" : "sigma-hero-wordmark"
             }`}
           >
@@ -748,7 +756,7 @@ const HeroSection = ({
             {t.hero.subtitle}
           </p>
 
-          <p className="sigma-body-measure mb-8 text-sm leading-relaxed text-[#aeb5bd] text-pretty sm:mb-9 sm:text-[15px] sm:leading-[1.72]">
+          <p className="sigma-body-measure mb-8 text-sm leading-[1.75] text-[#d0d7df] text-pretty sm:mb-9 sm:text-[15px] sm:leading-[1.72] md:text-[#aeb5bd]">
             {t.hero.supporting}
           </p>
 
@@ -772,7 +780,7 @@ const HeroSection = ({
         </motion.div>
       </div>
 
-      <div className="relative z-10 order-1 min-h-0 w-full min-w-0 max-w-[min(100%,28rem)] justify-self-center sm:order-2 sm:max-w-none lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
+      <div className="relative z-10 order-1 min-h-0 w-full min-w-0 max-w-full justify-self-stretch sm:order-2 md:max-w-[min(100%,28rem)] md:justify-self-center lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
         <div className="relative min-h-[min(180px,30svh)] w-full sm:min-h-[min(260px,38vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
           <HeroVisual t={t} />
         </div>
@@ -797,14 +805,14 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
         <p className="sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
           {t.whatIsSigma.label}
         </p>
-        <h2 className="font-display text-2xl font-semibold uppercase leading-tight tracking-tight text-white text-balance sm:text-3xl md:text-4xl lg:max-w-4xl">
+        <h2 className="font-display text-xl font-semibold uppercase leading-snug tracking-tight text-white text-balance sm:text-3xl sm:leading-tight md:text-4xl lg:max-w-4xl">
           {t.whatIsSigma.headline}
         </h2>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base md:leading-relaxed">
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
           {t.whatIsSigma.description}
         </p>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {pillars.map((pillar, idx) => (
             <motion.div
               key={pillar.title}
@@ -817,7 +825,7 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
               <h3 className="font-display text-sm font-semibold uppercase tracking-[0.12em] text-[#e9ecef] md:text-[15px]">
                 {pillar.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-[#aeb5bd] md:text-[15px]">
+              <p className="mt-3 text-sm leading-relaxed text-[#c8d0d8] md:text-[15px] md:text-[#aeb5bd]">
                 {pillar.description}
               </p>
             </motion.div>
@@ -847,13 +855,13 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
         </p>
         <AnimatedText
           text={t.about.title}
-          className="justify-center font-display text-2xl font-semibold uppercase leading-[1.14] tracking-tight text-white sm:text-3xl sm:leading-[1.1] md:text-5xl lg:text-6xl"
+          className="justify-center font-display text-xl font-semibold uppercase leading-snug tracking-tight text-white max-md:leading-[1.28] sm:text-3xl sm:leading-[1.1] md:text-5xl lg:text-6xl"
         />
         <motion.p
           initial={{ opacity: 1 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.15, duration: 0.6 }}
-          className="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] sm:mt-10 sm:text-base md:text-lg"
+          className="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-[#cfd6de] sm:mt-10 sm:text-base md:text-lg md:text-[#b6bcc4]"
         >
           {t.about.description}
         </motion.p>
@@ -906,7 +914,7 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
           </h2>
           <AnimatedText
             text={t.services.headline}
-            className="font-display text-3xl font-semibold uppercase leading-tight tracking-tight text-balance sm:text-4xl md:text-5xl"
+            className="font-display text-2xl font-semibold uppercase leading-tight tracking-tight text-balance max-md:leading-snug sm:text-4xl md:text-5xl"
           />
         </div>
 
@@ -965,7 +973,7 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
             <h2 className="font-display text-2xl font-semibold tracking-tight text-white text-balance sm:text-3xl md:text-4xl lg:text-[2.5rem]">
               {t.sigmaPro.title}
             </h2>
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base md:leading-relaxed">
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
               {t.sigmaPro.description}
             </p>
             <ul className="mt-10 max-w-2xl space-y-5">
@@ -983,7 +991,7 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
                 </li>
               ))}
             </ul>
-            <p className="mt-10 max-w-2xl text-xs leading-relaxed text-[#868e96] md:text-[13px]">
+            <p className="mt-10 max-w-2xl text-xs leading-relaxed text-[#a0a8b2] md:text-[13px] md:text-[#868e96]">
               {t.sigmaPro.footnote}
             </p>
             <div className="mt-8 flex justify-center">
@@ -1053,14 +1061,14 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
           <h2 className="font-display text-2xl font-semibold uppercase tracking-tight text-balance text-white sm:text-3xl md:text-4xl">
             {sc.title}
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
             {sc.description}
           </p>
           <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-x-6 gap-y-2">
             <SectionDeepLink href={H.contact.href} label={H.contact.label} openInNewTab />
             <SectionDeepLink href={H.faq.href} label={H.faq.label} openInNewTab />
           </div>
-          <p className="mx-auto mt-6 max-w-2xl text-xs text-[#8f98a3] sm:text-sm">
+          <p className="mx-auto mt-6 max-w-2xl text-xs text-[#aeb6c1] sm:text-sm md:text-[#8f98a3]">
             {sc.reachUsPrefix}{" "}
             <a
               href={`mailto:${socialContactEmail}`}
@@ -1089,7 +1097,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
           </div>
         </div>
 
-        <div className="mx-auto mt-14 grid w-full max-w-7xl grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
+        <div className="mx-auto mt-14 grid w-full max-w-7xl grid-cols-1 gap-2.5 sm:gap-3 md:grid-cols-2 lg:grid-cols-4">
           {CONTACT_SOCIAL_ORDER.map((key) => {
             const Icon = SOCIAL_ICON_MAP[key];
             const href = socialLinks[key].trim();
@@ -1139,7 +1147,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
 const CTASection = ({ t }: { t: SiteTranslations }) => (
   <section
     id="connect"
-    className="relative z-10 flex min-h-[min(68dvh,560px)] scroll-mt-24 flex-col items-center justify-center bg-gradient-to-t from-[#0a0c12] to-transparent px-3 py-14 sm:min-h-[min(80dvh,720px)] sm:px-6 sm:py-16 md:min-h-screen md:scroll-mt-28"
+    className="relative z-10 flex min-h-[min(68dvh,560px)] scroll-mt-24 flex-col items-center justify-center bg-gradient-to-t from-[#0a0c12] to-transparent px-4 py-14 sm:min-h-[min(80dvh,720px)] sm:px-6 sm:py-16 md:min-h-screen md:scroll-mt-28"
   >
     <motion.div
       initial={{ opacity: 1, scale: 0.985 }}
@@ -1151,7 +1159,7 @@ const CTASection = ({ t }: { t: SiteTranslations }) => (
         {t.cta.title}
       </h2>
       <div className="mx-auto mt-4 h-1 w-0 bg-[#1c39bb] transition-all duration-700 ease-in-out group-hover:w-full" />
-      <p className="mt-6 break-words text-xs tracking-[0.22em] text-[#adb5bd] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm sm:tracking-[0.3em]">
+      <p className="mt-6 break-words text-xs tracking-[0.22em] text-[#c5ccd4] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm sm:tracking-[0.3em] md:text-[#adb5bd]">
         {t.cta.description}
       </p>
     </motion.div>

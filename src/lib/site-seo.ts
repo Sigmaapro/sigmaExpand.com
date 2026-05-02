@@ -1,3 +1,4 @@
-/** Shared copy for root + homepage metadata (single source of truth). */
-export const SITE_DEFAULT_DESCRIPTION =
-  "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.";
+import { SEO_PAGES } from "@/content/seo";
+
+/** Shared copy for root layout + homepage metadata (single source: `src/content/seo.ts`). */
+export const SITE_DEFAULT_DESCRIPTION = SEO_PAGES.home.description;

@@ -18,7 +18,8 @@ import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
 import { MidConversionCta, FinalConversionCta } from "@/components/sigma/ConversionSections";
 import { BookCallModal } from "@/components/sigma/BookCallModal";
 import { HeroGlassCarousel } from "@/components/sigma/HeroGlassCarousel";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
+import { motion, useReducedMotion } from "framer-motion";
 import * as THREE from "three";
 import {
   Shield,
@@ -45,6 +46,10 @@ import {
 } from "@/content/socials";
 import { InsightsOuterLink } from "@/components/site/InsightsOuterLink";
 import { LanguageSwitcherButton } from "@/components/site/LanguageSwitcherButton";
+import { SigmaMobileNavPanel } from "@/components/sigma/SigmaMobileNavPanel";
+import { pickLang } from "@/content/global/marketing/helpers";
+import { aboutPageMetaByLang } from "@/content/global/marketing/aboutContent";
+import { teamPageMetaByLang } from "@/content/global/marketing/teamContent";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
@@ -1356,7 +1361,7 @@ const Navbar = () => {
           if (e.target === e.currentTarget) scrollToTop();
         }}
       >
-        <div className="flex h-[72px] min-w-0 w-[min(100%,calc(100vw-0.75rem))] max-w-[1440px] shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-[#07090f]/70 px-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:w-[calc(100%-1.25rem)] sm:gap-3 sm:px-3.5 md:gap-4 md:px-5 lg:gap-5 lg:px-6">
+        <div className="relative flex h-[72px] min-w-0 w-[min(100%,calc(100vw-0.75rem))] max-w-[1440px] shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-[#07090f]/70 px-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:w-[calc(100%-1.25rem)] sm:gap-3 sm:px-3.5 md:gap-4 md:px-5 lg:gap-5 lg:px-6">
           <button
             type="button"
             onClick={() => scrollToTop()}
@@ -1370,6 +1375,16 @@ const Navbar = () => {
               SIGMA
             </span>
           </button>
+
+          <div className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center lg:hidden">
+            <div className="pointer-events-auto">
+              <LanguageSwitcherButton
+                currentLang={currentLang}
+                setLang={setCurrentLang}
+                ariaLabel={t.ui.navChrome.languageMenuAria}
+              />
+            </div>
+          </div>
 
           <div className="relative z-0 hidden min-h-0 min-w-0 flex-1 justify-center overflow-x-auto overflow-y-visible px-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:flex">
             <div
@@ -1452,11 +1467,13 @@ const Navbar = () => {
               {t.nav.navCta}
             </button>
 
-            <LanguageSwitcherButton
-              currentLang={currentLang}
-              setLang={setCurrentLang}
-              ariaLabel={t.ui.navChrome.languageMenuAria}
-            />
+            <div className="hidden shrink-0 lg:block">
+              <LanguageSwitcherButton
+                currentLang={currentLang}
+                setLang={setCurrentLang}
+                ariaLabel={t.ui.navChrome.languageMenuAria}
+              />
+            </div>
 
             <button
               type="button"
@@ -1477,87 +1494,22 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {mobileOpen ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[45] bg-black/70 backdrop-blur-md lg:hidden"
-            onClick={() => setMobileOpen(false)}
-          />
-        ) : null}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {mobileOpen ? (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-3 right-3 top-[calc(5rem+env(safe-area-inset-top,0px))] z-[55] max-h-[min(82dvh,calc(100dvh-5.25rem))] overflow-y-auto overscroll-contain rounded-2xl border border-white/[0.07] bg-[#0a0c12]/95 p-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_20px_64px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:left-4 sm:right-4 sm:p-4 lg:hidden"
-          >
-            <div className="flex flex-col gap-1">
-              {primaryNav.map(({ id, icon: Icon, label }) => {
-                const isPro = id === "sigmapro";
-                const active = glassActive === id;
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => goToSection(id)}
-                    className={`flex min-h-[3.25rem] touch-manipulation items-center justify-between gap-3 rounded-xl px-3 py-3.5 text-start transition-colors ${
-                      active
-                        ? "bg-[#1c39bb]/22 text-white"
-                        : isPro
-                          ? "border border-[#bde0fe]/10 bg-white/[0.04] text-[#d8dde3] hover:bg-white/[0.07]"
-                          : "text-[#c5ccd3] hover:bg-white/[0.04]"
-                    }`}
-                  >
-                    <span className="flex min-w-0 items-center gap-2.5">
-                      <Icon
-                        className={`size-[18px] shrink-0 ${isPro && !active ? "text-[#bde0fe]" : "opacity-90"}`}
-                        strokeWidth={2}
-                      />
-                      <span className="min-w-0 break-words font-display text-[13px] font-semibold uppercase tracking-[0.1em]">
-                        {label}
-                      </span>
-                    </span>
-                    <ArrowUpRight className="size-4 shrink-0 opacity-45" />
-                  </button>
-                );
-              })}
-            </div>
-            <InsightsOuterLink
-              onNavigate={() => setMobileOpen(false)}
-              className="mt-2 flex min-h-[3.25rem] touch-manipulation items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-3.5 text-start text-[#d8dde3] transition-colors hover:bg-white/[0.06]"
-            >
-              <span className="flex min-w-0 items-center gap-2.5">
-                <Newspaper
-                  className="size-[18px] shrink-0 text-[#bde0fe]"
-                  strokeWidth={2}
-                  aria-hidden
-                />
-                <span className="min-w-0 break-words font-display text-[13px] font-semibold uppercase tracking-[0.1em]">
-                  {t.nav.insights}
-                </span>
-              </span>
-              <ArrowUpRight className="size-4 shrink-0 opacity-45" />
-            </InsightsOuterLink>
-            <div className="mt-3 border-t border-white/[0.06] pt-3">
-              <button
-                type="button"
-                onClick={() => goToSection("connect")}
-                className="flex min-h-12 w-full touch-manipulation items-center justify-center rounded-lg bg-[#1c39bb] px-4 py-3.5 text-[13px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_8px_28px_rgba(28,57,187,0.3)] active:scale-[0.99]"
-              >
-                {t.nav.navCta}
-              </button>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      <SigmaMobileNavPanel
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        goToSection={goToSection}
+        glassActive={glassActive}
+        labels={{
+          about: t.nav.system,
+          capabilities: t.nav.capabilities,
+          network: t.nav.network,
+          sigmapro: t.nav.sigmaPro,
+          contact: t.nav.contact,
+        }}
+        aboutLabel={pickLang(aboutPageMetaByLang, currentLang).title}
+        teamLabel={pickLang(teamPageMetaByLang, currentLang).title}
+        workWithSigmaLabel={t.nav.navCta}
+      />
     </>
   );
 };
@@ -1579,6 +1531,8 @@ export default function SigmaLanding() {
         <div className="origin-top">
           <HeroSection t={t} isRtl={isRtl} />
         </div>
+
+        <CryptoMarketingSection />
 
         <WhatIsSigmaSection t={t} />
         <AboutSection t={t} />

@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
+import { FaqStructuredData } from "@/components/seo/FaqStructuredData";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { FaqPageView } from "@/components/site/marketing/FaqPageView";
-import { faqPageMetaByLang } from "@/content/global/marketing/faqContent";
+import { buildPageMetadata } from "@/content/seo";
 
-const m = faqPageMetaByLang.EN;
-
-export const metadata: Metadata = {
-  title: m.title,
-  description: m.description,
-};
+export const metadata: Metadata = buildPageMetadata("faq");
 
 export default function FaqPage() {
   return (
-    <InnerPageShell>
-      <FaqPageView />
-    </InnerPageShell>
+    <>
+      <FaqStructuredData />
+      <InnerPageShell>
+        <FaqPageView />
+      </InnerPageShell>
+    </>
   );
 }

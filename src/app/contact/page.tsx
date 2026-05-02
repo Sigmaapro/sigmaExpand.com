@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { ContactSubpageView } from "@/components/site/ContactSubpageView";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
-import { contactSubpageMetaByLang } from "@/content/global/marketing/contactSubpageContent";
+import { buildPageMetadata } from "@/content/seo";
 
-const m = contactSubpageMetaByLang.EN;
-
-export const metadata: Metadata = {
-  title: m.title,
-  description: m.description,
-};
+export const metadata: Metadata = buildPageMetadata("contact");
 
 export default function ContactPage() {
   return (

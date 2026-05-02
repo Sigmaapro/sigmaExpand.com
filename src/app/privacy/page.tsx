@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { PrivacyPageView } from "@/components/site/marketing/PrivacyPageView";
-import { privacyPageMetaByLang } from "@/content/global/marketing/privacyContent";
+import { buildPageMetadata } from "@/content/seo";
 
-const m = privacyPageMetaByLang.EN;
-
-export const metadata: Metadata = {
-  title: m.title,
-  description: m.description,
-};
+export const metadata: Metadata = buildPageMetadata("privacy");
 
 export default function PrivacyPage() {
   return (

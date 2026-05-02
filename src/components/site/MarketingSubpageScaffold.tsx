@@ -33,12 +33,12 @@ export function MarketingSubpageScaffold({ children }: Props) {
       >
         <div className="rounded-2xl border border-white/[0.09] bg-[#07090f]/75 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-10 md:p-12">
           <div className="mx-auto max-w-2xl text-center">
-            <p
+            <h2
               id="subpage-cta-heading"
               className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb]"
             >
               {c.title}
-            </p>
+            </h2>
             <p className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.12em] text-[#e9ecef] md:text-xl">
               {c.description}
             </p>

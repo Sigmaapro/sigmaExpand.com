@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { getAllInsightsPosts } from "@/content/insights";
 import { getSiteUrl } from "@/lib/site-url";
 
+const MARKET_REGIONS = ["uae", "turkey", "iran", "china", "global"] as const;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
   const posts = getAllInsightsPosts();
@@ -11,6 +13,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(p.publishDate),
     changeFrequency: "monthly" as const,
     priority: 0.75,
+  }));
+
+  const markets: MetadataRoute.Sitemap = MARKET_REGIONS.map((region) => ({
+    url: `${base}/markets/${region}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.55,
   }));
 
   return [
@@ -68,6 +77,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.35,
     },
+    ...markets,
     ...articles,
   ];
 }

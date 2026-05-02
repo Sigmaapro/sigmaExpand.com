@@ -3,6 +3,8 @@ import { Inter, Noto_Sans_Arabic, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ProductionAnalytics } from "@/components/ProductionAnalytics";
+import { GlobalStructuredData } from "@/components/seo/GlobalStructuredData";
+import { SEO_PAGES } from "@/content/seo";
 import { SITE_DEFAULT_DESCRIPTION } from "@/lib/site-seo";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -37,17 +39,13 @@ export const metadata: Metadata = {
   },
   description: SITE_DEFAULT_DESCRIPTION,
   applicationName: "Sigma",
-  keywords: [
-    "Sigma",
-    "Web3",
-    "crypto",
-    "growth",
-    "liquidity",
-    "exchange",
-    "protocol",
-    "distribution",
-    "market infrastructure",
-  ],
+  keywords: SEO_PAGES.home.keywords,
+  /** Default locale hint for crawlers (URLs are not localized per-path). */
+  alternates: {
+    languages: {
+      "x-default": "/",
+    },
+  },
   authors: [{ name: "Sigma", url: siteUrl }],
   creator: "Sigma",
   openGraph: {
@@ -94,6 +92,7 @@ export default function RootLayout({
       className={`min-h-screen bg-erie ${spaceGrotesk.variable} ${inter.variable} ${notoSansArabic.variable}`}
     >
       <body className="min-h-screen bg-erie font-body text-cadet antialiased">
+        <GlobalStructuredData />
         <Providers>{children}</Providers>
         <ProductionAnalytics />
       </body>

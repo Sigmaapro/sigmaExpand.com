@@ -9,8 +9,12 @@ import {
 import { ArticleBody } from "@/components/insights/ArticleBody";
 import { InsightHero } from "@/components/insights/InsightHero";
 import { RelatedPosts } from "@/components/insights/RelatedPosts";
+import {
+  ArticleStructuredData,
+  BreadcrumbInsightStructuredData,
+} from "@/components/seo/ArticleStructuredData";
+import { SEO_PAGES, getCanonicalUrl } from "@/content/seo";
 import { siteTranslations } from "@/content/siteTranslations";
-import { getSiteUrl } from "@/lib/site-url";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -22,18 +26,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getInsightBySlug(slug);
   if (!post) return { title: siteTranslations.EN.insights.pageTitle };
-  const base = getSiteUrl();
-  const canonical = `${base}/insights/${slug}`;
+  const canonical = getCanonicalUrl(`/insights/${slug}`);
   const og = post.ogImage ?? post.coverImage;
   return {
     title: { absolute: post.seoTitle },
     description: post.seoDescription,
+    keywords: [...SEO_PAGES.insights.keywords, post.category],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
     alternates: { canonical },
     authors: [{ name: post.author }],
     openGraph: {
       title: post.seoTitle,
       description: post.seoDescription,
       url: canonical,
+      locale: "en_US",
+      siteName: "Sigma",
       images: [{ url: og, width: 1200, height: 630, alt: post.title }],
       type: "article",
       publishedTime: post.publishDate,
@@ -56,7 +67,10 @@ export default async function InsightArticlePage({ params }: Props) {
   const related = getRelatedPosts(post, 3);
 
   return (
-    <article>
+    <>
+      <ArticleStructuredData post={post} />
+      <BreadcrumbInsightStructuredData post={post} />
+      <article>
       <InsightHero post={post} />
 
       <div className="mx-auto max-w-5xl px-3 pt-8 sm:px-6 sm:pt-10 lg:px-10">
@@ -79,5 +93,6 @@ export default async function InsightArticlePage({ params }: Props) {
 
       <RelatedPosts posts={related} />
     </article>
+    </>
   );
 }

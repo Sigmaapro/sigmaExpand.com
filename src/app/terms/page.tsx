@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { TermsPageView } from "@/components/site/TermsPageView";
-import { termsPageMetaByLang } from "@/content/global/termsPage";
+import { buildPageMetadata } from "@/content/seo";
 
-const m = termsPageMetaByLang.EN;
-
-export const metadata: Metadata = {
-  title: m.title,
-  description: m.description,
-};
+export const metadata: Metadata = buildPageMetadata("terms");
 
 export default function TermsPage() {
   return (

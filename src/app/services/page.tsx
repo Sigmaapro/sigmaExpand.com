@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
+import { ServicesStructuredData } from "@/components/seo/ServicesStructuredData";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { ServicesPageView } from "@/components/site/marketing/ServicesPageView";
-import { servicesPageMetaByLang } from "@/content/global/marketing/servicesContent";
+import { buildPageMetadata } from "@/content/seo";
 
-const m = servicesPageMetaByLang.EN;
-
-export const metadata: Metadata = {
-  title: m.title,
-  description: m.description,
-};
+export const metadata: Metadata = buildPageMetadata("services");
 
 export default function ServicesPage() {
   return (
-    <InnerPageShell>
-      <ServicesPageView />
-    </InnerPageShell>
+    <>
+      <ServicesStructuredData />
+      <InnerPageShell>
+        <ServicesPageView />
+      </InnerPageShell>
+    </>
   );
 }

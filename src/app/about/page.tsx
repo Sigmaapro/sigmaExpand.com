@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { AboutPageView } from "@/components/site/marketing/AboutPageView";
-import { aboutPageMetaByLang } from "@/content/global/marketing/aboutContent";
+import { buildPageMetadata } from "@/content/seo";
 
-const m = aboutPageMetaByLang.EN;
-
-export const metadata: Metadata = {
-  title: m.title,
-  description: m.description,
-};
+export const metadata: Metadata = buildPageMetadata("about");
 
 export default function AboutPage() {
   return (

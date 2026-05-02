@@ -1,9 +1,11 @@
 /**
  * Centralized SEO copy for Next.js Metadata API, sitemap parity, and JSON-LD.
- * Canonical URLs always derive from `NEXT_PUBLIC_SITE_URL` via `getSiteUrl()`.
+ * Canonical path segments use `alternates.canonical` relative to root `metadataBase`
+ * (`NEXT_PUBLIC_SITE_URL` → {@link getSiteUrl}); absolute URLs use {@link getCanonicalUrl}.
  */
 
 import type { Metadata } from "next";
+import { servicesPageMetaByLang } from "@/content/global/marketing/servicesContent";
 import { getSiteUrl } from "@/lib/site-url";
 
 /** Default OG/Twitter image — Next.js `opengraph-image` route (see `app/opengraph-image.tsx`). */
@@ -53,7 +55,7 @@ export function absoluteOgImage(path: string = DEFAULT_OG_IMAGE_PATH): string {
 export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   home: {
     path: "/",
-    title: "Sigma — Web3 Growth Infrastructure",
+    title: "Sigma | Web3 Growth, Liquidity & Crypto Exchange Marketing",
     description:
       "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
     keywords: [
@@ -65,10 +67,10 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
       "protocol distribution",
       "market infrastructure",
     ],
-    ogTitle: "Sigma — Web3 Growth Infrastructure",
+    ogTitle: "Sigma | Web3 Growth, Liquidity & Crypto Exchange Marketing",
     ogDescription:
       "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
-    twitterTitle: "Sigma — Web3 Growth Infrastructure",
+    twitterTitle: "Sigma | Web3 Growth, Liquidity & Crypto Marketing",
     twitterDescription:
       "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
   },
@@ -249,24 +251,148 @@ const ROBOTS: Metadata["robots"] = {
   googleBot: { index: true, follow: true },
 };
 
+/** hreflang pairs for English default URLs vs Arabic `/ar/*` marketing routes */
+export type MarketingHrefRoute = "home" | "services" | "insights";
+
+export function marketingHreflangLanguages(
+  route: MarketingHrefRoute,
+): NonNullable<Metadata["alternates"]>["languages"] {
+  const paths = {
+    home: { en: "/", ar: "/ar" },
+    services: { en: "/services", ar: "/ar/services" },
+    insights: { en: "/insights", ar: "/ar/insights" },
+  }[route];
+  return { "x-default": paths.en, en: paths.en, ar: paths.ar };
+}
+
+/** Arabic landing SEO — manual copy (not machine-translated). */
+export function buildArabicHomeMetadata(): Metadata {
+  const title =
+    "سيغما | نمو Web3 وسيولة وتسويق منصات العملات المشفرة";
+  const description =
+    "بنية تحتية استراتيجية للنمو لمنصات التداول والبروتوكولات ومنتجات Web3 — اكتساس، توزيع، وأنظمة سيولة.";
+  const canonicalAbsolute = getCanonicalUrl("/ar");
+  const ogAbs = absoluteOgImage();
+
+  return {
+    title: { absolute: title },
+    description,
+    keywords: SEO_PAGES.home.keywords,
+    alternates: {
+      canonical: "/ar",
+      languages: marketingHreflangLanguages("home"),
+    },
+    robots: ROBOTS,
+    openGraph: {
+      title,
+      description,
+      url: canonicalAbsolute,
+      siteName: "Sigma",
+      locale: "ar_SA",
+      type: "website",
+      images: [{ url: ogAbs, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogAbs],
+    },
+  };
+}
+
+export function buildArabicServicesMetadata(): Metadata {
+  const p = servicesPageMetaByLang.AR;
+  const canonicalAbsolute = getCanonicalUrl("/ar/services");
+  const ogAbs = absoluteOgImage();
+
+  return {
+    title: p.title,
+    description: p.description,
+    keywords: SEO_PAGES.services.keywords,
+    alternates: {
+      canonical: "/ar/services",
+      languages: marketingHreflangLanguages("services"),
+    },
+    robots: ROBOTS,
+    openGraph: {
+      title: p.title,
+      description: p.description,
+      url: canonicalAbsolute,
+      siteName: "Sigma",
+      locale: "ar_SA",
+      type: "website",
+      images: [{ url: ogAbs, width: 1200, height: 630, alt: p.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: p.title,
+      description: p.description,
+      images: [ogAbs],
+    },
+  };
+}
+
+export function buildArabicInsightsIndexMetadata(): Metadata {
+  const title =
+    "رؤى سيغما — نمو Web3 وتسويق العملات المشفرة";
+  const description =
+    "ذكاء السوق، تحليل التنفيذ، وأنظمة النمو لـ Web3 — من مكتب سيغما التحريري.";
+  const canonicalAbsolute = getCanonicalUrl("/ar/insights");
+  const ogAbs = absoluteOgImage();
+
+  return {
+    title,
+    description,
+    keywords: SEO_PAGES.insights.keywords,
+    alternates: {
+      canonical: "/ar/insights",
+      languages: marketingHreflangLanguages("insights"),
+    },
+    robots: ROBOTS,
+    openGraph: {
+      title: `${title} | Sigma`,
+      description,
+      url: canonicalAbsolute,
+      siteName: "Sigma",
+      locale: "ar_SA",
+      type: "website",
+      images: [{ url: ogAbs, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Sigma`,
+      description,
+      images: [ogAbs],
+    },
+  };
+}
+
 /**
  * Full Metadata for static routes defined in {@link SEO_PAGES}.
  * Home uses `title.absolute` so root template does not append `| Sigma` twice.
  */
 export function buildPageMetadata(key: SeoRouteKey, ogImagePath: string = DEFAULT_OG_IMAGE_PATH): Metadata {
   const p = SEO_PAGES[key];
-  const canonical = getCanonicalUrl(p.path);
+  const canonicalPath = p.path === "/" ? "/" : p.path;
+  const canonicalAbsolute = getCanonicalUrl(p.path);
   const ogAbs = absoluteOgImage(ogImagePath);
+
+  const hrefRoute: MarketingHrefRoute | undefined =
+    key === "home" ? "home" : key === "services" ? "services" : undefined;
 
   const base: Metadata = {
     description: p.description,
     keywords: p.keywords,
-    alternates: { canonical },
+    alternates: {
+      canonical: canonicalPath,
+      ...(hrefRoute ? { languages: marketingHreflangLanguages(hrefRoute) } : {}),
+    },
     robots: ROBOTS,
     openGraph: {
       title: p.ogTitle,
       description: p.ogDescription,
-      url: canonical,
+      url: canonicalAbsolute,
       siteName: "Sigma",
       locale: "en_US",
       type: "website",
@@ -306,18 +432,21 @@ export function buildInsightsIndexMetadata(
   title: string,
   description: string,
 ): Metadata {
-  const canonical = getCanonicalUrl("/insights");
+  const canonicalAbsolute = getCanonicalUrl("/insights");
   const ogAbs = absoluteOgImage();
   return {
     title,
     description,
     keywords: SEO_PAGES.insights.keywords,
-    alternates: { canonical },
+    alternates: {
+      canonical: "/insights",
+      languages: marketingHreflangLanguages("insights"),
+    },
     robots: ROBOTS,
     openGraph: {
       title: `${title} | Sigma`,
       description,
-      url: canonical,
+      url: canonicalAbsolute,
       siteName: "Sigma",
       locale: "en_US",
       type: "website",

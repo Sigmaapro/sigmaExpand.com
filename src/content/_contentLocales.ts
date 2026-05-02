@@ -2,7 +2,7 @@
 
 import type { LangCode } from "./types";
 
-export type ContentLocale = "en" | "fa" | "tr" | "zh" | "es" | "ru";
+export type ContentLocale = "en" | "fa" | "tr" | "zh" | "es" | "ru" | "ar";
 
 export type Localized<T> = Record<ContentLocale, T>;
 
@@ -13,6 +13,7 @@ export const CONTENT_LOCALES: ContentLocale[] = [
   "zh",
   "es",
   "ru",
+  "ar",
 ];
 
 const LANG_TO_LOCALE: Record<LangCode, ContentLocale> = {
@@ -22,6 +23,7 @@ const LANG_TO_LOCALE: Record<LangCode, ContentLocale> = {
   ZH: "zh",
   ES: "es",
   RU: "ru",
+  AR: "ar",
 };
 
 const LOCALE_TO_LANG: Record<ContentLocale, LangCode> = {
@@ -31,6 +33,7 @@ const LOCALE_TO_LANG: Record<ContentLocale, LangCode> = {
   zh: "ZH",
   es: "ES",
   ru: "RU",
+  ar: "AR",
 };
 
 export function localizeFromLangRecord<T>(byLang: Record<LangCode, T>): Localized<T> {
@@ -41,6 +44,7 @@ export function localizeFromLangRecord<T>(byLang: Record<LangCode, T>): Localize
     zh: byLang.ZH,
     es: byLang.ES,
     ru: byLang.RU,
+    ar: byLang.AR,
   };
 }
 
@@ -52,6 +56,7 @@ export function langRecordFromLocalized<T>(localized: Localized<T>): Record<Lang
     ZH: localized.zh,
     ES: localized.es,
     RU: localized.ru,
+    AR: localized.ar,
   };
 }
 

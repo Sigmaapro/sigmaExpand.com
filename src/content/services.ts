@@ -182,6 +182,37 @@ const RU: ServicesContent = {
   ],
 };
 
+const AR: ServicesContent = {
+  sectionLabel: "٠١ // الهيكل",
+  headline: "النظام البيئي الأساسي",
+  cards: [
+    {
+      title: "بروتوكولات السيولة",
+      description:
+        "محركات صناعة السوق الخوارزمية المصممة لتنفيذ الصفقات بانزلاق منخفض على مستوى المؤسسات.",
+      icon: "activity",
+    },
+    {
+      title: "أمان الشبكة",
+      description:
+        "آليات توافق تشفيرية مصممة لمواجهة نماذج الهجوم المتقدمة.",
+      icon: "shield",
+    },
+    {
+      title: "بنية العقد",
+      description:
+        "شبكات موزعة عالمياً لضمان وقت تشغيل مستقر.",
+      icon: "cpu",
+    },
+    {
+      title: "العقود الذكية",
+      description:
+        "تحقق صوري وتدقيق صارم للأدوات المالية المعقدة.",
+      icon: "code2",
+    },
+  ],
+};
+
 export const servicesByLang: Record<LangCode, ServicesContent> = {
   EN,
   TR,
@@ -189,4 +220,5 @@ export const servicesByLang: Record<LangCode, ServicesContent> = {
   FA,
   ES,
   RU,
+  AR,
 };

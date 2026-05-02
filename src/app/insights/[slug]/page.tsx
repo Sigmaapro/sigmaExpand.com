@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getInsightBySlug(slug);
   if (!post) return { title: siteTranslations.EN.insights.pageTitle };
-  const canonical = getCanonicalUrl(`/insights/${slug}`);
+  const canonicalAbsolute = getCanonicalUrl(`/insights/${slug}`);
   const og = post.ogImage ?? post.coverImage;
   return {
     title: { absolute: post.seoTitle },
@@ -37,12 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
       googleBot: { index: true, follow: true },
     },
-    alternates: { canonical },
+    alternates: { canonical: `/insights/${slug}` },
     authors: [{ name: post.author }],
     openGraph: {
       title: post.seoTitle,
       description: post.seoDescription,
-      url: canonical,
+      url: canonicalAbsolute,
       locale: "en_US",
       siteName: "Sigma",
       images: [{ url: og, width: 1200, height: 630, alt: post.title }],

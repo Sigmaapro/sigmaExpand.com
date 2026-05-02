@@ -54,6 +54,11 @@ const EXTRA_LABELS_BY_LANG: Record<LangCode, ExtraLabels> = {
     contact: "Страница контактов",
     faq: "FAQ",
   },
+  AR: {
+    heroInsights: "عرض الرؤى",
+    contact: "صفحة اتصل بنا",
+    faq: "الأسئلة الشائعة",
+  },
 };
 
 /** Contextual deep links on the homepage — hrefs resolved here; “Learn more” from `t.ui.learnMore`. */

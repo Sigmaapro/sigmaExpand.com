@@ -1,16 +1,17 @@
 import { SEO_PAGES } from "@/content/seo";
-import { getSiteUrl } from "@/lib/site-url";
+import { PRODUCTION_SITE_ORIGIN } from "@/lib/site-url";
 
 /** Organization + WebSite JSON-LD for every page (injected from root layout). */
 export function GlobalStructuredData() {
-  const base = getSiteUrl().replace(/\/$/, "");
+  /** Stable publisher URLs for rich results — never deployment preview hosts. */
+  const base = PRODUCTION_SITE_ORIGIN.replace(/\/$/, "");
   const org = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${base}/#organization`,
     name: "Sigma",
     url: base,
-    logo: `${base}/icon.svg`,
+    logo: `${base}/logo.png`,
     description: SEO_PAGES.home.description,
   };
   const website = {
@@ -21,7 +22,7 @@ export function GlobalStructuredData() {
     url: base,
     description: SEO_PAGES.home.description,
     publisher: { "@id": `${base}/#organization` },
-    inLanguage: ["en", "fa", "tr", "zh", "es", "ru"],
+    inLanguage: ["en", "ar", "fa", "tr", "zh", "es", "ru"],
   };
 
   const graph = {

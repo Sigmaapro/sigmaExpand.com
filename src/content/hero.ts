@@ -90,6 +90,21 @@ const RU: HeroContent = {
   scrollHint: "Прокрутка",
 };
 
+const AR: HeroContent = {
+  eyebrow: "بنية تحتية للنمو في Web3",
+  title: "SIGMA",
+  subtitle: "صُممت لتحريك المستخدمين والسيولة والأسواق.",
+  supporting:
+    "محرك قائم على البيانات لاكتساب المستخدمين وتنشيط الشبكة وتوسعة السوق بشكل قابل للتوسع.",
+  primaryCta: "ابدأ التوسّع",
+  secondaryCta: "استكشف النظام",
+  primaryHref: "#connect",
+  secondaryHref: "#capabilities",
+  logoSrc:
+    "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
+  scrollHint: "مرر للأسفل",
+};
+
 /** Hero — swap for CMS `fetch` later; keys mirror a typical headless hero document */
 export const heroByLang: Record<LangCode, HeroContent> = {
   EN,
@@ -98,4 +113,5 @@ export const heroByLang: Record<LangCode, HeroContent> = {
   FA,
   ES,
   RU,
+  AR,
 };

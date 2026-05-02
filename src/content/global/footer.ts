@@ -211,6 +211,62 @@ const FOOTER_FA: GlobalFooterContent = {
   landmarkSocial: "شبکه‌های اجتماعی",
 };
 
+const FOOTER_AR: GlobalFooterContent = {
+  brandTagline:
+    "بنية تحتية للنمو في Web3 للمستخدمين والسيولة وتوسعة السوق.",
+  trustLine: "مُصمَّمة لفرق النمو ومنصات التداول وشبكات Web3.",
+  contactIntro: "للشراكات واستفسارات النمو",
+  email: contactEmail,
+  columnPlatform: {
+    title: "المنصة",
+    links: [
+      { label: "النظام", href: A.system },
+      { label: "القدرات", href: A.capabilities },
+      { label: "الشبكة", href: A.network },
+      { label: "سيغما برو", href: A.sigmaPro },
+      { label: "الرؤى", href: ROUTES.insights },
+    ],
+  },
+  columnCompany: {
+    title: "الشركة",
+    links: [
+      { label: "من نحن", href: ROUTES.about },
+      { label: "الخدمات", href: ROUTES.services },
+      { label: "الفريق", href: ROUTES.team },
+      { label: "اتصل", href: ROUTES.contact },
+      { label: "الأسئلة الشائعة", href: ROUTES.faq },
+    ],
+  },
+  columnResources: {
+    title: "المصادر",
+    links: [
+      { label: "البحث / الرؤى", href: ROUTES.insights },
+      { label: "دراسات حالة", href: ROUTES.insights },
+      { label: "الخصوصية", href: ROUTES.privacy },
+      { label: "الشروط", href: ROUTES.terms },
+      { label: "احجز مكالمة", href: ROUTES.contact },
+    ],
+  },
+  socialColumnTitle: "وسائل التواصل",
+  socialLabels: {
+    x: "X",
+    instagram: "إنستغرام",
+    telegram: "تيليغرام",
+    linkedin: "لينكدإن",
+    youtube: "يوتيوب",
+    whatsapp: "واتساب",
+    discord: "ديسكورد",
+    tiktok: "تيك توك",
+  },
+  bottomCopyright: "© 2026 سيغما. جميع الحقوق محفوظة.",
+  privacy: { label: "الخصوصية", href: ROUTES.privacy },
+  terms: { label: "الشروط", href: ROUTES.terms },
+  statusLabel: "حالة النظام",
+  statusValue: "يعمل",
+  landmarkNav: "تذييل التنقل",
+  landmarkSocial: "وسائل التواصل",
+};
+
 const FOOTER_ZH: GlobalFooterContent = {
   brandTagline: "面向用户、流动性与市场扩张的 Web3 增长基础设施。",
   trustLine: "为增长团队、交易所与 Web3 网络而打造。",
@@ -382,6 +438,7 @@ export const globalFooterByLang: Record<LangCode, GlobalFooterContent> = {
   EN: FOOTER_EN,
   TR: FOOTER_TR,
   FA: FOOTER_FA,
+  AR: FOOTER_AR,
   ZH: FOOTER_ZH,
   ES: FOOTER_ES,
   RU: FOOTER_RU,

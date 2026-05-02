@@ -42,6 +42,13 @@ const RU: HeroCarouselContent = {
   paginationDotLabels: ["Инсайты", "Ключевая экосистема", "В цифрах"],
 };
 
+const AR: HeroCarouselContent = {
+  carouselAriaLabel: "مقتطفات مميزة",
+  ecosystemCtaLabel: "عرض القدرات",
+  proofCtaLabel: "عرض الشبكة",
+  paginationDotLabels: ["رؤى", "النظام الأساسي", "أدلة بالأرقام"],
+};
+
 export const heroCarouselByLang: Record<LangCode, HeroCarouselContent> = {
   EN,
   FA,
@@ -49,4 +56,5 @@ export const heroCarouselByLang: Record<LangCode, HeroCarouselContent> = {
   ZH,
   ES,
   RU,
+  AR,
 };

@@ -28,4 +28,8 @@ export const contactSectionContent = localizeFromLangRecord({
     contact: siteRestByLang.RU.contact,
     stayConnected: siteRestByLang.RU.stayConnected,
   },
+  AR: {
+    contact: siteRestByLang.AR.contact,
+    stayConnected: siteRestByLang.AR.stayConnected,
+  },
 });

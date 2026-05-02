@@ -51,6 +51,11 @@ export const contactSubpageMetaByLang: Record<LangCode, PageMeta> = {
     description:
       "Запишитесь на стратегический звонок или напишите Sigma: ликвидность, дистрибуция и техническое исполнение.",
   },
+  AR: {
+    title: "اتصل",
+    description:
+      "احجز مكالمة استراتيجية أو أرسل رسالة إلى سيغما: سيولة، توزيع، وتنفيذ تقني لمنصات التداول والبروتوكولات.",
+  },
 };
 
 export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> = {
@@ -203,5 +208,30 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
       sendError: "Что-то пошло не так. Повторите или напишите напрямую.",
     },
     social: { title: "Связь" },
+  },
+  AR: {
+    kicker: "ابدأ محادثة",
+    headline: "لنبني ما هو قادم",
+    intro:
+      "صف خارطة طريقك والقيود. للاستكشاف المنظّم احجز مكالمة — نأتي بمعايير مقارنة وخيارات ذات صلة.",
+    bookCall: {
+      title: "احجز مكالمة استراتيجية",
+      subtitle:
+        "احجز وقتاً مع الفريق. إذا كان Calendly مفعّلاً ستظهر المواعيد؛ وإلا نتابع عبر البريد.",
+      cta: "احجز مكالمة",
+    },
+    form: {
+      title: "أرسل رسالة",
+      nameLabel: "الاسم",
+      emailLabel: "البريد الإلكتروني",
+      messageLabel: "كيف يمكننا المساعدة؟",
+      submit: "إرسال",
+      sending: "جاري الإرسال…",
+      success: "شكراً — وصلت رسالتك. سنرد قريباً.",
+      validationError: "يرجى إدخال البريد ورسالة.",
+      invalidEmailError: "أدخل بريداً صالحاً.",
+      sendError: "حدث خطأ. أعد المحاولة أو راسلنا مباشرة.",
+    },
+    social: { title: "تواصل" },
   },
 };

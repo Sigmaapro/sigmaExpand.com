@@ -43,4 +43,10 @@ export const homePageContent = localizeFromLangRecord({
     services: servicesByLang.RU,
     heroCarousel: heroCarouselByLang.RU,
   },
+  AR: {
+    ...siteRestByLang.AR,
+    hero: heroByLang.AR,
+    services: servicesByLang.AR,
+    heroCarousel: heroCarouselByLang.AR,
+  },
 });

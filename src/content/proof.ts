@@ -518,6 +518,79 @@ const RU: ProofContent = {
   ],
 };
 
+const AR: ProofContent = {
+  trustedBy: {
+    sectionLabel: "يثقون بنا",
+    headline: "نُبنى جنباً إلى جنب مع فرق تشكّل مستقبل Web3",
+  },
+  proofInNumbers: {
+    sectionLabel: "أدلة بالأرقام",
+    headline: "تنفيذ يحرك المستخدمين والحجم والوصول",
+  },
+  partnerFeedback: {
+    sectionLabel: "آراء الشركاء",
+    headline: "ماذا يقول الشركاء عن العمل مع سيغما",
+  },
+  metrics: [
+    {
+      id: "volume",
+      value: "$12B+",
+      label: "حجم التداول الاسمي",
+      note: "تراكمي عبر المنصات المدعومة",
+    },
+    {
+      id: "users",
+      value: "2.4M",
+      label: "مستخدمون تم تنشيطهم",
+      note: "مجموعات موثّقة عبر المحفظة",
+    },
+    {
+      id: "reach",
+      value: "190+",
+      label: "نطاق الشبكة",
+      note: "أسطح الشركاء والمجتمع",
+    },
+    {
+      id: "partners",
+      value: "85",
+      label: "شركاء استراتيجيون",
+      note: "علاقات توزيع نشطة",
+    },
+    {
+      id: "markets",
+      value: "40",
+      label: "أسواق مغطاة",
+      note: "مناطق بتنفيذ مباشر",
+    },
+  ],
+  testimonials: [
+    {
+      id: "t1",
+      quote:
+        "سيغما لا تطلق حملات صورية. تربط الاكتساب بنقاط تحقق السيولة وتحافظ على انضباط التقارير حتى يمكن لمكتب التداول التصرّف.",
+      name: "Elena Marchetti",
+      role: "رئيسة النمو",
+      company: "Global CEX desk",
+    },
+    {
+      id: "t2",
+      quote:
+        "أخيراً صار لدينا إيقاع تشغيل واحد بين المؤثرين ومراحل المنتج وأحداث السوق. انخفاض تكلفة التنسيق وحده كان ملموساً.",
+      name: "James Okonkwo",
+      role: "نائب رئيس المنظومة",
+      company: "Layer-1 foundation",
+    },
+    {
+      id: "t3",
+      quote:
+        "فريقهم يتحدث بلغة التنفيذ: عروض أقل، أساليب تشغيل أكثر، وبيانات تشغيل تغيّر أسبوعياتنا فعلياً.",
+      name: "Sarah Chen",
+      role: "مديرة التسويق",
+      company: "DeFi protocol",
+    },
+  ],
+};
+
 export const proofByLang: Record<LangCode, ProofContent> = {
   EN,
   FA,
@@ -525,4 +598,5 @@ export const proofByLang: Record<LangCode, ProofContent> = {
   ZH,
   ES,
   RU,
+  AR,
 };

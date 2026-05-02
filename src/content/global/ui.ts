@@ -10,4 +10,5 @@ export const uiContent = localizeFromLangRecord({
   ZH: siteRestByLang.ZH.ui,
   ES: siteRestByLang.ES.ui,
   RU: siteRestByLang.RU.ui,
+  AR: siteRestByLang.AR.ui,
 });

@@ -29,21 +29,24 @@ const notoSansArabic = Noto_Sans_Arabic({
   display: "swap",
 });
 
+/** Resolved from `NEXT_PUBLIC_SITE_URL` when safe; never preview `*.vercel.app` deployment hosts. */
 const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Sigma — Web3 Growth Infrastructure",
+    default: "Sigma | Web3 Growth, Liquidity & Crypto Exchange Marketing",
     template: "%s | Sigma",
   },
   description: SITE_DEFAULT_DESCRIPTION,
   applicationName: "Sigma",
   keywords: SEO_PAGES.home.keywords,
-  /** Default locale hint for crawlers (URLs are not localized per-path). */
+  /** Default locale hint for crawlers (URLs are not localized per-path). Per-path canonicals live on each route’s metadata. */
   alternates: {
     languages: {
       "x-default": "/",
+      en: "/",
+      ar: "/ar",
     },
   },
   authors: [{ name: "Sigma", url: siteUrl }],
@@ -53,12 +56,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "Sigma",
-    title: "Sigma — Web3 Growth Infrastructure",
+    title: "Sigma | Web3 Growth, Liquidity & Crypto Exchange Marketing",
     description: SITE_DEFAULT_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sigma — Web3 Growth Infrastructure",
+    title: "Sigma | Web3 Growth, Liquidity & Crypto Marketing",
     description: SITE_DEFAULT_DESCRIPTION,
   },
   robots: {

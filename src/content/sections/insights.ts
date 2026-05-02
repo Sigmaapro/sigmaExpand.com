@@ -10,4 +10,5 @@ export const insightsSectionContent = localizeFromLangRecord({
   ZH: siteRestByLang.ZH.insights,
   ES: siteRestByLang.ES.insights,
   RU: siteRestByLang.RU.insights,
+  AR: siteRestByLang.AR.insights,
 });

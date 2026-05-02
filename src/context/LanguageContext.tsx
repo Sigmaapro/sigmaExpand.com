@@ -25,7 +25,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 const STORAGE_KEY = "sigma-lang";
 
-const LANG_CODES: LangCode[] = ["EN", "TR", "ZH", "FA", "ES", "RU"];
+const LANG_CODES: LangCode[] = ["EN", "TR", "ZH", "FA", "ES", "RU", "AR"];
 
 const HTML_LANG_BY_CODE: Record<LangCode, string> = {
   EN: "en",
@@ -34,6 +34,7 @@ const HTML_LANG_BY_CODE: Record<LangCode, string> = {
   FA: "fa",
   ES: "es",
   RU: "ru",
+  AR: "ar",
 };
 
 function isLangCode(value: string): value is LangCode {
@@ -67,18 +68,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     lang,
     setLang,
     t: siteTranslations[lang],
-    isRtl: lang === "FA",
+    isRtl: lang === "FA" || lang === "AR",
   };
 
   useEffect(() => {
     document.documentElement.dir = value.isRtl ? "rtl" : "ltr";
     document.documentElement.lang = HTML_LANG_BY_CODE[lang];
   }, [value.isRtl, lang]);
-
-  useEffect(() => {
-    // Debug trace for verifying instant i18n reactivity.
-    console.debug("[i18n] language changed", lang);
-  }, [lang]);
 
   return (
     <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>

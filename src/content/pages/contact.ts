@@ -10,4 +10,5 @@ export const contactPageContent = localizeFromLangRecord({
   ZH: siteRestByLang.ZH.contactHub,
   ES: siteRestByLang.ES.contactHub,
   RU: siteRestByLang.RU.contactHub,
+  AR: siteRestByLang.AR.contactHub,
 });

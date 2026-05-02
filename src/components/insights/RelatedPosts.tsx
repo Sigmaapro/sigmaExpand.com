@@ -13,6 +13,7 @@ const DATE_LOCALE: Record<LangCode, string> = {
   FA: "fa-IR",
   ES: "es-ES",
   RU: "ru-RU",
+  AR: "ar-SA",
 };
 
 function formatDate(iso: string, lang: LangCode) {

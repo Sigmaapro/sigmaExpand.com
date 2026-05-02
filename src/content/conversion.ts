@@ -204,6 +204,44 @@ const faBundle: ConversionBundle = {
   },
 };
 
+const arBundle: ConversionBundle = {
+  mid: {
+    label: "جاهزون للتوسّع",
+    headline: "ابدأ التوسّع مع سيغما",
+    supporting:
+      "استخدم نظام نمو منظمًا مصمماً لتنفيذ Web3 — من سطح الاكتساس إلى نقاط السيولة.",
+    primaryLabel: "احصل على وصول",
+    primaryHref: "#connect",
+  },
+  final: {
+    headline: "ابنِ نموًا يتحول فعلياً",
+    supporting:
+      "من جذب المستخدمين إلى السيولة، تربط سيغما النظام بالكامل. قدّم الإحاطة وسنرسم أقصر مسار لنتائج قابلة للقياس.",
+    primaryLabel: "اعمل مع سيغما",
+    primaryHref: "#contact",
+    secondaryLabel: "احجز مكالمة",
+  },
+  bookCall: {
+    title: "احجز مكالمة",
+    subtitle:
+      "شاركنا بياناتك — نؤكد الموعد أو نرد خلال يوم عمل واحد.",
+    nameLabel: "الاسم",
+    emailLabel: "البريد الإلكتروني",
+    messageLabel: "رسالة (اختياري)",
+    submitLabel: "إرسال الطلب",
+    sendingLabel: "جاري الإرسال…",
+    successTitle: "تم استلام الطلب",
+    successBody: "شكراً لك. سيتواصل معك أحد أعضاء الفريق قريباً.",
+    closeLabel: "إغلاق",
+    calendlyHint: "اختر وقتاً يناسب جدولك.",
+    backdropCloseAria: "إغلاق الحوار",
+    calendlyIframeTitle: "جدولة عبر Calendly",
+    submitError: "تعذّر إرسال الطلب. حاول مجدداً أو راسلنا عبر البريد.",
+    invalidEmailError: "يرجى إدخال بريد إلكتروني صالح.",
+    unavailableError: "الطلبات غير متاحة مؤقتاً. حاول لاحقاً.",
+  },
+};
+
 const esBundle: ConversionBundle = {
   mid: {
     label: "LISTO PARA ESCALAR",
@@ -285,6 +323,7 @@ export const conversionByLang: Record<LangCode, ConversionBundle> = {
   TR: trBundle,
   ZH: zhBundle,
   FA: faBundle,
+  AR: arBundle,
   ES: esBundle,
   RU: ruBundle,
 };

@@ -38,6 +38,10 @@ export const termsPageMetaByLang: Record<LangCode, TermsPageMeta> = {
     title: "Условия",
     description: "Условия использования маркетингового сайта и контактных каналов Sigma.",
   },
+  AR: {
+    title: "الشروط",
+    description: "شروط استخدام موقع سيغما التسويقي وقنوات التواصل.",
+  },
 };
 
 export const termsPageContentByLang: Record<LangCode, TermsPageContent> = {
@@ -206,6 +210,34 @@ export const termsPageContentByLang: Record<LangCode, TermsPageContent> = {
       {
         title: "Изменения",
         body: "Условия могут обновляться; продолжение использования означает согласие.",
+      },
+    ],
+  },
+  AR: {
+    kicker: "قانوني",
+    headline: "شروط الاستخدام",
+    updatedLabel: "آخر تحديث",
+    updatedDate: "مايو 2026",
+    sections: [
+      {
+        title: "الموافقة",
+        body: "باستخدام الموقع فإنك توافق على هذه الشروط. إذا لم توافق، لا تستخدم الموقع.",
+      },
+      {
+        title: "ليس استثماراً أو نصيحة قانونية",
+        body: "المحتوى معلوماتي ولا يُعدّ استشارة مالية أو قانونية.",
+      },
+      {
+        title: "الاتصال",
+        body: "قد تُستخدم البيانات المرسلة عبر النماذج للرد وتحسين الخدمة.",
+      },
+      {
+        title: "حدود المسؤولية",
+        body: "إلى أقصى ما يسمح به القانون، تُستثنى المسؤولية عن الأضرار غير المباشرة.",
+      },
+      {
+        title: "التغييرات",
+        body: "قد نحدّث الشروط؛ استمرار الاستخدام يعني الموافقة.",
       },
     ],
   },

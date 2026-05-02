@@ -104,6 +104,23 @@ const livePanelRU = {
   sendError: "Не удалось начать чат поддержки. Попробуйте снова.",
 } as const;
 
+const livePanelAR = {
+  panelTitle: "دعم مباشر",
+  panelSubtitle: "تحدث مع دعم سيغما",
+  panelAriaLabel: "لوحة الدعم المباشر",
+  closeAria: "إغلاق لوحة الدعم",
+  namePlaceholder: "الاسم (اختياري)",
+  emailPlaceholder: "البريد الإلكتروني",
+  messagePlaceholder: "كيف يمكن لدعم سيغما مساعدتك؟",
+  submit: "بدء المحادثة",
+  submitSending: "جاري الإرسال…",
+  successBody: "تم إرسال الرسالة. سيتواصل الفريق قريباً.",
+  footerNote: "سنرد في أقرب وقت.",
+  validationError: "يرجى إدخال البريد والرسالة.",
+  invalidEmailError: "يرجى إدخال بريد إلكتروني صالح.",
+  sendError: "تعذّر بدء محادثة الدعم. حاول مجدداً.",
+} as const;
+
 export const siteRestByLang: Record<LangCode, SiteRest> = {
   EN: {
     nav: {
@@ -1145,6 +1162,180 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     trustedBy: {
       sectionLabel: "مورد اعتماد",
+      logos: [],
+    },
+    testimonials: [],
+  },
+  AR: {
+    nav: {
+      system: "النظام",
+      capabilities: "القدرات",
+      network: "الشبكة",
+      metrics: "المؤشرات",
+      sigmaPro: "Sigma Pro",
+      contact: "اتصل",
+      navCta: "احصل على وصول",
+      insights: "الرؤى",
+      insightsAccessLabel: "الوصول",
+    },
+    insights: {
+      pageTitle: "رؤى سيغما",
+      pageSubtitle:
+        "ذكاء السوق، تحليل التنفيذ، وأنظمة النمو لـ Web3.",
+      pageEyebrow: "الرؤى",
+      filterAllLabel: "الكل",
+      readLabel: "اقرأ الرؤية",
+      relatedHeading: "رؤى ذات صلة",
+      backToInsights: "الرؤى",
+      sigmaHome: "سيغما",
+      chromeNavAriaLabel: "تنقل الرؤى",
+      categoryTablistAriaLabel: "الفئات",
+      featuredLabel: "مختار",
+      emptyState: "لا توجد مواد في هذا العرض.",
+      insightBadge: "رؤية سيغما",
+      insightAriaLabel: "رؤية سيغما",
+      articleCtaMidHeading: "هل تحتاج بنية تحتية للنمو وليس تسويقاً فقط؟",
+      articleCtaMidSupporting:
+        "أنظمة تنفيذ للاكتساس والسيولة والوصول للسوق.",
+      articleCtaMidButton: "احصل على وصول",
+      articleCtaEndHeading: "اعمل مع سيغما",
+      articleCtaEndSupporting:
+        "اربط المستخدمين والسيولة وتوزيع الشبكة في نظام استراتيجي واحد.",
+      articleCtaEndButton: "اعمل مع سيغما",
+      categories: {
+        growth: "النمو",
+        distribution: "التوزيع",
+        liquidity: "السيولة",
+      },
+    },
+    whatIsSigma: {
+      label: "ما هي سيغما",
+      headline: "محرك نمو استراتيجي لـ Web3",
+      description:
+        "تربط سيغما السيولة والمستخدمين والتوزيع في نظام واحد قابل للتوسّع.",
+      pillars: [
+        {
+          title: "اكتساس المستخدمين",
+          description: "من الصفر إلى متداولين ذوي نية عالية عبر مسارات دقيقة.",
+        },
+        {
+          title: "تنشيط السيولة",
+          description: "تحويل الزيارات إلى حجم حقيقي ونشاط مستدام.",
+        },
+        {
+          title: "توسيع الشبكة",
+          description: "التوسّع عبر المؤثرين والمجتمعات والشراكات الاستراتيجية.",
+        },
+      ],
+    },
+    about: {
+      kicker: "من نحن",
+      title: "لا نتأقلم مع المستقبل. نصنعه.",
+      description:
+        "تعمل سيغما عند تقاطع التمويل عالي التردد والتشفير بمستوى المؤسسات والشبكات الموزعة المتقدمة. الدقة ليست خياراً — إنها البروتوكول.",
+    },
+    metrics: {
+      kicker: "الشبكة",
+      title:
+        "توجيه عالمي، عمق سيولة، وبيانات تشغيل — مصممة للمقياس.",
+      stats: [
+        { label: "إجمالي القيمة المقفلة", target: 50, suffix: "B+" },
+        { label: "العقد النشطة", target: 14, suffix: "K+" },
+        { label: "زمن انتظار الشبكة", target: 12, suffix: "ms" },
+      ],
+    },
+    network: {
+      kicker: "الشبكة",
+      title: "بيان مجتمعي",
+      body: "تنسَّق العقد عبر حوافز مشتركة. ترسم سيغما الشبكة — الحواف هي الثقة والسعة وحالة يمكن التحقق منها.",
+    },
+    sigmaPro: {
+      badge: "VIP · وصول نخبوي",
+      title: "SigmaPRO",
+      description:
+        "سعة مخصصة، توجيه أسبقية، وعمليات نمو مخصصة للفرق عالية الحجم.",
+      bullets: [
+        "مكتب نمو مخصص مع خطط تنفيذ واتفاقيات مستوى الخدمة",
+        "توجيه أسبقية عبر مسارات السيولة والتوزيع",
+        "بيانات تشغيل سرية، تقارير مخصصة، وتصعيد مباشر",
+      ],
+      footnote: "الوصول محدود ويُمنح بعد الأهلية.",
+    },
+    contact: {
+      kicker: "اتصل",
+      title: "تواصل مع سيغما",
+      description:
+        "للشراكات والإعلام والاستفسارات المؤسسية — راسل الفريق أو افتح قائمة القنوات الكاملة.",
+      emailCta: "البريد",
+      socialCta: "القنوات والشبكات",
+      fallbackMailto: "mailto:hello@sigma.io",
+    },
+    stayConnected: {
+      kicker: "اتصل",
+      title: "ابقَ على تواصل مع سيغما",
+      description:
+        "تابع سيغما في القنوات الاستراتيجية: تحديثات الشبكة، ذكاء السوق، وتواصل مباشر مع فريق البنية التحتية للنمو.",
+      reachUsPrefix: "تواصل معنا:",
+      socialLabels: {
+        x: "X",
+        instagram: "Instagram",
+        telegram: "Telegram",
+        linkedin: "LinkedIn",
+        youtube: "YouTube",
+        whatsapp: "WhatsApp",
+        discord: "Discord",
+        tiktok: "TikTok",
+      },
+    },
+    contactHub: {
+      pageEyebrow: "SIGMA",
+      title: "تواصل",
+      subtitle:
+        "قنوات رسمية، حسابات اجتماعية، واتصال مباشر — كصفحة روابط موحّدة.",
+      backHome: "العودة إلى سيغما",
+      empty:
+        "لم يتم ضبط الروابط بعد. عيّن متغيرات NEXT_PUBLIC_SOCIAL_* في البيئة (راجع .env.example).",
+      labels: {
+        instagram: "إنستغرام",
+        x: "X",
+        linkedin: "لينكدإن",
+        telegram: "تيليغرام",
+        discord: "ديسكورد",
+        email: "البريد",
+        website: "الموقع",
+      },
+      footerLine: "© 2026 SIGMA",
+    },
+    cta: {
+      title: "إطلاق",
+      description: "الوصول إلى النظام الأساسي",
+      primaryCta: "دخول المنظومة",
+      secondaryCta: "اطلب جلسة",
+      primaryHref: "#capabilities",
+      secondaryHref: "#contact",
+    },
+    ui: {
+      liveSupport: "دعم مباشر",
+      liveSupportPanel: { ...livePanelAR },
+      navChrome: {
+        brandAria: "SIGMA",
+        openMenuAria: "فتح القائمة",
+        closeMenuAria: "إغلاق القائمة",
+        languageMenuAria: "اختيار اللغة",
+      },
+      logoAlt: "SIGMA",
+      learnMore: "اعرف المزيد",
+    },
+    footer: {
+      rights: "© 2026 بروتوكول سيغما. جميع الحقوق محفوظة.",
+      statusPrefix: "حالة النظام:",
+      statusValue: "مثالي",
+      tagline: "Web3 · استراتيجية · دقة",
+      navAriaLabel: "تذييل",
+      links: [],
+    },
+    trustedBy: {
+      sectionLabel: "يثقون بنا",
       logos: [],
     },
     testimonials: [],

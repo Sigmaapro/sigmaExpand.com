@@ -82,7 +82,7 @@ function MetricCard({ metric, index }: { metric: ProofMetric; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex min-h-0 flex-col rounded-lg border border-white/[0.07] bg-gradient-to-b from-[#10141c]/95 to-[#0a0c12]/95 px-5 py-6 transition-[border-color,box-shadow] duration-300 hover:border-[#1c39bb]/25 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:px-6 sm:py-7"
+      className="group flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-lg border border-white/[0.07] bg-gradient-to-b from-[#10141c]/95 to-[#0a0c12]/95 px-5 py-6 transition-[border-color,box-shadow] duration-300 hover:border-[#1c39bb]/25 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:px-6 sm:py-7"
     >
       <p className="font-display text-2xl font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
         {metric.value}
@@ -107,7 +107,7 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-48px" }}
       transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="flex min-h-0 flex-col rounded-xl border border-white/[0.07] bg-[#0c0f14]/90 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:p-7"
+      className="flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-xl border border-white/[0.07] bg-[#0c0f14]/90 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:p-7"
     >
       <blockquote className="min-w-0 flex-1 border-s-2 border-[#1c39bb]/45 ps-4 text-sm leading-relaxed text-[#e8eaed] sm:ps-5 sm:text-[15px] sm:leading-[1.68]">
         <span className="text-[#8a939e] md:text-[#6c757d]">“</span>
@@ -163,13 +163,13 @@ export function ProofLayer() {
       {/* Trusted by */}
       <section
         id="trusted-by"
-        className="relative scroll-mt-28 px-4 py-14 sm:px-6 sm:py-16 md:px-16 md:py-20 lg:px-24"
+        className="relative scroll-mt-28 px-5 py-14 sm:px-6 sm:py-16 md:px-16 md:py-20 lg:px-24"
       >
-        <div className="relative mx-auto max-w-[90rem] text-center">
+        <div className="relative mx-auto min-w-0 max-w-[90rem] text-center">
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.trustedBy.sectionLabel}
           </p>
-          <h2 className="mx-auto max-w-2xl font-display text-xl font-semibold uppercase leading-tight tracking-tight text-white text-balance sm:text-2xl md:text-3xl">
+          <h2 className="mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.trustedBy.headline}
           </h2>
           <div className="mx-auto mt-10 flex max-w-5xl flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4 md:gap-5">
@@ -183,18 +183,18 @@ export function ProofLayer() {
       {/* Proof in numbers — `id="network"` preserves navbar scroll target */}
       <section
         id="network"
-        className="relative scroll-mt-28 border-t border-white/[0.05] px-4 py-14 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
+        className="relative scroll-mt-28 border-t border-white/[0.05] px-5 py-14 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
       >
-        <div className="relative mx-auto max-w-[90rem]">
+        <div className="relative mx-auto min-w-0 max-w-[90rem]">
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.proofInNumbers.sectionLabel}
           </p>
-          <h2 className="max-w-3xl font-display text-xl font-semibold uppercase leading-tight tracking-tight text-white text-balance sm:text-2xl md:text-3xl">
+          <h2 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.proofInNumbers.headline}
           </h2>
           <div
             id="metrics"
-            className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
+            className="mt-10 grid min-w-0 grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
           >
             {proof.metrics.map((m, i) => (
               <MetricCard key={m.id} metric={m} index={i} />
@@ -209,16 +209,16 @@ export function ProofLayer() {
       {/* Partner feedback */}
       <section
         id="testimonials"
-        className="relative scroll-mt-28 border-t border-white/[0.05] px-4 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
+        className="relative scroll-mt-28 border-t border-white/[0.05] px-5 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
       >
-        <div className="relative mx-auto max-w-[90rem]">
+        <div className="relative mx-auto min-w-0 max-w-[90rem]">
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.partnerFeedback.sectionLabel}
           </p>
-          <h2 className="max-w-3xl font-display text-xl font-semibold uppercase leading-tight tracking-tight text-white text-balance sm:text-2xl md:text-3xl">
+          <h2 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.partnerFeedback.headline}
           </h2>
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+          <div className="mt-10 grid min-w-0 grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
             {proof.testimonials.map((item, idx) => (
               <TestimonialCard key={item.id} item={item} index={idx} />
             ))}

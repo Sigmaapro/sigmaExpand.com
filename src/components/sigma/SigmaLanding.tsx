@@ -165,10 +165,15 @@ const GlobalStyles = () => (
       z-index: 10;
       padding-top: max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.25rem));
     }
+    @media (max-width: 767px) {
+      .sigma-landing-root main {
+        padding-top: max(4.25rem, calc(env(safe-area-inset-top, 0px) + 3rem));
+      }
+    }
     .sigma-landing-root #hero {
       min-height: min(100svh, 920px);
-      padding-left: max(1rem, env(safe-area-inset-left, 0px));
-      padding-right: max(1rem, env(safe-area-inset-right, 0px));
+      padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+      padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
       padding-bottom: 2rem;
       box-sizing: border-box;
     }
@@ -520,32 +525,65 @@ const WebGLBackground = () => {
 const AnimatedText = ({
   text,
   className,
+  /** Mobile: each word on its own centered line (e.g. "CORE" / "ECOSYSTEM"). Desktop: unchanged word-by-word row. */
+  mobileWordStack = false,
 }: {
   text: string;
   className?: string;
+  mobileWordStack?: boolean;
 }) => {
-  const words = text.split(" ");
+  const words = text.split(" ").filter((w) => w.length > 0);
+  const spanMotion = (i: number) => ({
+    initial: { opacity: 1, y: 14 } as const,
+    whileInView: { opacity: 1, y: 0 },
+    transition: {
+      duration: 0.6,
+      delay: i * 0.1,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+    viewport: { once: true, margin: "-100px" as const },
+  });
+
+  if (mobileWordStack) {
+    return (
+      <motion.div
+        className={`flex w-full min-w-0 max-w-full flex-col items-center gap-1.5 text-center [overflow-wrap:anywhere] leading-snug md:flex-row md:flex-wrap md:items-baseline md:gap-x-0 md:gap-y-1 md:leading-none md:text-start ${className ?? ""}`}
+      >
+        {words.map((word, i) => (
+          <motion.span
+            key={`${word}-${i}`}
+            {...spanMotion(i)}
+            className="max-w-full shrink-0 [word-break:normal] max-md:block max-md:w-full max-md:px-1 md:mb-1 md:mr-3 md:inline-block md:break-words rtl:md:mr-0 rtl:md:ml-3"
+          >
+            {word}
+          </motion.span>
+        ))}
+      </motion.div>
+    );
+  }
+
   return (
-    <motion.div
-      className={`flex max-w-full flex-wrap break-words [overflow-wrap:anywhere] max-md:gap-y-1 max-md:leading-relaxed ${className ?? ""}`}
-    >
-      {words.map((word, i) => (
-        <motion.span
-          key={`${word}-${i}`}
-          initial={{ opacity: 1, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            delay: i * 0.1,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-1 mr-3 max-w-full break-words [word-break:normal] rtl:mr-0 rtl:ml-3"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </motion.div>
+    <>
+      <motion.p
+        {...spanMotion(0)}
+        className={`max-w-full md:hidden [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
+      >
+        {text}
+      </motion.p>
+      <motion.div
+        className={`hidden max-w-full flex-wrap break-words [overflow-wrap:anywhere] md:flex md:gap-y-1 ${className ?? ""}`}
+      >
+        {words.map((word, i) => (
+          <motion.span
+            key={`${word}-${i}`}
+            {...spanMotion(i)}
+            className="mb-1 mr-3 max-w-full break-words [word-break:normal] md:inline-block rtl:mr-0 rtl:ml-3"
+          >
+            {word}
+          </motion.span>
+        ))}
+      </motion.div>
+    </>
   );
 };
 
@@ -677,7 +715,7 @@ const TiltCard = ({
       onMouseLeave={handleMouseLeave}
       animate={{ rotateX: isNarrow ? 0 : rotate.x, rotateY: isNarrow ? 0 : rotate.y }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative flex h-full min-h-[16.75rem] flex-col overflow-hidden sharp-edge border border-[#adb5bd]/20 bg-[#212529]/80 p-6 backdrop-blur-md sm:p-8"
+      className="group relative flex h-full min-h-[16.75rem] w-full min-w-0 max-w-full flex-col overflow-hidden sharp-edge border border-[#adb5bd]/20 bg-[#212529]/80 p-6 backdrop-blur-md sm:p-8"
       style={{ transformStyle: isNarrow ? "flat" : "preserve-3d" }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#1c39bb]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -707,7 +745,7 @@ const HeroSection = ({
   return (
   <section
     id="hero"
-    className="relative flex min-h-[min(100svh,920px)] scroll-mt-24 items-center overflow-x-clip px-4 pb-10 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.5rem))] sm:px-6 sm:pb-14 sm:pt-28 md:min-h-screen md:px-16 md:pt-32 lg:px-24"
+    className="relative flex min-h-[min(100svh,920px)] scroll-mt-24 items-center overflow-x-clip px-5 pb-10 pt-[max(5.25rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:pb-14 sm:pt-28 md:min-h-screen md:px-16 md:pt-32 lg:px-24"
   >
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
       <div className="absolute inset-0 bg-sigma-mesh opacity-[0.1] sm:opacity-[0.16] md:opacity-[0.2]" />
@@ -745,7 +783,7 @@ const HeroSection = ({
           </div>
 
           <h1
-            className={`sigma-hero-title mb-5 max-w-full break-words text-[clamp(1.7rem,8.5vw,2.65rem)] font-semibold uppercase leading-[1.1] tracking-tight text-balance [overflow-wrap:anywhere] sm:mb-6 sm:text-6xl sm:leading-none md:text-8xl lg:mb-6 lg:text-[5.25rem] xl:text-[5.75rem] ${
+            className={`sigma-hero-title mb-5 max-w-full break-words text-[clamp(1.45rem,7.2vw,2.35rem)] font-semibold uppercase leading-[1.14] tracking-normal text-balance [overflow-wrap:anywhere] sm:mb-6 sm:text-6xl sm:leading-none sm:tracking-tight md:text-8xl lg:mb-6 lg:text-[5.25rem] xl:text-[5.75rem] ${
               isRtl ? "text-white glow-text" : "sigma-hero-wordmark"
             }`}
           >
@@ -798,14 +836,14 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="what-is-sigma"
-      className="relative z-10 scroll-mt-24 border-t border-white/[0.04] bg-[#0a0c12]/90 px-4 py-16 backdrop-blur-sm sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
+      className="relative z-10 scroll-mt-24 border-t border-white/[0.04] bg-[#0a0c12]/90 px-5 py-16 backdrop-blur-sm sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
       <div className="relative z-10 mx-auto max-w-[90rem]">
         <p className="sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
           {t.whatIsSigma.label}
         </p>
-        <h2 className="font-display text-xl font-semibold uppercase leading-snug tracking-tight text-white text-balance sm:text-3xl sm:leading-tight md:text-4xl lg:max-w-4xl">
+        <h2 className="max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-4xl">
           {t.whatIsSigma.headline}
         </h2>
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
@@ -822,7 +860,7 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
               transition={{ duration: 0.45, delay: idx * 0.06 }}
               className="group rounded-md border border-white/[0.06] bg-white/[0.02] px-6 py-7 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[#1c39bb]/22 hover:bg-white/[0.035] hover:shadow-[0_0_36px_rgba(28,57,187,0.09)]"
             >
-              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.12em] text-[#e9ecef] md:text-[15px]">
+              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em]">
                 {pillar.title}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[#c8d0d8] md:text-[15px] md:text-[#aeb5bd]">
@@ -846,16 +884,16 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="about"
-      className="relative z-10 flex min-h-0 scroll-mt-24 items-center justify-center px-4 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
+      className="relative z-10 flex min-h-0 scroll-mt-24 items-center justify-center px-5 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
-      <div className="relative z-10 mx-auto max-w-4xl px-1 text-center sm:px-0">
+      <div className="relative z-10 mx-auto min-w-0 max-w-4xl px-1 text-center sm:px-0">
         <p className="sigma-hero-eyebrow mb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-8 sm:text-[11px]">
           {t.about.kicker}
         </p>
         <AnimatedText
           text={t.about.title}
-          className="justify-center font-display text-xl font-semibold uppercase leading-snug tracking-tight text-white max-md:leading-[1.28] sm:text-3xl sm:leading-[1.1] md:text-5xl lg:text-6xl"
+          className="justify-center font-display text-[clamp(1.05rem,3.8vw,1.35rem)] font-semibold uppercase leading-[1.2] tracking-normal text-white max-md:leading-[1.2] sm:text-3xl sm:leading-[1.1] sm:tracking-tight md:text-5xl lg:text-6xl"
         />
         <motion.p
           initial={{ opacity: 1 }}
@@ -905,21 +943,22 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="capabilities"
-      className="relative z-10 min-h-0 scroll-mt-24 bg-[#212529]/50 px-4 py-16 backdrop-blur-sm sm:px-6 sm:py-24 md:scroll-mt-28 md:px-16 md:py-28 lg:px-24"
+      className="relative z-10 min-h-0 scroll-mt-24 bg-[#212529]/50 px-5 py-16 backdrop-blur-sm sm:px-6 sm:py-24 md:scroll-mt-28 md:px-16 md:py-28 lg:px-24"
     >
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-10 md:mb-16">
-          <h2 className="mb-2 text-xs font-bold tracking-widest text-[#1c39bb] sm:text-sm">
+      <div className="mx-auto min-w-0 max-w-7xl">
+        <div className="mb-10 min-w-0 max-w-full md:mb-16">
+          <h2 className="mb-2 text-xs font-bold tracking-[0.18em] text-[#1c39bb] sm:text-sm md:tracking-widest">
             {t.services.sectionLabel}
           </h2>
           <AnimatedText
             text={t.services.headline}
-            className="font-display text-2xl font-semibold uppercase leading-tight tracking-tight text-balance max-md:leading-snug sm:text-4xl md:text-5xl"
+            mobileWordStack
+            className="font-display w-full min-w-0 max-w-full text-[clamp(1.3rem,5.8vw,1.85rem)] font-semibold uppercase leading-snug tracking-normal text-balance sm:text-4xl md:text-5xl md:tracking-tight"
           />
         </div>
 
         <div
-          className="grid grid-cols-1 auto-rows-fr gap-6 md:grid-cols-2 lg:grid-cols-4"
+          className="grid min-w-0 grid-cols-1 auto-rows-fr gap-6 md:grid-cols-2 lg:grid-cols-4"
           style={{ perspective: "1000px" }}
         >
           {services.map((service, idx) => (
@@ -929,7 +968,7 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className="h-full"
+              className="h-full min-w-0 w-full max-w-full"
             >
               <TiltCard {...service} />
             </motion.div>
@@ -950,16 +989,16 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="sigmapro"
-      className="relative z-10 scroll-mt-24 px-4 py-12 sm:px-6 sm:py-16 md:scroll-mt-28 md:px-16 md:py-24"
+      className="relative z-10 scroll-mt-24 px-5 py-12 sm:px-6 sm:py-16 md:scroll-mt-28 md:px-16 md:py-24"
     >
       <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px max-w-4xl -translate-y-1/2 bg-gradient-to-r from-transparent via-[#1c39bb]/35 to-transparent opacity-60" />
-      <div className="relative mx-auto max-w-5xl">
+      <div className="relative mx-auto min-w-0 max-w-5xl">
         <motion.div
           initial={{ opacity: 1, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-48px" }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="relative overflow-hidden rounded-2xl border border-white/[0.09] bg-gradient-to-br from-[#10131a]/95 via-[#0a0c12] to-[#07090f] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.55)] backdrop-blur-2xl sm:p-8 md:p-12 md:ps-14 md:pe-14"
+          className="relative min-w-0 overflow-hidden rounded-2xl border border-white/[0.09] bg-gradient-to-br from-[#10131a]/95 via-[#0a0c12] to-[#07090f] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.55)] backdrop-blur-2xl sm:p-8 md:p-12 md:ps-14 md:pe-14"
         >
           <div className="pointer-events-none absolute -end-24 -top-28 h-72 w-72 rounded-full bg-[#1c39bb]/25 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -start-16 h-56 w-56 rounded-full bg-[#bde0fe]/[0.06] blur-3xl" />
@@ -970,7 +1009,7 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
               <Sparkles className="size-3.5 shrink-0 text-[#bde0fe]" strokeWidth={2} />
               {t.sigmaPro.badge}
             </div>
-            <h2 className="font-display text-2xl font-semibold tracking-tight text-white text-balance sm:text-3xl md:text-4xl lg:text-[2.5rem]">
+            <h2 className="max-w-full font-display text-[clamp(1.15rem,4vw,1.65rem)] font-semibold tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl lg:text-[2.5rem]">
               {t.sigmaPro.title}
             </h2>
             <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
@@ -1050,7 +1089,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="contact"
-      className="relative z-10 scroll-mt-24 border-t border-white/[0.06] bg-gradient-to-b from-[#0d1016] via-[#0a0c12] to-[#080a0f] px-4 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-28"
+      className="relative z-10 scroll-mt-24 border-t border-white/[0.06] bg-gradient-to-b from-[#0d1016] via-[#0a0c12] to-[#080a0f] px-5 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-28"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px max-w-3xl bg-gradient-to-r from-transparent via-[#1c39bb]/40 to-transparent opacity-80" />
       <div className="relative mx-auto max-w-7xl">
@@ -1058,7 +1097,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
           <p className="sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {sc.kicker}
           </p>
-          <h2 className="font-display text-2xl font-semibold uppercase tracking-tight text-balance text-white sm:text-3xl md:text-4xl">
+          <h2 className="max-w-full font-display text-[clamp(1.125rem,4vw,1.65rem)] font-semibold uppercase tracking-normal text-balance text-white sm:text-3xl sm:tracking-tight md:text-4xl">
             {sc.title}
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
@@ -1147,7 +1186,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
 const CTASection = ({ t }: { t: SiteTranslations }) => (
   <section
     id="connect"
-    className="relative z-10 flex min-h-[min(68dvh,560px)] scroll-mt-24 flex-col items-center justify-center bg-gradient-to-t from-[#0a0c12] to-transparent px-4 py-14 sm:min-h-[min(80dvh,720px)] sm:px-6 sm:py-16 md:min-h-screen md:scroll-mt-28"
+    className="relative z-10 flex min-h-[min(68dvh,560px)] scroll-mt-24 flex-col items-center justify-center overflow-x-clip bg-gradient-to-t from-[#0a0c12] to-transparent px-5 py-14 sm:min-h-[min(80dvh,720px)] sm:px-6 sm:py-16 md:min-h-screen md:scroll-mt-28"
   >
     <motion.div
       initial={{ opacity: 1, scale: 0.985 }}
@@ -1155,11 +1194,11 @@ const CTASection = ({ t }: { t: SiteTranslations }) => (
       transition={{ duration: 0.8 }}
       className="group max-w-[min(100%,42rem)] cursor-pointer px-2 text-center"
     >
-      <h2 className="sigma-cta-wordmark break-words text-[clamp(2.75rem,15vw,4.5rem)] font-bold uppercase leading-none tracking-tighter transition-[background-image] duration-500 sm:text-7xl md:text-9xl">
+      <h2 className="sigma-cta-wordmark max-w-full break-words text-[clamp(1.85rem,11vw,4rem)] font-bold uppercase leading-[1.05] tracking-normal transition-[background-image] duration-500 sm:text-7xl sm:leading-none sm:tracking-tighter md:text-9xl">
         {t.cta.title}
       </h2>
       <div className="mx-auto mt-4 h-1 w-0 bg-[#1c39bb] transition-all duration-700 ease-in-out group-hover:w-full" />
-      <p className="mt-6 break-words text-xs tracking-[0.22em] text-[#c5ccd4] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm sm:tracking-[0.3em] md:text-[#adb5bd]">
+      <p className="mt-6 max-w-full break-words text-xs tracking-[0.14em] text-[#c5ccd4] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm sm:tracking-[0.3em] md:text-[#adb5bd]">
         {t.cta.description}
       </p>
     </motion.div>
@@ -1312,7 +1351,7 @@ const Navbar = () => {
     <>
       <nav
         dir="ltr"
-        className="sigma-nav-shell fixed inset-x-0 top-0 z-[10000] flex justify-center pt-4 md:pt-5"
+        className="sigma-nav-shell fixed inset-x-0 top-0 z-[10000] flex justify-center pt-2 md:pt-5"
         onClick={(e) => {
           if (e.target === e.currentTarget) scrollToTop();
         }}
@@ -1458,7 +1497,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-3 right-3 top-[calc(4.75rem+env(safe-area-inset-top,0px))] z-[55] max-h-[min(82dvh,calc(100dvh-5.5rem))] overflow-y-auto overscroll-contain rounded-2xl border border-white/[0.07] bg-[#0a0c12]/95 p-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_20px_64px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:left-4 sm:right-4 sm:p-4 lg:hidden"
+            className="fixed left-3 right-3 top-[calc(5rem+env(safe-area-inset-top,0px))] z-[55] max-h-[min(82dvh,calc(100dvh-5.25rem))] overflow-y-auto overscroll-contain rounded-2xl border border-white/[0.07] bg-[#0a0c12]/95 p-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_20px_64px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:left-4 sm:right-4 sm:p-4 lg:hidden"
           >
             <div className="flex flex-col gap-1">
               {primaryNav.map(({ id, icon: Icon, label }) => {
@@ -1534,7 +1573,7 @@ export default function SigmaLanding() {
 
       <main
         key={currentLang}
-        className="relative z-10 max-w-[100vw] overflow-x-clip font-body selection:bg-[#1c39bb] selection:text-white"
+        className="relative z-10 min-w-0 max-w-[100vw] overflow-x-clip font-body selection:bg-[#1c39bb] selection:text-white"
         dir={isRtl ? "rtl" : "ltr"}
       >
         <div className="origin-top">

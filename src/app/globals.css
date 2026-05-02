@@ -29,6 +29,12 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+@media (max-width: 767px) {
+  body:has(.sigma-landing-root) {
+    overflow-x: clip;
+  }
+}
+
 .font-display {
   font-family: var(--font-display), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -78,7 +84,13 @@ body {
 }
 
 .sigma-hero-eyebrow {
-  letter-spacing: 0.28em;
+  letter-spacing: 0.12em;
+}
+
+@media (min-width: 768px) {
+  .sigma-hero-eyebrow {
+    letter-spacing: 0.28em;
+  }
 }
 
 .sigma-body-measure {
@@ -122,8 +134,8 @@ body {
 /* Mobile (<768px): higher legibility — gradient text often clips on WebKit; keep desktop unchanged. */
 @media (max-width: 767px) {
   .sigma-hero-title {
-    line-height: 1.12;
-    letter-spacing: -0.034em;
+    line-height: 1.14;
+    letter-spacing: -0.02em;
   }
 
   .sigma-hero-wordmark {

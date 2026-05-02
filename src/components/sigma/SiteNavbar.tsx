@@ -14,7 +14,7 @@ export function SiteNavbar() {
 
   return (
     <nav
-      className="fixed top-0 z-[100] flex w-full items-center justify-between border-b border-cadet/10 bg-erie/80 px-5 py-4 backdrop-blur-md md:px-10"
+      className="fixed top-0 z-[100] flex w-full items-center justify-between border-b border-cadet/10 bg-erie/80 px-5 py-3 backdrop-blur-md md:px-10 md:py-4"
       dir={isRtl ? "rtl" : "ltr"}
     >
       <Link

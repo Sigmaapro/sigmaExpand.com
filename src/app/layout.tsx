@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { ProductionAnalytics } from "@/components/ProductionAnalytics";
 import { GlobalStructuredData } from "@/components/seo/GlobalStructuredData";
+import { PublisherOrganizationJsonLd } from "@/components/seo/PublisherOrganizationJsonLd";
 import { SEO_PAGES } from "@/content/seo";
 import { SITE_DEFAULT_DESCRIPTION } from "@/lib/site-seo";
 import { getSiteUrl } from "@/lib/site-url";
@@ -92,9 +93,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`min-h-screen bg-erie ${spaceGrotesk.variable} ${inter.variable} ${notoSansArabic.variable}`}
     >
       <body className="min-h-screen bg-erie font-body text-cadet antialiased">
+        <PublisherOrganizationJsonLd />
         <GlobalStructuredData />
         <Providers>{children}</Providers>
         <ProductionAnalytics />

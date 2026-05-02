@@ -117,7 +117,13 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
       <div className="mt-8 flex min-w-0 flex-col gap-4 border-t border-white/[0.06] pt-6 sm:flex-row sm:flex-wrap sm:items-center">
         {item.avatarSrc ? (
           <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-white/10 bg-[#111318]">
-            <Image src={item.avatarSrc} alt="" fill className="object-cover" sizes="44px" />
+            <Image
+              src={item.avatarSrc}
+              alt={`Photo of ${item.name}`}
+              fill
+              className="object-cover"
+              sizes="44px"
+            />
           </div>
         ) : (
           <div
@@ -169,9 +175,9 @@ export function ProofLayer() {
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.trustedBy.sectionLabel}
           </p>
-          <h2 className="mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h3 className="mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.trustedBy.headline}
-          </h2>
+          </h3>
           <div className="mx-auto mt-10 flex max-w-5xl flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4 md:gap-5">
             {clientLogos.map((logo) => (
               <LogoCell key={logo.id} logo={logo} />
@@ -189,9 +195,9 @@ export function ProofLayer() {
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.proofInNumbers.sectionLabel}
           </p>
-          <h2 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h3 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.proofInNumbers.headline}
-          </h2>
+          </h3>
           <div
             id="metrics"
             className="mt-10 grid min-w-0 grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
@@ -215,9 +221,9 @@ export function ProofLayer() {
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.partnerFeedback.sectionLabel}
           </p>
-          <h2 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h3 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.partnerFeedback.headline}
-          </h2>
+          </h3>
           <div className="mt-10 grid min-w-0 grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
             {proof.testimonials.map((item, idx) => (
               <TestimonialCard key={item.id} item={item} index={idx} />

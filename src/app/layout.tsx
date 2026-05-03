@@ -6,7 +6,10 @@ import { ProductionAnalytics } from "@/components/ProductionAnalytics";
 import { GlobalStructuredData } from "@/components/seo/GlobalStructuredData";
 import { SEO_PAGES } from "@/content/seo";
 import { SITE_DEFAULT_DESCRIPTION } from "@/lib/site-seo";
-import { getSiteUrl } from "@/lib/site-url";
+import { getSiteUrl, PRODUCTION_SITE_ORIGIN } from "@/lib/site-url";
+
+/** Stable publisher URL for meta tags + authors (production host; SEO extensions expect this). */
+const PUBLISHER_SITE_URL = `${PRODUCTION_SITE_ORIGIN}/`;
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -49,8 +52,9 @@ export const metadata: Metadata = {
       ar: "/ar",
     },
   },
-  authors: [{ name: "Sigma", url: siteUrl }],
+  authors: [{ name: "Sigma", url: PUBLISHER_SITE_URL }],
   creator: "Sigma",
+  publisher: "Sigma",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -97,6 +101,9 @@ export default function RootLayout({
     >
       <head>
         <GlobalStructuredData />
+        <meta name="publisher" content="Sigma" />
+        <meta property="article:publisher" content={PUBLISHER_SITE_URL} />
+        <meta name="author" content="Sigma" />
       </head>
       <body className="min-h-screen bg-erie font-body text-cadet antialiased">
         <Providers>{children}</Providers>

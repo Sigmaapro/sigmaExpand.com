@@ -4,8 +4,8 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { ProductionAnalytics } from "@/components/ProductionAnalytics";
 import { GlobalStructuredData } from "@/components/seo/GlobalStructuredData";
-import { PublisherOrganizationJsonLd } from "@/components/seo/PublisherOrganizationJsonLd";
 import { SEO_PAGES } from "@/content/seo";
+import { ORGANIZATION_PUBLISHER_JSON_LD } from "@/lib/organization-publisher-jsonld";
 import { SITE_DEFAULT_DESCRIPTION } from "@/lib/site-seo";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -96,9 +96,15 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`min-h-screen bg-erie ${spaceGrotesk.variable} ${inter.variable} ${notoSansArabic.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(ORGANIZATION_PUBLISHER_JSON_LD),
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-erie font-body text-cadet antialiased">
-        {/* Publisher Organization JSON-LD + WebSite graph (schema.org) */}
-        <PublisherOrganizationJsonLd />
         <GlobalStructuredData />
         <Providers>{children}</Providers>
         <ProductionAnalytics />

@@ -533,13 +533,13 @@ const AnimatedText = ({
   className,
   /** Mobile: each word on its own centered line (e.g. "CORE" / "ECOSYSTEM"). Desktop: unchanged word-by-word row. */
   mobileWordStack = false,
-  /** Semantic heading for capabilities headline without changing motion or typography. */
+  /** Semantic heading — motion + typography unchanged. */
   as,
 }: {
   text: string;
   className?: string;
   mobileWordStack?: boolean;
-  as?: "h2";
+  as?: "h2" | "h3";
 }) => {
   const words = text.split(" ").filter((w) => w.length > 0);
   const spanMotion = (i: number) => ({
@@ -554,7 +554,7 @@ const AnimatedText = ({
   });
 
   if (mobileWordStack) {
-    const Wrapper = as === "h2" ? motion.h2 : motion.div;
+    const Wrapper = as === "h2" ? motion.h2 : as === "h3" ? motion.h3 : motion.div;
     return (
       <Wrapper
         className={`flex w-full min-w-0 max-w-full flex-col items-center gap-1.5 text-center [overflow-wrap:anywhere] leading-snug md:flex-row md:flex-wrap md:items-baseline md:gap-x-0 md:gap-y-1 md:leading-none md:text-start ${className ?? ""}`}
@@ -572,52 +572,30 @@ const AnimatedText = ({
     );
   }
 
+  const MobileTag = as === "h2" ? motion.h2 : as === "h3" ? motion.h3 : motion.p;
+  const DesktopTag = as === "h2" ? motion.h2 : as === "h3" ? motion.h3 : motion.div;
+
   return (
     <>
-      {as === "h2" ? (
-        <motion.h2
-          {...spanMotion(0)}
-          className={`max-w-full md:hidden [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
-        >
-          {text}
-        </motion.h2>
-      ) : (
-        <motion.p
-          {...spanMotion(0)}
-          className={`max-w-full md:hidden [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
-        >
-          {text}
-        </motion.p>
-      )}
-      {as === "h2" ? (
-        <motion.h2
-          className={`hidden max-w-full flex-wrap break-words [overflow-wrap:anywhere] md:flex md:gap-y-1 ${className ?? ""}`}
-        >
-          {words.map((word, i) => (
-            <motion.span
-              key={`${word}-${i}`}
-              {...spanMotion(i)}
-              className="mb-1 mr-3 max-w-full break-words [word-break:normal] md:inline-block rtl:mr-0 rtl:ml-3"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </motion.h2>
-      ) : (
-        <motion.div
-          className={`hidden max-w-full flex-wrap break-words [overflow-wrap:anywhere] md:flex md:gap-y-1 ${className ?? ""}`}
-        >
-          {words.map((word, i) => (
-            <motion.span
-              key={`${word}-${i}`}
-              {...spanMotion(i)}
-              className="mb-1 mr-3 max-w-full break-words [word-break:normal] md:inline-block rtl:mr-0 rtl:ml-3"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </motion.div>
-      )}
+      <MobileTag
+        {...spanMotion(0)}
+        className={`max-w-full md:hidden [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
+      >
+        {text}
+      </MobileTag>
+      <DesktopTag
+        className={`hidden max-w-full flex-wrap break-words [overflow-wrap:anywhere] md:flex md:gap-y-1 ${className ?? ""}`}
+      >
+        {words.map((word, i) => (
+          <motion.span
+            key={`${word}-${i}`}
+            {...spanMotion(i)}
+            className="mb-1 mr-3 max-w-full break-words [word-break:normal] md:inline-block rtl:mr-0 rtl:ml-3"
+          >
+            {word}
+          </motion.span>
+        ))}
+      </DesktopTag>
     </>
   );
 };
@@ -928,7 +906,7 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
         </p>
         <AnimatedText
           text={t.about.title}
-          as="h2"
+          as="h3"
           className="justify-center font-display text-[clamp(1.05rem,3.8vw,1.35rem)] font-semibold uppercase leading-[1.2] tracking-normal text-white max-md:leading-[1.2] sm:text-3xl sm:leading-[1.1] sm:tracking-tight md:text-5xl lg:text-6xl"
         />
         <motion.p
@@ -1134,9 +1112,9 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
           <p className="sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {sc.kicker}
           </p>
-          <h2 className="max-w-full font-display text-[clamp(1.125rem,4vw,1.65rem)] font-semibold uppercase tracking-normal text-balance text-white sm:text-3xl sm:tracking-tight md:text-4xl">
+          <h3 className="max-w-full font-display text-[clamp(1.125rem,4vw,1.65rem)] font-semibold uppercase tracking-normal text-balance text-white sm:text-3xl sm:tracking-tight md:text-4xl">
             {sc.title}
-          </h2>
+          </h3>
           <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
             {sc.description}
           </p>

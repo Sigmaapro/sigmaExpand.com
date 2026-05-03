@@ -87,9 +87,9 @@ export function CryptoMarketingSection() {
                 exit={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : -6 }}
                 transition={fade}
               >
-                <p className="font-display text-xl font-semibold tracking-tight text-white text-balance sm:text-2xl md:text-[1.65rem]">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-white text-balance sm:text-2xl md:text-[1.65rem]">
                   {tab.panelTitle}
-                </p>
+                </h3>
                 <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-[15px] md:leading-relaxed md:text-[#aeb5bd]">
                   {tab.description}
                 </p>

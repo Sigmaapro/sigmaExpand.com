@@ -137,7 +137,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
                       </span>
                       <span className="shrink-0 text-[10px] text-[#aab2ba]">{post.readTime}</span>
                     </div>
-                    <h4 className="line-clamp-1 shrink-0 text-sm font-semibold text-[#edf1f5]">{post.title}</h4>
+                    <h3 className="line-clamp-1 shrink-0 text-sm font-semibold text-[#edf1f5]">{post.title}</h3>
                     <p className="mt-0.5 line-clamp-2 min-h-0 text-[11px] leading-snug text-[#aeb5bd]">
                       {post.excerpt}
                     </p>
@@ -176,9 +176,9 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
                   key={card.title}
                   className="flex shrink-0 items-center overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.02] px-2.5 py-1.5 transition-colors duration-300 group-hover:border-white/[0.11] group-hover:bg-white/[0.03]"
                 >
-                  <p className="line-clamp-2 text-[10px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#edf1f5] lg:text-[11px]">
+                  <h3 className="line-clamp-2 text-[10px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#edf1f5] lg:text-[11px]">
                     {card.title}
-                  </p>
+                  </h3>
                 </div>
               ))}
             </div>

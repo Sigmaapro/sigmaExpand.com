@@ -58,13 +58,13 @@ export function SiteNavbar() {
           <button
             type="button"
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-2 p-2 font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white"
+            className="flex max-w-[6rem] items-center gap-2 p-2 font-body text-[11px] font-bold tracking-[0.12em] text-cadet transition-colors hover:text-white sm:max-w-none md:uppercase md:tracking-[0.2em]"
             aria-expanded={open}
             aria-haspopup="listbox"
             aria-label={t.ui.navChrome.languageMenuAria}
           >
             <Globe size={14} strokeWidth={2} aria-hidden />
-            <span>{language}</span>
+            <span className="truncate normal-case">{t.ui.languageSwitcherCompact[language]}</span>
           </button>
 
           <AnimatePresence>

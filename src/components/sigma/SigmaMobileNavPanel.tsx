@@ -19,6 +19,9 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { ROUTES } from "@/content/global/routes";
+import { getCryptoAgency } from "@/content/sections/cryptoAgency";
+import type { MobileNavSheetStrings } from "@/content/types";
+import { useLanguage } from "@/context/LanguageContext";
 
 export type GlassNavId =
   | "about"
@@ -43,6 +46,8 @@ type Props = {
   onClose: () => void;
   goToSection: (id: GlassNavId) => void;
   glassActive: GlassNavId | null;
+  mobileNav: MobileNavSheetStrings;
+  isRtl: boolean;
   /** Labels keyed by nav id (from primaryNav + contact) */
   labels: Record<CoreNavId | "contact", string>;
   aboutLabel: string;
@@ -50,25 +55,6 @@ type Props = {
   /** Bottom CTA — typically matches desktop nav CTA copy */
   workWithSigmaLabel: string;
 };
-
-const LOCATIONS: { label: string; href: string }[] = [
-  { label: "UAE", href: "/markets/uae" },
-  { label: "Turkey", href: "/markets/turkey" },
-  { label: "Iran", href: "/markets/iran" },
-  { label: "China", href: "/markets/china" },
-  { label: "Global", href: "/markets/global" },
-];
-
-const SERVICE_LINKS: { label: string; href: string }[] = [
-  { label: "Growth Engine", href: `${ROUTES.services}#growth` },
-  { label: "KOL Marketing", href: "/insights/kol-strategy-distribution-logic" },
-  { label: "Liquidity", href: `${ROUTES.services}#liquidity` },
-];
-
-const INSIGHT_LINKS: { label: string; href: string }[] = [
-  { label: "Featured", href: "/insights/how-web3-growth-scales" },
-  { label: "Crypto Marketing 101", href: "/insights/kol-strategy-distribution-logic" },
-];
 
 const spring = { type: "spring" as const, stiffness: 420, damping: 34 };
 
@@ -141,7 +127,7 @@ function NavLinkRow({
     <Link href={href} className={cls} onClick={onNavigate}>
       <span className="min-w-0">{label}</span>
       <ArrowUpRight
-        className="size-4 shrink-0 opacity-40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-90"
+        className="size-4 shrink-0 opacity-40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-90 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5 rtl:group-hover:translate-y-[-0.125rem]"
         strokeWidth={2}
         aria-hidden
       />
@@ -154,11 +140,39 @@ export function SigmaMobileNavPanel({
   onClose,
   goToSection,
   glassActive,
+  mobileNav,
+  isRtl,
   labels,
   aboutLabel,
   teamLabel,
   workWithSigmaLabel,
 }: Props) {
+  const { lang } = useLanguage();
+  const crypto = getCryptoAgency(lang);
+  const locations = crypto.tabs.map((t) => ({ label: t.label, href: t.href }));
+
+  const serviceLinks = React.useMemo(
+    () =>
+      [
+        { label: mobileNav.linkGrowthEngine, href: `${ROUTES.services}#growth` },
+        { label: mobileNav.linkKolMarketing, href: "/insights/kol-strategy-distribution-logic" },
+        { label: mobileNav.linkLiquidity, href: `${ROUTES.services}#liquidity` },
+      ] as const,
+    [mobileNav.linkGrowthEngine, mobileNav.linkKolMarketing, mobileNav.linkLiquidity],
+  );
+
+  const insightLinks = React.useMemo(
+    () =>
+      [
+        { label: mobileNav.linkFeatured, href: "/insights/how-web3-growth-scales" },
+        {
+          label: mobileNav.linkCryptoMarketing101,
+          href: "/insights/kol-strategy-distribution-logic",
+        },
+      ] as const,
+    [mobileNav.linkFeatured, mobileNav.linkCryptoMarketing101],
+  );
+
   const [accLocations, setAccLocations] = React.useState(false);
   const [accServices, setAccServices] = React.useState(false);
   const [accInsights, setAccInsights] = React.useState(false);
@@ -177,6 +191,8 @@ export function SigmaMobileNavPanel({
     label: labels[id],
   }));
 
+  const sheetDir = isRtl ? "rtl" : "ltr";
+
   return (
     <AnimatePresence>
       {open ? (
@@ -193,7 +209,8 @@ export function SigmaMobileNavPanel({
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Mobile navigation"
+            aria-label={mobileNav.sheetAriaLabel}
+            dir={sheetDir}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
@@ -206,8 +223,8 @@ export function SigmaMobileNavPanel({
               <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pb-4 [-webkit-overflow-scrolling:touch]">
                 {/* A — Core */}
                 <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[linear-gradient(155deg,rgba(16,20,30,0.94)_0%,rgba(8,10,16,0.9)_100%)] p-3 shadow-[0_16px_56px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-2xl">
-                  <p className="px-2 pb-2 font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb]">
-                    Core
+                  <p className="px-2 pb-2 text-start font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb]">
+                    {mobileNav.sectionCore}
                   </p>
                   <div className="grid gap-1.5">
                     {navCore.map(({ id, icon: Icon, label }) => {
@@ -236,7 +253,11 @@ export function SigmaMobileNavPanel({
                               {label}
                             </span>
                           </span>
-                          <ArrowUpRight className="size-4 shrink-0 opacity-35" strokeWidth={2} aria-hidden />
+                          <ArrowUpRight
+                            className="size-4 shrink-0 opacity-35 rtl:-scale-x-100"
+                            strokeWidth={2}
+                            aria-hidden
+                          />
                         </button>
                       );
                     })}
@@ -244,65 +265,73 @@ export function SigmaMobileNavPanel({
                 </div>
 
                 <GlassAccordion
-                  title="Locations"
+                  title={mobileNav.sectionLocations}
                   icon={MapPin}
                   open={accLocations}
                   onToggle={() => setAccLocations((v) => !v)}
                 >
-                  {LOCATIONS.map(({ label, href }) => (
+                  {locations.map(({ label, href }) => (
                     <NavLinkRow key={href} href={href} label={label} onNavigate={onClose} />
                   ))}
                 </GlassAccordion>
 
                 <GlassAccordion
-                  title="Services"
+                  title={mobileNav.sectionServices}
                   icon={TrendingUp}
                   open={accServices}
                   onToggle={() => setAccServices((v) => !v)}
                 >
-                  {SERVICE_LINKS.map(({ label, href }) => (
+                  {serviceLinks.map(({ label, href }) => (
                     <NavLinkRow key={href} href={href} label={label} onNavigate={onClose} />
                   ))}
                 </GlassAccordion>
 
                 <GlassAccordion
-                  title="Insights"
+                  title={mobileNav.sectionInsights}
                   icon={Newspaper}
                   open={accInsights}
                   onToggle={() => setAccInsights((v) => !v)}
                 >
-                  {INSIGHT_LINKS.map(({ label, href }) => (
+                  {insightLinks.map(({ label, href }) => (
                     <NavLinkRow key={href} href={href} label={label} onNavigate={onClose} />
                   ))}
                 </GlassAccordion>
 
                 {/* E — Company */}
                 <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[linear-gradient(155deg,rgba(14,18,26,0.94)_0%,rgba(7,9,14,0.9)_100%)] p-3 shadow-[0_12px_44px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
-                  <p className="px-2 pb-2 font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb]">
-                    Company
+                  <p className="px-2 pb-2 text-start font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb]">
+                    {mobileNav.sectionCompany}
                   </p>
                   <div className="grid gap-1.5">
                     <Link
                       href={ROUTES.about}
                       onClick={onClose}
-                      className="group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98]"
+                      className="group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98]"
                     >
                       <span className="flex items-center gap-3">
                         <Building2 className="size-[18px] text-[#bde0fe]/85" strokeWidth={2} aria-hidden />
                         {aboutLabel}
                       </span>
-                      <ArrowUpRight className="size-4 opacity-40 group-hover:opacity-80" strokeWidth={2} aria-hidden />
+                      <ArrowUpRight
+                        className="size-4 opacity-40 rtl:-scale-x-100 group-hover:opacity-80"
+                        strokeWidth={2}
+                        aria-hidden
+                      />
                     </Link>
                     <Link
                       href={ROUTES.team}
                       onClick={onClose}
-                      className="group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98]"
+                      className="group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98]"
                     >
                       <span className="flex items-center gap-3">
                         <Users className="size-[18px] text-[#bde0fe]/85" strokeWidth={2} aria-hidden />
                         {teamLabel}
                       </span>
-                      <ArrowUpRight className="size-4 opacity-40 group-hover:opacity-80" strokeWidth={2} aria-hidden />
+                      <ArrowUpRight
+                        className="size-4 opacity-40 rtl:-scale-x-100 group-hover:opacity-80"
+                        strokeWidth={2}
+                        aria-hidden
+                      />
                     </Link>
                     <button
                       type="button"
@@ -317,7 +346,7 @@ export function SigmaMobileNavPanel({
                         <Mail className="size-[18px] text-[#bde0fe]/85" strokeWidth={2} aria-hidden />
                         {labels.contact}
                       </span>
-                      <ArrowUpRight className="size-4 opacity-40" strokeWidth={2} aria-hidden />
+                      <ArrowUpRight className="size-4 opacity-40 rtl:-scale-x-100" strokeWidth={2} aria-hidden />
                     </button>
                   </div>
                 </div>

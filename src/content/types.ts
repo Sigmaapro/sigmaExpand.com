@@ -206,6 +206,21 @@ export type NavChromeStrings = {
   languageMenuAria: string;
 };
 
+/** Homepage mobile slide-over (`SigmaMobileNavPanel`) — all strings localized. */
+export type MobileNavSheetStrings = {
+  sheetAriaLabel: string;
+  sectionCore: string;
+  sectionLocations: string;
+  sectionServices: string;
+  sectionInsights: string;
+  sectionCompany: string;
+  linkGrowthEngine: string;
+  linkKolMarketing: string;
+  linkLiquidity: string;
+  linkFeatured: string;
+  linkCryptoMarketing101: string;
+};
+
 export type UiStrings = {
   liveSupport: string;
   liveSupportPanel: LiveSupportPanelContent;
@@ -214,6 +229,9 @@ export type UiStrings = {
   logoAlt: string;
   /** Section deep-link CTA (replaces “More info”) */
   learnMore: string;
+  mobileNavSheet: MobileNavSheetStrings;
+  /** Closed language switcher: label for each `LangCode` from current UI locale’s perspective. */
+  languageSwitcherCompact: Record<LangCode, string>;
 };
 
 export type AboutContent = {

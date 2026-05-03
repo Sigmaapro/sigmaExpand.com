@@ -15,6 +15,8 @@ export type FooterColumn = {
 };
 
 export type GlobalFooterContent = {
+  /** Wordmark next to Σ — localized where script differs */
+  brandWordmark: string;
   brandTagline: string;
   trustLine: string;
   contactIntro: string;
@@ -80,6 +82,7 @@ const SOCIAL_LABELS_EN: Record<SocialPlatformKey, string> = {
 };
 
 const FOOTER_EN: GlobalFooterContent = {
+  brandWordmark: "Sigma",
   brandTagline:
     "Web3 growth infrastructure for users, liquidity, and market expansion.",
   trustLine: "Built for growth teams, exchanges, and Web3 networks.",
@@ -100,6 +103,7 @@ const FOOTER_EN: GlobalFooterContent = {
 };
 
 const FOOTER_TR: GlobalFooterContent = {
+  brandWordmark: "Sigma",
   brandTagline:
     "Web3 büyüme altyapısı: kullanıcılar, likidite ve pazar genişlemesi için.",
   trustLine: "Büyüme ekipleri, borsalar ve Web3 ağları için tasarlandı.",
@@ -156,6 +160,7 @@ const FOOTER_TR: GlobalFooterContent = {
 };
 
 const FOOTER_FA: GlobalFooterContent = {
+  brandWordmark: "سیگما",
   brandTagline:
     "زیرساخت رشد وب۳ برای کاربران، نقدینگی و گسترش بازار.",
   trustLine: "ساخته‌شده برای تیم‌های رشد، صرافی‌ها و شبکه‌های وب۳.",
@@ -212,6 +217,7 @@ const FOOTER_FA: GlobalFooterContent = {
 };
 
 const FOOTER_AR: GlobalFooterContent = {
+  brandWordmark: "سيغما",
   brandTagline:
     "بنية تحتية للنمو في Web3 للمستخدمين والسيولة وتوسعة السوق.",
   trustLine: "مُصمَّمة لفرق النمو ومنصات التداول وشبكات Web3.",
@@ -268,6 +274,7 @@ const FOOTER_AR: GlobalFooterContent = {
 };
 
 const FOOTER_ZH: GlobalFooterContent = {
+  brandWordmark: "西格玛",
   brandTagline: "面向用户、流动性与市场扩张的 Web3 增长基础设施。",
   trustLine: "为增长团队、交易所与 Web3 网络而打造。",
   contactIntro: "合作与增长咨询",
@@ -323,6 +330,7 @@ const FOOTER_ZH: GlobalFooterContent = {
 };
 
 const FOOTER_ES: GlobalFooterContent = {
+  brandWordmark: "Sigma",
   brandTagline:
     "Infraestructura de crecimiento Web3 para usuarios, liquidez y expansión de mercado.",
   trustLine: "Diseñado para equipos de crecimiento, exchanges y redes Web3.",
@@ -379,6 +387,7 @@ const FOOTER_ES: GlobalFooterContent = {
 };
 
 const FOOTER_RU: GlobalFooterContent = {
+  brandWordmark: "Сигма",
   brandTagline:
     "Инфраструктура роста Web3: пользователи, ликвидность и расширение рынка.",
   trustLine: "Для команд роста, бирж и Web3-сетей.",

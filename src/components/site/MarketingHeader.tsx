@@ -12,6 +12,7 @@ import { useLanguage } from "@/context/LanguageContext";
  */
 export function MarketingHeader() {
   const { t, language, setLanguage } = useLanguage();
+  const compactLabel = t.ui.languageSwitcherCompact[language];
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#07090f]/90 pt-[env(safe-area-inset-top,0px)] backdrop-blur-xl supports-[backdrop-filter]:bg-[#07090f]/75">
@@ -48,6 +49,7 @@ export function MarketingHeader() {
             currentLang={language}
             setLang={setLanguage}
             ariaLabel={t.ui.navChrome.languageMenuAria}
+            compactLabel={compactLabel}
           />
         </div>
       </div>

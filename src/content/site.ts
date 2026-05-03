@@ -1,6 +1,9 @@
-import type { LangCode, SiteTranslations } from "./types";
+import type { LangCode, SiteTranslations, UiStrings } from "./types";
 
-export type SiteRest = Omit<SiteTranslations, "hero" | "services" | "heroCarousel">;
+/** Homepage bundle slice — `composeSiteTranslations` merges `mobileNavSheet` + `languageSwitcherCompact` into `ui`. */
+export type SiteRest = Omit<SiteTranslations, "hero" | "services" | "heroCarousel" | "ui"> & {
+  ui: Omit<UiStrings, "mobileNavSheet" | "languageSwitcherCompact">;
+};
 
 const livePanelEN = {
   panelTitle: "Live Support",

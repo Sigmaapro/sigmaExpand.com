@@ -10,10 +10,13 @@ export function LanguageSwitcherButton({
   currentLang,
   setLang,
   ariaLabel,
+  compactLabel,
 }: {
   currentLang: LangCode;
   setLang: (l: LangCode) => void;
   ariaLabel: string;
+  /** Locale-aware short label for closed chip (not raw LangCode). */
+  compactLabel: string;
 }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -32,13 +35,14 @@ export function LanguageSwitcherButton({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="inline-flex h-12 min-h-12 min-w-[4.5rem] max-w-[5.5rem] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[13px] font-semibold uppercase tracking-[0.06em] text-[#b8c0c8] transition-colors hover:border-white/18 hover:bg-white/[0.06] hover:text-white sm:h-14 sm:min-h-14 sm:min-w-[72px] sm:max-w-[88px] sm:gap-2 sm:px-4 sm:text-[15px]"
+        title={`${ariaLabel}: ${compactLabel}`}
+        className="inline-flex h-12 min-h-12 min-w-[4.5rem] max-w-[min(7.25rem,32vw)] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[12px] font-semibold tracking-[0.04em] text-[#b8c0c8] transition-colors hover:border-white/18 hover:bg-white/[0.06] hover:text-white sm:h-14 sm:min-h-14 sm:min-w-[72px] sm:max-w-[min(8.75rem,30vw)] sm:gap-2 sm:px-4 sm:text-[14px] sm:tracking-[0.06em]"
         aria-label={ariaLabel}
         aria-expanded={open}
         aria-haspopup="listbox"
       >
-        <Globe className="size-4 shrink-0" strokeWidth={2} />
-        <span>{currentLang}</span>
+        <Globe className="size-4 shrink-0" strokeWidth={2} aria-hidden />
+        <span className="min-w-0 truncate leading-none normal-case">{compactLabel}</span>
       </button>
 
       <AnimatePresence>
@@ -61,7 +65,7 @@ export function LanguageSwitcherButton({
                   setLang(lang.code);
                   setOpen(false);
                 }}
-                className={`px-4 py-3 text-start text-xs font-semibold uppercase tracking-[0.14em] transition-colors ${
+                className={`px-4 py-3 text-start text-xs font-semibold uppercase tracking-[0.14em] transition-colors rtl:text-end ${
                   currentLang === lang.code
                     ? "bg-[#1c39bb] text-white"
                     : "text-[#adb5bd] hover:bg-white/[0.06] hover:text-white"

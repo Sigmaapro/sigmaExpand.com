@@ -96,8 +96,8 @@ export function MarketingFooter() {
               <span className="flex h-9 w-9 shrink-0 items-center justify-center font-display text-[1.75rem] font-semibold leading-none text-white drop-shadow-[0_0_14px_rgba(189,224,254,0.18)]">
                 Σ
               </span>
-              <span className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-[#c5ccd3]">
-                Sigma
+              <span className="font-display text-sm font-semibold tracking-[0.14em] text-[#c5ccd3] normal-case">
+                {f.brandWordmark}
               </span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-[#cfd6de] md:text-[#b6bcc4]">{f.brandTagline}</p>

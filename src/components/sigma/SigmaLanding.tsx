@@ -1242,7 +1242,7 @@ const NAV_SCROLL_GAP = 112;
 const NAV_CLICK_SCROLL_LOCK_MS = 900;
 
 const Navbar = () => {
-  const { t, lang: currentLang, setLang: setCurrentLang } = useLanguage();
+  const { t, lang: currentLang, setLang: setCurrentLang, isRtl } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [glassActive, setGlassActive] = useState<GlassNavId | null>(null);
   const navClickScrollingRef = useRef(false);
@@ -1392,6 +1392,7 @@ const Navbar = () => {
                 currentLang={currentLang}
                 setLang={setCurrentLang}
                 ariaLabel={t.ui.navChrome.languageMenuAria}
+                compactLabel={t.ui.languageSwitcherCompact[currentLang]}
               />
             </div>
           </div>
@@ -1482,6 +1483,7 @@ const Navbar = () => {
                 currentLang={currentLang}
                 setLang={setCurrentLang}
                 ariaLabel={t.ui.navChrome.languageMenuAria}
+                compactLabel={t.ui.languageSwitcherCompact[currentLang]}
               />
             </div>
 
@@ -1509,6 +1511,8 @@ const Navbar = () => {
         onClose={() => setMobileOpen(false)}
         goToSection={goToSection}
         glassActive={glassActive}
+        mobileNav={t.ui.mobileNavSheet}
+        isRtl={isRtl}
         labels={{
           about: t.nav.system,
           capabilities: t.nav.capabilities,

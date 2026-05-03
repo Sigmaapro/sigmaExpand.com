@@ -29,9 +29,9 @@ export type CryptoAgencyLocale = {
 export const cryptoAgency: Localized<CryptoAgencyLocale> = {
   en: {
     eyebrow: "Markets",
-    title: "Crypto Marketing Agency",
+    title: "Crypto Agency Marketing",
     description:
-      "We scale Web3 products through acquisition, distribution, and liquidity systems.",
+      "Regional growth across UAE, Turkey, Iran, Greater China, and global corridors—built for Web3 acquisition, distribution, and liquidity.",
     cta: "Learn More",
     regionsAriaLabel: "Regions",
     tabs: [
@@ -194,7 +194,7 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     title: "Kripto Pazarlama Ajansı",
     description:
       "Web3 ürünlerini kullanıcı kazanımı, dağıtım ve likidite ile büyütüyoruz.",
-    cta: "Daha fazla",
+    cta: "Daha fazla bilgi",
     regionsAriaLabel: "Bölgeler",
     tabs: [
       {

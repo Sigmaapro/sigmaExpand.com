@@ -120,9 +120,9 @@ export function LiveSupportButton({ label, panel, onSubmit }: LiveSupportButtonP
             <div className="border-b border-white/[0.07] bg-gradient-to-r from-[#0d1320] via-[#0b0f17] to-[#0b0f17] px-4 py-3.5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="font-display text-sm font-semibold uppercase tracking-[0.12em] text-[#f1f3f5]">
+                  <p className="font-display text-sm font-semibold uppercase tracking-[0.12em] text-[#f1f3f5]">
                     {panel.panelTitle}
-                  </h3>
+                  </p>
                   <p className="mt-1 text-xs text-[#9aa3ad]">
                     {panel.panelSubtitle}
                   </p>

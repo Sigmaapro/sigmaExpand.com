@@ -6,17 +6,17 @@ export function SeoHiddenImages() {
     <>
       <img
         src="/images/seo/web3-growth.jpg"
-        alt="Web3 growth infrastructure and liquidity system"
+        alt="Web3 growth infrastructure dashboard"
         style={{ display: "none" }}
       />
       <img
         src="/images/seo/crypto-marketing.jpg"
-        alt="Crypto marketing agency campaigns and exchange growth"
+        alt="Crypto marketing performance analytics"
         style={{ display: "none" }}
       />
       <img
         src="/images/seo/liquidity-system.jpg"
-        alt="Liquidity solutions and DeFi marketing execution"
+        alt="Liquidity system visualization"
         style={{ display: "none" }}
       />
     </>

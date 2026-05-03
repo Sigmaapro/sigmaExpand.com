@@ -4,96 +4,18 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
-
-type MarketTab = {
-  key: string;
-  label: string;
-  flag: string;
-  href: string;
-  panelTitle: string;
-  description: string;
-  bullets: [string, string, string];
-};
-
-const MARKET_TABS: MarketTab[] = [
-  {
-    key: "uae",
-    label: "UAE",
-    flag: "🇦🇪",
-    href: "/markets/uae",
-    panelTitle: "UAE Market Expansion",
-    description:
-      "Strategic Web3 growth across Dubai and Abu Dhabi. Local partnerships and regulated pathways help you scale with credibility in Gulf crypto hubs.",
-    bullets: [
-      "KOL and community programs tuned for Gulf audiences",
-      "Exchange and liquidity coordination across regional venues",
-      "Compliance-aware campaigns for institutional onboarding",
-    ],
-  },
-  {
-    key: "turkey",
-    label: "Turkey",
-    flag: "🇹🇷",
-    href: "/markets/turkey",
-    panelTitle: "Turkey Market Expansion",
-    description:
-      "High-velocity execution across Turkish crypto markets with localized narratives, listings-aligned storytelling, and trader-focused activation.",
-    bullets: [
-      "Localized messaging and distribution across Turkish communities",
-      "Exchange-listed narratives and liquidity-aligned milestones",
-      "Community-led growth loops with measurable engagement",
-    ],
-  },
-  {
-    key: "iran",
-    label: "Iran",
-    flag: "🇮🇷",
-    href: "/markets/iran",
-    panelTitle: "Iran Regional Outreach",
-    description:
-      "Persian-language programs and partner-led distribution for crypto-native audiences, focused on trust, clarity, and sustained engagement.",
-    bullets: [
-      "Persian-language creative and publishing workflows",
-      "Partner coordination for cross-platform presence",
-      "Retention-focused community structures and education layers",
-    ],
-  },
-  {
-    key: "china",
-    label: "China",
-    flag: "🇨🇳",
-    href: "/markets/china",
-    panelTitle: "Greater China Execution",
-    description:
-      "Carefully localized positioning for Greater China ecosystems—aligned with regional sentiment, partner norms, and credible institutional narratives.",
-    bullets: [
-      "Ecosystem-aligned messaging for regional audiences",
-      "Structured partner coordination across distribution surfaces",
-      "Institutional-grade collateral and timeline-ready milestones",
-    ],
-  },
-  {
-    key: "global",
-    label: "Global",
-    flag: "🌐",
-    href: "/markets/global",
-    panelTitle: "Global Crypto Agency Marketing",
-    description:
-      "One cohesive playbook for multi-region launches—bridging liquidity depth, user acquisition, and narrative continuity across time zones.",
-    bullets: [
-      "Unified campaign architecture across core corridors",
-      "Cross-market reporting with actionable funnel telemetry",
-      "Always-on iteration loops tied to liquidity and growth KPIs",
-    ],
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
+import { getCryptoAgency } from "@/content/sections/cryptoAgency";
 
 export function CryptoMarketingSection() {
+  const { lang } = useLanguage();
+  const c = getCryptoAgency(lang);
   const [active, setActive] = useState(0);
   const reduceMotion = useReducedMotion() ?? false;
   const fade = reduceMotion ? { duration: 0 } : { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const };
 
-  const tab = MARKET_TABS[active]!;
+  const tabs = c.tabs;
+  const tab = tabs[active] ?? tabs[0]!;
 
   return (
     <section
@@ -104,16 +26,16 @@ export function CryptoMarketingSection() {
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.14]" aria-hidden />
       <div className="relative z-10 mx-auto max-w-[90rem]">
         <p className="sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
-          Markets
+          {c.eyebrow}
         </p>
         <h2
           id="crypto-agency-marketing-heading"
           className="max-w-full font-display text-[clamp(1.125rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl"
         >
-          Crypto Agency Marketing
+          {c.title}
         </h2>
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
-          Global presence across key crypto markets
+          {c.description}
         </p>
 
         {/* Tabs — horizontal scroll on narrow viewports */}
@@ -121,18 +43,18 @@ export function CryptoMarketingSection() {
           <div
             className="-mx-5 flex min-w-0 gap-2 overflow-x-auto overscroll-x-contain px-5 pb-2 pt-1 [scrollbar-width:thin] md:mx-0 md:flex-wrap md:gap-3 md:overflow-visible md:px-0"
             role="tablist"
-            aria-label="Regions"
+            aria-label={c.regionsAriaLabel}
           >
-            {MARKET_TABS.map((t, i) => {
+            {tabs.map((regionTab, i) => {
               const isActive = active === i;
               return (
                 <button
-                  key={t.key}
+                  key={regionTab.key}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
-                  id={`crypto-market-tab-${t.key}`}
-                  aria-controls={`crypto-market-panel-${t.key}`}
+                  id={`crypto-market-tab-${regionTab.key}`}
+                  aria-controls={`crypto-market-panel-${regionTab.key}`}
                   onClick={() => setActive(i)}
                   className={`flex shrink-0 snap-start touch-manipulation items-center gap-2 rounded-full border px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.12em] transition-[background,border-color,box-shadow,color] duration-200 md:py-3 md:text-[12px] ${
                     isActive
@@ -141,9 +63,9 @@ export function CryptoMarketingSection() {
                   }`}
                 >
                   <span className="text-base leading-none" aria-hidden>
-                    {t.flag}
+                    {regionTab.flag}
                   </span>
-                  <span>{t.label}</span>
+                  <span>{regionTab.label}</span>
                 </button>
               );
             })}
@@ -156,7 +78,7 @@ export function CryptoMarketingSection() {
           <div className="relative z-10 px-5 py-8 sm:p-10 md:px-12 md:py-12">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
-                key={tab.key}
+                key={`${lang}-${tab.key}`}
                 id={`crypto-market-panel-${tab.key}`}
                 role="tabpanel"
                 aria-labelledby={`crypto-market-tab-${tab.key}`}
@@ -165,9 +87,9 @@ export function CryptoMarketingSection() {
                 exit={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : -6 }}
                 transition={fade}
               >
-                <h3 className="font-display text-xl font-semibold tracking-tight text-white text-balance sm:text-2xl md:text-[1.65rem]">
+                <p className="font-display text-xl font-semibold tracking-tight text-white text-balance sm:text-2xl md:text-[1.65rem]">
                   {tab.panelTitle}
-                </h3>
+                </p>
                 <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-[15px] md:leading-relaxed md:text-[#aeb5bd]">
                   {tab.description}
                 </p>
@@ -188,7 +110,7 @@ export function CryptoMarketingSection() {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/22 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,box-shadow,border-color] hover:border-[#2a4acd]/70 hover:bg-[#1c39bb]/38 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)]"
                   >
-                    Learn More
+                    {c.cta}
                     <ArrowUpRight className="size-4 opacity-90" strokeWidth={2} aria-hidden />
                   </Link>
                 </div>

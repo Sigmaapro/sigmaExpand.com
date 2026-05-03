@@ -1,6 +1,9 @@
 import { PRODUCTION_SITE_ORIGIN } from "@/lib/site-url";
 
-/** Standalone Organization publisher node (referenced by {@link GlobalStructuredData} WebSite). */
+/**
+ * Organization publisher JSON-LD — stable production URLs for rich results
+ * (`PRODUCTION_SITE_ORIGIN` matches the deployed host, e.g. sigma-expand-com.vercel.app).
+ */
 export function PublisherOrganizationJsonLd() {
   const base = PRODUCTION_SITE_ORIGIN.replace(/\/$/, "");
   const data = {

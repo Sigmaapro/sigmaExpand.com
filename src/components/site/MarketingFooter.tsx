@@ -36,9 +36,9 @@ function FooterColumnBlock({
 }) {
   return (
     <div className="min-w-0">
-      <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
+      <p className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
         {title}
-      </h3>
+      </p>
       <ul className="mt-2 space-y-1.5 md:mt-3 md:space-y-2">
         {links.map((link) => {
           const common =
@@ -123,9 +123,9 @@ export function MarketingFooter() {
             <FooterColumnBlock title={f.columnCompany.title} links={f.columnCompany.links} />
             <FooterColumnBlock title={f.columnResources.title} links={f.columnResources.links} />
             <div className="min-w-0">
-              <h3 className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
+              <p className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a0aab4] md:text-[#8b939e]">
                 {f.socialColumnTitle}
-              </h3>
+              </p>
               <ul
                 className="mt-2 grid grid-cols-1 gap-x-2 gap-y-1.5 md:mt-3 md:gap-y-2"
                 aria-label={f.landmarkSocial}

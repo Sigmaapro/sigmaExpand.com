@@ -759,9 +759,9 @@ const TiltCard = ({
         style={{ transform: "translateZ(30px)" }}
       >
         <Icon className="mb-6 h-10 w-10 text-[#adb5bd] transition-colors duration-300 group-hover:text-[#bde0fe]" />
-        <h3 className="mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl">
+        <p className="mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl">
           {title}
-        </h3>
+        </p>
         <p className="text-sm leading-relaxed text-[#c5ccd4] md:text-[#adb5bd]">{desc}</p>
       </div>
       <div className="absolute left-0 top-0 h-2 w-2 border-l border-t border-[#bde0fe] opacity-0 transition-opacity group-hover:opacity-100" />
@@ -895,9 +895,9 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
               transition={{ duration: 0.45, delay: idx * 0.06 }}
               className="group rounded-md border border-white/[0.06] bg-white/[0.02] px-6 py-7 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[#1c39bb]/22 hover:bg-white/[0.035] hover:shadow-[0_0_36px_rgba(28,57,187,0.09)]"
             >
-              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em]">
+              <p className="font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em]">
                 {pillar.title}
-              </h3>
+              </p>
               <p className="mt-3 text-sm leading-relaxed text-[#c8d0d8] md:text-[15px] md:text-[#aeb5bd]">
                 {pillar.description}
               </p>
@@ -1230,9 +1230,9 @@ const CTASection = ({ t }: { t: SiteTranslations }) => (
       transition={{ duration: 0.8 }}
       className="group max-w-[min(100%,42rem)] cursor-pointer px-2 text-center"
     >
-      <h3 className="sigma-cta-wordmark max-w-full break-words text-[clamp(1.85rem,11vw,4rem)] font-bold uppercase leading-[1.05] tracking-normal transition-[background-image] duration-500 sm:text-7xl sm:leading-none sm:tracking-tighter md:text-9xl">
+      <p className="sigma-cta-wordmark max-w-full break-words text-[clamp(1.85rem,11vw,4rem)] font-bold uppercase leading-[1.05] tracking-normal transition-[background-image] duration-500 sm:text-7xl sm:leading-none sm:tracking-tighter md:text-9xl">
         {t.cta.title}
-      </h3>
+      </p>
       <div className="mx-auto mt-4 h-1 w-0 bg-[#1c39bb] transition-all duration-700 ease-in-out group-hover:w-full" />
       <p className="mt-6 max-w-full break-words text-xs tracking-[0.14em] text-[#c5ccd4] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm sm:tracking-[0.3em] md:text-[#adb5bd]">
         {t.cta.description}

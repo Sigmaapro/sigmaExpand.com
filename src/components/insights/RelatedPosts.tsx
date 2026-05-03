@@ -42,12 +42,12 @@ export function RelatedPosts({ posts }: { posts: InsightPost[] }) {
       aria-labelledby="related-posts"
     >
       <div className="mx-auto max-w-6xl px-3 py-12 sm:px-6 sm:py-16 lg:px-10">
-        <h3
+        <p
           id="related-posts"
           className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#1c39bb]"
         >
           {t.insights.relatedHeading}
-        </h3>
+        </p>
         <ul className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <li key={post.slug}>

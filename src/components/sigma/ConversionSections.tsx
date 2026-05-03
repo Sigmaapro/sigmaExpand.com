@@ -29,9 +29,9 @@ export function MidConversionCta({
         <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#1c39bb] sm:text-[11px]">
           {c.label}
         </p>
-        <h3 className="max-w-full font-display text-[clamp(1.1rem,4vw,1.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-[2rem]">
+        <p className="max-w-full font-display text-[clamp(1.1rem,4vw,1.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-[2rem]">
           {c.headline}
-        </h3>
+        </p>
         <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#adb5bd] sm:text-[15px] sm:leading-relaxed">
           {c.supporting}
         </p>
@@ -68,9 +68,9 @@ export function FinalConversionCta({
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="relative mx-auto min-w-0 w-full max-w-3xl px-1 text-center sm:px-0"
       >
-        <h3 className="max-w-full font-display text-[clamp(1.1rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-4xl sm:tracking-tight sm:leading-[1.1] md:text-5xl">
+        <p className="max-w-full font-display text-[clamp(1.1rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-4xl sm:tracking-tight sm:leading-[1.1] md:text-5xl">
           {c.headline}
-        </h3>
+        </p>
         <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] sm:text-base md:text-lg">
           {c.supporting}
         </p>

@@ -131,14 +131,14 @@ export function InsightsListingClient({
                   · {featured.readTime}
                 </span>
               </div>
-              <h3 className="font-display text-xl font-semibold leading-tight tracking-tight text-[#f1f3f5] text-balance sm:text-2xl md:text-3xl">
+              <p className="font-display text-xl font-semibold leading-tight tracking-tight text-[#f1f3f5] text-balance sm:text-2xl md:text-3xl">
                 <Link
                   href={`/insights/${featured.slug}`}
                   className="transition-colors hover:text-[#bde0fe]"
                 >
                   {featured.title}
                 </Link>
-              </h3>
+              </p>
               <p className="mt-4 text-base leading-relaxed text-[#adb5bd]">
                 {featured.excerpt}
               </p>

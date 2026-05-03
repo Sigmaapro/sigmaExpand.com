@@ -59,6 +59,7 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     description:
       "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
     keywords: [
+      "Sigma",
       "web3 growth infrastructure",
       "crypto marketing agency",
       "liquidity solutions",

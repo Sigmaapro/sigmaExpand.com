@@ -97,6 +97,7 @@ export default function RootLayout({
       className={`min-h-screen bg-erie ${spaceGrotesk.variable} ${inter.variable} ${notoSansArabic.variable}`}
     >
       <body className="min-h-screen bg-erie font-body text-cadet antialiased">
+        {/* Publisher Organization JSON-LD + WebSite graph (schema.org) */}
         <PublisherOrganizationJsonLd />
         <GlobalStructuredData />
         <Providers>{children}</Providers>

@@ -11,7 +11,7 @@ export function ServicesStructuredData() {
     "@type": "Service",
     name: "Sigma Web3 growth infrastructure",
     description:
-      "Liquidity programs, compliance-aware execution, technical integration, and Web3-native growth systems for protocols and exchanges.",
+      "Explore Sigma’s Web3 growth services: crypto marketing, liquidity solutions, exchange expansion, and user acquisition systems.",
     url,
     serviceType: "Web3 growth and marketing infrastructure",
     provider: {

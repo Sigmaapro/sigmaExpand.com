@@ -90,16 +90,24 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   },
   services: {
     path: "/services",
-    title: "Services",
+    title: "Web3 Growth & Crypto Marketing Services",
     description:
-      "Explore Sigma’s core capabilities: liquidity programs, risk and compliance layers, technical integration, and Web3-native growth execution.",
-    keywords: ["Sigma services", "Web3 liquidity", "crypto marketing services", "exchange integration", "growth execution"],
-    ogTitle: "Sigma Services | Liquidity & Growth Execution",
+      "Explore Sigma’s Web3 growth services: crypto marketing, liquidity solutions, exchange expansion, and user acquisition systems.",
+    keywords: [
+      "web3 growth services",
+      "crypto marketing services",
+      "liquidity solutions",
+      "exchange growth",
+      "user acquisition web3",
+      "defi marketing",
+      "sigma services",
+    ],
+    ogTitle: "Web3 Growth & Crypto Marketing Services | Sigma",
     ogDescription:
-      "Liquidity programs, compliance-aware execution, technical integration, and Web3 growth systems—in one strategic stack.",
-    twitterTitle: "Sigma Services",
+      "Explore Sigma’s Web3 growth services: crypto marketing, liquidity solutions, exchange expansion, and user acquisition systems.",
+    twitterTitle: "Web3 Growth & Crypto Marketing Services | Sigma",
     twitterDescription:
-      "Liquidity, integration, and Web3 growth execution for protocols and exchanges.",
+      "Explore Sigma’s Web3 growth services: crypto marketing, liquidity solutions, exchange expansion, and user acquisition systems.",
   },
   contact: {
     path: "/contact",

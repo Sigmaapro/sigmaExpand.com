@@ -6,6 +6,7 @@ import { ROUTES } from "@/content/global/routes";
 import { InsightsOuterLink } from "@/components/site/InsightsOuterLink";
 import { LanguageSwitcherButton } from "@/components/site/LanguageSwitcherButton";
 import { useLanguage } from "@/context/LanguageContext";
+import { arCta, arNav } from "@/lib/arabicTypography";
 
 /**
  * Compact chrome for inner routes + Insights layout — logo, Insights, Get Access, language (no “More” menu).
@@ -24,13 +25,17 @@ export function MarketingHeader() {
           <span className="flex h-8 w-8 shrink-0 items-center justify-center font-display text-[1.5rem] font-semibold leading-none text-white">
             Σ
           </span>
-          <span className="hidden font-display text-[0.95rem] font-semibold uppercase tracking-[0.14em] sm:inline">
+          <span
+            className={`hidden font-display text-[0.95rem] font-semibold uppercase tracking-[0.14em] sm:inline ${arNav(language)}`}
+          >
             {t.insights.sigmaHome}
           </span>
         </Link>
 
         <div className="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-2 sm:gap-3 md:gap-4">
-          <InsightsOuterLink className="inline-flex min-h-10 max-w-[min(11rem,40vw)] items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-white/[0.1] bg-white/[0.03] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] sm:text-[11px]">
+          <InsightsOuterLink
+            className={`inline-flex min-h-10 max-w-[min(11rem,40vw)] items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-white/[0.1] bg-white/[0.03] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] sm:text-[11px] ${arNav(language)}`}
+          >
             <Newspaper
               className="size-[14px] shrink-0 text-[#bde0fe]/80"
               strokeWidth={2}
@@ -41,7 +46,7 @@ export function MarketingHeader() {
           </InsightsOuterLink>
           <Link
             href={ROUTES.anchor.connect}
-            className="inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-md border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.22)_0%,rgba(28,57,187,0.08)_100%)] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-[border-color,box-shadow] hover:border-[#2a4acd]/65 sm:text-[11px]"
+            className={`inline-flex min-h-10 shrink-0 items-center whitespace-nowrap rounded-md border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.22)_0%,rgba(28,57,187,0.08)_100%)] px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-[border-color,box-shadow] hover:border-[#2a4acd]/65 sm:text-[11px] ${arCta(language)}`}
           >
             {t.nav.navCta}
           </Link>

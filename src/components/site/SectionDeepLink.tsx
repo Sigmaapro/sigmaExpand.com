@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { arNav } from "@/lib/arabicTypography";
 
 export function SectionDeepLink({
   href,
@@ -18,9 +20,11 @@ export function SectionDeepLink({
   /** Same-origin `next/link` only — adds `target` + `rel` when true */
   openInNewTab?: boolean;
 }) {
+  const { lang } = useLanguage();
   const isExternal = external ?? /^https?:\/\//i.test(href);
   const cls = [
     "group inline-flex items-center gap-1.5 font-semibold uppercase tracking-[0.12em] text-[11px] transition-colors",
+    arNav(lang),
     "text-[#c8d2dc] underline decoration-[#6ea8ff]/45 underline-offset-[5px] drop-shadow-[0_0_14px_rgba(110,168,255,0.22)]",
     "md:text-[#7d8692] md:no-underline md:decoration-transparent md:drop-shadow-none",
     "hover:text-[#bde0fe]",

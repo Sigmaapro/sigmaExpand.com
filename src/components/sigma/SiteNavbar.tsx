@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
+import { arCta, arNav } from "@/lib/arabicTypography";
 
 export function SiteNavbar() {
   const { t, language, setLanguage, isRtl } = useLanguage();
@@ -35,19 +36,19 @@ export function SiteNavbar() {
       <div className="hidden items-center gap-8 md:flex">
         <Link
           href="/#about"
-          className="font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white"
+          className={`font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white ${arNav(language)}`}
         >
           {t.nav.system}
         </Link>
         <Link
           href="/#ecosystem"
-          className="font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white"
+          className={`font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white ${arNav(language)}`}
         >
           {t.nav.capabilities}
         </Link>
         <Link
           href="/#metrics"
-          className="font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white"
+          className={`font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white ${arNav(language)}`}
         >
           {t.nav.metrics}
         </Link>
@@ -58,7 +59,7 @@ export function SiteNavbar() {
           <button
             type="button"
             onClick={() => setOpen(!open)}
-            className="flex max-w-[6rem] items-center gap-2 p-2 font-body text-[11px] font-bold tracking-[0.12em] text-cadet transition-colors hover:text-white sm:max-w-none md:uppercase md:tracking-[0.2em]"
+            className={`flex max-w-[6rem] items-center gap-2 p-2 font-body text-[11px] font-bold tracking-[0.12em] text-cadet transition-colors hover:text-white sm:max-w-none md:uppercase md:tracking-[0.2em] ${arNav(language)}`}
             aria-expanded={open}
             aria-haspopup="listbox"
             aria-label={t.ui.navChrome.languageMenuAria}
@@ -89,7 +90,7 @@ export function SiteNavbar() {
                       setLanguage(l.code);
                       setOpen(false);
                     }}
-                    className={`block w-full px-4 py-3 text-left font-body text-[11px] font-bold uppercase tracking-widest transition-colors rtl:text-right ${
+                    className={`block w-full px-4 py-3 text-start font-body text-[11px] font-bold uppercase tracking-widest transition-colors ${arNav(language)} ${
                       language === l.code
                         ? "bg-persian text-white"
                         : "text-cadet hover:bg-cadet/10 hover:text-white"
@@ -105,7 +106,7 @@ export function SiteNavbar() {
 
         <Link
           href="/#connect"
-          className="border border-white/20 px-4 py-2 font-body text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-erie"
+          className={`border border-white/20 px-4 py-2 font-body text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-erie ${arCta(language)}`}
         >
           {t.nav.navCta}
         </Link>

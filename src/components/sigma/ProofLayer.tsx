@@ -12,7 +12,9 @@ import {
 } from "@/content/proof";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
+import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
+import { arEyebrow, arHeading, arNav } from "@/lib/arabicTypography";
 
 function initialsFromName(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -21,7 +23,7 @@ function initialsFromName(name: string) {
   return `${a}${b}`.toUpperCase();
 }
 
-function LogoCell({ logo }: { logo: ProofClientLogo }) {
+function LogoCell({ logo, lang }: { logo: ProofClientLogo; lang: LangCode }) {
   const inner = (
     <div className="flex min-h-[3.25rem] min-w-[7.5rem] max-w-[11rem] items-center justify-center px-5 py-3 sm:min-h-[3.5rem] sm:min-w-[8.5rem]">
       {logo.imageSrc ? (
@@ -33,7 +35,9 @@ function LogoCell({ logo }: { logo: ProofClientLogo }) {
           className="h-7 w-auto max-w-full object-contain opacity-[0.78] grayscale transition-[opacity,filter] duration-300 group-hover:opacity-100 group-hover:grayscale-0 sm:h-8"
         />
       ) : (
-        <span className="font-display text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9aa3ad] transition-colors duration-300 group-hover:text-[#e9ecef] sm:text-xs">
+        <span
+          className={`font-display text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9aa3ad] transition-colors duration-300 group-hover:text-[#e9ecef] sm:text-xs ${arNav(lang)}`}
+        >
           {logo.wordmark}
         </span>
       )}
@@ -75,7 +79,15 @@ function LogoCell({ logo }: { logo: ProofClientLogo }) {
   );
 }
 
-function MetricCard({ metric, index }: { metric: ProofMetric; index: number }) {
+function MetricCard({
+  metric,
+  index,
+  lang,
+}: {
+  metric: ProofMetric;
+  index: number;
+  lang: LangCode;
+}) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 14 }}
@@ -87,7 +99,9 @@ function MetricCard({ metric, index }: { metric: ProofMetric; index: number }) {
       <p className="font-display text-2xl font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
         {metric.value}
       </p>
-      <p className="mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e]">
+      <p
+        className={`mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e] ${arNav(lang)}`}
+      >
         {metric.label}
       </p>
       {metric.note ? (
@@ -99,7 +113,15 @@ function MetricCard({ metric, index }: { metric: ProofMetric; index: number }) {
   );
 }
 
-function TestimonialCard({ item, index }: { item: ProofTestimonial; index: number }) {
+function TestimonialCard({
+  item,
+  index,
+  lang,
+}: {
+  item: ProofTestimonial;
+  index: number;
+  lang: LangCode;
+}) {
   const initials = initialsFromName(item.name);
   return (
     <motion.article
@@ -127,7 +149,7 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
           </div>
         ) : (
           <div
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#1c39bb]/35 bg-[#1c39bb]/12 text-[11px] font-semibold uppercase tracking-wide text-[#bde0fe]"
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#1c39bb]/35 bg-[#1c39bb]/12 text-[11px] font-semibold uppercase tracking-wide text-[#bde0fe] ${arNav(lang)}`}
             aria-hidden
           >
             {initials}
@@ -135,7 +157,9 @@ function TestimonialCard({ item, index }: { item: ProofTestimonial; index: numbe
         )}
         <div className="min-w-0 flex-1">
           <p className="font-display text-sm font-semibold text-white">{item.name}</p>
-          <p className="mt-0.5 text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96]">
+          <p
+            className={`mt-0.5 text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96] ${arNav(lang)}`}
+          >
             {item.role}
             {item.role && item.company ? " · " : null}
             {item.company}
@@ -172,15 +196,19 @@ export function ProofLayer() {
         className="relative scroll-mt-28 px-5 py-14 sm:px-6 sm:py-16 md:px-16 md:py-20 lg:px-24"
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem] text-center">
-          <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
+          <p
+            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+          >
             {proof.trustedBy.sectionLabel}
           </p>
-          <h3 className="mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h3
+            className={`mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${arHeading(lang)}`}
+          >
             {proof.trustedBy.headline}
           </h3>
           <div className="mx-auto mt-10 flex max-w-5xl flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4 md:gap-5">
             {clientLogos.map((logo) => (
-              <LogoCell key={logo.id} logo={logo} />
+              <LogoCell key={logo.id} logo={logo} lang={lang} />
             ))}
           </div>
         </div>
@@ -192,10 +220,14 @@ export function ProofLayer() {
         className="relative scroll-mt-28 border-t border-white/[0.05] px-5 py-14 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem]">
-          <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
+          <p
+            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+          >
             {proof.proofInNumbers.sectionLabel}
           </p>
-          <h2 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h2
+            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${arHeading(lang)}`}
+          >
             {proof.proofInNumbers.headline}
           </h2>
           <div
@@ -203,7 +235,7 @@ export function ProofLayer() {
             className="mt-10 grid min-w-0 grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
           >
             {proof.metrics.map((m, i) => (
-              <MetricCard key={m.id} metric={m} index={i} />
+              <MetricCard key={m.id} metric={m} index={i} lang={lang} />
             ))}
           </div>
           <div className="mt-10 flex justify-center sm:mt-12">
@@ -218,15 +250,19 @@ export function ProofLayer() {
         className="relative scroll-mt-28 border-t border-white/[0.05] px-5 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem]">
-          <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
+          <p
+            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+          >
             {proof.partnerFeedback.sectionLabel}
           </p>
-          <h3 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h3
+            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${arHeading(lang)}`}
+          >
             {proof.partnerFeedback.headline}
           </h3>
           <div className="mt-10 grid min-w-0 grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
             {proof.testimonials.map((item, idx) => (
-              <TestimonialCard key={item.id} item={item} index={idx} />
+              <TestimonialCard key={item.id} item={item} index={idx} lang={lang} />
             ))}
           </div>
         </div>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { getConversion } from "@/content/conversion";
 import type { LangCode } from "@/content/types";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
+import { arEyebrow, arHeading, arMutedTrack } from "@/lib/arabicTypography";
 
 export function MidConversionCta({
   isRtl,
@@ -26,13 +27,19 @@ export function MidConversionCta({
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="relative mx-auto min-w-0 max-w-3xl rounded-xl border border-white/[0.08] bg-[#0c0f16]/95 px-4 py-8 text-center shadow-[0_0_60px_rgba(28,57,187,0.12)] sm:px-10 sm:py-12"
       >
-        <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#1c39bb] sm:text-[11px]">
+        <p
+          className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+        >
           {c.label}
         </p>
-        <p className="max-w-full font-display text-[clamp(1.1rem,4vw,1.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-[2rem]">
+        <p
+          className={`max-w-full font-display text-[clamp(1.1rem,4vw,1.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-[2rem] ${arHeading(lang)}`}
+        >
           {c.headline}
         </p>
-        <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#adb5bd] sm:text-[15px] sm:leading-relaxed">
+        <p
+          className={`mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#adb5bd] sm:text-[15px] sm:leading-relaxed ${arMutedTrack(lang)}`}
+        >
           {c.supporting}
         </p>
         <div className="mt-8 flex w-full justify-center px-1 sm:px-0">
@@ -68,10 +75,14 @@ export function FinalConversionCta({
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="relative mx-auto min-w-0 w-full max-w-3xl px-1 text-center sm:px-0"
       >
-        <p className="max-w-full font-display text-[clamp(1.1rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-4xl sm:tracking-tight sm:leading-[1.1] md:text-5xl">
+        <p
+          className={`max-w-full font-display text-[clamp(1.1rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-4xl sm:tracking-tight sm:leading-[1.1] md:text-5xl ${arHeading(lang)}`}
+        >
           {c.headline}
         </p>
-        <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] sm:text-base md:text-lg">
+        <p
+          className={`mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] sm:text-base md:text-lg ${arMutedTrack(lang)}`}
+        >
           {c.supporting}
         </p>
         <div className="mx-auto mt-10 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mt-12 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">

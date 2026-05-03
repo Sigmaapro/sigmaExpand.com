@@ -55,6 +55,14 @@ import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import { useLanguage } from "@/context/LanguageContext";
+import {
+  arCardTitle,
+  arCta,
+  arEyebrow,
+  arHeading,
+  arMutedTrack,
+  arNav,
+} from "@/lib/arabicTypography";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
 
 const theme = {
@@ -701,6 +709,7 @@ const TiltCard = ({
   icon: React.ComponentType<{ className?: string }>;
   desc: string;
 }) => {
+  const { lang } = useLanguage();
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const isNarrow = useIsMobile(1024);
@@ -737,7 +746,9 @@ const TiltCard = ({
         style={{ transform: "translateZ(30px)" }}
       >
         <Icon className="mb-6 h-10 w-10 text-[#adb5bd] transition-colors duration-300 group-hover:text-[#bde0fe]" />
-        <h3 className="mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl">
+        <h3
+          className={`mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl ${arCardTitle(lang)}`}
+        >
           {title}
         </h3>
         <p className="text-sm leading-relaxed text-[#c5ccd4] md:text-[#adb5bd]">{desc}</p>
@@ -755,6 +766,7 @@ const HeroSection = ({
   t: SiteTranslations;
   isRtl: boolean;
 }) => {
+  const { lang } = useLanguage();
   return (
   <section
     id="hero"
@@ -803,11 +815,15 @@ const HeroSection = ({
             {t.hero.title}
           </h1>
 
-          <p className="mb-4 max-w-xl font-display text-[0.95rem] font-medium leading-snug tracking-[-0.01em] text-[#f1f3f5] text-balance sm:text-lg sm:leading-[1.35] md:text-xl">
+          <p
+            className={`mb-4 max-w-xl font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:text-lg sm:leading-[1.35] md:text-xl ${lang === "AR" ? "tracking-normal !leading-snug" : "tracking-[-0.01em]"}`}
+          >
             {t.hero.subtitle}
           </p>
 
-          <p className="sigma-body-measure mb-8 text-sm leading-[1.75] text-[#d0d7df] text-pretty sm:mb-9 sm:text-[15px] sm:leading-[1.72] md:text-[#aeb5bd]">
+          <p
+            className={`sigma-body-measure mb-8 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:text-[15px] md:text-[#aeb5bd] ${lang === "AR" ? "!leading-[1.85]" : "leading-[1.75] sm:leading-[1.72]"}`}
+          >
             {t.hero.supporting}
           </p>
 
@@ -853,10 +869,14 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
       <div className="relative z-10 mx-auto max-w-[90rem]">
-        <p className="sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
+        <p
+          className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(language)}`}
+        >
           {t.whatIsSigma.label}
         </p>
-        <h2 className="max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-4xl">
+        <h2
+          className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-4xl ${arHeading(language)}`}
+        >
           {t.whatIsSigma.headline}
         </h2>
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
@@ -873,7 +893,9 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
               transition={{ duration: 0.45, delay: idx * 0.06 }}
               className="group rounded-md border border-white/[0.06] bg-white/[0.02] px-6 py-7 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[#1c39bb]/22 hover:bg-white/[0.035] hover:shadow-[0_0_36px_rgba(28,57,187,0.09)]"
             >
-              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em]">
+              <h3
+                className={`font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em] ${arCardTitle(language)}`}
+              >
                 {pillar.title}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[#c8d0d8] md:text-[15px] md:text-[#aeb5bd]">
@@ -901,13 +923,15 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
       <div className="relative z-10 mx-auto min-w-0 max-w-4xl px-1 text-center sm:px-0">
-        <p className="sigma-hero-eyebrow mb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-8 sm:text-[11px]">
+        <p
+          className={`sigma-hero-eyebrow mb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-8 sm:text-[11px] ${arEyebrow(language)}`}
+        >
           {t.about.kicker}
         </p>
         <AnimatedText
           text={t.about.title}
           as="h3"
-          className="justify-center font-display text-[clamp(1.05rem,3.8vw,1.35rem)] font-semibold uppercase leading-[1.2] tracking-normal text-white max-md:leading-[1.2] sm:text-3xl sm:leading-[1.1] sm:tracking-tight md:text-5xl lg:text-6xl"
+          className={`justify-center font-display text-[clamp(1.05rem,3.8vw,1.35rem)] font-semibold uppercase leading-[1.2] tracking-normal text-white max-md:leading-[1.2] sm:text-3xl sm:leading-[1.1] sm:tracking-tight md:text-5xl lg:text-6xl ${arHeading(language)}`}
         />
         <motion.p
           initial={{ opacity: 1 }}
@@ -961,14 +985,16 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
     >
       <div className="mx-auto min-w-0 max-w-7xl">
         <div className="mb-10 min-w-0 max-w-full md:mb-16">
-          <p className="mb-2 text-xs font-bold tracking-[0.18em] text-[#1c39bb] sm:text-sm md:tracking-widest">
+          <p
+            className={`mb-2 text-xs font-bold tracking-[0.18em] text-[#1c39bb] sm:text-sm md:tracking-widest ${arEyebrow(language)}`}
+          >
             {t.services.sectionLabel}
           </p>
           <AnimatedText
             text={t.services.headline}
             mobileWordStack
             as="h2"
-            className="font-display w-full min-w-0 max-w-full text-[clamp(1.3rem,5.8vw,1.85rem)] font-semibold uppercase leading-snug tracking-normal text-balance sm:text-4xl md:text-5xl md:tracking-tight"
+            className={`font-display w-full min-w-0 max-w-full text-[clamp(1.3rem,5.8vw,1.85rem)] font-semibold uppercase leading-snug tracking-normal text-balance sm:text-4xl md:text-5xl md:tracking-tight ${arHeading(language)}`}
           />
         </div>
 
@@ -1019,12 +1045,14 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
           <div className="pointer-events-none absolute -bottom-20 -start-16 h-56 w-56 rounded-full bg-[#bde0fe]/[0.06] blur-3xl" />
           <div className="relative">
             <div
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#bde0fe]/25 bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#bde0fe] sm:text-[11px]"
+              className={`mb-6 inline-flex items-center gap-2 rounded-full border border-[#bde0fe]/25 bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#bde0fe] sm:text-[11px] ${arNav(language)}`}
             >
               <Sparkles className="size-3.5 shrink-0 text-[#bde0fe]" strokeWidth={2} />
               {t.sigmaPro.badge}
             </div>
-            <h2 className="max-w-full font-display text-[clamp(1.15rem,4vw,1.65rem)] font-semibold tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl lg:text-[2.5rem]">
+            <h2
+              className={`max-w-full font-display text-[clamp(1.15rem,4vw,1.65rem)] font-semibold tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl lg:text-[2.5rem] ${arHeading(language)}`}
+            >
               {t.sigmaPro.title}
             </h2>
             <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
@@ -1109,10 +1137,14 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px max-w-3xl bg-gradient-to-r from-transparent via-[#1c39bb]/40 to-transparent opacity-80" />
       <div className="relative mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
+          <p
+            className={`sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(language)}`}
+          >
             {sc.kicker}
           </p>
-          <h3 className="max-w-full font-display text-[clamp(1.125rem,4vw,1.65rem)] font-semibold uppercase tracking-normal text-balance text-white sm:text-3xl sm:tracking-tight md:text-4xl">
+          <h3
+            className={`max-w-full font-display text-[clamp(1.125rem,4vw,1.65rem)] font-semibold uppercase tracking-normal text-balance text-white sm:text-3xl sm:tracking-tight md:text-4xl ${arHeading(language)}`}
+          >
             {sc.title}
           </h3>
           <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
@@ -1134,7 +1166,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
           <div className="mt-10 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:mx-auto sm:flex-row sm:items-center sm:gap-4">
             <a
               href={mailto}
-              className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/20 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.25)] transition-[background,box-shadow,transform] hover:bg-[#1c39bb]/40 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] active:scale-[0.99] sm:w-auto sm:px-8"
+              className={`inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/20 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.25)] transition-[background,box-shadow,transform] hover:bg-[#1c39bb]/40 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] active:scale-[0.99] sm:w-auto sm:px-8 ${arCta(language)}`}
             >
               <Mail className="size-4 shrink-0" strokeWidth={2} aria-hidden />
               {t.contact.emailCta}
@@ -1143,7 +1175,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
               href="/contact"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] active:scale-[0.99] sm:w-auto sm:px-8"
+              className={`inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] active:scale-[0.99] sm:w-auto sm:px-8 ${arCta(language)}`}
             >
               {t.contact.socialCta}
               <ArrowUpRight className="size-4 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
@@ -1168,7 +1200,11 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
                 <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.02] text-[#bde0fe] transition-colors group-hover:text-white">
                   <Icon className="h-4.5 w-4.5" />
                 </span>
-                <span className="text-xs font-medium tracking-wide">{label}</span>
+                <span
+                  className={`text-xs font-medium ${language === "AR" ? "!tracking-normal leading-snug" : "tracking-wide"}`}
+                >
+                  {label}
+                </span>
               </>
             );
 
@@ -1198,27 +1234,32 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
   );
 };
 
-const CTASection = ({ t }: { t: SiteTranslations }) => (
-  <section
-    id="connect"
-    className="relative z-10 flex min-h-[min(68dvh,560px)] scroll-mt-24 flex-col items-center justify-center overflow-x-clip bg-gradient-to-t from-[#0a0c12] to-transparent px-5 py-14 sm:min-h-[min(80dvh,720px)] sm:px-6 sm:py-16 md:min-h-screen md:scroll-mt-28"
-  >
-    <motion.div
-      initial={{ opacity: 1, scale: 0.985 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8 }}
-      className="group max-w-[min(100%,42rem)] cursor-pointer px-2 text-center"
+const CTASection = ({ t }: { t: SiteTranslations }) => {
+  const { lang } = useLanguage();
+  return (
+    <section
+      id="connect"
+      className="relative z-10 flex min-h-[min(68dvh,560px)] scroll-mt-24 flex-col items-center justify-center overflow-x-clip bg-gradient-to-t from-[#0a0c12] to-transparent px-5 py-14 sm:min-h-[min(80dvh,720px)] sm:px-6 sm:py-16 md:min-h-screen md:scroll-mt-28"
     >
-      <p className="sigma-cta-wordmark max-w-full break-words text-[clamp(1.85rem,11vw,4rem)] font-bold uppercase leading-[1.05] tracking-normal transition-[background-image] duration-500 sm:text-7xl sm:leading-none sm:tracking-tighter md:text-9xl">
-        {t.cta.title}
-      </p>
-      <div className="mx-auto mt-4 h-1 w-0 bg-[#1c39bb] transition-all duration-700 ease-in-out group-hover:w-full" />
-      <p className="mt-6 max-w-full break-words text-xs tracking-[0.14em] text-[#c5ccd4] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm sm:tracking-[0.3em] md:text-[#adb5bd]">
-        {t.cta.description}
-      </p>
-    </motion.div>
-  </section>
-);
+      <motion.div
+        initial={{ opacity: 1, scale: 0.985 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="group max-w-[min(100%,42rem)] cursor-pointer px-2 text-center"
+      >
+        <p className="sigma-cta-wordmark max-w-full break-words text-[clamp(1.85rem,11vw,4rem)] font-bold uppercase leading-[1.05] tracking-normal transition-[background-image] duration-500 sm:text-7xl sm:leading-none sm:tracking-tighter md:text-9xl">
+          {t.cta.title}
+        </p>
+        <div className="mx-auto mt-4 h-1 w-0 bg-[#1c39bb] transition-all duration-700 ease-in-out group-hover:w-full" />
+        <p
+          className={`mt-6 max-w-full break-words text-xs text-[#c5ccd4] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm md:text-[#adb5bd] ${lang === "AR" ? arMutedTrack(lang) : "tracking-[0.14em] sm:tracking-[0.3em]"}`}
+        >
+          {t.cta.description}
+        </p>
+      </motion.div>
+    </section>
+  );
+};
 
 type GlassNavId =
   | "about"
@@ -1381,7 +1422,9 @@ const Navbar = () => {
             <span className="flex h-7 w-7 shrink-0 items-center justify-center font-display text-[1.65rem] font-semibold leading-none tracking-tight text-white drop-shadow-[0_0_12px_rgba(189,224,254,0.2)] transition-transform duration-300 hover:scale-[1.02]">
               Σ
             </span>
-            <span className="hidden font-display text-lg font-semibold tracking-[0.12em] text-[#c5ccd3] sm:inline">
+            <span
+              className={`hidden font-display text-lg font-semibold tracking-[0.12em] text-[#c5ccd3] sm:inline ${currentLang === "AR" ? "!tracking-normal" : ""}`}
+            >
               SIGMA
             </span>
           </button>
@@ -1441,7 +1484,7 @@ const Navbar = () => {
                         aria-hidden
                       />
                       <span
-                        className={`max-w-[9.5rem] truncate text-[11px] font-semibold uppercase leading-tight tracking-[0.06em] text-current sm:max-w-none sm:text-[13px] sm:leading-none sm:tracking-[0.07em] md:text-[14px] md:tracking-[0.08em] xl:whitespace-nowrap ${
+                        className={`max-w-[9.5rem] truncate text-[11px] font-semibold uppercase leading-tight tracking-[0.06em] text-current sm:max-w-none sm:text-[13px] sm:leading-none sm:tracking-[0.07em] md:text-[14px] md:tracking-[0.08em] xl:whitespace-nowrap ${arNav(currentLang)} ${
                           isPro && !isActive ? "shrink-0 text-[#dce2e8]" : ""
                         }`}
                         title={label}
@@ -1456,7 +1499,9 @@ const Navbar = () => {
           </div>
 
           <div className="ms-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 md:gap-4">
-            <InsightsOuterLink className="hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-white/[0.1] bg-white/[0.03] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color,box-shadow] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px]">
+            <InsightsOuterLink
+              className={`hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-white/[0.1] bg-white/[0.03] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color,box-shadow] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px] ${arNav(currentLang)}`}
+            >
               <Newspaper
                 className="size-[15px] shrink-0 text-[#bde0fe]/80"
                 strokeWidth={2}
@@ -1473,7 +1518,7 @@ const Navbar = () => {
             <button
               type="button"
               onClick={() => goToSection("connect")}
-              className="hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.26)_0%,rgba(28,57,187,0.09)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_22px_rgba(28,57,187,0.14)] transition-[background,box-shadow,border-color,transform] hover:border-[#2a4acd]/70 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_28px_rgba(28,57,187,0.22)] active:scale-[0.99] md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px]"
+              className={`hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.26)_0%,rgba(28,57,187,0.09)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_22px_rgba(28,57,187,0.14)] transition-[background,box-shadow,border-color,transform] hover:border-[#2a4acd]/70 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_28px_rgba(28,57,187,0.22)] active:scale-[0.99] md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px] ${arCta(currentLang)}`}
             >
               {t.nav.navCta}
             </button>

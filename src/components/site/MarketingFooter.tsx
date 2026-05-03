@@ -12,7 +12,7 @@ import { getGlobalFooter, type FooterColumnLink } from "@/content/global/footer"
 import type { LangCode } from "@/content/types";
 import { socialLinks } from "@/content/socials";
 import { useLanguage } from "@/context/LanguageContext";
-import { arFooter, arNav } from "@/lib/arabicTypography";
+import { localeFooter, localeNav } from "@/lib/localeTypography";
 
 /** Footer social column — X, Instagram, Telegram, LinkedIn only */
 const FOOTER_SOCIAL_ORDER = ["x", "instagram", "telegram", "linkedin"] as const;
@@ -38,7 +38,7 @@ function FooterColumnBlock({
   links: FooterColumnLink[];
   lang: LangCode;
 }) {
-  const ar = arFooter(lang);
+  const ar = localeFooter(lang);
   return (
     <div className="min-w-0">
       <p
@@ -88,7 +88,7 @@ function FooterColumnBlock({
 export function MarketingFooter() {
   const { language, isRtl } = useLanguage();
   const f = getGlobalFooter(language);
-  const ar = arFooter(language);
+  const ar = localeFooter(language);
 
   return (
     <footer
@@ -105,7 +105,7 @@ export function MarketingFooter() {
                 Σ
               </span>
               <span
-                className={`font-display text-sm font-semibold tracking-[0.14em] text-[#c5ccd3] normal-case ${arNav(language)}`}
+                className={`font-display text-sm font-semibold tracking-[0.14em] text-[#c5ccd3] normal-case ${localeNav(language)}`}
               >
                 {f.brandWordmark}
               </span>

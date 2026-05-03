@@ -93,42 +93,77 @@ body {
   }
 }
 
-/* Arabic UI: neutralize Latin uppercase / wide tracking on shared utilities */
-html[lang="ar"] .sigma-hero-eyebrow {
+/* RTL connected scripts (FA, AR): neutralize Latin uppercase / wide tracking */
+html[lang="ar"] .sigma-hero-eyebrow,
+html[lang="fa"] .sigma-hero-eyebrow {
   letter-spacing: normal !important;
   text-transform: none !important;
   line-height: 1.65 !important;
   word-spacing: normal;
 }
 
-html[lang="ar"] .sigma-hero-title {
+html[lang="ar"] .sigma-hero-title,
+html[lang="fa"] .sigma-hero-title {
   letter-spacing: normal !important;
   line-height: 1.14 !important;
   text-transform: none !important;
 }
 
 @media (min-width: 640px) {
-  html[lang="ar"] .sigma-hero-title {
+  html[lang="ar"] .sigma-hero-title,
+  html[lang="fa"] .sigma-hero-title {
     line-height: 1.08 !important;
   }
 }
 
-html[lang="ar"] .sigma-cta-wordmark {
+html[lang="ar"] .sigma-cta-wordmark,
+html[lang="fa"] .sigma-cta-wordmark {
   text-transform: none !important;
   letter-spacing: normal !important;
   line-height: 1.05 !important;
   word-spacing: normal;
 }
 
-/* Contact hub — inline `<style>` sets wide Latin tracking on kicker */
-html[lang="ar"] .sigma-contact-root .sigma-contact-kicker {
+/* Chinese: no letter-spacing hacks; readable line height */
+html[lang="zh-CN"] .sigma-hero-eyebrow {
   letter-spacing: normal !important;
   text-transform: none !important;
   line-height: 1.65 !important;
   word-spacing: normal;
 }
 
-html[lang="ar"] .sigma-contact-root h1 {
+html[lang="zh-CN"] .sigma-hero-title {
+  letter-spacing: normal !important;
+  line-height: 1.18 !important;
+  text-transform: none !important;
+}
+
+@media (min-width: 640px) {
+  html[lang="zh-CN"] .sigma-hero-title {
+    line-height: 1.12 !important;
+  }
+}
+
+html[lang="zh-CN"] .sigma-cta-wordmark {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  line-height: 1.08 !important;
+  word-spacing: normal;
+}
+
+/* Contact hub — inline `<style>` sets wide Latin tracking on kicker */
+html[lang="ar"] .sigma-contact-root .sigma-contact-kicker,
+html[lang="fa"] .sigma-contact-root .sigma-contact-kicker,
+html[lang="zh-CN"] .sigma-contact-root .sigma-contact-kicker {
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  line-height: 1.65 !important;
+  word-spacing: normal;
+}
+
+html[lang="ar"] .sigma-contact-root h1,
+html[lang="fa"] .sigma-contact-root h1,
+html[lang="zh-CN"] .sigma-contact-root h1 {
   letter-spacing: normal !important;
   line-height: 1.35 !important;
 }

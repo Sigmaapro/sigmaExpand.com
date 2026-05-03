@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { arCta } from "@/lib/arabicTypography";
+import { localeCta } from "@/lib/localeTypography";
 
 export const magneticButtonClass = (primary?: boolean, fullWidthMobile?: boolean) =>
   `group relative inline-flex max-w-full min-w-0 overflow-hidden rounded-[2px] px-5 py-3.5 text-start text-xs font-semibold uppercase tracking-[0.2em] transition-[box-shadow,transform,border-color] duration-300 ease-out will-change-transform touch-manipulation hover:scale-[1.02] sm:px-8 sm:py-4 sm:text-sm active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#bde0fe]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0c12] ${
@@ -62,7 +62,7 @@ export const MagneticButton = ({
     onMouseLeave: handleMouseLeave,
     animate: { x: position.x, y: position.y },
     transition: { type: "spring" as const, stiffness: 180, damping: 18, mass: 0.12 },
-    className: `${magneticButtonClass(primary, fullWidthMobile)} ${arCta(lang)}`,
+    className: `${magneticButtonClass(primary, fullWidthMobile)} ${localeCta(lang)}`,
   };
 
   const inner = (

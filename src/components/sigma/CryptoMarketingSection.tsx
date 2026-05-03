@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { getCryptoAgency } from "@/content/sections/cryptoAgency";
-import { arCta, arEyebrow, arHeading, arNav } from "@/lib/arabicTypography";
+import { localeCta, localeEyebrow, localeHeading, localeNav } from "@/lib/localeTypography";
 
 export function CryptoMarketingSection() {
   const { lang, isRtl } = useLanguage();
@@ -57,13 +57,13 @@ export function CryptoMarketingSection() {
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.14]" aria-hidden />
       <div className="relative z-10 mx-auto min-w-0 max-w-[90rem]">
         <p
-          className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+          className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
         >
           {c.eyebrow}
         </p>
         <h2
           id="crypto-agency-marketing-heading"
-          className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl ${arHeading(lang)}`}
+          className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl ${localeHeading(lang)}`}
         >
           {c.title}
         </h2>
@@ -109,7 +109,7 @@ export function CryptoMarketingSection() {
                     selectTab(next);
                     tabBtnRefs.current[next]?.focus();
                   }}
-                  className={`flex shrink-0 snap-center touch-manipulation items-center gap-2 rounded-full border px-4 py-2.5 text-start text-[11px] font-semibold uppercase tracking-[0.12em] transition-[background,border-color,box-shadow,color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/45 md:py-3 md:text-[12px] ${arNav(lang)} ${
+                  className={`flex shrink-0 snap-center touch-manipulation items-center gap-2 rounded-full border px-4 py-2.5 text-start text-[11px] font-semibold uppercase tracking-[0.12em] transition-[background,border-color,box-shadow,color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/45 md:py-3 md:text-[12px] ${localeNav(lang)} ${
                     isActive
                       ? "border-[#1c39bb]/55 bg-[#1c39bb]/18 text-white shadow-[0_0_28px_rgba(28,57,187,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md"
                       : "border-white/[0.1] bg-[#0c1018]/60 text-[#c5ccd3] backdrop-blur-sm hover:border-[#bde0fe]/25 hover:bg-white/[0.04]"
@@ -150,7 +150,7 @@ export function CryptoMarketingSection() {
                 className="min-w-0"
               >
                 <h3
-                  className={`font-display text-xl font-semibold tracking-tight text-white text-balance sm:text-2xl md:text-[1.65rem] ${arHeading(lang)}`}
+                  className={`font-display text-xl font-semibold tracking-tight text-white text-balance sm:text-2xl md:text-[1.65rem] ${localeHeading(lang)}`}
                 >
                   {tab.panelTitle}
                 </h3>
@@ -170,7 +170,7 @@ export function CryptoMarketingSection() {
                 <div className="mt-10">
                   <Link
                     href={tab.href}
-                    className={`inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/22 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,box-shadow,border-color] hover:border-[#2a4acd]/70 hover:bg-[#1c39bb]/38 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/50 ${arCta(lang)}`}
+                    className={`inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/22 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,box-shadow,border-color] hover:border-[#2a4acd]/70 hover:bg-[#1c39bb]/38 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/50 ${localeCta(lang)}`}
                   >
                     {c.cta}
                     <ArrowUpRight className="size-4 opacity-90" aria-hidden />

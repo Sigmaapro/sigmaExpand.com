@@ -8,6 +8,7 @@ import { getConversion } from "@/content/conversion";
 import type { LangCode } from "@/content/types";
 import { isValidEmail } from "@/lib/contact/sanitize";
 import { submitLead } from "@/lib/contact/client";
+import { localeCta, localeHeading, localeNav } from "@/lib/localeTypography";
 
 function readCalendlyUrl(): string | undefined {
   if (typeof process === "undefined") return undefined;
@@ -140,7 +141,7 @@ export function BookCallModal({
               <div className="min-w-0">
                 <h2
                   id={titleId}
-                  className="font-display text-lg font-semibold uppercase tracking-tight text-white"
+                  className={`font-display text-lg font-semibold uppercase tracking-tight text-white ${localeHeading(lang)}`}
                 >
                   {copy.title}
                 </h2>
@@ -179,7 +180,7 @@ export function BookCallModal({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="mt-8 inline-flex min-h-[3rem] min-w-[10rem] items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] px-6 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background] duration-200 hover:scale-[1.02] hover:bg-[#152a8a] active:scale-[0.99]"
+                    className={`mt-8 inline-flex min-h-[3rem] min-w-[10rem] items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] px-6 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background] duration-200 hover:scale-[1.02] hover:bg-[#152a8a] active:scale-[0.99] ${localeCta(lang)}`}
                   >
                     {copy.closeLabel}
                   </button>
@@ -194,7 +195,7 @@ export function BookCallModal({
                   <div>
                     <label
                       htmlFor="book-name"
-                      className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#868e96]"
+                      className={`block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#868e96] ${localeNav(lang)}`}
                     >
                       {copy.nameLabel}
                     </label>
@@ -211,7 +212,7 @@ export function BookCallModal({
                   <div>
                     <label
                       htmlFor="book-email"
-                      className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#868e96]"
+                      className={`block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#868e96] ${localeNav(lang)}`}
                     >
                       {copy.emailLabel}
                     </label>
@@ -229,7 +230,7 @@ export function BookCallModal({
                   <div>
                     <label
                       htmlFor="book-message"
-                      className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#868e96]"
+                      className={`block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#868e96] ${localeNav(lang)}`}
                     >
                       {copy.messageLabel}
                     </label>
@@ -245,7 +246,7 @@ export function BookCallModal({
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="mt-3 flex w-full min-h-12 touch-manipulation items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background,opacity] duration-200 hover:scale-[1.01] hover:bg-[#152a8a] active:scale-[0.99] disabled:opacity-60"
+                    className={`mt-3 flex w-full min-h-12 touch-manipulation items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background,opacity] duration-200 hover:scale-[1.01] hover:bg-[#152a8a] active:scale-[0.99] disabled:opacity-60 ${localeCta(lang)}`}
                   >
                     {status === "sending" ? copy.sendingLabel : copy.submitLabel}
                   </button>

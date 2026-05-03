@@ -22,7 +22,7 @@ import { ROUTES } from "@/content/global/routes";
 import { getCryptoAgency } from "@/content/sections/cryptoAgency";
 import type { LangCode, MobileNavSheetStrings } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
-import { arCta, arEyebrow, arNav } from "@/lib/arabicTypography";
+import { localeCta, localeEyebrow, localeNav } from "@/lib/localeTypography";
 
 export type GlassNavId =
   | "about"
@@ -87,7 +87,7 @@ function GlassAccordion({
             <Icon className="size-[18px]" strokeWidth={2} aria-hidden />
           </span>
           <span
-            className={`font-display text-[12px] font-semibold uppercase tracking-[0.14em] text-[#e9ecef] ${arNav(lang)}`}
+            className={`font-display text-[12px] font-semibold uppercase tracking-[0.14em] text-[#e9ecef] ${localeNav(lang)}`}
           >
             {title}
           </span>
@@ -129,7 +129,7 @@ function NavLinkRow({
   lang: LangCode;
 }) {
   const cls =
-    `group flex min-h-[3rem] touch-manipulation items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all duration-200 hover:border-[#1c39bb]/35 hover:bg-[#1c39bb]/12 hover:text-white hover:shadow-[0_0_28px_rgba(28,57,187,0.18)] active:scale-[0.98] ${arNav(lang)}`;
+    `group flex min-h-[3rem] touch-manipulation items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all duration-200 hover:border-[#1c39bb]/35 hover:bg-[#1c39bb]/12 hover:text-white hover:shadow-[0_0_28px_rgba(28,57,187,0.18)] active:scale-[0.98] ${localeNav(lang)}`;
   return (
     <Link href={href} className={cls} onClick={onNavigate}>
       <span className="min-w-0">{label}</span>
@@ -231,7 +231,7 @@ export function SigmaMobileNavPanel({
                 {/* A — Core */}
                 <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[linear-gradient(155deg,rgba(16,20,30,0.94)_0%,rgba(8,10,16,0.9)_100%)] p-3 shadow-[0_16px_56px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-2xl">
                   <p
-                    className={`px-2 pb-2 text-start font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb] ${arEyebrow(lang)}`}
+                    className={`px-2 pb-2 text-start font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb] ${localeEyebrow(lang)}`}
                   >
                     {mobileNav.sectionCore}
                   </p>
@@ -259,7 +259,7 @@ export function SigmaMobileNavPanel({
                               aria-hidden
                             />
                             <span
-                              className={`min-w-0 font-display text-[12px] font-semibold uppercase tracking-[0.11em] ${arNav(lang)}`}
+                              className={`min-w-0 font-display text-[12px] font-semibold uppercase tracking-[0.11em] ${localeNav(lang)}`}
                             >
                               {label}
                             </span>
@@ -332,7 +332,7 @@ export function SigmaMobileNavPanel({
                 {/* E — Company */}
                 <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[linear-gradient(155deg,rgba(14,18,26,0.94)_0%,rgba(7,9,14,0.9)_100%)] p-3 shadow-[0_12px_44px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
                   <p
-                    className={`px-2 pb-2 text-start font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb] ${arEyebrow(lang)}`}
+                    className={`px-2 pb-2 text-start font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb] ${localeEyebrow(lang)}`}
                   >
                     {mobileNav.sectionCompany}
                   </p>
@@ -340,7 +340,7 @@ export function SigmaMobileNavPanel({
                     <Link
                       href={ROUTES.about}
                       onClick={onClose}
-                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] ${arNav(lang)}`}
+                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] ${localeNav(lang)}`}
                     >
                       <span className="flex items-center gap-3">
                         <Building2 className="size-[18px] text-[#bde0fe]/85" strokeWidth={2} aria-hidden />
@@ -355,7 +355,7 @@ export function SigmaMobileNavPanel({
                     <Link
                       href={ROUTES.team}
                       onClick={onClose}
-                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] ${arNav(lang)}`}
+                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] ${localeNav(lang)}`}
                     >
                       <span className="flex items-center gap-3">
                         <Users className="size-[18px] text-[#bde0fe]/85" strokeWidth={2} aria-hidden />
@@ -370,7 +370,7 @@ export function SigmaMobileNavPanel({
                     <button
                       type="button"
                       onClick={() => goToSection("contact")}
-                      className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-between gap-3 rounded-xl border px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] transition-all active:scale-[0.98] ${arNav(lang)} ${
+                      className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-between gap-3 rounded-xl border px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] transition-all active:scale-[0.98] ${localeNav(lang)} ${
                         glassActive === "contact"
                           ? "border-[#1c39bb]/45 bg-[#1c39bb]/22 text-white shadow-[0_0_28px_rgba(28,57,187,0.22)]"
                           : "border-transparent text-[#d8dde3] hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)]"
@@ -390,7 +390,7 @@ export function SigmaMobileNavPanel({
                 <button
                   type="button"
                   onClick={() => goToSection("connect")}
-                  className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-center gap-2 rounded-2xl border border-[#1c39bb]/45 bg-[linear-gradient(180deg,rgba(28,57,187,0.35)_0%,rgba(28,57,187,0.12)_100%)] px-5 py-4 font-display text-[12px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_8px_36px_rgba(28,57,187,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[transform,box-shadow] hover:border-[#3d5cdf]/55 hover:shadow-[0_12px_48px_rgba(28,57,187,0.45)] active:scale-[0.98] ${arCta(lang)}`}
+                  className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-center gap-2 rounded-2xl border border-[#1c39bb]/45 bg-[linear-gradient(180deg,rgba(28,57,187,0.35)_0%,rgba(28,57,187,0.12)_100%)] px-5 py-4 font-display text-[12px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_8px_36px_rgba(28,57,187,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[transform,box-shadow] hover:border-[#3d5cdf]/55 hover:shadow-[0_12px_48px_rgba(28,57,187,0.45)] active:scale-[0.98] ${localeCta(lang)}`}
                 >
                   {workWithSigmaLabel}
                   <Sparkles className="size-4 text-[#bde0fe]" strokeWidth={2} aria-hidden />

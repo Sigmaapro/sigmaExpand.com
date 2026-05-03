@@ -14,7 +14,7 @@ import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
-import { arEyebrow, arHeading, arNav } from "@/lib/arabicTypography";
+import { localeEyebrow, localeHeading, localeNav } from "@/lib/localeTypography";
 
 function initialsFromName(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -36,7 +36,7 @@ function LogoCell({ logo, lang }: { logo: ProofClientLogo; lang: LangCode }) {
         />
       ) : (
         <span
-          className={`font-display text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9aa3ad] transition-colors duration-300 group-hover:text-[#e9ecef] sm:text-xs ${arNav(lang)}`}
+          className={`font-display text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9aa3ad] transition-colors duration-300 group-hover:text-[#e9ecef] sm:text-xs ${localeNav(lang)}`}
         >
           {logo.wordmark}
         </span>
@@ -100,7 +100,7 @@ function MetricCard({
         {metric.value}
       </p>
       <p
-        className={`mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e] ${arNav(lang)}`}
+        className={`mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e] ${localeNav(lang)}`}
       >
         {metric.label}
       </p>
@@ -149,7 +149,7 @@ function TestimonialCard({
           </div>
         ) : (
           <div
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#1c39bb]/35 bg-[#1c39bb]/12 text-[11px] font-semibold uppercase tracking-wide text-[#bde0fe] ${arNav(lang)}`}
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#1c39bb]/35 bg-[#1c39bb]/12 text-[11px] font-semibold uppercase tracking-wide text-[#bde0fe] ${localeNav(lang)}`}
             aria-hidden
           >
             {initials}
@@ -158,7 +158,7 @@ function TestimonialCard({
         <div className="min-w-0 flex-1">
           <p className="font-display text-sm font-semibold text-white">{item.name}</p>
           <p
-            className={`mt-0.5 text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96] ${arNav(lang)}`}
+            className={`mt-0.5 text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96] ${localeNav(lang)}`}
           >
             {item.role}
             {item.role && item.company ? " · " : null}
@@ -197,12 +197,12 @@ export function ProofLayer() {
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem] text-center">
           <p
-            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
           >
             {proof.trustedBy.sectionLabel}
           </p>
           <h3
-            className={`mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${arHeading(lang)}`}
+            className={`mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
           >
             {proof.trustedBy.headline}
           </h3>
@@ -221,12 +221,12 @@ export function ProofLayer() {
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem]">
           <p
-            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
           >
             {proof.proofInNumbers.sectionLabel}
           </p>
           <h2
-            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${arHeading(lang)}`}
+            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
           >
             {proof.proofInNumbers.headline}
           </h2>
@@ -251,12 +251,12 @@ export function ProofLayer() {
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem]">
           <p
-            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${arEyebrow(lang)}`}
+            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
           >
             {proof.partnerFeedback.sectionLabel}
           </p>
           <h3
-            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${arHeading(lang)}`}
+            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
           >
             {proof.partnerFeedback.headline}
           </h3>

@@ -9,7 +9,7 @@ import { ROUTES } from "@/content/global/routes";
 import { getAllInsightsPosts } from "@/content/insights";
 import { proofByLang } from "@/content/proof";
 import type { SiteTranslations } from "@/content/types";
-import { arEyebrow, arHeading, arNav } from "@/lib/arabicTypography";
+import { localeEyebrow, localeHeading, localeNav } from "@/lib/localeTypography";
 
 const METRIC_ORDER = ["markets", "partners", "reach", "users", "volume"] as const;
 const AUTO_MS = 3000;
@@ -91,7 +91,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
         <div className="h-px w-16 shrink-0 bg-gradient-to-r from-[#1c39bb]/70 to-transparent" />
       </div>
       <h3
-        className={`mb-3 min-h-[2.75rem] font-display text-lg font-semibold leading-snug tracking-tight text-white lg:min-h-[3rem] lg:text-xl ${arHeading(language)}`}
+        className={`mb-3 min-h-[2.75rem] font-display text-lg font-semibold leading-snug tracking-tight text-white lg:min-h-[3rem] lg:text-xl ${localeHeading(language)}`}
       >
         <span className="line-clamp-2">{title}</span>
       </h3>
@@ -122,7 +122,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
         >
           {slideHeader(
             <span
-              className={`inline-flex max-w-[min(100%,14rem)] items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff] ${arEyebrow(language)}`}
+              className={`inline-flex max-w-[min(100%,14rem)] items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff] ${localeEyebrow(language)}`}
             >
               {t.insights.pageEyebrow}
             </span>,
@@ -138,7 +138,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
                   >
                     <div className="mb-1 flex shrink-0 items-center justify-between gap-2">
                       <span
-                        className={`truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-[#bde0fe]/90 ${arNav(language)}`}
+                        className={`truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-[#bde0fe]/90 ${localeNav(language)}`}
                       >
                         {post.category}
                       </span>
@@ -172,7 +172,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
         >
           {slideHeader(
             <span
-              className={`inline-flex max-w-[min(100%,14rem)] items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff] ${arEyebrow(language)}`}
+              className={`inline-flex max-w-[min(100%,14rem)] items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff] ${localeEyebrow(language)}`}
             >
               {t.services.sectionLabel}
             </span>,
@@ -186,7 +186,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
                   className="flex shrink-0 items-center overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.02] px-2.5 py-1.5 transition-colors duration-300 group-hover:border-white/[0.11] group-hover:bg-white/[0.03]"
                 >
                   <h3
-                    className={`line-clamp-2 text-[10px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#edf1f5] lg:text-[11px] ${arNav(language)}`}
+                    className={`line-clamp-2 text-[10px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#edf1f5] lg:text-[11px] ${localeNav(language)}`}
                   >
                     {card.title}
                   </h3>
@@ -209,7 +209,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
         >
           {slideHeader(
             <span
-              className={`inline-flex max-w-[min(100%,14rem)] items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff] ${arEyebrow(language)}`}
+              className={`inline-flex max-w-[min(100%,14rem)] items-center rounded-full border border-[#bde0fe]/30 bg-[#bde0fe]/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d9ebff] ${localeEyebrow(language)}`}
             >
               {proof.proofInNumbers.sectionLabel}
             </span>,
@@ -224,7 +224,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
                 >
                   <p className="truncate text-sm font-semibold tabular-nums text-white">{m.value}</p>
                   <p
-                    className={`mt-0.5 line-clamp-2 text-[8px] font-medium uppercase leading-tight tracking-[0.06em] text-[#aeb5bd] sm:text-[9px] ${arNav(language)}`}
+                    className={`mt-0.5 line-clamp-2 text-[8px] font-medium uppercase leading-tight tracking-[0.06em] text-[#aeb5bd] sm:text-[9px] ${localeNav(language)}`}
                   >
                     {m.label}
                   </p>

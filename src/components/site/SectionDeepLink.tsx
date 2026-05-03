@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { arNav } from "@/lib/arabicTypography";
+import { localeNav } from "@/lib/localeTypography";
 
 export function SectionDeepLink({
   href,
@@ -24,7 +24,7 @@ export function SectionDeepLink({
   const isExternal = external ?? /^https?:\/\//i.test(href);
   const cls = [
     "group inline-flex items-center gap-1.5 font-semibold uppercase tracking-[0.12em] text-[11px] transition-colors",
-    arNav(lang),
+    localeNav(lang),
     "text-[#c8d2dc] underline decoration-[#6ea8ff]/45 underline-offset-[5px] drop-shadow-[0_0_14px_rgba(110,168,255,0.22)]",
     "md:text-[#7d8692] md:no-underline md:decoration-transparent md:drop-shadow-none",
     "hover:text-[#bde0fe]",

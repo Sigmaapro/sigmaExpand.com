@@ -103,6 +103,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
       onMouseEnter={() => setHoverPause(true)}
       onMouseLeave={() => setHoverPause(false)}
     >
+      <h2 className="sr-only">{t.nav.insights}</h2>
       <div className={`relative isolate z-[1] shrink-0 overflow-hidden ${SLIDE_VIEWPORT_H}`}>
         {/* Stacked slides: opacity-only crossfade — no unmount, no x-transform, fixed box */}
         <motion.div

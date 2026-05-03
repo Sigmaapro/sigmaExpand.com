@@ -13,7 +13,7 @@ import {
   ArticleStructuredData,
   BreadcrumbInsightStructuredData,
 } from "@/components/seo/ArticleStructuredData";
-import { SEO_PAGES, getCanonicalUrl } from "@/content/seo";
+import { SEO_PAGES, SIGMA_SITE_AUTHORS, getCanonicalUrl } from "@/content/seo";
 import { siteTranslations } from "@/content/siteTranslations";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonicalAbsolute = getCanonicalUrl(`/insights/${slug}`);
   const og = post.ogImage ?? post.coverImage;
   return {
+    ...SIGMA_SITE_AUTHORS,
     title: { absolute: post.seoTitle },
     description: post.seoDescription,
     keywords: [...SEO_PAGES.insights.keywords, post.category],

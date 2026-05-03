@@ -759,9 +759,9 @@ const TiltCard = ({
         style={{ transform: "translateZ(30px)" }}
       >
         <Icon className="mb-6 h-10 w-10 text-[#adb5bd] transition-colors duration-300 group-hover:text-[#bde0fe]" />
-        <p className="mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl">
+        <h3 className="mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl">
           {title}
-        </p>
+        </h3>
         <p className="text-sm leading-relaxed text-[#c5ccd4] md:text-[#adb5bd]">{desc}</p>
       </div>
       <div className="absolute left-0 top-0 h-2 w-2 border-l border-t border-[#bde0fe] opacity-0 transition-opacity group-hover:opacity-100" />
@@ -895,9 +895,9 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
               transition={{ duration: 0.45, delay: idx * 0.06 }}
               className="group rounded-md border border-white/[0.06] bg-white/[0.02] px-6 py-7 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[#1c39bb]/22 hover:bg-white/[0.035] hover:shadow-[0_0_36px_rgba(28,57,187,0.09)]"
             >
-              <p className="font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em]">
+              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em]">
                 {pillar.title}
-              </p>
+              </h3>
               <p className="mt-3 text-sm leading-relaxed text-[#c8d0d8] md:text-[15px] md:text-[#aeb5bd]">
                 {pillar.description}
               </p>
@@ -928,6 +928,7 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
         </p>
         <AnimatedText
           text={t.about.title}
+          as="h2"
           className="justify-center font-display text-[clamp(1.05rem,3.8vw,1.35rem)] font-semibold uppercase leading-[1.2] tracking-normal text-white max-md:leading-[1.2] sm:text-3xl sm:leading-[1.1] sm:tracking-tight md:text-5xl lg:text-6xl"
         />
         <motion.p

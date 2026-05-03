@@ -11,6 +11,13 @@ import { getSiteUrl } from "@/lib/site-url";
 /** Default OG/Twitter image — Next.js `opengraph-image` route (see `app/opengraph-image.tsx`). */
 export const DEFAULT_OG_IMAGE_PATH = "/opengraph-image";
 
+/** Consistent site authorship (name only — no URL in `authors` for SEO tools). */
+export const SIGMA_SITE_AUTHORS: Pick<Metadata, "authors" | "creator" | "publisher"> = {
+  authors: [{ name: "Sigma" }],
+  creator: "Sigma",
+  publisher: "Sigma",
+};
+
 export type SeoRouteKey =
   | "home"
   | "about"
@@ -59,14 +66,14 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     description:
       "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
     keywords: [
-      "Sigma",
-      "web3 growth infrastructure",
-      "crypto marketing agency",
-      "liquidity solutions",
-      "exchange growth",
-      "web3 user acquisition",
+      "web3 marketing agency",
+      "crypto growth agency",
+      "exchange user acquisition",
       "defi marketing",
-      "sigma web3",
+      "liquidity growth",
+      "web3 expansion services",
+      "crypto marketing agency",
+      "web3 infrastructure growth",
     ],
     ogTitle: "Sigma | Web3 Growth, Liquidity & Crypto Exchange Marketing",
     ogDescription:
@@ -284,6 +291,7 @@ export function buildArabicHomeMetadata(): Metadata {
   const ogAbs = absoluteOgImage();
 
   return {
+    ...SIGMA_SITE_AUTHORS,
     title: { absolute: title },
     description,
     keywords: SEO_PAGES.home.keywords,
@@ -316,6 +324,7 @@ export function buildArabicServicesMetadata(): Metadata {
   const ogAbs = absoluteOgImage();
 
   return {
+    ...SIGMA_SITE_AUTHORS,
     title: p.title,
     description: p.description,
     keywords: SEO_PAGES.services.keywords,
@@ -351,6 +360,7 @@ export function buildArabicInsightsIndexMetadata(): Metadata {
   const ogAbs = absoluteOgImage();
 
   return {
+    ...SIGMA_SITE_AUTHORS,
     title,
     description,
     keywords: SEO_PAGES.insights.keywords,
@@ -391,6 +401,7 @@ export function buildPageMetadata(key: SeoRouteKey, ogImagePath: string = DEFAUL
     key === "home" ? "home" : key === "services" ? "services" : undefined;
 
   const base: Metadata = {
+    ...SIGMA_SITE_AUTHORS,
     description: p.description,
     keywords: p.keywords,
     alternates: {
@@ -444,6 +455,7 @@ export function buildInsightsIndexMetadata(
   const canonicalAbsolute = getCanonicalUrl("/insights");
   const ogAbs = absoluteOgImage();
   return {
+    ...SIGMA_SITE_AUTHORS,
     title,
     description,
     keywords: SEO_PAGES.insights.keywords,

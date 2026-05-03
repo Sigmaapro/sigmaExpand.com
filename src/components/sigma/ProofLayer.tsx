@@ -175,9 +175,9 @@ export function ProofLayer() {
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.trustedBy.sectionLabel}
           </p>
-          <h3 className="mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h2 className="mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.trustedBy.headline}
-          </h3>
+          </h2>
           <div className="mx-auto mt-10 flex max-w-5xl flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4 md:gap-5">
             {clientLogos.map((logo) => (
               <LogoCell key={logo.id} logo={logo} />
@@ -221,9 +221,9 @@ export function ProofLayer() {
           <p className="sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px]">
             {proof.partnerFeedback.sectionLabel}
           </p>
-          <h3 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
+          <h2 className="max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl">
             {proof.partnerFeedback.headline}
-          </h3>
+          </h2>
           <div className="mt-10 grid min-w-0 grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
             {proof.testimonials.map((item, idx) => (
               <TestimonialCard key={item.id} item={item} index={idx} />

@@ -52,7 +52,7 @@ export const metadata: Metadata = {
       ar: "/ar",
     },
   },
-  authors: [{ name: "Sigma", url: PUBLISHER_SITE_URL }],
+  authors: [{ name: "Sigma" }],
   creator: "Sigma",
   publisher: "Sigma",
   openGraph: {

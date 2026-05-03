@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SIGMA_SITE_AUTHORS } from "@/content/seo";
 
 export const metadata: Metadata = {
+  ...SIGMA_SITE_AUTHORS,
   title: "Page not found",
   description: "The requested Sigma page could not be found.",
   robots: { index: false, follow: true },

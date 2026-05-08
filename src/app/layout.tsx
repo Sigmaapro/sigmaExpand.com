@@ -87,12 +87,12 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const initialLang = (langFromUnknown(cookieStore.get("sigma-lang")?.value) ?? "EN") as LangCode;
   const htmlDir = isRtlLang(initialLang) ? "rtl" : "ltr";
   const htmlLang = HTML_LANG_BY_CODE[initialLang];

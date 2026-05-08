@@ -75,7 +75,7 @@ export function buildLanguageAlternates(path: string): NonNullable<Metadata["alt
     const html = HTML_LANG_BY_CODE[lang];
     const basePath = lang === "AR" && map.arabicPath ? map.arabicPath : map.defaultPath;
     const q = new URLSearchParams({ lang });
-    languages[html] = `${basePath}?${q.toString()}`;
+    (languages as Record<string, string>)[html] = `${basePath}?${q.toString()}`;
   }
   return languages;
 }

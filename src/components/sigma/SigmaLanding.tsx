@@ -1579,8 +1579,9 @@ const Navbar = () => {
 
             <button
               type="button"
-              className="inline-flex h-12 min-h-12 w-12 min-w-12 shrink-0 touch-manipulation items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] text-[#e9ecef] transition-colors hover:border-white/18 hover:bg-white/[0.06] active:scale-[0.98] lg:hidden"
+              className="inline-flex h-12 min-h-12 w-12 min-w-12 shrink-0 touch-manipulation items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] text-[#e9ecef] transition-colors hover:border-white/18 hover:bg-white/[0.06] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 lg:hidden"
               aria-expanded={mobileOpen}
+              aria-controls="sigma-mobile-nav-panel"
               aria-label={
                 mobileOpen ? t.ui.navChrome.closeMenuAria : t.ui.navChrome.openMenuAria
               }
@@ -1597,8 +1598,10 @@ const Navbar = () => {
       </nav>
 
       <SigmaMobileNavPanel
+        panelId="sigma-mobile-nav-panel"
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
+        closeAriaLabel={t.ui.navChrome.closeMenuAria}
         goToSection={goToSection}
         glassActive={glassActive}
         mobileNav={t.ui.mobileNavSheet}

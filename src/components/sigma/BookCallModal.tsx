@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
@@ -28,6 +28,7 @@ export function BookCallModal({
   lang?: LangCode;
 }) {
   const titleId = useId();
+  const descriptionId = useId();
   const [mounted, setMounted] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,6 +39,8 @@ export function BookCallModal({
   const [errorMessage, setErrorMessage] = useState("");
   const calendlySrc = readCalendlyUrl();
   const reduceMotion = useReducedMotion() ?? false;
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -65,6 +68,37 @@ export function BookCallModal({
       setEmail("");
       setMessage("");
     }
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    lastFocusedRef.current = document.activeElement as HTMLElement | null;
+    const panel = dialogRef.current;
+    if (!panel) return;
+    const focusables = panel.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+    );
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    first?.focus();
+
+    const onTabKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || focusables.length === 0) return;
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onTabKey);
+    return () => {
+      document.removeEventListener("keydown", onTabKey);
+      lastFocusedRef.current?.focus();
+    };
   }, [open]);
 
   const copy = getConversion(lang).bookCall;
@@ -126,17 +160,20 @@ export function BookCallModal({
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             aria-label={copy.backdropCloseAria}
             onClick={onClose}
+            tabIndex={-1}
           />
           <motion.div
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
+            aria-describedby={descriptionId}
             dir={isRtl ? "rtl" : "ltr"}
             initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 16, scale: 0.98 }}
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.98 }}
             transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
             className="relative z-10 flex max-h-[min(88dvh,calc(100dvh-env(safe-area-inset-bottom,0px)-0.5rem))] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-white/[0.1] border-b-0 bg-gradient-to-b from-[#12161f] to-[#0a0c12] shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:max-h-[min(92vh,720px)] sm:rounded-xl sm:border-b"
+            ref={dialogRef}
           >
             <div className="flex items-start justify-between gap-3 border-b border-white/[0.06] px-4 py-3.5 sm:gap-4 sm:px-6 sm:py-4">
               <div className="min-w-0">
@@ -146,7 +183,7 @@ export function BookCallModal({
                 >
                   {copy.title}
                 </h2>
-                <p className="mt-1 text-xs leading-relaxed text-[#8b939e] sm:text-[13px]">
+                <p id={descriptionId} className="mt-1 text-xs leading-relaxed text-[#8b939e] sm:text-[13px]">
                   {calendlySrc ? copy.calendlyHint : copy.subtitle}
                 </p>
               </div>
@@ -189,7 +226,7 @@ export function BookCallModal({
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {status === "error" && errorMessage ? (
-                    <p className="text-sm text-[#ff8f8f]" role="alert">
+                    <p className="text-sm text-[#ff8f8f]" role="alert" aria-live="assertive">
                       {errorMessage}
                     </p>
                   ) : null}
@@ -205,6 +242,7 @@ export function BookCallModal({
                       name="name"
                       required
                       autoComplete="name"
+                      autoFocus
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="mt-1.5 min-h-11 w-full rounded-md border border-white/[0.1] bg-[#07090f] px-3 py-2.5 text-base text-[#f1f3f5] outline-none transition-[border-color,box-shadow] focus:border-[#1c39bb]/55 focus:ring-2 focus:ring-[#1c39bb]/25 sm:text-sm"

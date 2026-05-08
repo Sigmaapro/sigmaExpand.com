@@ -45,6 +45,8 @@ const CORE_ORDER: { id: CoreNavId; icon: LucideIcon }[] = [
 type Props = {
   open: boolean;
   onClose: () => void;
+  panelId?: string;
+  closeAriaLabel: string;
   goToSection: (id: GlassNavId) => void;
   glassActive: GlassNavId | null;
   mobileNav: MobileNavSheetStrings;
@@ -60,6 +62,7 @@ type Props = {
 const spring = { type: "spring" as const, stiffness: 420, damping: 34 };
 
 function GlassAccordion({
+  id,
   title,
   icon: Icon,
   children,
@@ -67,6 +70,7 @@ function GlassAccordion({
   onToggle,
   lang,
 }: {
+  id: string;
   title: string;
   icon: LucideIcon;
   children: React.ReactNode;
@@ -74,13 +78,16 @@ function GlassAccordion({
   onToggle: () => void;
   lang: LangCode;
 }) {
+  const panelId = `${id}-panel`;
   return (
     <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[linear-gradient(155deg,rgba(18,22,32,0.92)_0%,rgba(7,9,14,0.88)_55%,rgba(12,16,24,0.9)_100%)] shadow-[0_12px_48px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.05),0_0_0_1px_rgba(28,57,187,0.06)] backdrop-blur-2xl">
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full touch-manipulation items-center justify-between gap-3 px-4 py-4 text-start transition-[background] duration-200 hover:bg-white/[0.03] active:scale-[0.99]"
+        className="flex w-full touch-manipulation items-center justify-between gap-3 px-4 py-4 text-start transition-[background] duration-200 hover:bg-white/[0.03] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
         aria-expanded={open}
+        aria-controls={panelId}
+        id={id}
       >
         <span className="flex min-w-0 items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#1c39bb]/25 bg-[#1c39bb]/12 text-[#bde0fe] shadow-[0_0_20px_rgba(28,57,187,0.12)]">
@@ -108,6 +115,9 @@ function GlassAccordion({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden border-t border-white/[0.06]"
+            role="region"
+            id={panelId}
+            aria-labelledby={id}
           >
             <div className="space-y-1 px-3 pb-3 pt-1">{children}</div>
           </motion.div>
@@ -129,7 +139,7 @@ function NavLinkRow({
   lang: LangCode;
 }) {
   const cls =
-    `group flex min-h-[3rem] touch-manipulation items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all duration-200 hover:border-[#1c39bb]/35 hover:bg-[#1c39bb]/12 hover:text-white hover:shadow-[0_0_28px_rgba(28,57,187,0.18)] active:scale-[0.98] ${localeNav(lang)}`;
+    `group flex min-h-[3rem] touch-manipulation items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all duration-200 hover:border-[#1c39bb]/35 hover:bg-[#1c39bb]/12 hover:text-white hover:shadow-[0_0_28px_rgba(28,57,187,0.18)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)}`;
   return (
     <Link href={href} className={cls} onClick={onNavigate}>
       <span className="min-w-0">{label}</span>
@@ -145,6 +155,8 @@ function NavLinkRow({
 export function SigmaMobileNavPanel({
   open,
   onClose,
+  panelId = "sigma-mobile-nav-panel",
+  closeAriaLabel,
   goToSection,
   glassActive,
   mobileNav,
@@ -155,6 +167,8 @@ export function SigmaMobileNavPanel({
   workWithSigmaLabel,
 }: Props) {
   const { lang } = useLanguage();
+  const panelRef = React.useRef<HTMLDivElement | null>(null);
+  const lastFocusedRef = React.useRef<HTMLElement | null>(null);
   const crypto = getCryptoAgency(lang);
   const locations = crypto.tabs.map((t) => ({ label: t.label, href: t.href }));
 
@@ -192,6 +206,43 @@ export function SigmaMobileNavPanel({
     }
   }, [open]);
 
+  React.useEffect(() => {
+    if (!open) return;
+    lastFocusedRef.current = document.activeElement as HTMLElement | null;
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const focusables = panel.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+    );
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    first?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab" || focusables.length === 0) return;
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      lastFocusedRef.current?.focus();
+    };
+  }, [open, onClose]);
+
   const navCore = CORE_ORDER.map(({ id, icon }) => ({
     id,
     icon,
@@ -217,16 +268,28 @@ export function SigmaMobileNavPanel({
             role="dialog"
             aria-modal="true"
             aria-label={mobileNav.sheetAriaLabel}
+            id={panelId}
             dir={sheetDir}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={spring}
             className="fixed inset-x-0 bottom-0 top-[calc(4.75rem+env(safe-area-inset-top,0px))] z-[9999] flex min-h-0 flex-col overflow-x-clip lg:hidden"
+            ref={panelRef}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_0%,rgba(28,57,187,0.14)_0%,transparent_58%)] opacity-90" />
 
             <div className="relative flex min-h-0 flex-1 flex-col overflow-x-clip px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
+              <div className="mb-2 flex justify-end">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className={`inline-flex min-h-11 min-w-11 touch-manipulation items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.04] text-[#d8dde3] transition-colors hover:border-[#bde0fe]/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)}`}
+                  aria-label={closeAriaLabel}
+                >
+                  <span aria-hidden>×</span>
+                </button>
+              </div>
               <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pb-4 [-webkit-overflow-scrolling:touch]">
                 {/* A — Core */}
                 <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[linear-gradient(155deg,rgba(16,20,30,0.94)_0%,rgba(8,10,16,0.9)_100%)] p-3 shadow-[0_16px_56px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-2xl">
@@ -244,7 +307,7 @@ export function SigmaMobileNavPanel({
                           key={id}
                           type="button"
                           onClick={() => goToSection(id)}
-                          className={`flex min-h-[3.25rem] touch-manipulation items-center justify-between gap-3 rounded-xl px-3 py-3 text-start transition-all duration-200 active:scale-[0.98] ${
+                          className={`flex min-h-[3.25rem] touch-manipulation items-center justify-between gap-3 rounded-xl px-3 py-3 text-start transition-all duration-200 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${
                             active
                               ? "border border-[#1c39bb]/45 bg-[#1c39bb]/22 text-white shadow-[0_0_32px_rgba(28,57,187,0.28)]"
                               : isPro
@@ -276,6 +339,7 @@ export function SigmaMobileNavPanel({
                 </div>
 
                 <GlassAccordion
+                  id="sigma-mobile-locations"
                   title={mobileNav.sectionLocations}
                   icon={MapPin}
                   open={accLocations}
@@ -294,6 +358,7 @@ export function SigmaMobileNavPanel({
                 </GlassAccordion>
 
                 <GlassAccordion
+                  id="sigma-mobile-services"
                   title={mobileNav.sectionServices}
                   icon={TrendingUp}
                   open={accServices}
@@ -312,6 +377,7 @@ export function SigmaMobileNavPanel({
                 </GlassAccordion>
 
                 <GlassAccordion
+                  id="sigma-mobile-insights"
                   title={mobileNav.sectionInsights}
                   icon={Newspaper}
                   open={accInsights}
@@ -340,7 +406,7 @@ export function SigmaMobileNavPanel({
                     <Link
                       href={ROUTES.about}
                       onClick={onClose}
-                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] ${localeNav(lang)}`}
+                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)}`}
                     >
                       <span className="flex items-center gap-3">
                         <Building2 className="size-[18px] text-[#bde0fe]/85" strokeWidth={2} aria-hidden />
@@ -355,7 +421,7 @@ export function SigmaMobileNavPanel({
                     <Link
                       href={ROUTES.team}
                       onClick={onClose}
-                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] ${localeNav(lang)}`}
+                      className={`group flex min-h-[3.25rem] items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)}`}
                     >
                       <span className="flex items-center gap-3">
                         <Users className="size-[18px] text-[#bde0fe]/85" strokeWidth={2} aria-hidden />
@@ -370,7 +436,7 @@ export function SigmaMobileNavPanel({
                     <button
                       type="button"
                       onClick={() => goToSection("contact")}
-                      className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-between gap-3 rounded-xl border px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] transition-all active:scale-[0.98] ${localeNav(lang)} ${
+                      className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-between gap-3 rounded-xl border px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] transition-all active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)} ${
                         glassActive === "contact"
                           ? "border-[#1c39bb]/45 bg-[#1c39bb]/22 text-white shadow-[0_0_28px_rgba(28,57,187,0.22)]"
                           : "border-transparent text-[#d8dde3] hover:border-[#1c39bb]/30 hover:bg-[#1c39bb]/10 hover:text-white hover:shadow-[0_0_24px_rgba(28,57,187,0.14)]"
@@ -390,7 +456,7 @@ export function SigmaMobileNavPanel({
                 <button
                   type="button"
                   onClick={() => goToSection("connect")}
-                  className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-center gap-2 rounded-2xl border border-[#1c39bb]/45 bg-[linear-gradient(180deg,rgba(28,57,187,0.35)_0%,rgba(28,57,187,0.12)_100%)] px-5 py-4 font-display text-[12px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_8px_36px_rgba(28,57,187,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[transform,box-shadow] hover:border-[#3d5cdf]/55 hover:shadow-[0_12px_48px_rgba(28,57,187,0.45)] active:scale-[0.98] ${localeCta(lang)}`}
+                  className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-center gap-2 rounded-2xl border border-[#1c39bb]/45 bg-[linear-gradient(180deg,rgba(28,57,187,0.35)_0%,rgba(28,57,187,0.12)_100%)] px-5 py-4 font-display text-[12px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_8px_36px_rgba(28,57,187,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[transform,box-shadow] hover:border-[#3d5cdf]/55 hover:shadow-[0_12px_48px_rgba(28,57,187,0.45)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(lang)}`}
                 >
                   {workWithSigmaLabel}
                   <Sparkles className="size-4 text-[#bde0fe]" strokeWidth={2} aria-hidden />

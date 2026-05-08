@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { InsightPost } from "@/content/insights";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
+import { localeBody, localeMeta, localeNav } from "@/lib/localeTypography";
 import { InsightCard } from "./InsightCard";
 
 const DATE_LOCALE: Record<LangCode, string> = {
@@ -73,7 +74,7 @@ export function InsightsListingClient({
             role="tab"
             aria-selected={active === "all"}
             onClick={() => setActive("all")}
-            className={`touch-manipulation rounded-full border px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors sm:text-[11px] ${
+            className={`touch-manipulation rounded-full border px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors sm:text-[11px] ${localeNav(lang)} ${
               active === "all"
                 ? "border-[#1c39bb]/60 bg-[#1c39bb]/25 text-white"
                 : "border-white/[0.1] bg-transparent text-[#8b939e] hover:border-white/20 hover:text-[#e9ecef]"
@@ -88,7 +89,7 @@ export function InsightsListingClient({
               role="tab"
               aria-selected={active === c}
               onClick={() => setActive(c)}
-              className={`touch-manipulation rounded-full border px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors sm:text-[11px] ${
+              className={`touch-manipulation rounded-full border px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors sm:text-[11px] ${localeNav(lang)} ${
                 active === c
                   ? "border-[#1c39bb]/60 bg-[#1c39bb]/25 text-white"
                   : "border-white/[0.1] bg-transparent text-[#8b939e] hover:border-white/20 hover:text-[#e9ecef]"
@@ -118,16 +119,18 @@ export function InsightsListingClient({
             </Link>
             <div className="flex min-w-0 flex-col justify-center p-5 sm:p-8 md:p-10">
               <div className="mb-3 flex flex-wrap items-center gap-2">
-                <span className="rounded-sm border border-[#1c39bb]/40 bg-[#1c39bb]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#bde0fe]">
+                <span
+                  className={`rounded-sm border border-[#1c39bb]/40 bg-[#1c39bb]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#bde0fe] ${localeMeta(lang)}`}
+                >
                   {t.insights.featuredLabel} · {getCategoryLabel(featured.category, t)}
                 </span>
                 <time
                   dateTime={featured.publishDate}
-                  className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]"
+                  className={`text-[10px] uppercase tracking-[0.12em] text-[#6c757d] ${localeMeta(lang)}`}
                 >
                   {formatDate(featured.publishDate, lang)}
                 </time>
-                <span className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]">
+                <span className={`text-[10px] uppercase tracking-[0.12em] text-[#6c757d] ${localeMeta(lang)}`}>
                   · {featured.readTime}
                 </span>
               </div>
@@ -139,7 +142,7 @@ export function InsightsListingClient({
                   {featured.title}
                 </Link>
               </h3>
-              <p className="mt-4 text-base leading-relaxed text-[#adb5bd]">
+              <p className={`mt-4 text-base leading-relaxed text-[#adb5bd] ${localeBody(lang)}`}>
                 {featured.excerpt}
               </p>
               <Link

@@ -17,7 +17,7 @@ export function SectionDeepLink({
   className?: string;
   /** Same-origin routes omit this; use for insights URL if external */
   external?: boolean;
-  /** Same-origin `next/link` only — adds `target` + `rel` when true */
+  /** Deprecated for internal routes; preserved for backward compatibility */
   openInNewTab?: boolean;
 }) {
   const { lang } = useLanguage();
@@ -50,13 +50,6 @@ export function SectionDeepLink({
     );
   }
 
-  return (
-    <Link
-      href={href}
-      className={cls}
-      {...(openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-    >
-      {inner}
-    </Link>
-  );
+  const allowNewTab = openInNewTab && !href.startsWith("/");
+  return <Link href={href} className={cls} {...(allowNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{inner}</Link>;
 }

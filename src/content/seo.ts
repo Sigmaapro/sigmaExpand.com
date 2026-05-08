@@ -6,6 +6,7 @@
 
 import type { Metadata } from "next";
 import { servicesPageMetaByLang } from "@/content/global/marketing/servicesContent";
+import { buildLanguageAlternates } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
 
 /** Default OG/Twitter image — Next.js `opengraph-image` route (see `app/opengraph-image.tsx`). */
@@ -267,18 +268,14 @@ const ROBOTS: Metadata["robots"] = {
   googleBot: { index: true, follow: true },
 };
 
-/** hreflang pairs for English default URLs vs Arabic `/ar/*` marketing routes */
+/** Scalable hreflang alternates across all supported locales. */
 export type MarketingHrefRoute = "home" | "services" | "insights";
 
 export function marketingHreflangLanguages(
   route: MarketingHrefRoute,
 ): NonNullable<Metadata["alternates"]>["languages"] {
-  const paths = {
-    home: { en: "/", ar: "/ar" },
-    services: { en: "/services", ar: "/ar/services" },
-    insights: { en: "/insights", ar: "/ar/insights" },
-  }[route];
-  return { "x-default": paths.en, en: paths.en, ar: paths.ar };
+  const path = route === "home" ? "/" : route === "services" ? "/services" : "/insights";
+  return buildLanguageAlternates(path);
 }
 
 /** Arabic landing SEO — manual copy (not machine-translated). */
@@ -397,16 +394,13 @@ export function buildPageMetadata(key: SeoRouteKey, ogImagePath: string = DEFAUL
   const canonicalAbsolute = getCanonicalUrl(p.path);
   const ogAbs = absoluteOgImage(ogImagePath);
 
-  const hrefRoute: MarketingHrefRoute | undefined =
-    key === "home" ? "home" : key === "services" ? "services" : undefined;
-
   const base: Metadata = {
     ...SIGMA_SITE_AUTHORS,
     description: p.description,
     keywords: p.keywords,
     alternates: {
       canonical: canonicalPath,
-      ...(hrefRoute ? { languages: marketingHreflangLanguages(hrefRoute) } : {}),
+      languages: buildLanguageAlternates(canonicalPath),
     },
     robots: ROBOTS,
     openGraph: {
@@ -461,7 +455,7 @@ export function buildInsightsIndexMetadata(
     keywords: SEO_PAGES.insights.keywords,
     alternates: {
       canonical: "/insights",
-      languages: marketingHreflangLanguages("insights"),
+      languages: buildLanguageAlternates("/insights"),
     },
     robots: ROBOTS,
     openGraph: {

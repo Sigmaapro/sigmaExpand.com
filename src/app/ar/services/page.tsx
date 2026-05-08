@@ -9,7 +9,7 @@ export const metadata: Metadata = buildArabicServicesMetadata();
 export default function ArabicServicesPage() {
   return (
     <>
-      <ServicesStructuredData />
+      <ServicesStructuredData lang="AR" />
       <InnerPageShell>
         <ServicesPageView />
       </InnerPageShell>

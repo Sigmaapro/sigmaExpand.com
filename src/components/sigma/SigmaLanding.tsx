@@ -1177,8 +1177,6 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
             </a>
             <Link
               href="/contact"
-              target="_blank"
-              rel="noopener noreferrer"
               className={`inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] active:scale-[0.99] sm:w-auto sm:px-8 ${localeCta(language)}`}
             >
               {t.contact.socialCta}

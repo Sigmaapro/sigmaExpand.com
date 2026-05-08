@@ -4,14 +4,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Globe } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
+import { buildLocaleSearchParams, routePathForLang } from "@/lib/i18n";
 import { localeCta, localeNav } from "@/lib/localeTypography";
 
 export function SiteNavbar() {
   const { t, language, setLanguage, isRtl } = useLanguage();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
+
+  const applyLanguage = (nextLang: typeof language) => {
+    setLanguage(nextLang);
+    document.cookie = `sigma-lang=${nextLang}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    const targetPath = routePathForLang(pathname || "/", nextLang);
+    const nextQuery = buildLocaleSearchParams(searchParams, nextLang);
+    router.replace(nextQuery ? `${targetPath}?${nextQuery}` : targetPath, { scroll: false });
+  };
 
   return (
     <nav
@@ -87,7 +100,7 @@ export function SiteNavbar() {
                     role="option"
                     aria-selected={language === l.code}
                     onClick={() => {
-                      setLanguage(l.code);
+                      applyLanguage(l.code);
                       setOpen(false);
                     }}
                     className={`block w-full px-4 py-3 text-start font-body text-[11px] font-bold uppercase tracking-widest transition-colors ${localeNav(language)} ${

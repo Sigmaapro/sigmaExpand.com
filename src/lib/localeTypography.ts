@@ -50,6 +50,14 @@ function rtlFooter(): string {
   return "!tracking-normal normal-case !leading-relaxed [word-spacing:normal]";
 }
 
+function rtlBody(): string {
+  return "normal-case !tracking-normal !leading-[1.95] [word-spacing:0.02em]";
+}
+
+function rtlMeta(): string {
+  return "normal-case !tracking-normal !leading-relaxed [word-spacing:normal]";
+}
+
 /** Eyebrows / kickers */
 export function localeEyebrow(lang: LangCode): string {
   if (isRtlConnectedLang(lang)) return rtlEyebrow();
@@ -93,6 +101,20 @@ export function localeFooter(lang: LangCode): string {
 /** Muted lines that used wide Latin tracking */
 export function localeMutedTrack(lang: LangCode): string {
   return localeFooter(lang);
+}
+
+/** Body paragraphs & dense copy */
+export function localeBody(lang: LangCode): string {
+  if (isRtlConnectedLang(lang)) return rtlBody();
+  if (isZhLang(lang)) return "!tracking-normal !leading-[1.9]";
+  return "";
+}
+
+/** Small meta labels, dates, chips */
+export function localeMeta(lang: LangCode): string {
+  if (isRtlConnectedLang(lang)) return rtlMeta();
+  if (isZhLang(lang)) return "!tracking-normal normal-case";
+  return "";
 }
 
 /** Hero subtitle row */

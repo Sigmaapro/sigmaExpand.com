@@ -16,13 +16,7 @@ export function InsightsOuterLink({
   const href = siteSettings.insightsUrl;
   if (href.startsWith("/")) {
     return (
-      <Link
-        href={href}
-        onClick={onNavigate}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
+      <Link href={href} onClick={onNavigate} className={className}>
         {children}
       </Link>
     );

@@ -1,12 +1,15 @@
 import type { InsightPost } from "@/content/insights";
+import type { LangCode } from "@/content/types";
 import { getCanonicalUrl } from "@/content/seo";
+import { siteTranslations } from "@/content/siteTranslations";
 import { getSiteUrl } from "@/lib/site-url";
 
 type Props = {
   post: InsightPost;
+  lang?: LangCode;
 };
 
-export function ArticleStructuredData({ post }: Props) {
+export function ArticleStructuredData({ post, lang = "EN" }: Props) {
   const base = getSiteUrl().replace(/\/$/, "");
   const url = getCanonicalUrl(`/insights/${post.slug}`);
   const img = post.ogImage ?? post.coverImage;
@@ -34,7 +37,7 @@ export function ArticleStructuredData({ post }: Props) {
       },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    url,
+    url: `${url}?lang=${lang}`,
     isPartOf: { "@type": "WebSite", "@id": `${base}/#website` },
     articleSection: post.category,
   };
@@ -44,8 +47,9 @@ export function ArticleStructuredData({ post }: Props) {
   );
 }
 
-export function BreadcrumbInsightStructuredData({ post }: Props) {
+export function BreadcrumbInsightStructuredData({ post, lang = "EN" }: Props) {
   const base = getSiteUrl().replace(/\/$/, "");
+  const labels = siteTranslations[lang].insights;
   const data = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -53,20 +57,20 @@ export function BreadcrumbInsightStructuredData({ post }: Props) {
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: siteTranslations[lang].insights.sigmaHome,
         item: base,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Insights",
-        item: getCanonicalUrl("/insights"),
+        name: labels.backToInsights,
+        item: `${getCanonicalUrl("/insights")}?lang=${lang}`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: post.title,
-        item: getCanonicalUrl(`/insights/${post.slug}`),
+        item: `${getCanonicalUrl(`/insights/${post.slug}`)}?lang=${lang}`,
       },
     ],
   };

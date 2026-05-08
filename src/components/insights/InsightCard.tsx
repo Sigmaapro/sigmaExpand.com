@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { InsightPost } from "@/content/insights";
 import type { LangCode } from "@/content/types";
+import { localeBody, localeMeta, localeNav } from "@/lib/localeTypography";
 
 const DATE_LOCALE: Record<LangCode, string> = {
   EN: "en-US",
@@ -47,16 +48,18 @@ export function InsightCard({
       </Link>
       <div className="flex min-h-0 flex-1 flex-col p-5 sm:p-6">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span className="rounded-sm border border-[#1c39bb]/40 bg-[#1c39bb]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#bde0fe]">
+          <span
+            className={`rounded-sm border border-[#1c39bb]/40 bg-[#1c39bb]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#bde0fe] ${localeMeta(lang)}`}
+          >
             {categoryLabel}
           </span>
           <time
             dateTime={post.publishDate}
-            className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]"
+            className={`text-[10px] uppercase tracking-[0.12em] text-[#6c757d] ${localeMeta(lang)}`}
           >
             {formatDate(post.publishDate, lang)}
           </time>
-          <span className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]">
+          <span className={`text-[10px] uppercase tracking-[0.12em] text-[#6c757d] ${localeMeta(lang)}`}>
             · {post.readTime}
           </span>
         </div>
@@ -68,12 +71,12 @@ export function InsightCard({
             {post.title}
           </Link>
         </h3>
-        <p className="mt-3 min-h-0 flex-1 text-sm leading-relaxed text-[#adb5bd]">
+        <p className={`mt-3 min-h-0 flex-1 text-sm leading-relaxed text-[#adb5bd] ${localeBody(lang)}`}>
           {post.excerpt}
         </p>
         <Link
           href={`/insights/${post.slug}`}
-          className="mt-5 inline-flex min-h-10 w-fit items-center gap-1.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#bde0fe] transition-colors hover:text-white"
+          className={`mt-5 inline-flex min-h-10 w-fit items-center gap-1.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#bde0fe] transition-colors hover:text-white ${localeNav(lang)}`}
         >
           {readLabel}
           <span aria-hidden className="translate-x-0 transition-transform group-hover:translate-x-0.5">

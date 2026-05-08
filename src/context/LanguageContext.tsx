@@ -7,8 +7,10 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import type { LangCode, SiteTranslations } from "@/content/types";
 import { siteTranslations } from "@/content/siteTranslations";
+import { HTML_LANG_BY_CODE, isRtlLang, langFromUnknown } from "@/lib/i18n";
 
 type LanguageContextValue = {
   /** Preferred alias for clarity in consumers */
@@ -27,31 +29,40 @@ const STORAGE_KEY = "sigma-lang";
 
 const LANG_CODES: LangCode[] = ["EN", "TR", "ZH", "FA", "ES", "RU", "AR"];
 
-const HTML_LANG_BY_CODE: Record<LangCode, string> = {
-  EN: "en",
-  TR: "tr",
-  ZH: "zh-CN",
-  FA: "fa",
-  ES: "es",
-  RU: "ru",
-  AR: "ar",
-};
-
 function isLangCode(value: string): value is LangCode {
   return (LANG_CODES as readonly string[]).includes(value);
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<LangCode>("EN");
+export function LanguageProvider({
+  children,
+  initialLang = "EN",
+}: {
+  children: ReactNode;
+  initialLang?: LangCode;
+}) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [lang, setLangState] = useState<LangCode>(initialLang);
 
   useEffect(() => {
     try {
+      const fromQuery = langFromUnknown(searchParams.get("lang"));
+      if (fromQuery) {
+        setLangState(fromQuery);
+        localStorage.setItem(STORAGE_KEY, fromQuery);
+        return;
+      }
+      if (pathname?.startsWith("/ar")) {
+        setLangState("AR");
+        localStorage.setItem(STORAGE_KEY, "AR");
+        return;
+      }
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved && isLangCode(saved)) setLangState(saved);
     } catch {
       /* ignore */
     }
-  }, []);
+  }, [pathname, searchParams]);
 
   const setLang = (l: LangCode) => {
     setLangState((prev) => (prev === l ? prev : l));
@@ -68,7 +79,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     lang,
     setLang,
     t: siteTranslations[lang],
-    isRtl: lang === "FA" || lang === "AR",
+    isRtl: isRtlLang(lang),
   };
 
   useEffect(() => {

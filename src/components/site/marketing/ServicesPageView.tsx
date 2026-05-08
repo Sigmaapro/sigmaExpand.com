@@ -4,6 +4,7 @@ import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaf
 import { servicesPageContentByLang } from "@/content/global/marketing/servicesContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
+import { localeBody, localeEyebrow, localeHeading } from "@/lib/localeTypography";
 
 export function ServicesPageView() {
   const { language } = useLanguage();
@@ -13,13 +14,13 @@ export function ServicesPageView() {
     <MarketingSubpageScaffold>
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
         <header className="mx-auto max-w-3xl text-center">
-          <p className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb]">
+          <p className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}>
             {c.kicker}
           </p>
-          <h1 className="font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h1 className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}>
             {c.headline}
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">
+          <p className={`mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}>
             {c.intro}
           </p>
         </header>
@@ -31,11 +32,17 @@ export function ServicesPageView() {
               id={s.id}
               className="scroll-mt-28 rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8"
             >
-              <p className="font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1c39bb]">
+              <p
+                className={`font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1c39bb] ${localeEyebrow(language)}`}
+              >
                 {s.eyebrow}
               </p>
-              <h2 className="font-display mt-2 text-xl font-semibold text-white md:text-2xl">{s.title}</h2>
-              <p className="mt-4 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{s.description}</p>
+              <h2 className={`font-display mt-2 text-xl font-semibold text-white md:text-2xl ${localeHeading(language)}`}>
+                {s.title}
+              </h2>
+              <p className={`mt-4 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px] ${localeBody(language)}`}>
+                {s.description}
+              </p>
               <ul className="mt-6 list-disc space-y-2.5 ps-5 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">
                 {s.bullets.map((b, i) => (
                   <li key={i}>{b}</li>

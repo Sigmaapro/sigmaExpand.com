@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { InsightPost } from "@/content/insights";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
+import { localeMeta, localeNav } from "@/lib/localeTypography";
 
 const DATE_LOCALE: Record<LangCode, string> = {
   EN: "en-US",
@@ -44,7 +45,7 @@ export function RelatedPosts({ posts }: { posts: InsightPost[] }) {
       <div className="mx-auto max-w-6xl px-3 py-12 sm:px-6 sm:py-16 lg:px-10">
         <p
           id="related-posts"
-          className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#1c39bb]"
+          className={`font-display text-xs font-semibold uppercase tracking-[0.28em] text-[#1c39bb] ${localeNav(lang)}`}
         >
           {t.insights.relatedHeading}
         </p>
@@ -65,7 +66,7 @@ export function RelatedPosts({ posts }: { posts: InsightPost[] }) {
                   />
                 </div>
                 <div className="min-w-0 flex-1 py-1">
-                  <p className="text-[10px] uppercase tracking-[0.12em] text-[#6c757d]">
+                  <p className={`text-[10px] uppercase tracking-[0.12em] text-[#6c757d] ${localeMeta(lang)}`}>
                     {getCategoryLabel(post.category, t)} · {formatDate(post.publishDate, lang)}
                   </p>
                   <p className="mt-1 font-display text-base font-semibold leading-snug text-[#f1f3f5] transition group-hover:text-[#bde0fe]">

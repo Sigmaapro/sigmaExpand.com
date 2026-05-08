@@ -2,9 +2,11 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Globe } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { LangCode } from "@/content/types";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
+import { buildLocaleSearchParams, routePathForLang } from "@/lib/i18n";
 import { localeNav } from "@/lib/localeTypography";
 
 export function LanguageSwitcherButton({
@@ -19,6 +21,9 @@ export function LanguageSwitcherButton({
   /** Locale-aware short label for closed chip (not raw LangCode). */
   compactLabel: string;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +35,14 @@ export function LanguageSwitcherButton({
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
+
+  const applyLanguage = (nextLang: LangCode) => {
+    setLang(nextLang);
+    document.cookie = `sigma-lang=${nextLang}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    const targetPath = routePathForLang(pathname || "/", nextLang);
+    const nextQuery = buildLocaleSearchParams(searchParams, nextLang);
+    router.replace(nextQuery ? `${targetPath}?${nextQuery}` : targetPath, { scroll: false });
+  };
 
   return (
     <div ref={wrapRef} className="relative">
@@ -63,7 +76,7 @@ export function LanguageSwitcherButton({
                 role="option"
                 aria-selected={currentLang === lang.code}
                 onClick={() => {
-                  setLang(lang.code);
+                  applyLanguage(lang.code);
                   setOpen(false);
                 }}
                 className={`px-4 py-3 text-start text-xs font-semibold uppercase tracking-[0.14em] transition-colors ${localeNav(currentLang)} ${

@@ -15,15 +15,22 @@ import {
 } from "@/components/seo/ArticleStructuredData";
 import { SEO_PAGES, SIGMA_SITE_AUTHORS, getCanonicalUrl } from "@/content/seo";
 import { siteTranslations } from "@/content/siteTranslations";
+import type { LangCode } from "@/content/types";
+import { buildLanguageAlternates, langFromUnknown } from "@/lib/i18n";
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ lang?: string }>;
+};
 
 export async function generateStaticParams() {
   return getInsightSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const { lang: langParam } = await searchParams;
+  const lang = (langFromUnknown(langParam) ?? "EN") as LangCode;
   const post = getInsightBySlug(slug);
   if (!post) return { title: siteTranslations.EN.insights.pageTitle };
   const canonicalAbsolute = getCanonicalUrl(`/insights/${slug}`);
@@ -38,13 +45,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
       googleBot: { index: true, follow: true },
     },
-    alternates: { canonical: `/insights/${slug}` },
+    alternates: {
+      canonical: `/insights/${slug}`,
+      languages: buildLanguageAlternates(`/insights/${slug}`),
+    },
     authors: [{ name: post.author }],
     openGraph: {
       title: post.seoTitle,
       description: post.seoDescription,
       url: canonicalAbsolute,
-      locale: "en_US",
+      locale: lang === "AR" ? "ar_SA" : "en_US",
       siteName: "Sigma",
       images: [{ url: og, width: 1200, height: 630, alt: post.title }],
       type: "article",
@@ -60,8 +70,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function InsightArticlePage({ params }: Props) {
+export default async function InsightArticlePage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const { lang: langParam } = await searchParams;
+  const lang = (langFromUnknown(langParam) ?? "EN") as LangCode;
   const post = getInsightBySlug(slug);
   if (!post) notFound();
 
@@ -69,8 +81,8 @@ export default async function InsightArticlePage({ params }: Props) {
 
   return (
     <>
-      <ArticleStructuredData post={post} />
-      <BreadcrumbInsightStructuredData post={post} />
+      <ArticleStructuredData post={post} lang={lang} />
+      <BreadcrumbInsightStructuredData post={post} lang={lang} />
       <article>
       <InsightHero post={post} />
 

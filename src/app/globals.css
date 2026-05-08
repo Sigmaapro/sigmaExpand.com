@@ -345,6 +345,20 @@ html[lang="fa"] body {
   text-rendering: optimizeLegibility;
 }
 
+html[lang="ar"] body {
+  font-family:
+    var(--font-fa),
+    "Noto Sans Arabic",
+    "Vazirmatn",
+    "Tahoma",
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.9;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "rlig" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
 html[lang="fa"] .font-display,
 html[lang="fa"] .font-body,
 html[lang="fa"] .sigma-hero-title {
@@ -352,6 +366,19 @@ html[lang="fa"] .sigma-hero-title {
     var(--font-fa),
     "Vazirmatn",
     "Noto Sans Arabic",
+    "Tahoma",
+    "Segoe UI",
+    sans-serif;
+  letter-spacing: 0;
+}
+
+html[lang="ar"] .font-display,
+html[lang="ar"] .font-body,
+html[lang="ar"] .sigma-hero-title {
+  font-family:
+    var(--font-fa),
+    "Noto Sans Arabic",
+    "Vazirmatn",
     "Tahoma",
     "Segoe UI",
     sans-serif;
@@ -366,13 +393,36 @@ html[lang="fa"] .sigma-cta-wordmark {
 }
 
 html[lang="fa"] p,
+html[lang="ar"] p,
 html[lang="fa"] h1,
+html[lang="ar"] h1,
 html[lang="fa"] h2,
+html[lang="ar"] h2,
 html[lang="fa"] h3,
+html[lang="ar"] h3,
 html[lang="fa"] h4,
+html[lang="ar"] h4,
 html[lang="fa"] h5,
+html[lang="ar"] h5,
 html[lang="fa"] h6,
+html[lang="ar"] h6,
 html[lang="fa"] span {
   overflow-wrap: break-word;
   word-break: normal;
+}
+
+html[lang="ar"] span {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+html[lang="fa"] input,
+html[lang="fa"] textarea,
+html[lang="fa"] button,
+html[lang="ar"] input,
+html[lang="ar"] textarea,
+html[lang="ar"] button {
+  letter-spacing: normal !important;
+  text-transform: none;
+  line-height: 1.6;
 }

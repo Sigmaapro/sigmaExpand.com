@@ -66,7 +66,7 @@ export function LanguageSwitcherButton({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute end-0 top-[calc(100%+10px)] z-[60] flex min-w-[140px] flex-col overflow-hidden rounded-lg border border-white/10 bg-[#0d1018]/95 shadow-2xl backdrop-blur-xl"
+            className="absolute end-0 top-[calc(100%+10px)] z-[60] flex max-h-[min(60svh,20rem)] min-w-[140px] max-w-[min(92vw,15rem)] flex-col overflow-hidden overflow-y-auto rounded-lg border border-white/10 bg-[#0d1018]/95 shadow-2xl backdrop-blur-xl"
             role="listbox"
           >
             {LANGUAGE_SWITCHER_OPTIONS.map((lang) => (
@@ -85,7 +85,7 @@ export function LanguageSwitcherButton({
                     : "text-[#adb5bd] hover:bg-white/[0.06] hover:text-white"
                 }`}
               >
-                {lang.label}
+                <span className="block truncate">{lang.label}</span>
               </button>
             ))}
           </motion.div>

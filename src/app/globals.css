@@ -14,6 +14,8 @@ html {
   scroll-behavior: smooth;
   /* Prevent white flash before CSS/fonts load (FOUC). */
   background-color: #212529;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -27,6 +29,7 @@ body {
   @apply bg-erie text-cadet antialiased;
   font-feature-settings: "kern" 1, "liga" 1;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 @media (max-width: 767px) {

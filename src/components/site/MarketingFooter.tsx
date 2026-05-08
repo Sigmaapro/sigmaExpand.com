@@ -97,7 +97,7 @@ export function MarketingFooter() {
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px max-w-5xl bg-gradient-to-r from-transparent via-[#1c39bb]/35 to-transparent opacity-90" />
 
-      <div className="mx-auto max-w-[90rem] px-5 py-10 sm:px-6 lg:px-10 lg:py-12">
+      <div className="mx-auto max-w-[90rem] px-5 pb-[max(2.5rem,calc(env(safe-area-inset-bottom,0px)+1.5rem))] pt-10 sm:px-6 lg:px-10 lg:py-12">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] lg:gap-8">
           <div className="max-w-md min-w-0 lg:max-w-md">
             <div className="flex items-center gap-2.5">

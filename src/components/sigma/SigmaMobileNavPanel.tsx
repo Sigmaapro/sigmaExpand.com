@@ -222,11 +222,11 @@ export function SigmaMobileNavPanel({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             transition={spring}
-            className="fixed inset-x-0 bottom-0 top-[calc(4.75rem+env(safe-area-inset-top,0px))] z-[9999] flex min-h-0 flex-col lg:hidden"
+            className="fixed inset-x-0 bottom-0 top-[calc(4.75rem+env(safe-area-inset-top,0px))] z-[9999] flex min-h-0 flex-col overflow-x-clip lg:hidden"
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_0%,rgba(28,57,187,0.14)_0%,transparent_58%)] opacity-90" />
 
-            <div className="relative flex min-h-0 flex-1 flex-col px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
+            <div className="relative flex min-h-0 flex-1 flex-col overflow-x-clip px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3">
               <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pb-4 [-webkit-overflow-scrolling:touch]">
                 {/* A — Core */}
                 <div className="overflow-hidden rounded-2xl border border-white/[0.09] bg-[linear-gradient(155deg,rgba(16,20,30,0.94)_0%,rgba(8,10,16,0.9)_100%)] p-3 shadow-[0_16px_56px_rgba(0,0,0,0.48),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-2xl">

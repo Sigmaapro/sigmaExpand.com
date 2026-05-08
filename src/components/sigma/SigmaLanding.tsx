@@ -1412,7 +1412,7 @@ const Navbar = () => {
           if (e.target === e.currentTarget) scrollToTop();
         }}
       >
-        <div className="relative flex h-[72px] min-w-0 w-[min(100%,calc(100vw-0.75rem))] max-w-[1440px] shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-[#07090f]/70 px-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:w-[calc(100%-1.25rem)] sm:gap-3 sm:px-3.5 md:gap-4 md:px-5 lg:gap-5 lg:px-6">
+        <div className="relative flex h-[72px] min-w-0 w-[min(100%,calc(100vw-0.75rem))] max-w-[1440px] shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-[#07090f]/70 px-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:w-[min(100%,calc(100vw-1.25rem))] sm:gap-3 sm:px-3.5 md:gap-4 md:px-5 lg:gap-5 lg:px-6">
           <button
             type="button"
             onClick={() => scrollToTop()}

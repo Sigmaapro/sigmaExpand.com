@@ -1,22 +1,26 @@
 /**
  * Crawler-visible `<img>` references with no layout impact (home sections).
  */
-export function SeoHiddenImages() {
+import type { LangCode } from "@/content/types";
+import { getSeoImageAlts } from "@/content/global/seoImageAlts";
+
+export function SeoHiddenImages({ lang }: { lang: LangCode }) {
+  const alts = getSeoImageAlts(lang);
   return (
     <>
       <img
         src="/images/seo/web3-growth.jpg"
-        alt="Web3 growth infrastructure dashboard"
+        alt={alts.home.web3Growth}
         style={{ display: "none" }}
       />
       <img
         src="/images/seo/crypto-marketing.jpg"
-        alt="Crypto marketing performance analytics"
+        alt={alts.home.cryptoMarketing}
         style={{ display: "none" }}
       />
       <img
         src="/images/seo/liquidity-system.jpg"
-        alt="Liquidity system visualization"
+        alt={alts.home.liquiditySystem}
         style={{ display: "none" }}
       />
     </>

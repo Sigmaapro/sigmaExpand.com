@@ -61,7 +61,7 @@ export const mobileNavSheetContent: Localized<MobileNavSheetStrings> = {
     sectionCore: "Núcleo",
     sectionLocations: "Ubicaciones",
     sectionServices: "Servicios",
-    sectionInsights: "Insights",
+    sectionInsights: "Perspectivas",
     sectionCompany: "Empresa",
     linkGrowthEngine: "Motor de crecimiento",
     linkKolMarketing: "Marketing KOL",

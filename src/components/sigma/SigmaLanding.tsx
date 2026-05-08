@@ -1587,7 +1587,7 @@ export default function SigmaLanding() {
         className="relative z-10 min-w-0 max-w-[100vw] overflow-x-clip font-body selection:bg-[#1c39bb] selection:text-white"
         dir={isRtl ? "rtl" : "ltr"}
       >
-        <SeoHiddenImages />
+        <SeoHiddenImages lang={currentLang} />
         <div className="origin-top">
           <HeroSection t={t} isRtl={isRtl} />
         </div>

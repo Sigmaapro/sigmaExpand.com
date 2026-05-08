@@ -343,7 +343,7 @@ const FOOTER_ES: GlobalFooterContent = {
       { label: "Capacidades", href: A.capabilities },
       { label: "Red", href: A.network },
       { label: "Sigma Pro", href: A.sigmaPro },
-      { label: "Insights", href: ROUTES.insights },
+      { label: "Perspectivas", href: ROUTES.insights },
     ],
   },
   columnCompany: {
@@ -359,14 +359,14 @@ const FOOTER_ES: GlobalFooterContent = {
   columnResources: {
     title: "Recursos",
     links: [
-      { label: "Investigación / Insights", href: ROUTES.insights },
+      { label: "Investigación / Perspectivas", href: ROUTES.insights },
       { label: "Casos de estudio", href: ROUTES.insights },
       { label: "Privacidad", href: ROUTES.privacy },
       { label: "Términos", href: ROUTES.terms },
       { label: "Reservar llamada", href: ROUTES.contact },
     ],
   },
-  socialColumnTitle: "Social",
+  socialColumnTitle: "Redes",
   socialLabels: {
     x: "X",
     instagram: "Instagram",

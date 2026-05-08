@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import { getConversion } from "@/content/conversion";
 import type { LangCode } from "@/content/types";
@@ -37,6 +37,7 @@ export function BookCallModal({
   );
   const [errorMessage, setErrorMessage] = useState("");
   const calendlySrc = readCalendlyUrl();
+  const reduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
     setMounted(true);
@@ -118,7 +119,7 @@ export function BookCallModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: reduceMotion ? 0 : 0.2 }}
         >
           <button
             type="button"
@@ -131,10 +132,10 @@ export function BookCallModal({
             aria-modal="true"
             aria-labelledby={titleId}
             dir={isRtl ? "rtl" : "ltr"}
-            initial={{ opacity: 0, y: 16, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 380, damping: 32 }}
+            initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 16, scale: 0.98 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.98 }}
+            transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
             className="relative z-10 flex max-h-[min(88dvh,calc(100dvh-env(safe-area-inset-bottom,0px)-0.5rem))] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-white/[0.1] border-b-0 bg-gradient-to-b from-[#12161f] to-[#0a0c12] shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:max-h-[min(92vh,720px)] sm:rounded-xl sm:border-b"
           >
             <div className="flex items-start justify-between gap-3 border-b border-white/[0.06] px-4 py-3.5 sm:gap-4 sm:px-6 sm:py-4">

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/hooks/useMedia";
 import { getConversion } from "@/content/conversion";
 import type { LangCode } from "@/content/types";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
@@ -14,6 +15,7 @@ export function MidConversionCta({
   lang: LangCode;
 }) {
   const c = getConversion(lang).mid;
+  const reduceMotion = usePrefersReducedMotion();
   return (
     <section
       id="conversion-mid"
@@ -21,10 +23,10 @@ export function MidConversionCta({
     >
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1c39bb]/[0.07] via-transparent to-transparent" />
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="relative mx-auto min-w-0 max-w-3xl rounded-xl border border-white/[0.08] bg-[#0c0f16]/95 px-4 py-8 text-center shadow-[0_0_60px_rgba(28,57,187,0.12)] sm:px-10 sm:py-12"
       >
         <p
@@ -62,6 +64,7 @@ export function FinalConversionCta({
   onBookCall: () => void;
 }) {
   const c = getConversion(lang).final;
+  const reduceMotion = usePrefersReducedMotion();
   return (
     <section
       id="conversion-final"
@@ -69,10 +72,10 @@ export function FinalConversionCta({
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-40 max-w-3xl bg-[#1c39bb]/[0.12] blur-3xl" aria-hidden />
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="relative mx-auto min-w-0 w-full max-w-3xl px-1 text-center sm:px-0"
       >
         <p

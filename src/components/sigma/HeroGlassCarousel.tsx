@@ -9,6 +9,7 @@ import { ROUTES } from "@/content/global/routes";
 import { getAllInsightsPosts } from "@/content/insights";
 import { proofByLang } from "@/content/proof";
 import type { SiteTranslations } from "@/content/types";
+import { useIsMobile } from "@/hooks/useMedia";
 import { localeEyebrow, localeHeading, localeNav } from "@/lib/localeTypography";
 
 const METRIC_ORDER = ["markets", "partners", "reach", "users", "volume"] as const;
@@ -27,6 +28,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
   const { language } = useLanguage();
   const H = getHomeSectionLinks(language);
   const reduceMotion = useReducedMotion() ?? false;
+  const isTouchViewport = useIsMobile(1024);
   const [active, setActive] = useState(0);
   const [hoverPause, setHoverPause] = useState(false);
   const insightPreview = getAllInsightsPosts().slice(0, 3);
@@ -48,12 +50,12 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
       : proof.metrics.slice(0, METRIC_ORDER.length);
 
   useEffect(() => {
-    if (reduceMotion || hoverPause) return;
+    if (reduceMotion || hoverPause || isTouchViewport) return;
     const id = window.setInterval(() => {
       setActive((a) => (a + 1) % 3);
     }, AUTO_MS);
     return () => clearInterval(id);
-  }, [reduceMotion, hoverPause]);
+  }, [reduceMotion, hoverPause, isTouchViewport]);
 
   const ctaForSlide = () => {
     if (active === 0) {

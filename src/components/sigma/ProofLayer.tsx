@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   clientLogos,
   proofByLang,
@@ -83,17 +83,19 @@ function MetricCard({
   metric,
   index,
   lang,
+  reduceMotion,
 }: {
   metric: ProofMetric;
   index: number;
   lang: LangCode;
+  reduceMotion: boolean;
 }) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       className="group flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-lg border border-white/[0.07] bg-gradient-to-b from-[#10141c]/95 to-[#0a0c12]/95 px-5 py-6 transition-[border-color,box-shadow] duration-300 hover:border-[#1c39bb]/25 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:px-6 sm:py-7"
     >
       <p className="font-display text-2xl font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
@@ -117,18 +119,20 @@ function TestimonialCard({
   item,
   index,
   lang,
+  reduceMotion,
 }: {
   item: ProofTestimonial;
   index: number;
   lang: LangCode;
+  reduceMotion: boolean;
 }) {
   const initials = initialsFromName(item.name);
   return (
     <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-48px" }}
-      transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className="flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-xl border border-white/[0.07] bg-[#0c0f14]/90 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:p-7"
     >
       <blockquote className="min-w-0 flex-1 border-s-2 border-[#1c39bb]/45 ps-4 text-sm leading-relaxed text-[#e8eaed] sm:ps-5 sm:text-[15px] sm:leading-[1.68]">
@@ -183,6 +187,7 @@ function TestimonialCard({
 
 export function ProofLayer() {
   const { lang } = useLanguage();
+  const reduceMotion = useReducedMotion() ?? false;
   const proof = proofByLang[lang] ?? proofByLang.EN;
   const H = getHomeSectionLinks(lang);
 
@@ -235,7 +240,7 @@ export function ProofLayer() {
             className="mt-10 grid min-w-0 grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
           >
             {proof.metrics.map((m, i) => (
-              <MetricCard key={m.id} metric={m} index={i} lang={lang} />
+              <MetricCard key={m.id} metric={m} index={i} lang={lang} reduceMotion={reduceMotion} />
             ))}
           </div>
           <div className="mt-10 flex justify-center sm:mt-12">
@@ -262,7 +267,13 @@ export function ProofLayer() {
           </h3>
           <div className="mt-10 grid min-w-0 grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
             {proof.testimonials.map((item, idx) => (
-              <TestimonialCard key={item.id} item={item} index={idx} lang={lang} />
+              <TestimonialCard
+                key={item.id}
+                item={item}
+                index={idx}
+                lang={lang}
+                reduceMotion={reduceMotion}
+              />
             ))}
           </div>
         </div>

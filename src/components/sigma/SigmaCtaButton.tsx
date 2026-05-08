@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeCta } from "@/lib/localeTypography";
+import { useIsMobile } from "@/hooks/useMedia";
 
 export const magneticButtonClass = (primary?: boolean, fullWidthMobile?: boolean) =>
   `group relative inline-flex max-w-full min-w-0 overflow-hidden rounded-[2px] px-5 py-3.5 text-start text-xs font-semibold uppercase tracking-[0.2em] transition-[box-shadow,transform,border-color] duration-300 ease-out will-change-transform touch-manipulation hover:scale-[1.02] sm:px-8 sm:py-4 sm:text-sm active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#bde0fe]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0c12] ${
@@ -37,7 +38,11 @@ export const MagneticButton = ({
   fullWidthMobile?: boolean;
 }) => {
   const { lang } = useLanguage();
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const isNarrow = useIsMobile(1024);
+  const motionX = useMotionValue(0);
+  const motionY = useMotionValue(0);
+  const smoothX = useSpring(motionX, { stiffness: 180, damping: 18, mass: 0.12 });
+  const smoothY = useSpring(motionY, { stiffness: 180, damping: 18, mass: 0.12 });
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const anchorRef = useRef<HTMLAnchorElement | null>(null);
 
@@ -50,18 +55,19 @@ export const MagneticButton = ({
     const { left, top, width, height } = el.getBoundingClientRect();
     const x = (clientX - (left + width / 2)) * 0.22;
     const y = (clientY - (top + height / 2)) * 0.22;
-    setPosition({ x, y });
+    motionX.set(x);
+    motionY.set(y);
   };
 
   const handleMouseLeave = () => {
-    setPosition({ x: 0, y: 0 });
+    motionX.set(0);
+    motionY.set(0);
   };
 
   const motionShared = {
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
-    animate: { x: position.x, y: position.y },
-    transition: { type: "spring" as const, stiffness: 180, damping: 18, mass: 0.12 },
+    style: { x: isNarrow ? 0 : smoothX, y: isNarrow ? 0 : smoothY },
     className: `${magneticButtonClass(primary, fullWidthMobile)} ${localeCta(lang)}`,
   };
 

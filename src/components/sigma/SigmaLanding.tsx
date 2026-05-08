@@ -20,7 +20,7 @@ import { BookCallModal } from "@/components/sigma/BookCallModal";
 import { HeroGlassCarousel } from "@/components/sigma/HeroGlassCarousel";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
 import { SeoHiddenImages } from "@/components/seo/SeoHiddenImages";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import * as THREE from "three";
 import {
   Shield,
@@ -236,8 +236,8 @@ const GlobalStyles = () => (
   `}</style>
 );
 
-/** Heavy Three.js layer — only mounted from tablet-up to protect phone performance. */
-const WebGLScene = () => {
+/** Heavy Three.js layer — only mounted from desktop-up to protect phone performance. */
+const WebGLScene = ({ lowPower }: { lowPower: boolean }) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const scrollY = useRef(0);
   const mouse = useRef(new THREE.Vector2());
@@ -263,9 +263,13 @@ const WebGLScene = () => {
     );
     camera.position.z = 15;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({
+      antialias: !lowPower,
+      alpha: true,
+      powerPreference: lowPower ? "low-power" : "high-performance",
+    });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTablet ? 1.5 : 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.05 : isTablet ? 1.25 : 1.5));
     renderer.domElement.style.pointerEvents = "none";
     mount.appendChild(renderer.domElement);
 
@@ -305,7 +309,7 @@ const WebGLScene = () => {
       opacity: 0.17,
     });
 
-    const numShards = isTablet ? 156 : 298;
+    const numShards = lowPower ? 92 : isTablet ? 132 : 252;
     const shards: THREE.Mesh[] = [];
 
     const SIGMA_W = 2.8;
@@ -394,7 +398,7 @@ const WebGLScene = () => {
     }
 
     const particlesGeo = new THREE.BufferGeometry();
-    const particlesCount = isTablet ? 280 : 620;
+    const particlesCount = lowPower ? 140 : isTablet ? 220 : 480;
     const posArray = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount * 3; i++) {
       posArray[i] = (Math.random() - 0.5) * 40;
@@ -441,14 +445,26 @@ const WebGLScene = () => {
     window.addEventListener("resize", handleResize);
 
     let animationFrameId: number;
+    let running = true;
     const clock = new THREE.Clock();
 
+    let maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+    const updateMaxScroll = () => {
+      maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+    };
+
+    const onVisibility = () => {
+      running = document.visibilityState !== "hidden";
+      if (running) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+
     const animate = () => {
+      if (!running) return;
       const time = clock.getElapsedTime();
-      const maxScroll = Math.max(
-        document.body.scrollHeight - window.innerHeight,
-        1,
-      );
       const scrollProgress = Math.min(scrollY.current / maxScroll, 1.0);
 
       pointLight.position.x +=
@@ -490,12 +506,18 @@ const WebGLScene = () => {
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    updateMaxScroll();
     animate();
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("resize", updateMaxScroll);
 
     return () => {
+      running = false;
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", updateMaxScroll);
+      document.removeEventListener("visibilitychange", onVisibility);
       cancelAnimationFrame(animationFrameId);
       if (mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
@@ -527,13 +549,24 @@ const WebGLScene = () => {
 const WebGLBackground = () => {
   /** Canvas from lg-up saves tablet GPU / battery; film grain still shows below */
   const showCanvas = useMinWidth(1024);
+  const reduceMotion = useReducedMotion() ?? false;
+  const [lowPowerDevice, setLowPowerDevice] = useState(false);
+
+  useEffect(() => {
+    const nav = navigator as Navigator & { deviceMemory?: number };
+    const memory = typeof nav.deviceMemory === "number" ? nav.deviceMemory : 8;
+    const cores = typeof navigator.hardwareConcurrency === "number" ? navigator.hardwareConcurrency : 8;
+    setLowPowerDevice(memory <= 4 || cores <= 6);
+  }, []);
+
+  const shouldRenderCanvas = showCanvas && !reduceMotion && !lowPowerDevice;
 
   return (
     <div className="pointer-events-none fixed left-0 top-0 z-0 h-full w-full overflow-x-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#080a0f] via-[#151a22] to-[#0c111a]" />
-      {showCanvas ? <WebGLScene /> : null}
+      {shouldRenderCanvas ? <WebGLScene lowPower={lowPowerDevice} /> : null}
       <div
-        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${showCanvas ? "opacity-100" : "opacity-[0.35]"}`}
+        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.35]"}`}
         aria-hidden
       />
     </div>
@@ -616,7 +649,10 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
   const reduceMotion = useReducedMotion();
   const isNarrow = useIsMobile(768);
   const isTiny = useIsMobile(480);
-  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const parallaxX = useMotionValue(0);
+  const parallaxY = useMotionValue(0);
+  const smoothParallaxX = useSpring(parallaxX, { stiffness: 70, damping: 24, mass: 0.9 });
+  const smoothParallaxY = useSpring(parallaxY, { stiffness: 70, damping: 24, mass: 0.9 });
   const sparkleCount = isTiny ? 4 : isNarrow ? 6 : 22;
   const parallaxMul = isNarrow ? 3.5 : 10;
   const parallaxMulY = isNarrow ? 2.5 : 8;
@@ -626,11 +662,13 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const nx = ((e.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
     const ny = ((e.clientY - rect.top) / Math.max(rect.height, 1)) * 2 - 1;
-    setParallax({ x: nx, y: ny });
+    parallaxX.set(nx);
+    parallaxY.set(ny);
   };
 
   const handleMouseLeave = () => {
-    setParallax({ x: 0, y: 0 });
+    parallaxX.set(0);
+    parallaxY.set(0);
   };
 
   return (
@@ -649,11 +687,10 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
       </div>
       <motion.div
         className="relative z-10 flex w-full min-w-0 items-center justify-center px-1 sm:px-0 ltr:lg:justify-end rtl:lg:justify-start"
-        animate={{
-          x: reduceMotion || isNarrow ? 0 : parallax.x * parallaxMul,
-          y: reduceMotion || isNarrow ? 0 : parallax.y * parallaxMulY,
+        style={{
+          x: reduceMotion || isNarrow ? 0 : smoothParallaxX,
+          y: reduceMotion || isNarrow ? 0 : smoothParallaxY,
         }}
-        transition={{ type: "spring", stiffness: 70, damping: 24, mass: 0.9 }}
       >
         <motion.div
           initial={{ opacity: 1, y: 8 }}
@@ -715,8 +752,12 @@ const TiltCard = ({
 }) => {
   const { lang } = useLanguage();
   const cardRef = useRef<HTMLDivElement | null>(null);
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const isNarrow = useIsMobile(1024);
+  const reduceMotion = useReducedMotion() ?? false;
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const smoothRotateX = useSpring(rotateX, { stiffness: 260, damping: 24, mass: 0.2 });
+  const smoothRotateY = useSpring(rotateY, { stiffness: 260, damping: 24, mass: 0.2 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isNarrow || !cardRef.current) return;
@@ -725,13 +766,15 @@ const TiltCard = ({
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
-    setRotate({ x: rotateX, y: rotateY });
+    const nextRotateX = ((y - centerY) / centerY) * -10;
+    const nextRotateY = ((x - centerX) / centerX) * 10;
+    rotateX.set(nextRotateX);
+    rotateY.set(nextRotateY);
   };
 
   const handleMouseLeave = () => {
-    setRotate({ x: 0, y: 0 });
+    rotateX.set(0);
+    rotateY.set(0);
   };
 
   return (
@@ -739,10 +782,12 @@ const TiltCard = ({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{ rotateX: isNarrow ? 0 : rotate.x, rotateY: isNarrow ? 0 : rotate.y }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      style={{
+        rotateX: isNarrow || reduceMotion ? 0 : smoothRotateX,
+        rotateY: isNarrow || reduceMotion ? 0 : smoothRotateY,
+        transformStyle: isNarrow || reduceMotion ? "flat" : "preserve-3d",
+      }}
       className="group relative flex h-full min-h-[16.75rem] w-full min-w-0 max-w-full flex-col overflow-hidden sharp-edge border border-[#adb5bd]/20 bg-[#212529]/80 p-6 backdrop-blur-md sm:p-8"
-      style={{ transformStyle: isNarrow ? "flat" : "preserve-3d" }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#1c39bb]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div

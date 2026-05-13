@@ -53,6 +53,7 @@ import { aboutPageMetaByLang } from "@/content/global/marketing/aboutContent";
 import { teamPageMetaByLang } from "@/content/global/marketing/teamContent";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
+import { ROUTES } from "@/content/global/routes";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import { useLanguage } from "@/context/LanguageContext";
 import {
@@ -536,7 +537,7 @@ const WebGLScene = ({ lowPower }: { lowPower: boolean }) => {
       particlesMat.dispose();
       renderer.dispose();
     };
-  }, []);
+  }, [lowPower]);
 
   return (
     <div
@@ -617,20 +618,15 @@ const AnimatedText = ({
     );
   }
 
-  const MobileTag = as === "h2" ? motion.h2 : as === "h3" ? motion.h3 : motion.p;
-  const DesktopTag = as === "h2" ? motion.h2 : as === "h3" ? motion.h3 : motion.div;
+  const Wrapper = as === "h2" ? motion.h2 : as === "h3" ? motion.h3 : motion.div;
 
   return (
-    <>
-      <MobileTag
-        {...spanMotion(0)}
-        className={`max-w-full md:hidden [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
-      >
-        {text}
-      </MobileTag>
-      <DesktopTag
-        className={`hidden max-w-full flex-wrap break-words [overflow-wrap:anywhere] md:flex md:gap-y-1 ${className ?? ""}`}
-      >
+    <Wrapper
+      {...spanMotion(0)}
+      className={`max-w-full [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
+    >
+      <span className="md:hidden">{text}</span>
+      <span className="hidden max-w-full flex-wrap break-words md:flex md:gap-y-1">
         {words.map((word, i) => (
           <motion.span
             key={`${word}-${i}`}
@@ -640,8 +636,8 @@ const AnimatedText = ({
             {word}
           </motion.span>
         ))}
-      </DesktopTag>
-    </>
+      </span>
+    </Wrapper>
   );
 };
 
@@ -1221,7 +1217,7 @@ const ContactSection = ({ t }: { t: SiteTranslations }) => {
               {t.contact.emailCta}
             </a>
             <Link
-              href="/contact"
+              href={ROUTES.contact}
               className={`inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] active:scale-[0.99] sm:w-auto sm:px-8 ${localeCta(language)}`}
             >
               {t.contact.socialCta}

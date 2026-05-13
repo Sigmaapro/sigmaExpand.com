@@ -229,7 +229,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         "Partnerships, media, and institutional inquiries — email the desk or open the full channel list (social, Telegram, and more).",
       emailCta: "Email",
       socialCta: "Channels & social",
-      fallbackMailto: "mailto:hello@sigma.io",
+      fallbackMailto: "mailto:partners@sigmaexpand.com",
     },
     stayConnected: {
       kicker: "CONTACT",
@@ -404,7 +404,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         "Ortaklıklar, basın ve kurumsal talepler — ekibe e-posta gönderin veya tüm kanallar listesini açın.",
       emailCta: "E-posta",
       socialCta: "Kanallar ve sosyal",
-      fallbackMailto: "mailto:hello@sigma.io",
+      fallbackMailto: "mailto:partners@sigmaexpand.com",
     },
     stayConnected: {
       kicker: "İLETİŞİM",
@@ -573,7 +573,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         "合作、媒体与机构咨询 — 发送邮件或打开完整渠道列表（社交、Telegram 等）。",
       emailCta: "邮件",
       socialCta: "渠道与社交",
-      fallbackMailto: "mailto:hello@sigma.io",
+      fallbackMailto: "mailto:partners@sigmaexpand.com",
     },
     stayConnected: {
       kicker: "联系",
@@ -747,7 +747,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         "Alianzas, medios e instituciones: escribe al equipo o abre la lista completa de canales.",
       emailCta: "Correo",
       socialCta: "Canales y redes",
-      fallbackMailto: "mailto:hello@sigma.io",
+      fallbackMailto: "mailto:partners@sigmaexpand.com",
     },
     stayConnected: {
       kicker: "CONTACTO",
@@ -923,7 +923,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         "Партнёрства, медиа и институциональные запросы — напишите команде или откройте полный список каналов.",
       emailCta: "Почта",
       socialCta: "Каналы и соцсети",
-      fallbackMailto: "mailto:hello@sigma.io",
+      fallbackMailto: "mailto:partners@sigmaexpand.com",
     },
     stayConnected: {
       kicker: "КОНТАКТЫ",
@@ -1097,7 +1097,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         "همکاری، رسانه و درخواست‌های سازمانی — به تیم ایمیل بزنید یا فهرست کامل کانال‌ها را باز کنید.",
       emailCta: "ایمیل",
       socialCta: "کانال‌ها و شبکه‌ها",
-      fallbackMailto: "mailto:hello@sigma.io",
+      fallbackMailto: "mailto:partners@sigmaexpand.com",
     },
     stayConnected: {
       kicker: "تماس",
@@ -1271,7 +1271,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         "للشراكات والإعلام والاستفسارات المؤسسية — راسل الفريق أو افتح قائمة القنوات الكاملة.",
       emailCta: "البريد",
       socialCta: "القنوات والشبكات",
-      fallbackMailto: "mailto:hello@sigma.io",
+      fallbackMailto: "mailto:partners@sigmaexpand.com",
     },
     stayConnected: {
       kicker: "اتصل",

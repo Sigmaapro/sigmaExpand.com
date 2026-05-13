@@ -4,13 +4,14 @@
  */
 
 import type { LangCode } from "./types";
+import { ROUTES } from "./global/routes";
 
 export type MidConversionCopy = {
   label: string;
   headline: string;
   supporting: string;
   primaryLabel: string;
-  /** In-page anchor */
+  /** Primary conversion — full contact page */
   primaryHref: string;
 };
 
@@ -53,7 +54,7 @@ const EN_MID: MidConversionCopy = {
   supporting:
     "Access a structured growth system built for Web3 execution — from acquisition surfaces to liquidity checkpoints.",
   primaryLabel: "Get Access",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
 };
 
 const EN_FINAL: FinalConversionCopy = {
@@ -61,7 +62,7 @@ const EN_FINAL: FinalConversionCopy = {
   supporting:
     "From user acquisition to liquidity, Sigma connects the full system. Brief the desk and we will map the shortest path to measurable throughput.",
   primaryLabel: "Work With Sigma",
-  primaryHref: "#contact",
+  primaryHref: ROUTES.contact,
   secondaryLabel: "Book a Call",
 };
 
@@ -100,14 +101,14 @@ const trBundle: ConversionBundle = {
     supporting:
       "Web3 yürütmesi için tasarlanmış yapılandırılmış bir büyüme sistemine erişin.",
     primaryLabel: "Erişim Al",
-    primaryHref: "#connect",
+    primaryHref: ROUTES.contact,
   },
   final: {
     headline: "Gerçekten Dönüşen Büyüme İnşa Edin",
     supporting:
       "Kullanıcı ediniminden likiditeye kadar Sigma tüm sistemi birbirine bağlar.",
     primaryLabel: "Sigma ile Çalış",
-    primaryHref: "#contact",
+    primaryHref: ROUTES.contact,
     secondaryLabel: "Görüşme Planla",
   },
   bookCall: {
@@ -137,13 +138,13 @@ const zhBundle: ConversionBundle = {
     headline: "与 Sigma 一起开始扩展",
     supporting: "访问为 Web3 执行构建的结构化增长系统。",
     primaryLabel: "获取权限",
-    primaryHref: "#connect",
+    primaryHref: ROUTES.contact,
   },
   final: {
     headline: "构建真正可转化的增长",
     supporting: "从获客到流动性，Sigma 连接完整系统。",
     primaryLabel: "与 Sigma 合作",
-    primaryHref: "#contact",
+    primaryHref: ROUTES.contact,
     secondaryLabel: "预约通话",
   },
   bookCall: {
@@ -173,14 +174,14 @@ const faBundle: ConversionBundle = {
     supporting:
       "به یک سیستم رشد ساختاریافته برای اجرای Web3 دسترسی پیدا کنید.",
     primaryLabel: "دریافت دسترسی",
-    primaryHref: "#connect",
+    primaryHref: ROUTES.contact,
   },
   final: {
     headline: "رشد واقعی و قابل تبدیل بسازید",
     supporting:
       "از جذب کاربر تا نقدینگی، سیگما کل سیستم را به هم متصل می‌کند.",
     primaryLabel: "همکاری با سیگما",
-    primaryHref: "#contact",
+    primaryHref: ROUTES.contact,
     secondaryLabel: "رزرو تماس",
   },
   bookCall: {
@@ -211,14 +212,14 @@ const arBundle: ConversionBundle = {
     supporting:
       "استخدم نظام نمو منظمًا مصمماً لتنفيذ Web3 — من سطح الاكتساس إلى نقاط السيولة.",
     primaryLabel: "احصل على وصول",
-    primaryHref: "#connect",
+    primaryHref: ROUTES.contact,
   },
   final: {
     headline: "ابنِ نموًا يتحول فعلياً",
     supporting:
       "من جذب المستخدمين إلى السيولة، تربط سيغما النظام بالكامل. قدّم الإحاطة وسنرسم أقصر مسار لنتائج قابلة للقياس.",
     primaryLabel: "اعمل مع سيغما",
-    primaryHref: "#contact",
+    primaryHref: ROUTES.contact,
     secondaryLabel: "احجز مكالمة",
   },
   bookCall: {
@@ -249,14 +250,14 @@ const esBundle: ConversionBundle = {
     supporting:
       "Accede a un sistema de crecimiento estructurado para ejecución en Web3.",
     primaryLabel: "Obtener acceso",
-    primaryHref: "#connect",
+    primaryHref: ROUTES.contact,
   },
   final: {
     headline: "Construye crecimiento que sí convierte",
     supporting:
       "Desde adquisición de usuarios hasta liquidez, Sigma conecta todo el sistema.",
     primaryLabel: "Trabajar con Sigma",
-    primaryHref: "#contact",
+    primaryHref: ROUTES.contact,
     secondaryLabel: "Reservar llamada",
   },
   bookCall: {
@@ -287,14 +288,14 @@ const ruBundle: ConversionBundle = {
     supporting:
       "Получите доступ к структурированной growth-системе для Web3-исполнения.",
     primaryLabel: "Получить доступ",
-    primaryHref: "#connect",
+    primaryHref: ROUTES.contact,
   },
   final: {
     headline: "Стройте рост, который действительно конвертирует",
     supporting:
       "От привлечения пользователей до ликвидности — Sigma соединяет всю систему.",
     primaryLabel: "Работать с Sigma",
-    primaryHref: "#contact",
+    primaryHref: ROUTES.contact,
     secondaryLabel: "Забронировать звонок",
   },
   bookCall: {

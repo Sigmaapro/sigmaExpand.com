@@ -11,11 +11,11 @@ export const contactSubpageContent = {
   kicker: "Start a conversation",
   headline: "Let’s build what’s next",
   intro:
-    "Tell us about your roadmap and constraints. For structured discovery, book a call—we’ll come prepared with relevant benchmarks and options.",
+    "Tell us about your roadmap and constraints. Prefer async? Send a short brief and our team will respond with next-step options.",
   bookCall: {
     title: "Book a strategy call",
     subtitle:
-      "Reserve time with our team. If Calendly is configured, you’ll see live availability; otherwise we’ll follow up by email.",
+      "Book a private strategy call with Sigma. We review your market, traction stage, and growth constraints before the session so the conversation starts with context.",
     cta: "Book a call",
   },
   form: {

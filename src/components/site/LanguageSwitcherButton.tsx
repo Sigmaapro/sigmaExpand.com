@@ -66,6 +66,7 @@ export function LanguageSwitcherButton({
       <button
         ref={triggerRef}
         type="button"
+        role="combobox"
         onClick={() => setOpen(!open)}
         title={`${ariaLabel}: ${compactLabel}`}
         onKeyDown={(e) => {

@@ -1,4 +1,5 @@
 import type { HeroContent, LangCode } from "./types";
+import { ROUTES } from "./global/routes";
 
 const EN: HeroContent = {
   eyebrow: "Web3 Growth Infrastructure",
@@ -8,7 +9,7 @@ const EN: HeroContent = {
     "A data-driven engine for user acquisition, network activation, and scalable market expansion.",
   primaryCta: "Start Scaling",
   secondaryCta: "See the System",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
   secondaryHref: "#capabilities",
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
@@ -23,7 +24,7 @@ const TR: HeroContent = {
     "Kullanıcı edinimi, ağ aktivasyonu ve ölçeklenebilir pazar genişlemesi için veri odaklı bir motor.",
   primaryCta: "Ölçeklemeye Başla",
   secondaryCta: "Sistemi Gör",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
   secondaryHref: "#capabilities",
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
@@ -38,7 +39,7 @@ const ZH: HeroContent = {
     "以数据驱动的引擎，实现用户增长、网络激活与可扩展的市场扩张。",
   primaryCta: "开始扩展",
   secondaryCta: "了解系统",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
   secondaryHref: "#capabilities",
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
@@ -53,7 +54,7 @@ const FA: HeroContent = {
     "موتوری مبتنی بر داده برای جذب کاربر، فعال‌سازی شبکه و گسترش بازار در مقیاس.",
   primaryCta: "شروع مقیاس‌دهی",
   secondaryCta: "مشاهده سیستم",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
   secondaryHref: "#capabilities",
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
@@ -68,7 +69,7 @@ const ES: HeroContent = {
     "Un motor basado en datos para adquisición de usuarios, activación de red y expansión escalable del mercado.",
   primaryCta: "Empezar a escalar",
   secondaryCta: "Ver el sistema",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
   secondaryHref: "#capabilities",
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
@@ -83,7 +84,7 @@ const RU: HeroContent = {
     "Движок на данных для привлечения пользователей, активации сети и масштабируемого расширения рынка.",
   primaryCta: "Начать масштабирование",
   secondaryCta: "Смотреть систему",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
   secondaryHref: "#capabilities",
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
@@ -98,7 +99,7 @@ const AR: HeroContent = {
     "محرك قائم على البيانات لاكتساب المستخدمين وتنشيط الشبكة وتوسعة السوق بشكل قابل للتوسع.",
   primaryCta: "ابدأ التوسّع",
   secondaryCta: "استكشف النظام",
-  primaryHref: "#connect",
+  primaryHref: ROUTES.contact,
   secondaryHref: "#capabilities",
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",

@@ -63,11 +63,11 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
     kicker: "Start a conversation",
     headline: "Let’s build what’s next",
     intro:
-      "Tell us about your roadmap and constraints. For structured discovery, book a call—we’ll come prepared with relevant benchmarks and options.",
+      "Tell us about your roadmap and constraints. Prefer async? Send a short brief and our team will respond with next-step options.",
     bookCall: {
       title: "Book a strategy call",
       subtitle:
-        "Reserve time with our team. If Calendly is configured, you’ll see live availability; otherwise we’ll follow up by email.",
+        "Book a private strategy call with Sigma. We review your market, traction stage, and growth constraints before the session so the conversation starts with context.",
       cta: "Book a call",
     },
     form: {
@@ -88,11 +88,11 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
     kicker: "Konuşma başlatın",
     headline: "Bir sonrakini birlikte kuralım",
     intro:
-      "Yol haritanızı ve kısıtları paylaşın. Yapılandırılmış keşif için görüşme ayırın—ilgili kıyaslar ve seçeneklerle geliriz.",
+      "Yol haritanızı ve kısıtları paylaşın. Asenkron mu tercih ediyorsunuz? Kısa bir brif gönderin; ekibimiz bir sonraki adım için seçeneklerle döner.",
     bookCall: {
       title: "Strateji görüşmesi ayırın",
       subtitle:
-        "Ekibimizle zaman ayırın. Calendly yapılandırıldıysa müsaitlik görünür; değilse e-posta ile döneriz.",
+        "Sigma ile özel bir strateji görüşmesi ayırın. Oturum öncesinde pazarınızı, çekim aşamanızı ve büyüme kısıtlarınızı değerlendiririz; böylece görüşme bağlamıyla başlar.",
       cta: "Görüşme ayır",
     },
     form: {
@@ -113,11 +113,11 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
     kicker: "گفتگو را شروع کنید",
     headline: "بسازیم آنچه پیش روست",
     intro:
-      "نقشه راه و محدودیت‌ها را بگویید. برای کشف ساخت‌یافته، جلسه رزرو کنید—با معیارها و گزینه‌های مرتبه می‌آییم.",
+      "نقشه راه و محدودیت‌ها را با ما در میان بگذارید. ترجیح می‌دهید غیرهمزمان؟ یک خلاصه کوتاه بفرستید تا تیم ما با گزینه‌های گام بعد پاسخ دهد.",
     bookCall: {
       title: "جلسه استراتژی رزرو کنید",
       subtitle:
-        "زمان تیم را رزرو کنید. اگر Calendly تنظیم باشد دسترسی زنده دیده می‌شود؛ وگرنه با ایمیل پیگیری می‌کنیم.",
+        "یک تماس استراتژی خصوصی با سیگما رزرو کنید. پیش از جلسه بازار، مرحله جذب و محدودیت‌های رشد شما را بررسی می‌کنیم تا گفتگو با بافت آغاز شود.",
       cta: "رزرو تماس",
     },
     form: {
@@ -138,11 +138,11 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
     kicker: "开始对话",
     headline: "共建下一步",
     intro:
-      "告诉我们您的路线图与约束。若要结构化调研，请预约通话——我们会带上相关基准与选项。",
+      "请说明您的路线图与约束。偏好异步沟通？发送简短需求摘要，我们将以后续步骤选项回复。",
     bookCall: {
       title: "预约战略通话",
       subtitle:
-        "预留团队时间。若已配置 Calendly 将显示实时空闲；否则我们通过邮件跟进。",
+        "预约与 Sigma 的闭门策略通话。会前我们会研判您的市场、增长阶段与约束，使对话自上下文展开。",
       cta: "预约通话",
     },
     form: {
@@ -163,11 +163,11 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
     kicker: "Inicia una conversación",
     headline: "Construyamos lo próximo",
     intro:
-      "Cuéntanos tu roadmap y restricciones. Para un discovery estructurado, reserva una llamada—llegamos con benchmarks y opciones.",
+      "Cuéntanos tu roadmap y restricciones. ¿Prefieres un contacto asíncrono? Envía un brief breve y el equipo responderá con opciones para el siguiente paso.",
     bookCall: {
       title: "Reserva una llamada estratégica",
       subtitle:
-        "Aparta tiempo con el equipo. Si Calendly está configurado verás disponibilidad; si no, seguimos por email.",
+        "Coordinamos una sesión estratégica privada con Sigma. Antes de la reunión revisamos tu mercado, etapa de tracción y restricciones de crecimiento para que la conversación arranque con contexto.",
       cta: "Reservar llamada",
     },
     form: {
@@ -188,11 +188,11 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
     kicker: "Начать диалог",
     headline: "Создадим следующий шаг",
     intro:
-      "Расскажите о дорожной карте и ограничениях. Для структурированного discovery забронируйте звонок—приведём бенчмарки и сценарии.",
+      "Расскажите о дорожной карте и ограничениях. Предпочитаете асинхронно? Отправьте краткий бриф — команда ответит вариантами следующих шагов.",
     bookCall: {
       title: "Записаться на стратегический звонок",
       subtitle:
-        "Забронируйте время команды. Если настроен Calendly—увидите слоты; иначе свяжемся по email.",
+        "Забронируйте приватный стратегический звонок с Sigma. До сессии мы разбираем ваш рынок, стадию трекшена и ограничения роста, чтобы разговор начался с контекста.",
       cta: "Записаться",
     },
     form: {
@@ -213,11 +213,11 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
     kicker: "ابدأ محادثة",
     headline: "لنبني ما هو قادم",
     intro:
-      "صف خارطة طريقك والقيود. للاستكشاف المنظّم احجز مكالمة — نأتي بمعايير مقارنة وخيارات ذات صلة.",
+      "صف خارطة طريقك والقيود. تفضّل التواصل غير المتزامن؟ أرسل ملخصاً موجزاً وسيرد الفريق بخيارات الخطوة التالية.",
     bookCall: {
       title: "احجز مكالمة استراتيجية",
       subtitle:
-        "احجز وقتاً مع الفريق. إذا كان Calendly مفعّلاً ستظهر المواعيد؛ وإلا نتابع عبر البريد.",
+        "احجز مكالمة استراتيجية خاصة مع سيغما. قبل الجلسة نراجع سوقك ومرحلة الزخم وقيود النمو لتبدأ المحادثة منطلقة من السياق.",
       cta: "احجز مكالمة",
     },
     form: {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { cookies } from "next/headers";
 import { ServicesStructuredData } from "@/components/seo/ServicesStructuredData";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
@@ -16,15 +17,21 @@ export default async function ServicesPage() {
   return (
     <>
       <ServicesStructuredData />
-      <img
+      <Image
         src="/images/seo/services-1.jpg"
         alt={alts.services.servicesDashboard}
-        style={{ display: "none" }}
+        width={1200}
+        height={630}
+        className="hidden"
+        sizes="1px"
       />
-      <img
+      <Image
         src="/images/seo/services-2.jpg"
         alt={alts.services.liquidityExchange}
-        style={{ display: "none" }}
+        width={1200}
+        height={630}
+        className="hidden"
+        sizes="1px"
       />
       <InnerPageShell>
         <ServicesPageView />

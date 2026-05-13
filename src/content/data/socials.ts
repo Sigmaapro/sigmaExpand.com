@@ -21,4 +21,4 @@ export const socials = {
   tiktok: "https://www.tiktok.com/",
 } as const;
 
-export const contactEmail = "contact@sigma.com";
+export const contactEmail = "partners@sigmaexpand.com";

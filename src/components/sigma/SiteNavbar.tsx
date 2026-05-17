@@ -54,7 +54,7 @@ export function SiteNavbar() {
           {t.nav.system}
         </Link>
         <Link
-          href="/#ecosystem"
+          href="/#capabilities"
           className={`font-body text-[11px] font-bold uppercase tracking-[0.2em] text-cadet transition-colors hover:text-white ${localeNav(language)}`}
         >
           {t.nav.capabilities}

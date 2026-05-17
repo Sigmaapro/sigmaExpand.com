@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { InsightPost } from "@/content/insights";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
+import { getInsightCategoryLabel } from "@/lib/insightCategoryLabel";
 import { localeMeta, localeNav } from "@/lib/localeTypography";
 
 const DATE_LOCALE: Record<LangCode, string> = {
@@ -26,15 +27,9 @@ function formatDate(iso: string, lang: LangCode) {
   }).format(d);
 }
 
-function getCategoryLabel(category: string, t: ReturnType<typeof useLanguage>["t"]) {
-  if (category === "Growth") return t.insights.categories.growth;
-  if (category === "Distribution") return t.insights.categories.distribution;
-  if (category === "Liquidity") return t.insights.categories.liquidity;
-  return category;
-}
-
 export function RelatedPosts({ posts }: { posts: InsightPost[] }) {
   const { t, lang } = useLanguage();
+  const cat = (c: string) => getInsightCategoryLabel(c, t.insights.categories);
   if (posts.length === 0) return null;
 
   return (
@@ -67,7 +62,7 @@ export function RelatedPosts({ posts }: { posts: InsightPost[] }) {
                 </div>
                 <div className="min-w-0 flex-1 py-1">
                   <p className={`text-[10px] uppercase tracking-[0.12em] text-[#6c757d] ${localeMeta(lang)}`}>
-                    {getCategoryLabel(post.category, t)} · {formatDate(post.publishDate, lang)}
+                    {cat(post.category)} · {formatDate(post.publishDate, lang)}
                   </p>
                   <p className="mt-1 font-display text-base font-semibold leading-snug text-[#f1f3f5] transition group-hover:text-[#bde0fe]">
                     {post.title}

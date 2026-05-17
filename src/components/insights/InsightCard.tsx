@@ -79,7 +79,10 @@ export function InsightCard({
           className={`mt-5 inline-flex min-h-10 w-fit items-center gap-1.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#bde0fe] transition-colors hover:text-white ${localeNav(lang)}`}
         >
           {readLabel}
-          <span aria-hidden className="translate-x-0 transition-transform group-hover:translate-x-0.5">
+          <span
+            aria-hidden
+            className="inline-block translate-x-0 transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
+          >
             →
           </span>
         </Link>

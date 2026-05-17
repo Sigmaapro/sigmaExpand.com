@@ -1,52 +1,50 @@
 import { SEO_PAGES } from "@/content/seo";
-
-/**
- * Production origin for publisher / @id references (rich results, SEO audits).
- * Must match public deployment host for Google’s publisher checks.
- */
-const ORIGIN = "https://sigma-expand-com.vercel.app";
-const BASE = `${ORIGIN}/`;
-const ORG_ID = `${ORIGIN}/#organization`;
-const SITE_ID = `${ORIGIN}/#website`;
-const PAGE_ID = `${ORIGIN}/#webpage`;
+import { getSiteUrl } from "@/lib/site-url";
 
 /**
  * Single JSON-LD graph: Organization ↔ WebSite ↔ WebPage (publisher + isPartOf).
  * Satisfies tools that require `publisher` on WebSite/WebPage, not a lone Organization node.
+ * Origin resolves via {@link getSiteUrl} (NEXT_PUBLIC_SITE_URL or production fallback).
  */
 export function getPublisherJsonLdGraph() {
+  const origin = getSiteUrl().replace(/\/$/, "");
+  const base = `${origin}/`;
+  const orgId = `${origin}/#organization`;
+  const siteId = `${origin}/#website`;
+  const pageId = `${origin}/#webpage`;
+
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": ORG_ID,
+        "@id": orgId,
         name: "Sigma",
-        url: BASE,
+        url: base,
         logo: {
           "@type": "ImageObject",
-          url: `${ORIGIN}/logo.png`,
+          url: `${origin}/logo.png`,
         },
       },
       {
         "@type": "WebSite",
-        "@id": SITE_ID,
-        url: BASE,
+        "@id": siteId,
+        url: base,
         name: "Sigma",
         publisher: {
-          "@id": ORG_ID,
+          "@id": orgId,
         },
       },
       {
         "@type": "WebPage",
-        "@id": PAGE_ID,
-        url: BASE,
+        "@id": pageId,
+        url: base,
         name: SEO_PAGES.home.title,
         isPartOf: {
-          "@id": SITE_ID,
+          "@id": siteId,
         },
         publisher: {
-          "@id": ORG_ID,
+          "@id": orgId,
         },
       },
     ],

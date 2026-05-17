@@ -8,7 +8,7 @@
  * ignored so preview deployments do not poison canonicals.
  */
 
-export const PRODUCTION_SITE_ORIGIN = "https://sigma-expand-com.vercel.app";
+export const PRODUCTION_SITE_ORIGIN = "https://sigmaa.pro";
 
 const PRODUCTION_HOSTNAME = new URL(PRODUCTION_SITE_ORIGIN).hostname.toLowerCase();
 

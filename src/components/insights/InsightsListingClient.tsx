@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { InsightPost } from "@/content/insights";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
+import { getInsightCategoryLabel } from "@/lib/insightCategoryLabel";
 import { localeBody, localeMeta, localeNav } from "@/lib/localeTypography";
 import { InsightCard } from "./InsightCard";
 
@@ -27,13 +28,6 @@ function formatDate(iso: string, lang: LangCode) {
   }).format(new Date(`${iso}T12:00:00`));
 }
 
-function getCategoryLabel(category: string, t: ReturnType<typeof useLanguage>["t"]) {
-  if (category === "Growth") return t.insights.categories.growth;
-  if (category === "Distribution") return t.insights.categories.distribution;
-  if (category === "Liquidity") return t.insights.categories.liquidity;
-  return category;
-}
-
 export function InsightsListingClient({
   posts,
   categories,
@@ -42,6 +36,7 @@ export function InsightsListingClient({
   categories: string[];
 }) {
   const { t, lang } = useLanguage();
+  const cat = (c: string) => getInsightCategoryLabel(c, t.insights.categories);
   const [active, setActive] = useState<string | "all">("all");
 
   const filtered = useMemo(() => {
@@ -95,7 +90,7 @@ export function InsightsListingClient({
                   : "border-white/[0.1] bg-transparent text-[#8b939e] hover:border-white/20 hover:text-[#e9ecef]"
               }`}
             >
-              {getCategoryLabel(c, t)}
+              {cat(c)}
             </button>
           ))}
         </div>
@@ -122,7 +117,7 @@ export function InsightsListingClient({
                 <span
                   className={`rounded-sm border border-[#1c39bb]/40 bg-[#1c39bb]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#bde0fe] ${localeMeta(lang)}`}
                 >
-                  {t.insights.featuredLabel} · {getCategoryLabel(featured.category, t)}
+                  {t.insights.featuredLabel} · {cat(featured.category)}
                 </span>
                 <time
                   dateTime={featured.publishDate}
@@ -150,7 +145,9 @@ export function InsightsListingClient({
                 className="mt-7 inline-flex w-fit items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#bde0fe] transition-colors hover:text-white"
               >
                 {t.insights.readLabel}
-                <span aria-hidden>→</span>
+                <span aria-hidden className="inline-block rtl:rotate-180">
+                  →
+                </span>
               </Link>
             </div>
           </div>
@@ -169,7 +166,7 @@ export function InsightsListingClient({
                 post={post}
                 readLabel={t.insights.readLabel}
                 lang={lang}
-                categoryLabel={getCategoryLabel(post.category, t)}
+                categoryLabel={cat(post.category)}
               />
             </li>
           ))}

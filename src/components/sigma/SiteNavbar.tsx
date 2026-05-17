@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
+import { ROUTES } from "@/content/global/routes";
 import { buildLocaleSearchParams, routePathForLang } from "@/lib/i18n";
 import { localeCta, localeNav } from "@/lib/localeTypography";
 
@@ -118,7 +119,7 @@ export function SiteNavbar() {
         </div>
 
         <Link
-          href="/#connect"
+          href={routePathForLang(ROUTES.contact, language)}
           className={`border border-white/20 px-4 py-2 font-body text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-erie ${localeCta(language)}`}
         >
           {t.nav.navCta}

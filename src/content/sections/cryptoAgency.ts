@@ -4,7 +4,14 @@ import type { Localized } from "../_contentLocales";
 import { getLocalized } from "../_contentLocales";
 import type { LangCode } from "../types";
 
-export type CryptoMarketTabKey = "uae" | "turkey" | "iran" | "china" | "global";
+export type CryptoMarketTabKey =
+  | "uae"
+  | "turkey"
+  | "wana"
+  | "china"
+  | "latam"
+  | "balkans"
+  | "global";
 
 export type CryptoMarketTab = {
   key: CryptoMarketTabKey;
@@ -31,7 +38,7 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     eyebrow: "Markets",
     title: "Crypto Agency Marketing",
     description:
-      "Regional growth across UAE, Turkey, Iran, Greater China, and global corridors—built for Web3 acquisition, distribution, and liquidity.",
+      "Regional growth across UAE, Turkey, WANA, Greater China, LATAM, the Balkans, and global corridors—built for Web3 acquisition, distribution, and liquidity.",
     cta: "Learn More",
     regionsAriaLabel: "Regions",
     tabs: [
@@ -64,22 +71,22 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "iran",
-        label: "Iran",
-        flag: "🇮🇷",
-        href: "/markets/iran",
-        panelTitle: "Iran Regional Outreach",
+        key: "wana",
+        label: "WANA",
+        flag: "🌏",
+        href: "/markets/wana",
+        panelTitle: "West Asia & North Africa",
         description:
-          "Persian-language programs and partner-led distribution for crypto-native audiences, focused on trust, clarity, and sustained engagement.",
+          "Strategic market expansion across West Asia and North Africa through localized acquisition, partner networks, community activation, and liquidity-aware growth systems.",
         bullets: [
-          "Persian-language creative and publishing workflows",
-          "Partner coordination for cross-platform presence",
-          "Retention-focused community structures and education layers",
+          "Region-aware messaging for diverse West Asian and North African audiences",
+          "Partner and community coordination across regional distribution surfaces",
+          "Market-entry narratives built for trust, compliance awareness, and scalable acquisition",
         ],
       },
       {
         key: "china",
-        label: "China",
+        label: "Greater China",
         flag: "🇨🇳",
         href: "/markets/china",
         panelTitle: "Greater China Execution",
@@ -89,6 +96,34 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "Ecosystem-aligned messaging for regional audiences",
           "Structured partner coordination across distribution surfaces",
           "Institutional-grade collateral and timeline-ready milestones",
+        ],
+      },
+      {
+        key: "latam",
+        label: "LATAM",
+        flag: "🌎",
+        href: "/markets/latam",
+        panelTitle: "Latin America",
+        description:
+          "Growth systems for Spanish- and Portuguese-speaking Web3 communities across Latin America, focused on localized acquisition, creator networks, and regional market activation.",
+        bullets: [
+          "Localized campaigns for Spanish- and Portuguese-speaking crypto audiences",
+          "Creator and community networks tuned for regional distribution",
+          "Market activation aligned with liquidity milestones and partner norms",
+        ],
+      },
+      {
+        key: "balkans",
+        label: "Balkans",
+        flag: "🏛️",
+        href: "/markets/balkans",
+        panelTitle: "Balkan Markets",
+        description:
+          "Regional expansion support across Balkan crypto communities, with localized messaging, partner coordination, and high-trust distribution.",
+        bullets: [
+          "Localized messaging for Balkan Web3 and trading communities",
+          "Partner coordination across regional exchanges and media surfaces",
+          "High-trust distribution narratives for sustainable community growth",
         ],
       },
       {
@@ -145,22 +180,22 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "iran",
-        label: "ایران",
-        flag: "🇮🇷",
-        href: "/markets/iran",
-        panelTitle: "دسترسی منطقه‌ای ایران",
+        key: "wana",
+        label: "WANA",
+        flag: "🌏",
+        href: "/markets/wana",
+        panelTitle: "غرب آسیا و شمال آفریقا",
         description:
-          "برنامه‌های فارسی‌زبان و توزیع با همکار برای مخاطبان بومی رمز ارز با تمرکز بر اعتماد، شفافیت و تعامل پایدار.",
+          "گسترش استراتژیک بازار در غرب آسیا و شمال آفریقا از طریق جذب بومی‌شده، شبکه‌های همکار، فعال‌سازی جامعه و سیستم‌های رشد آگاه از نقدینگی.",
         bullets: [
-          "گردش کار خلاق و انتشار فارسی‌زبان",
-          "هماهنگی همکار برای حضور چندسکویی",
-          "ساختار جامعه و لایه‌های آموزشی با تمرکز بر نگهداشت",
+          "پیام‌رسانی آگاه از منطقه برای مخاطبان متنوع غرب آسیا و شمال آفریقا",
+          "هماهنگی همکار و جامعه در سطح‌های توزیع منطقه‌ای",
+          "روایت‌های ورود به بازار با تمرکز بر اعتماد، آگاهی از انطباق و جذب مقیاس‌پذیر",
         ],
       },
       {
         key: "china",
-        label: "چین",
+        label: "چین بزرگ‌تر",
         flag: "🇨🇳",
         href: "/markets/china",
         panelTitle: "اجرای چین بزرگ‌تر",
@@ -170,6 +205,34 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "پیام‌رسانی هم‌راستا با اکوسیستم برای مخاطبان منطقه",
           "هماهنگی ساخت‌یافته همکار در سطح‌های توزیع",
           "محتوای درجه نهادی و نقاط عطف آماده زمان‌بندی",
+        ],
+      },
+      {
+        key: "latam",
+        label: "LATAM",
+        flag: "🌎",
+        href: "/markets/latam",
+        panelTitle: "آمریکای لاتین",
+        description:
+          "سیستم‌های رشد برای جوامع Web3 اسپانیایی‌ و پرتغالی‌زبان در آمریکای لاتین با تمرکز بر جذب بومی، شبکه‌های خالق و فعال‌سازی بازار منطقه‌ای.",
+        bullets: [
+          "کمپین‌های بومی برای مخاطبان رمز ارزی اسپانیایی‌ و پرتغالی‌زبان",
+          "شبکه‌های خالق و جامعه متناسب با توزیع منطقه‌ای",
+          "فعال‌سازی بازار هم‌راستا با نقاط عطف نقدینگی و هنجارهای همکار",
+        ],
+      },
+      {
+        key: "balkans",
+        label: "بالکان",
+        flag: "🏛️",
+        href: "/markets/balkans",
+        panelTitle: "بازارهای بالکان",
+        description:
+          "پشتیبانی گسترش منطقه‌ای در جوامع رمز ارزی بالکان با پیام‌رسانی بومی، هماهنگی همکار و توزیع با اعتماد بالا.",
+        bullets: [
+          "پیام‌رسانی بومی برای جوامع Web3 و معاملاتی بالکان",
+          "هماهنگی همکار در صرافی‌ها و سطح‌های رسانه‌ای منطقه",
+          "روایت‌های توزیع با اعتماد بالا برای رشد پایدار جامعه",
         ],
       },
       {
@@ -226,22 +289,22 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "iran",
-        label: "İran",
-        flag: "🇮🇷",
-        href: "/markets/iran",
-        panelTitle: "İran Bölgesel Erişimi",
+        key: "wana",
+        label: "WANA",
+        flag: "🌏",
+        href: "/markets/wana",
+        panelTitle: "Batı Asya ve Kuzey Afrika",
         description:
-          "Kripto yerli kitleler için Farsça programlar ve ortak öncülü dağıtım—güven, netlik ve sürdürülebilir katılım odaklı.",
+          "Batı Asya ve Kuzey Afrika genelinde yerelleştirilmiş edinim, ortak ağları, topluluk aktivasyonu ve likidite odaklı büyüme sistemleriyle stratejik pazar genişlemesi.",
         bullets: [
-          "Farsça içerik ve yayın iş akışları",
-          "Çok platformlu varlık için ortak koordinasyonu",
-          "Tutuma odaklı topluluk yapıları ve eğitim katmanları",
+          "Batı Asya ve Kuzey Afrika’daki çeşitli kitleler için bölgeye duyarlı mesajlaşma",
+          "Bölgesel dağıtım yüzeylerinde ortak ve topluluk koordinasyonu",
+          "Güven, uyum bilinci ve ölçeklenebilir edinim için pazar girişi anlatıları",
         ],
       },
       {
         key: "china",
-        label: "Çin",
+        label: "Geniş Çin",
         flag: "🇨🇳",
         href: "/markets/china",
         panelTitle: "Geniş Çin Uygulaması",
@@ -251,6 +314,34 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "Bölgesel kitleler için ekosistemle uyumlu mesajlaşma",
           "Dağıtım yüzeylerinde yapılandırılmış ortak koordinasyonu",
           "Kurumsal düzeyde materyaller ve zaman çizelgesine hazır kilometre taşları",
+        ],
+      },
+      {
+        key: "latam",
+        label: "LATAM",
+        flag: "🌎",
+        href: "/markets/latam",
+        panelTitle: "Latin Amerika",
+        description:
+          "Latin Amerika genelinde İspanyolca ve Portekizce konuşan Web3 toplulukları için yerelleştirilmiş edinim, içerik üretici ağları ve bölgesel pazar aktivasyonuna odaklı büyüme sistemleri.",
+        bullets: [
+          "İspanyolca ve Portekizce kripto kitleleri için yerelleştirilmiş kampanyalar",
+          "Bölgesel dağıtıma uygun içerik üretici ve topluluk ağları",
+          "Likidite kilometre taşları ve ortak normlarıyla uyumlu pazar aktivasyonu",
+        ],
+      },
+      {
+        key: "balkans",
+        label: "Balkanlar",
+        flag: "🏛️",
+        href: "/markets/balkans",
+        panelTitle: "Balkan Piyasaları",
+        description:
+          "Balkan kripto topluluklarında yerelleştirilmiş mesajlaşma, ortak koordinasyonu ve yüksek güvenli dağıtımla bölgesel genişleme desteği.",
+        bullets: [
+          "Balkan Web3 ve trader toplulukları için yerelleştirilmiş mesajlaşma",
+          "Bölgesel borsa ve medya yüzeylerinde ortak koordinasyonu",
+          "Sürdürülebilir topluluk büyümesi için yüksek güvenli dağıtım anlatıları",
         ],
       },
       {
@@ -306,22 +397,22 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "iran",
-        label: "伊朗",
-        flag: "🇮🇷",
-        href: "/markets/iran",
-        panelTitle: "伊朗区域触达",
+        key: "wana",
+        label: "WANA",
+        flag: "🌏",
+        href: "/markets/wana",
+        panelTitle: "西亚与北非",
         description:
-          "面向加密原生受众的波斯语项目与合作伙伴分发网络，强调信任、清晰与持续参与。",
+          "通过本地化获客、合作伙伴网络、社区激活与流动性导向增长体系，在西亚与北非实现战略性市场扩张。",
         bullets: [
-          "波斯语创意与发布流程",
-          "跨平台合作的伙伴协同",
-          "以留存为目标的社群结构与教育层",
+          "面向西亚与北非多元受众的区域化信息传达",
+          "区域分发渠道上的伙伴与社区协同",
+          "兼顾信任、合规意识与可扩展获客的市场进入叙事",
         ],
       },
       {
         key: "china",
-        label: "中国",
+        label: "大中华区",
         flag: "🇨🇳",
         href: "/markets/china",
         panelTitle: "大中华区执行",
@@ -331,6 +422,34 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "面向区域受众的生态一致信息",
           "跨分发渠道的结构化伙伴协同",
           "机构级物料与可交付时间表里程碑",
+        ],
+      },
+      {
+        key: "latam",
+        label: "LATAM",
+        flag: "🌎",
+        href: "/markets/latam",
+        panelTitle: "拉丁美洲",
+        description:
+          "面向拉丁美洲西语与葡语 Web3 社群的增长体系，聚焦本地化获客、创作者网络与区域市场激活。",
+        bullets: [
+          "面向西语与葡语加密受众的本地化 campaign",
+          "适配区域分发的创作者与社区网络",
+          "与流动性里程碑及伙伴规范对齐的市场激活",
+        ],
+      },
+      {
+        key: "balkans",
+        label: "巴尔干",
+        flag: "🏛️",
+        href: "/markets/balkans",
+        panelTitle: "巴尔干市场",
+        description:
+          "为巴尔干加密社群提供区域扩张支持，涵盖本地化信息、伙伴协同与高信任分发。",
+        bullets: [
+          "面向巴尔干 Web3 与交易社群的本地化信息",
+          "区域交易所与媒体渠道上的伙伴协同",
+          "支撑可持续社群增长的高信任分发叙事",
         ],
       },
       {
@@ -387,22 +506,22 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "iran",
-        label: "Irán",
-        flag: "🇮🇷",
-        href: "/markets/iran",
-        panelTitle: "Alcance regional en Irán",
+        key: "wana",
+        label: "WANA",
+        flag: "🌏",
+        href: "/markets/wana",
+        panelTitle: "Asia Occidental y Norte de África",
         description:
-          "Programas en persa y distribución liderada por socios para audiencias nativas cripto, con foco en confianza, claridad y compromiso sostenido.",
+          "Expansión estratégica en Asia Occidental y Norte de África mediante adquisición localizada, redes de socios, activación comunitaria y sistemas de crecimiento conscientes de la liquidez.",
         bullets: [
-          "Flujos creativos y editoriales en persa",
-          "Coordinación de socios para presencia multiplataforma",
-          "Estructuras comunitarias y capas educativas orientadas a retención",
+          "Mensajes conscientes de la región para audiencias diversas de Asia Occidental y Norte de África",
+          "Coordinación de socios y comunidades en superficies de distribución regionales",
+          "Narrativas de entrada al mercado centradas en confianza, cumplimiento y adquisición escalable",
         ],
       },
       {
         key: "china",
-        label: "China",
+        label: "Gran China",
         flag: "🇨🇳",
         href: "/markets/china",
         panelTitle: "Ejecución en Gran China",
@@ -412,6 +531,34 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "Mensajes alineados al ecosistema para audiencias regionales",
           "Coordinación estructurada de socios en superficies de distribución",
           "Material de nivel institucional e hitos listos para roadmap",
+        ],
+      },
+      {
+        key: "latam",
+        label: "LATAM",
+        flag: "🌎",
+        href: "/markets/latam",
+        panelTitle: "América Latina",
+        description:
+          "Sistemas de crecimiento para comunidades Web3 de habla hispana y portuguesa en América Latina, con adquisición localizada, redes de creadores y activación regional.",
+        bullets: [
+          "Campañas localizadas para audiencias cripto en español y portugués",
+          "Redes de creadores y comunidades adaptadas a la distribución regional",
+          "Activación de mercado alineada con hitos de liquidez y normas de socios",
+        ],
+      },
+      {
+        key: "balkans",
+        label: "Balcanes",
+        flag: "🏛️",
+        href: "/markets/balkans",
+        panelTitle: "Mercados balcánicos",
+        description:
+          "Soporte de expansión regional en comunidades cripto de los Balcanes, con mensajes localizados, coordinación de socios y distribución de alta confianza.",
+        bullets: [
+          "Mensajes localizados para comunidades Web3 y de trading en los Balcanes",
+          "Coordinación de socios en exchanges y medios regionales",
+          "Narrativas de distribución de alta confianza para crecimiento comunitario sostenible",
         ],
       },
       {
@@ -468,22 +615,22 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "iran",
-        label: "Иран",
-        flag: "🇮🇷",
-        href: "/markets/iran",
-        panelTitle: "Региональный охват Ирана",
+        key: "wana",
+        label: "WANA",
+        flag: "🌏",
+        href: "/markets/wana",
+        panelTitle: "Западная Азия и Северная Африка",
         description:
-          "Персоязычные программы и партнёрская дистрибуция для крипто-нативной аудитории — доверие, ясность и устойчивое вовлечение.",
+          "Стратегическое расширение на рынках Западной Азии и Северной Африки через локализованное привлечение, партнёрские сети, активацию сообществ и рост с учётом ликвидности.",
         bullets: [
-          "Персоязычные креативные и редакционные процессы",
-          "Координация партнёров для присутствия на платформах",
-          "Структуры сообщества и образовательные слои с фокусом на удержание",
+          "Регионально адаптированные сообщения для разнообразной аудитории Западной Азии и Северной Африки",
+          "Координация партнёров и сообществ на региональных каналах дистрибуции",
+          "Нарративы выхода на рынок с акцентом на доверие, комплаенс и масштабируемое привлечение",
         ],
       },
       {
         key: "china",
-        label: "Китай",
+        label: "Большой Китай",
         flag: "🇨🇳",
         href: "/markets/china",
         panelTitle: "Исполнение в Большом Китае",
@@ -493,6 +640,34 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "Сообщения, согласованные с экосистемой для региональной аудитории",
           "Структурированная координация партнёров по каналам дистрибуции",
           "Институциональные материалы и готовые к таймлайну вехи",
+        ],
+      },
+      {
+        key: "latam",
+        label: "LATAM",
+        flag: "🌎",
+        href: "/markets/latam",
+        panelTitle: "Латинская Америка",
+        description:
+          "Системы роста для испано- и португалоязычных Web3-сообществ Латинской Америки — локализованное привлечение, сети креаторов и региональная активация рынка.",
+        bullets: [
+          "Локализованные кампании для испано- и португалоязычной крипто-аудитории",
+          "Сети креаторов и сообществ под региональную дистрибуцию",
+          "Активация рынка в согласовании с вехами ликвидности и нормами партнёров",
+        ],
+      },
+      {
+        key: "balkans",
+        label: "Балканы",
+        flag: "🏛️",
+        href: "/markets/balkans",
+        panelTitle: "Балканские рынки",
+        description:
+          "Поддержка регионального расширения в балканских крипто-сообществах — локализованные сообщения, координация партнёров и дистрибуция с высоким доверием.",
+        bullets: [
+          "Локализованные сообщения для балканских Web3- и трейдерских сообществ",
+          "Координация партнёров на региональных биржах и медиа-площадках",
+          "Нарративы дистрибуции с высоким доверием для устойчивого роста сообщества",
         ],
       },
       {
@@ -549,22 +724,22 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "iran",
-        label: "إيران",
-        flag: "🇮🇷",
-        href: "/markets/iran",
-        panelTitle: "الوصول الإقليمي في إيران",
+        key: "wana",
+        label: "WANA",
+        flag: "🌏",
+        href: "/markets/wana",
+        panelTitle: "غرب آسيا وشمال أفريقيا",
         description:
-          "برامج بالفارسية وتوزيع يقوده الشركاء لجمهور العملات المشفرة مع التركيز على الثقة والوضوح والمشاركة المستدامة.",
+          "توسع استراتيجي في غرب آسيا وشمال أفريقيا عبر اكتساب محلي وشبكات شركاء وتفعيل مجتمعات وأنظمة نمو واعية بالسيولة.",
         bullets: [
-          "سير عمل إبداعي ونشر بالفارسية",
-          "تنسيق الشركاء للحضور متعدد المنصات",
-          "هياكل مجتمعية وطبقات تعليم تركز على الاحتفاظ",
+          "رسائل واعية بالمنطقة لجماهير متنوعة في غرب آسيا وشمال أفريقيا",
+          "تنسيق الشركاء والمجتمعات عبر قنوات التوزيع الإقليمية",
+          "سرديات دخول السوق تركز على الثقة والامتثال والاكتساب القابل للتوسع",
         ],
       },
       {
         key: "china",
-        label: "الصين",
+        label: "الصين الكبرى",
         flag: "🇨🇳",
         href: "/markets/china",
         panelTitle: "التنفيذ في الصين الكبرى",
@@ -574,6 +749,34 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "رسائل متوافقة مع النظام البيئي للجماهير الإقليمية",
           "تنسيق منظم للشركاء عبر قنوات التوزيع",
           "مواد على مستوى مؤسسي ومعالم جاهزة للجدول الزمني",
+        ],
+      },
+      {
+        key: "latam",
+        label: "LATAM",
+        flag: "🌎",
+        href: "/markets/latam",
+        panelTitle: "أمريكا اللاتينية",
+        description:
+          "أنظمة نمو لمجتمعات Web3 الناطقة بالإسبانية والبرتغالية في أمريكا اللاتينية، مع اكتساب محلي وشبكات مبدعين وتفعيل إقليمي للسوق.",
+        bullets: [
+          "حملات محلية لجماهير العملات المشفرة الناطقة بالإسبانية والبرتغالية",
+          "شبكات مبدعين ومجتمعات ملائمة للتوزيع الإقليمي",
+          "تفعيل السوق متوافق مع معالم السيولة ومعايير الشركاء",
+        ],
+      },
+      {
+        key: "balkans",
+        label: "البلقان",
+        flag: "🏛️",
+        href: "/markets/balkans",
+        panelTitle: "أسواق البلقان",
+        description:
+          "دعم التوسع الإقليمي في مجتمعات العملات المشفرة في البلقان، مع رسائل محلية وتنسيق شركاء وتوزيع عالي الثقة.",
+        bullets: [
+          "رسائل محلية لمجتمعات Web3 والتداول في البلقان",
+          "تنسيق الشركاء عبر المنصات والإعلام الإقليمي",
+          "سرديات توزيع عالية الثقة لنمو مجتمعي مستدام",
         ],
       },
       {

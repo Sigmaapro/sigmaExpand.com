@@ -31,8 +31,10 @@ export type SeoRouteKey =
   | "insights"
   | "marketsUae"
   | "marketsTurkey"
-  | "marketsIran"
+  | "marketsWana"
   | "marketsChina"
+  | "marketsLatam"
+  | "marketsBalkans"
   | "marketsGlobal";
 
 export type SeoPageDefinition = {
@@ -221,18 +223,18 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     twitterDescription:
       "Crypto agency marketing for Turkey.",
   },
-  marketsIran: {
-    path: "/markets/iran",
-    title: "Iran Regional Crypto Marketing | Sigma",
+  marketsWana: {
+    path: "/markets/wana",
+    title: "WANA Regional Crypto Marketing | Sigma",
     description:
-      "Persian-language outreach and partner-led distribution for crypto-native audiences—structured programs with clear compliance boundaries.",
-    keywords: ["Persian crypto marketing", "regional Web3", "Sigma Iran"],
-    ogTitle: "Iran Regional Crypto Marketing | Sigma",
+      "Strategic market expansion across West Asia and North Africa—localized acquisition, partner networks, community activation, and liquidity-aware growth systems.",
+    keywords: ["WANA crypto marketing", "West Asia Web3", "North Africa crypto growth", "Sigma WANA"],
+    ogTitle: "WANA Regional Crypto Marketing | Sigma",
     ogDescription:
-      "Structured Persian-language programs for crypto audiences.",
-    twitterTitle: "Iran Crypto Marketing | Sigma",
+      "Regional growth infrastructure for West Asia and North Africa.",
+    twitterTitle: "WANA Crypto Marketing | Sigma",
     twitterDescription:
-      "Regional Web3 marketing programs.",
+      "Web3 market expansion across West Asia and North Africa.",
   },
   marketsChina: {
     path: "/markets/china",
@@ -246,6 +248,32 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     twitterTitle: "Greater China Crypto Marketing | Sigma",
     twitterDescription:
       "Web3 growth execution for Greater China.",
+  },
+  marketsLatam: {
+    path: "/markets/latam",
+    title: "LATAM Crypto Agency Marketing | Sigma",
+    description:
+      "Growth systems for Spanish- and Portuguese-speaking Web3 communities across Latin America—localized acquisition, creator networks, and regional market activation.",
+    keywords: ["LATAM crypto marketing", "Latin America Web3", "Sigma LATAM"],
+    ogTitle: "LATAM Crypto Agency Marketing | Sigma",
+    ogDescription:
+      "Localized Web3 growth execution for Latin American crypto markets.",
+    twitterTitle: "LATAM Crypto Marketing | Sigma",
+    twitterDescription:
+      "Crypto agency marketing for Latin America.",
+  },
+  marketsBalkans: {
+    path: "/markets/balkans",
+    title: "Balkans Crypto Agency Marketing | Sigma",
+    description:
+      "Regional expansion support across Balkan crypto communities—localized messaging, partner coordination, and high-trust distribution.",
+    keywords: ["Balkans crypto marketing", "Balkan Web3", "Sigma Balkans"],
+    ogTitle: "Balkans Crypto Agency Marketing | Sigma",
+    ogDescription:
+      "Web3 growth execution for Balkan crypto communities.",
+    twitterTitle: "Balkans Crypto Marketing | Sigma",
+    twitterDescription:
+      "Regional crypto marketing for the Balkans.",
   },
   marketsGlobal: {
     path: "/markets/global",

@@ -10,8 +10,10 @@ import { langFromUnknown } from "@/lib/i18n";
 const REGION_TO_SEO: Record<string, SeoRouteKey> = {
   uae: "marketsUae",
   turkey: "marketsTurkey",
-  iran: "marketsIran",
+  wana: "marketsWana",
   china: "marketsChina",
+  latam: "marketsLatam",
+  balkans: "marketsBalkans",
   global: "marketsGlobal",
 };
 

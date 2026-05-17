@@ -28,6 +28,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/markets/iran",
+        destination: "/markets/wana",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

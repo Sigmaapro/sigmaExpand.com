@@ -6,7 +6,7 @@
 
 ## Market name
 
-<!-- e.g. UAE, Turkey, Iran, China, Global -->
+<!-- e.g. UAE, Turkey, WANA, Greater China, LATAM, Balkans, Global -->
 
 ## Target audience
 

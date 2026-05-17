@@ -24,7 +24,7 @@ Use it as the single internal drop zone for copy, brand assets, market notes, in
 | **01-brand** | Logo files, brand notes, tone of voice, visual references, color/type references |
 | **02-copy** | Homepage copy, about copy, services copy, CTA copy, multilingual copy notes |
 | **03-assets** | Images, videos, icons, screenshots, visual references, raw design files |
-| **04-market-pages** | UAE, Turkey, Iran, China, Global market content; regional proof/trust notes |
+| **04-market-pages** | UAE, Turkey, WANA, Greater China, LATAM, Balkans, Global market content; regional proof/trust notes |
 | **05-insights** | Article ideas, drafts, source notes, Web3 growth insights, SEO topic ideas |
 | **06-contact-and-business-info** | Business email, contact details, Calendly links, social links, legal/company info, partner notes |
 | **07-client-feedback** | Client comments, requested edits, approval notes, revision history |

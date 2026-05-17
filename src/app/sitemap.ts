@@ -3,7 +3,7 @@ import { getAllInsightsPosts } from "@/content/insights";
 import { SUPPORTED_LANGS } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
 
-const MARKET_REGIONS = ["uae", "turkey", "iran", "china", "global"] as const;
+const MARKET_REGIONS = ["uae", "turkey", "wana", "china", "latam", "balkans", "global"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();

@@ -29,10 +29,10 @@ export type SeoRouteKey =
   | "team"
   | "terms"
   | "insights"
-  | "marketsUae"
-  | "marketsTurkey"
+  | "marketsGcc"
+  | "marketsEurasia"
   | "marketsWana"
-  | "marketsChina"
+  | "marketsEastAsia"
   | "marketsLatam"
   | "marketsBalkans"
   | "marketsGlobal";
@@ -197,31 +197,31 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     twitterDescription:
       "Market intelligence and growth systems for Web3.",
   },
-  marketsUae: {
-    path: "/markets/uae",
-    title: "UAE Crypto Agency Marketing | Sigma",
+  marketsGcc: {
+    path: "/markets/gcc",
+    title: "GCC Crypto Agency Marketing | Sigma",
     description:
-      "Sigma’s UAE-focused Web3 marketing: Dubai and Abu Dhabi ecosystems, regional partnerships, and institutional-grade execution.",
-    keywords: ["UAE crypto marketing", "Dubai Web3", "Sigma UAE", "Middle East crypto growth"],
-    ogTitle: "UAE Crypto Agency Marketing | Sigma",
+      "Sigma’s GCC-focused Web3 marketing: Gulf Cooperation Council corridors, regional partnerships, and institutional-grade execution.",
+    keywords: ["GCC crypto marketing", "Gulf Web3", "Sigma GCC", "Middle East crypto growth"],
+    ogTitle: "GCC Crypto Agency Marketing | Sigma",
     ogDescription:
-      "Regional Web3 marketing and expansion across UAE crypto hubs.",
-    twitterTitle: "UAE Crypto Marketing | Sigma",
+      "Regional Web3 marketing and expansion across GCC crypto corridors.",
+    twitterTitle: "GCC Crypto Marketing | Sigma",
     twitterDescription:
-      "Web3 agency marketing for UAE markets.",
+      "Web3 agency marketing for GCC markets.",
   },
-  marketsTurkey: {
-    path: "/markets/turkey",
-    title: "Turkey Crypto Agency Marketing | Sigma",
+  marketsEurasia: {
+    path: "/markets/eurasia",
+    title: "Eurasia Crypto Agency Marketing | Sigma",
     description:
-      "Turkey market programs for crypto exchanges and protocols—localized narratives, listings-aligned milestones, and community activation.",
-    keywords: ["Turkey crypto marketing", "Sigma Turkey", "Web3 Turkey"],
-    ogTitle: "Turkey Crypto Agency Marketing | Sigma",
+      "Eurasia market programs for crypto exchanges and protocols—localized narratives, listings-aligned milestones, and community activation.",
+    keywords: ["Eurasia crypto marketing", "Sigma Eurasia", "Web3 Eurasia"],
+    ogTitle: "Eurasia Crypto Agency Marketing | Sigma",
     ogDescription:
-      "Localized Web3 growth execution for Turkish crypto markets.",
-    twitterTitle: "Turkey Crypto Marketing | Sigma",
+      "Localized Web3 growth execution for Eurasian crypto corridors.",
+    twitterTitle: "Eurasia Crypto Marketing | Sigma",
     twitterDescription:
-      "Crypto agency marketing for Turkey.",
+      "Crypto agency marketing for Eurasia.",
   },
   marketsWana: {
     path: "/markets/wana",
@@ -236,18 +236,18 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     twitterDescription:
       "Web3 market expansion across West Asia and North Africa.",
   },
-  marketsChina: {
-    path: "/markets/china",
-    title: "Greater China Crypto Marketing | Sigma",
+  marketsEastAsia: {
+    path: "/markets/east-asia",
+    title: "East Asia Crypto Marketing | Sigma",
     description:
-      "Greater China execution for Web3 teams—ecosystem-aligned messaging, partner coordination, and institutional narratives.",
-    keywords: ["China crypto marketing", "Greater China Web3", "Sigma"],
-    ogTitle: "Greater China Crypto Marketing | Sigma",
+      "East Asia execution for Web3 teams—ecosystem-aligned messaging, partner coordination, and institutional narratives.",
+    keywords: ["East Asia crypto marketing", "East Asia Web3", "Sigma"],
+    ogTitle: "East Asia Crypto Marketing | Sigma",
     ogDescription:
-      "Web3 marketing execution aligned with Greater China ecosystems.",
-    twitterTitle: "Greater China Crypto Marketing | Sigma",
+      "Web3 marketing execution aligned with East Asian ecosystems.",
+    twitterTitle: "East Asia Crypto Marketing | Sigma",
     twitterDescription:
-      "Web3 growth execution for Greater China.",
+      "Web3 growth execution for East Asia.",
   },
   marketsLatam: {
     path: "/markets/latam",

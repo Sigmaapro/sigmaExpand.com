@@ -5,10 +5,10 @@ import { getLocalized } from "../_contentLocales";
 import type { LangCode } from "../types";
 
 export type CryptoMarketTabKey =
-  | "uae"
-  | "turkey"
+  | "gcc"
+  | "eurasia"
   | "wana"
-  | "china"
+  | "east-asia"
   | "latam"
   | "balkans"
   | "global";
@@ -38,18 +38,18 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     eyebrow: "Markets",
     title: "Crypto Agency Marketing",
     description:
-      "Regional growth across UAE, Turkey, WANA, Greater China, LATAM, the Balkans, and global corridors—built for Web3 acquisition, distribution, and liquidity.",
+      "Regional growth across GCC, Eurasia, WANA, East Asia, LATAM, the Balkans, and global corridors—built for Web3 acquisition, distribution, and liquidity.",
     cta: "Learn More",
     regionsAriaLabel: "Regions",
     tabs: [
       {
-        key: "uae",
-        label: "UAE",
-        flag: "🇦🇪",
-        href: "/markets/uae",
-        panelTitle: "UAE Market Expansion",
+        key: "gcc",
+        label: "GCC",
+        flag: "🏛️",
+        href: "/markets/gcc",
+        panelTitle: "GCC Market Expansion",
         description:
-          "Strategic Web3 growth across Dubai and Abu Dhabi. Local partnerships and regulated pathways help you scale with credibility in Gulf crypto hubs.",
+          "Strategic Web3 growth across Gulf Cooperation Council corridors. Local partnerships and regulated pathways help you scale with credibility across institutional crypto hubs.",
         bullets: [
           "KOL and community programs tuned for Gulf audiences",
           "Exchange and liquidity coordination across regional venues",
@@ -57,15 +57,15 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "turkey",
-        label: "Turkey",
-        flag: "🇹🇷",
-        href: "/markets/turkey",
-        panelTitle: "Turkey Market Expansion",
+        key: "eurasia",
+        label: "Eurasia",
+        flag: "🌍",
+        href: "/markets/eurasia",
+        panelTitle: "Eurasia Market Expansion",
         description:
-          "High-velocity execution across Turkish crypto markets with localized narratives, listings-aligned storytelling, and trader-focused activation.",
+          "High-velocity execution across Eurasian crypto corridors with localized narratives, listings-aligned storytelling, and trader-focused activation.",
         bullets: [
-          "Localized messaging and distribution across Turkish communities",
+          "Localized messaging and distribution across Eurasian communities",
           "Exchange-listed narratives and liquidity-aligned milestones",
           "Community-led growth loops with measurable engagement",
         ],
@@ -85,13 +85,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "china",
-        label: "Greater China",
-        flag: "🇨🇳",
-        href: "/markets/china",
-        panelTitle: "Greater China Execution",
+        key: "east-asia",
+        label: "East Asia",
+        flag: "🌏",
+        href: "/markets/east-asia",
+        panelTitle: "East Asia Execution",
         description:
-          "Carefully localized positioning for Greater China ecosystems—aligned with regional sentiment, partner norms, and credible institutional narratives.",
+          "Carefully localized positioning for East Asian ecosystems—aligned with regional sentiment, partner norms, and credible institutional narratives.",
         bullets: [
           "Ecosystem-aligned messaging for regional audiences",
           "Structured partner coordination across distribution surfaces",
@@ -152,13 +152,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     regionsAriaLabel: "مناطق",
     tabs: [
       {
-        key: "uae",
-        label: "امارات",
-        flag: "🇦🇪",
-        href: "/markets/uae",
-        panelTitle: "گسترش بازار امارات",
+        key: "gcc",
+        label: "شورای همکاری خلیج",
+        flag: "🏛️",
+        href: "/markets/gcc",
+        panelTitle: "گسترش بازار شورای همکاری خلیج",
         description:
-          "رشد استراتژیک Web3 در دبی و ابوظبی. همکاری‌های محلی و مسیرهای منظم به شما کمک می‌کند با اعتبار در هاب‌های رمز ارزی خلیج مقیاس پیدا کنید.",
+          "رشد استراتژیک Web3 در کریدورهای شورای همکاری خلیج. همکاری‌های محلی و مسیرهای منظم به شما کمک می‌کند با اعتبار در هاب‌های نهادی رمز ارزی منطقه مقیاس پیدا کنید.",
         bullets: [
           "برنامه‌های KOL و جامعه برای مخاطبان خلیج",
           "هماهنگی صرافی و نقدینگی در سطح منطقه",
@@ -166,15 +166,15 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "turkey",
-        label: "ترکیه",
-        flag: "🇹🇷",
-        href: "/markets/turkey",
-        panelTitle: "گسترش بازار ترکیه",
+        key: "eurasia",
+        label: "اوراسیا",
+        flag: "🌍",
+        href: "/markets/eurasia",
+        panelTitle: "گسترش بازار اوراسیا",
         description:
-          "اجرای پرسرعت در بازارهای رمز ارزی ترکیه با روایت‌های بومی، داستان‌سرایی هم‌راستا با لیستینگ و فعال‌سازی متمرکز بر معامله‌گر.",
+          "اجرای پرسرعت در کریدورهای رمز ارزی اوراسیا با روایت‌های بومی، داستان‌سرایی هم‌راستا با لیستینگ و فعال‌سازی متمرکز بر معامله‌گر.",
         bullets: [
-          "پیام‌رسانی و توزیع بومی در جوامع ترکیه",
+          "پیام‌رسانی و توزیع بومی در جوامع اوراسیایی",
           "روایت‌های هم‌راستا با لیست صرافی و نقاط عطف نقدینگی",
           "حلقه‌های رشد جامعه‌محور با تعامل قابل اندازه‌گیری",
         ],
@@ -194,13 +194,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "china",
-        label: "چین بزرگ‌تر",
-        flag: "🇨🇳",
-        href: "/markets/china",
-        panelTitle: "اجرای چین بزرگ‌تر",
+        key: "east-asia",
+        label: "شرق آسیا",
+        flag: "🌏",
+        href: "/markets/east-asia",
+        panelTitle: "اجرای شرق آسیا",
         description:
-          "جایگاه‌یابی بومی‌شده برای اکوسیستم چین بزرگ‌تر — هم‌راستا با احساسات منطقه‌ای، هنجارهای همکار و روایت‌های نهادی معتبر.",
+          "جایگاه‌یابی بومی‌شده برای اکوسیستم‌های شرق آسیا — هم‌راستا با احساسات منطقه‌ای، هنجارهای همکار و روایت‌های نهادی معتبر.",
         bullets: [
           "پیام‌رسانی هم‌راستا با اکوسیستم برای مخاطبان منطقه",
           "هماهنگی ساخت‌یافته همکار در سطح‌های توزیع",
@@ -261,13 +261,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     regionsAriaLabel: "Bölgeler",
     tabs: [
       {
-        key: "uae",
-        label: "BAE",
-        flag: "🇦🇪",
-        href: "/markets/uae",
-        panelTitle: "BAE Piyasası Genişlemesi",
+        key: "gcc",
+        label: "Körfez Bölgesi",
+        flag: "🏛️",
+        href: "/markets/gcc",
+        panelTitle: "Körfez Bölgesi Pazar Genişlemesi",
         description:
-          "Dubai ve Abu Dhabi genelinde stratejik Web3 büyümesi. Yerel ortaklıklar ve düzenlemelere uygun yollar, Körfez kripto merkezlerinde güvenilir ölçek sağlar.",
+          "Körfez İş Birliği koridorlarında stratejik Web3 büyümesi. Yerel ortaklıklar ve düzenlemelere uygun yollar, bölgesel kurumsal kripto merkezlerinde güvenilir ölçek sağlar.",
         bullets: [
           "Körfez kitleleri için ayarlanmış KOL ve topluluk programları",
           "Bölgesel mecralarda borsa ve likidite koordinasyonu",
@@ -275,15 +275,15 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "turkey",
-        label: "Türkiye",
-        flag: "🇹🇷",
-        href: "/markets/turkey",
-        panelTitle: "Türkiye Piyasası Genişlemesi",
+        key: "eurasia",
+        label: "Avrasya",
+        flag: "🌍",
+        href: "/markets/eurasia",
+        panelTitle: "Avrasya Pazar Genişlemesi",
         description:
-          "Yerelleştirilmiş anlatılar, listelemeye uygun hikâye ve trader odaklı aktivasyonla Türkiye kripto piyasalarında yüksek hızlı icra.",
+          "Yerelleştirilmiş anlatılar, listelemeye uygun hikâye ve trader odaklı aktivasyonla Avrasya kripto koridorlarında yüksek hızlı icra.",
         bullets: [
-          "Türk topluluklarında yerelleştirilmiş mesaj ve dağıtım",
+          "Avrasya topluluklarında yerelleştirilmiş mesaj ve dağıtım",
           "Listelenmiş anlatılar ve likiditeyle uyumlu kilometre taşları",
           "Ölçülebilir etkileşimle topluluk odaklı büyüme döngüleri",
         ],
@@ -303,13 +303,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "china",
-        label: "Geniş Çin",
-        flag: "🇨🇳",
-        href: "/markets/china",
-        panelTitle: "Geniş Çin Uygulaması",
+        key: "east-asia",
+        label: "Doğu Asya",
+        flag: "🌏",
+        href: "/markets/east-asia",
+        panelTitle: "Doğu Asya Uygulaması",
         description:
-          "Geniş Çin ekosistemleri için özenle yerelleştirilmiş konumlandırma—bölgesel duyarlılık, ortak normları ve kurumsal anlatılarla uyumlu.",
+          "Doğu Asya ekosistemleri için özenle yerelleştirilmiş konumlandırma—bölgesel duyarlılık, ortak normları ve kurumsal anlatılarla uyumlu.",
         bullets: [
           "Bölgesel kitleler için ekosistemle uyumlu mesajlaşma",
           "Dağıtım yüzeylerinde yapılandırılmış ortak koordinasyonu",
@@ -369,13 +369,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     regionsAriaLabel: "地区",
     tabs: [
       {
-        key: "uae",
-        label: "阿联酋",
-        flag: "🇦🇪",
-        href: "/markets/uae",
-        panelTitle: "阿联酋市场拓展",
+        key: "gcc",
+        label: "海湾合作委员会",
+        flag: "🏛️",
+        href: "/markets/gcc",
+        panelTitle: "海湾合作委员会市场拓展",
         description:
-          "迪拜与阿布扎比的战略 Web3 增长。本地合作与合规路径帮助您在海湾加密枢纽可信扩张。",
+          "在海湾合作委员会走廊实现战略性 Web3 增长。本地合作与合规路径帮助您在区域机构级加密枢纽可信扩张。",
         bullets: [
           "面向海湾受众的 KOL 与社区计划",
           "区域内交易所与流动性协同",
@@ -383,15 +383,15 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "turkey",
-        label: "土耳其",
-        flag: "🇹🇷",
-        href: "/markets/turkey",
-        panelTitle: "土耳其市场拓展",
+        key: "eurasia",
+        label: "欧亚地区",
+        flag: "🌍",
+        href: "/markets/eurasia",
+        panelTitle: "欧亚地区市场拓展",
         description:
-          "以本地化叙事、与上新对齐的故事以及交易者导向激活，在土耳其加密市场高速执行。",
+          "以本地化叙事、与上新对齐的故事以及交易者导向激活，在欧亚加密走廊高速执行。",
         bullets: [
-          "土耳其社群中的本地化传播与分发",
+          "欧亚社群中的本地化传播与分发",
           "与上新叙事及流动性里程碑对齐",
           "可衡量互动的社群增长闭环",
         ],
@@ -411,13 +411,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "china",
-        label: "大中华区",
-        flag: "🇨🇳",
-        href: "/markets/china",
-        panelTitle: "大中华区执行",
+        key: "east-asia",
+        label: "东亚",
+        flag: "🌏",
+        href: "/markets/east-asia",
+        panelTitle: "东亚执行",
         description:
-          "为大中华生态精心本地化定位——契合区域情绪、伙伴规范与可信的机构叙事。",
+          "为东亚生态精心本地化定位——契合区域情绪、伙伴规范与可信的机构叙事。",
         bullets: [
           "面向区域受众的生态一致信息",
           "跨分发渠道的结构化伙伴协同",
@@ -478,13 +478,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     regionsAriaLabel: "Regiones",
     tabs: [
       {
-        key: "uae",
-        label: "EAU",
-        flag: "🇦🇪",
-        href: "/markets/uae",
-        panelTitle: "Expansión de mercado en EAU",
+        key: "gcc",
+        label: "CCG",
+        flag: "🏛️",
+        href: "/markets/gcc",
+        panelTitle: "Expansión de mercado en el CCG",
         description:
-          "Crecimiento Web3 estratégico en Dubái y Abu Dabi. Socios locales y rutas reguladas escalan con credibilidad en los hubs cripto del Golfo.",
+          "Crecimiento Web3 estratégico en los corredores del Consejo de Cooperación del Golfo. Socios locales y rutas reguladas escalan con credibilidad en hubs cripto institucionales regionales.",
         bullets: [
           "Programas KOL y comunitarios para audiencias del Golfo",
           "Coordinación de exchange y liquidez entre sedes regionales",
@@ -492,15 +492,15 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "turkey",
-        label: "Turquía",
-        flag: "🇹🇷",
-        href: "/markets/turkey",
-        panelTitle: "Expansión de mercado en Turquía",
+        key: "eurasia",
+        label: "Eurasia",
+        flag: "🌍",
+        href: "/markets/eurasia",
+        panelTitle: "Expansión de mercado en Eurasia",
         description:
-          "Ejecución de alta velocidad en mercados cripto turcos con narrativas localizadas, storytelling alineado a listings y activación centrada en traders.",
+          "Ejecución de alta velocidad en corredores cripto de Eurasia con narrativas localizadas, storytelling alineado a listings y activación centrada en traders.",
         bullets: [
-          "Mensajes y distribución localizados en comunidades turcas",
+          "Mensajes y distribución localizados en comunidades de Eurasia",
           "Narrativas listadas en exchange e hitos alineados con liquidez",
           "Bucles de crecimiento comunitario con engagement medible",
         ],
@@ -520,13 +520,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "china",
-        label: "Gran China",
-        flag: "🇨🇳",
-        href: "/markets/china",
-        panelTitle: "Ejecución en Gran China",
+        key: "east-asia",
+        label: "Asia Oriental",
+        flag: "🌏",
+        href: "/markets/east-asia",
+        panelTitle: "Ejecución en Asia Oriental",
         description:
-          "Posicionamiento localizado con cuidado para ecosistemas de Gran China—alineado al sentimiento regional, normas de socios e narrativas institucionales creíbles.",
+          "Posicionamiento localizado con cuidado para ecosistemas de Asia Oriental—alineado al sentimiento regional, normas de socios e narrativas institucionales creíbles.",
         bullets: [
           "Mensajes alineados al ecosistema para audiencias regionales",
           "Coordinación estructurada de socios en superficies de distribución",
@@ -587,13 +587,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     regionsAriaLabel: "Регионы",
     tabs: [
       {
-        key: "uae",
-        label: "ОАЭ",
-        flag: "🇦🇪",
-        href: "/markets/uae",
-        panelTitle: "Расширение на рынке ОАЭ",
+        key: "gcc",
+        label: "ССАГПЗ",
+        flag: "🏛️",
+        href: "/markets/gcc",
+        panelTitle: "Расширение на рынке ССАГПЗ",
         description:
-          "Стратегический рост Web3 в Дубае и Абу-Даби. Локальные партнёрства и регулируемые маршруты помогают масштабироваться с доверием в крипто-хабах Персидского залива.",
+          "Стратегический рост Web3 в коридорах Совета сотрудничества арабских государств Персидского залива. Локальные партнёрства и регулируемые маршруты помогают масштабироваться с доверием в институциональных крипто-хабах региона.",
         bullets: [
           "KOL и комьюнити-программы для аудиторий Персидского залива",
           "Координация бирж и ликвидности по региональным площадкам",
@@ -601,15 +601,15 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "turkey",
-        label: "Турция",
-        flag: "🇹🇷",
-        href: "/markets/turkey",
-        panelTitle: "Расширение на рынке Турции",
+        key: "eurasia",
+        label: "Евразия",
+        flag: "🌍",
+        href: "/markets/eurasia",
+        panelTitle: "Расширение на рынке Евразии",
         description:
-          "Высокоскоростное исполнение на турецких крипторынках с локализованными нарративами, историями под листинг и активацией вокруг трейдеров.",
+          "Высокоскоростное исполнение на евразийских криптокоридорах с локализованными нарративами, историями под листинг и активацией вокруг трейдеров.",
         bullets: [
-          "Локализованные сообщения и дистрибуция в турецких сообществах",
+          "Локализованные сообщения и дистрибуция в евразийских сообществах",
           "Нарративы листинга и вехи, согласованные с ликвидностью",
           "Ростовые петли сообщества с измеримым вовлечением",
         ],
@@ -629,13 +629,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "china",
-        label: "Большой Китай",
-        flag: "🇨🇳",
-        href: "/markets/china",
-        panelTitle: "Исполнение в Большом Китае",
+        key: "east-asia",
+        label: "Восточная Азия",
+        flag: "🌏",
+        href: "/markets/east-asia",
+        panelTitle: "Исполнение в Восточной Азии",
         description:
-          "Тщательно локализованное позиционирование для экосистем Большого Китая — в линии с региональным настроением, нормами партнёров и учрежденческими нарративами.",
+          "Тщательно локализованное позиционирование для экосистем Восточной Азии — в линии с региональным настроением, нормами партнёров и учрежденческими нарративами.",
         bullets: [
           "Сообщения, согласованные с экосистемой для региональной аудитории",
           "Структурированная координация партнёров по каналам дистрибуции",
@@ -696,13 +696,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
     regionsAriaLabel: "المناطق",
     tabs: [
       {
-        key: "uae",
-        label: "الإمارات",
-        flag: "🇦🇪",
-        href: "/markets/uae",
-        panelTitle: "توسعة سوق الإمارات",
+        key: "gcc",
+        label: "مجلس التعاون الخليجي",
+        flag: "🏛️",
+        href: "/markets/gcc",
+        panelTitle: "توسعة سوق مجلس التعاون الخليجي",
         description:
-          "نمو Web3 استراتيجي في دبي وأبوظبي. شراكات محلية ومسارات منظمة تساعدكم على التوسع بمصداقية في مراكز العملات المشفرة الخليجية.",
+          "نمو Web3 استراتيجي في ممرات مجلس التعاون الخليجي. شراكات محلية ومسارات منظمة تساعدكم على التوسع بمصداقية في مراكز العملات المشفرة المؤسسية الإقليمية.",
         bullets: [
           "برامج KOL ومجتمعات مخصصة لجمهور الخليج",
           "تنسيق بين المنصات والسيولة عبر المراكز الإقليمية",
@@ -710,15 +710,15 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "turkey",
-        label: "تركيا",
-        flag: "🇹🇷",
-        href: "/markets/turkey",
-        panelTitle: "توسعة سوق تركيا",
+        key: "eurasia",
+        label: "أوراسيا",
+        flag: "🌍",
+        href: "/markets/eurasia",
+        panelTitle: "توسعة سوق أوراسيا",
         description:
-          "تنفيذ عالي السرعة في أسواق العملات المشفرة التركية بسرديات محلية وقصص متوافقة مع الإدراج وتفعيل يركز على المتداولين.",
+          "تنفيذ عالي السرعة في ممرات العملات المشفرة الأوراسية بسرديات محلية وقصص متوافقة مع الإدراج وتفعيل يركز على المتداولين.",
         bullets: [
-          "رسائل وتوزيع محليان في المجتمعات التركية",
+          "رسائل وتوزيع محليان في المجتمعات الأوراسية",
           "سرديات متوافقة مع الإدراج ومعالم سيولة",
           "حلقات نمو مجتمعية بمشاركة قابلة للقياس",
         ],
@@ -738,13 +738,13 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         ],
       },
       {
-        key: "china",
-        label: "الصين الكبرى",
-        flag: "🇨🇳",
-        href: "/markets/china",
-        panelTitle: "التنفيذ في الصين الكبرى",
+        key: "east-asia",
+        label: "شرق آسيا",
+        flag: "🌏",
+        href: "/markets/east-asia",
+        panelTitle: "التنفيذ في شرق آسيا",
         description:
-          "موقع محلي بدقة لأنظمة الصين الكبرى — متوافق مع المشاعر الإقليمية ومعايير الشركاء وسرديات مؤسسية موثوقة.",
+          "موقع محلي بدقة لأنظمة شرق آسيا — متوافق مع المشاعر الإقليمية ومعايير الشركاء وسرديات مؤسسية موثوقة.",
         bullets: [
           "رسائل متوافقة مع النظام البيئي للجماهير الإقليمية",
           "تنسيق منظم للشركاء عبر قنوات التوزيع",

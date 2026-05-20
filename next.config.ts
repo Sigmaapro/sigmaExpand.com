@@ -35,6 +35,21 @@ const nextConfig: NextConfig = {
         destination: "/markets/wana",
         permanent: true,
       },
+      {
+        source: "/markets/uae",
+        destination: "/markets/gcc",
+        permanent: true,
+      },
+      {
+        source: "/markets/turkey",
+        destination: "/markets/eurasia",
+        permanent: true,
+      },
+      {
+        source: "/markets/china",
+        destination: "/markets/east-asia",
+        permanent: true,
+      },
     ];
   },
   images: {

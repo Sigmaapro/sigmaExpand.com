@@ -148,3 +148,14 @@ export function localeWordmarkNav(lang: LangCode): string {
   if (isLatinLang(lang)) return "";
   return "!tracking-normal normal-case";
 }
+
+/** Language switcher listbox row — tracking follows the option label script, not UI locale */
+export function localeLanguageSwitcherOption(lang: LangCode): string {
+  if (isRtlConnectedLang(lang)) {
+    return "normal-case tracking-normal leading-snug [word-spacing:normal]";
+  }
+  if (isZhLang(lang)) {
+    return "normal-case tracking-normal leading-snug [word-spacing:normal]";
+  }
+  return "uppercase tracking-[0.14em]";
+}

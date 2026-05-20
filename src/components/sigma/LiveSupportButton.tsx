@@ -12,6 +12,8 @@ type LiveSupportButtonProps = {
   label: string;
   /** Panel copy from `site` / CMS */
   panel: LiveSupportPanelContent;
+  /** Shown when lead capture is not configured (HTTP 503). */
+  unavailableError?: string;
   /** Optional async hook for future backend integration. */
   onSubmit?: (payload: {
     email: string;
@@ -22,7 +24,12 @@ type LiveSupportButtonProps = {
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
-export function LiveSupportButton({ label, panel, onSubmit }: LiveSupportButtonProps) {
+export function LiveSupportButton({
+  label,
+  panel,
+  unavailableError,
+  onSubmit,
+}: LiveSupportButtonProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -88,8 +95,14 @@ export function LiveSupportButton({ label, panel, onSubmit }: LiveSupportButtonP
           name: name.trim() || undefined,
           message: msg,
           source: "live-support",
+          website: "",
         });
         if (!result.ok) {
+          if (result.status === 503 && unavailableError) {
+            setSubmitState("error");
+            setErrorText(unavailableError);
+            return;
+          }
           throw new Error(result.error);
         }
       }
@@ -104,7 +117,7 @@ export function LiveSupportButton({ label, panel, onSubmit }: LiveSupportButtonP
   return (
     <div
       ref={wrapperRef}
-      className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] end-[max(0.75rem,env(safe-area-inset-right,0px))] z-[90] max-w-[100vw] md:bottom-8 md:end-8"
+      className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] end-[max(0.75rem,env(safe-area-inset-right,0px))] z-[90] max-w-full md:bottom-8 md:end-8"
     >
       <AnimatePresence>
         {open ? (
@@ -139,6 +152,15 @@ export function LiveSupportButton({ label, panel, onSubmit }: LiveSupportButtonP
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3 px-4 py-4">
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden
+                className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+                defaultValue=""
+              />
               <input
                 type="text"
                 inputMode="text"

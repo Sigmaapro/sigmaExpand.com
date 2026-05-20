@@ -63,7 +63,7 @@ export function InsightCard({
             · {post.readTime}
           </span>
         </div>
-        <h3 className="font-display text-lg font-semibold leading-snug tracking-tight text-[#f1f3f5] text-balance sm:text-xl">
+        <h3 className="font-display text-lg font-semibold leading-snug tracking-tight text-[#f1f3f5] text-balance [overflow-wrap:anywhere] sm:text-xl">
           <Link
             href={`/insights/${post.slug}`}
             className="transition-colors hover:text-[#bde0fe]"

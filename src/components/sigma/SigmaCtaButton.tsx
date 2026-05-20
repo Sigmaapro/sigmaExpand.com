@@ -79,7 +79,7 @@ export const MagneticButton = ({
         {children}
         <ArrowUpRight
           size={16}
-          className={`shrink-0 transition-transform group-hover:-translate-y-0.5 ${isRtl ? "group-hover:-translate-x-0.5" : "group-hover:translate-x-0.5"}`}
+          className={`shrink-0 transition-transform group-hover:-translate-y-0.5 rtl:-scale-x-100 ${isRtl ? "group-hover:-translate-x-0.5" : "group-hover:translate-x-0.5"}`}
         />
       </span>
       {primary ? (

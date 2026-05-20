@@ -18,6 +18,7 @@ import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaf
 import {
   contactSubpageContentByLang,
 } from "@/content/global/marketing/contactSubpageContent";
+import { getConversion } from "@/content/conversion";
 import { pickLang } from "@/content/global/marketing/helpers";
 import {
   socialLinks,
@@ -89,16 +90,27 @@ export function ContactSubpageView() {
           name: name.trim() || undefined,
           message: msg,
           source: "live-support",
+          website: "",
         });
-        if (!result.ok) throw new Error(result.error);
+        if (!result.ok) {
+          setFormState("error");
+          setErrorText(
+            result.status === 503
+              ? getConversion(language).bookCall.unavailableError
+              : copy.form.sendError,
+          );
+          return;
+        }
         setFormState("success");
+        setName("");
+        setEmail("");
         setMessage("");
       } catch {
         setFormState("error");
         setErrorText(copy.form.sendError);
       }
     },
-    [copy.form, email, message, name],
+    [copy.form, email, message, name, language],
   );
 
   return (
@@ -110,7 +122,10 @@ export function ContactSubpageView() {
         lang={language}
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+      <div
+        dir={isRtl ? "rtl" : "ltr"}
+        className="relative z-10 mx-auto w-full min-w-0 max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8"
+      >
         <header className="mx-auto max-w-2xl text-center">
           <p className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb]">
             {copy.kicker}
@@ -123,7 +138,7 @@ export function ContactSubpageView() {
           </p>
         </header>
 
-        <div className="mx-auto mt-12 grid max-w-5xl gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="mx-auto mt-12 grid min-w-0 max-w-5xl gap-10 lg:grid-cols-2 lg:gap-12">
           <section className="rounded-2xl border border-white/[0.08] bg-[#07090f]/70 p-6 shadow-[0_20px_48px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8">
             <div className="flex flex-col gap-2">
               <h2 className="font-display text-lg font-semibold text-white">
@@ -151,6 +166,15 @@ export function ContactSubpageView() {
               <p className="mt-6 text-sm leading-relaxed text-[#bde0fe]">{copy.form.success}</p>
             ) : (
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden
+                  className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+                  defaultValue=""
+                />
                 {formState === "error" && errorText ? (
                   <p className="text-sm text-[#ff8f8f]" role="alert">
                     {errorText}

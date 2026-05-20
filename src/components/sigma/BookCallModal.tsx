@@ -125,6 +125,7 @@ export function BookCallModal({
         name: name.trim() || undefined,
         message: message.trim() || undefined,
         source: "book-call",
+        website: "",
       });
 
       if (result.ok) {
@@ -225,6 +226,15 @@ export function BookCallModal({
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden
+                    className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+                    defaultValue=""
+                  />
                   {status === "error" && errorMessage ? (
                     <p className="text-sm text-[#ff8f8f]" role="alert" aria-live="assertive">
                       {errorMessage}

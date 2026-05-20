@@ -109,7 +109,7 @@ export function CryptoMarketingSection() {
                     selectTab(next);
                     tabBtnRefs.current[next]?.focus();
                   }}
-                  className={`flex shrink-0 snap-center touch-manipulation items-center gap-2 rounded-full border px-4 py-2.5 text-start text-[11px] font-semibold uppercase tracking-[0.12em] transition-[background,border-color,box-shadow,color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/45 md:py-3 md:text-[12px] ${localeNav(lang)} ${
+                  className={`flex shrink-0 snap-center touch-manipulation items-center gap-1.5 rounded-full border px-3 py-2.5 text-start text-[10px] font-semibold uppercase tracking-[0.1em] transition-[background,border-color,box-shadow,color] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/45 sm:gap-2 sm:px-4 sm:text-[11px] sm:tracking-[0.12em] md:py-3 md:text-[12px] ${localeNav(lang)} ${
                     isActive
                       ? "border-[#1c39bb]/55 bg-[#1c39bb]/18 text-white shadow-[0_0_28px_rgba(28,57,187,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md"
                       : "border-white/[0.1] bg-[#0c1018]/60 text-[#c5ccd3] backdrop-blur-sm hover:border-[#bde0fe]/25 hover:bg-white/[0.04]"
@@ -118,7 +118,9 @@ export function CryptoMarketingSection() {
                   <span className="text-base leading-none" aria-hidden>
                     {regionTab.flag}
                   </span>
-                  <span className="max-w-[10rem] truncate sm:max-w-none">{regionTab.label}</span>
+                  <span className="max-w-[7.5rem] truncate sm:max-w-none">
+                    {regionTab.label}
+                  </span>
                 </button>
               );
             })}
@@ -154,7 +156,7 @@ export function CryptoMarketingSection() {
                 >
                   {tab.panelTitle}
                 </h3>
-                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-[15px] md:leading-relaxed md:text-[#aeb5bd]">
+                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#cfd6de] [overflow-wrap:anywhere] md:text-[15px] md:leading-relaxed md:text-[#aeb5bd]">
                   {tab.description}
                 </p>
                 <ul className="mt-8 space-y-3 text-sm leading-relaxed text-[#e8eaed] md:text-[15px]">
@@ -163,7 +165,9 @@ export function CryptoMarketingSection() {
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-[#1c39bb]/45 bg-[#1c39bb]/12">
                         <Check className="size-3 text-[#bde0fe]" strokeWidth={2.5} aria-hidden />
                       </span>
-                      <span className="min-w-0 text-[#d8dde3]">{line}</span>
+                      <span className="min-w-0 break-words text-[#d8dde3] [overflow-wrap:anywhere]">
+                        {line}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -173,7 +177,10 @@ export function CryptoMarketingSection() {
                     className={`inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/22 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,box-shadow,border-color] hover:border-[#2a4acd]/70 hover:bg-[#1c39bb]/38 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/50 ${localeCta(lang)}`}
                   >
                     {c.cta}
-                    <ArrowUpRight className="size-4 opacity-90" aria-hidden />
+                    <ArrowUpRight
+                      className="size-4 shrink-0 opacity-90 rtl:-scale-x-100"
+                      aria-hidden
+                    />
                   </Link>
                 </div>
               </motion.div>

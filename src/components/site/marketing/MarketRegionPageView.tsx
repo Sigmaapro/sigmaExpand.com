@@ -16,15 +16,15 @@ export function MarketRegionPageView({
   const { language } = useLanguage();
   return (
     <MarketingSubpageScaffold>
-      <div className="mx-auto max-w-3xl px-4 py-12 text-center sm:px-6 md:py-16">
-        <header>
+      <div className="mx-auto min-w-0 max-w-3xl px-4 py-12 text-center sm:px-6 md:py-16">
+        <header className="min-w-0">
           <p className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}>
             {marketsLabel}
           </p>
-          <h1 className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}>
+          <h1 className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white text-balance [overflow-wrap:anywhere] md:text-4xl ${localeHeading(language)}`}>
             {heading}
           </h1>
-          <p className={`mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}>
+          <p className={`mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#b6bcc4] [overflow-wrap:anywhere] md:text-base ${localeBody(language)}`}>
             {description}
           </p>
         </header>

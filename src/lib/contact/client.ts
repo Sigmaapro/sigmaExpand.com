@@ -3,6 +3,8 @@ export type LeadPayload = {
   name?: string;
   message?: string;
   source: "book-call" | "live-support";
+  /** Honeypot — must stay empty; never shown to users. */
+  website?: string;
 };
 
 export type SubmitLeadResult =

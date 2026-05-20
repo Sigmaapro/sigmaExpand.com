@@ -26,6 +26,13 @@ export async function POST(req: Request) {
   }
 
   const o = body as Record<string, unknown>;
+
+  // Honeypot — bots that fill hidden "website" fields get a silent success.
+  const honeypot = sanitizeText(typeof o.website === "string" ? o.website : "", 200);
+  if (honeypot) {
+    return NextResponse.json({ ok: true });
+  }
+
   const rawEmail = typeof o.email === "string" ? o.email : "";
   const email = sanitizeText(rawEmail, 320);
   const name = sanitizeText(typeof o.name === "string" ? o.name : "", MAX_NAME);

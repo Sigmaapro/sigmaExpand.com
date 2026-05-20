@@ -28,7 +28,7 @@ Use it as the single internal drop zone for copy, brand assets, market notes, in
 | **05-insights** | Article ideas, drafts, source notes, Web3 growth insights, SEO topic ideas |
 | **06-contact-and-business-info** | Business email, contact details, Calendly links, social links, legal/company info, partner notes |
 | **07-client-feedback** | Client comments, requested edits, approval notes, revision history |
-| **08-launch-notes** | Domain notes, DNS notes, production launch checklist, post-launch tasks |
+| **08-launch-notes** | Domain notes, DNS notes, production launch checklist, post-launch tasks; see `final-pre-launch-status-report.md` for current go-live status |
 
 ---
 

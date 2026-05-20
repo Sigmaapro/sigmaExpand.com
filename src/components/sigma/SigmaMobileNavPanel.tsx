@@ -287,7 +287,9 @@ export function SigmaMobileNavPanel({
                   className={`inline-flex min-h-11 min-w-11 touch-manipulation items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.04] text-[#d8dde3] transition-colors hover:border-[#bde0fe]/35 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)}`}
                   aria-label={closeAriaLabel}
                 >
-                  <span aria-hidden>×</span>
+                  <span className="text-lg leading-none" aria-hidden>
+                    ×
+                  </span>
                 </button>
               </div>
               <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain pb-4 [-webkit-overflow-scrolling:touch]">

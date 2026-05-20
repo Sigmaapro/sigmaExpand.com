@@ -191,10 +191,10 @@ export function BookCallModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="inline-flex min-h-11 min-w-11 shrink-0 touch-manipulation items-center justify-center rounded-md border border-white/[0.08] p-2 text-[#adb5bd] transition-colors hover:border-[#bde0fe]/30 hover:text-white active:scale-[0.98]"
+                className="inline-flex min-h-11 min-w-11 shrink-0 touch-manipulation items-center justify-center rounded-md border border-white/[0.08] p-2 text-[#adb5bd] transition-colors hover:border-[#bde0fe]/30 hover:text-white active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
                 aria-label={copy.closeLabel}
               >
-                <X className="size-4" strokeWidth={2} />
+                <X className="size-4" strokeWidth={2} aria-hidden />
               </button>
             </div>
 
@@ -209,7 +209,7 @@ export function BookCallModal({
                   />
                 </div>
               ) : status === "success" ? (
-                <div className="py-6 text-center">
+                <div className="py-6 text-center" role="status" aria-live="polite">
                   <p className="font-display text-base font-semibold text-[#bde0fe]">
                     {copy.successTitle}
                   </p>
@@ -219,7 +219,7 @@ export function BookCallModal({
                   <button
                     type="button"
                     onClick={onClose}
-                    className={`mt-8 inline-flex min-h-[3rem] min-w-[10rem] items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] px-6 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background] duration-200 hover:scale-[1.02] hover:bg-[#152a8a] active:scale-[0.99] ${localeCta(lang)}`}
+                    className={`mt-8 inline-flex min-h-[3rem] min-w-[10rem] items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] px-6 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background] duration-200 hover:scale-[1.02] hover:bg-[#152a8a] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(lang)}`}
                   >
                     {copy.closeLabel}
                   </button>
@@ -295,7 +295,8 @@ export function BookCallModal({
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className={`mt-3 flex w-full min-h-12 touch-manipulation items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background,opacity] duration-200 hover:scale-[1.01] hover:bg-[#152a8a] active:scale-[0.99] disabled:opacity-60 ${localeCta(lang)}`}
+                    aria-busy={status === "sending"}
+                    className={`mt-3 flex w-full min-h-12 touch-manipulation items-center justify-center rounded-[2px] border border-[#2a4ecf]/80 bg-[#1c39bb] text-xs font-semibold uppercase tracking-[0.18em] text-white transition-[transform,background,opacity] duration-200 hover:scale-[1.01] hover:bg-[#152a8a] active:scale-[0.99] disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(lang)}`}
                   >
                     {status === "sending" ? copy.sendingLabel : copy.submitLabel}
                   </button>

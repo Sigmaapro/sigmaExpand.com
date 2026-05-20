@@ -73,11 +73,18 @@ export function LanguageSwitcherButton({
           if (e.key === "ArrowDown" || e.key === "ArrowUp") {
             e.preventDefault();
             setOpen(true);
+            return;
+          }
+          if (e.key === " " || e.key === "Enter") {
+            e.preventDefault();
+            setOpen((prev) => !prev);
+            return;
           }
           if (e.key === "Escape") {
             setOpen(false);
           }
         }}
+        aria-autocomplete="none"
         className={`inline-flex h-12 min-h-12 min-w-[4.5rem] max-w-[min(7.25rem,32vw)] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[12px] font-semibold tracking-[0.04em] text-[#b8c0c8] transition-colors hover:border-white/18 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 sm:h-14 sm:min-h-14 sm:min-w-[72px] sm:max-w-[min(8.75rem,30vw)] sm:gap-2 sm:px-4 sm:text-[14px] sm:tracking-[0.06em] ${localeNav(currentLang)}`}
         aria-label={ariaLabel}
         aria-expanded={open}
@@ -155,6 +162,14 @@ export function LanguageSwitcherButton({
                   triggerRef.current?.focus();
                 }}
                 onFocus={() => setActiveIndex(index)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    applyLanguage(lang.code);
+                    setOpen(false);
+                    triggerRef.current?.focus();
+                  }
+                }}
                 className={`px-4 py-3 text-start text-xs font-semibold uppercase tracking-[0.14em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[#bde0fe]/60 ${localeNav(currentLang)} ${
                   currentLang === lang.code
                     ? "bg-[#1c39bb] text-white"

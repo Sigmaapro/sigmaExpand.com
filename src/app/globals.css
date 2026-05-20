@@ -32,6 +32,14 @@ body {
   overflow-x: clip;
 }
 
+/* Fallback focus ring for controls without component-level focus-visible styles */
+a:focus-visible,
+button:focus-visible,
+[role="combobox"]:focus-visible {
+  outline: 2px solid rgba(189, 224, 254, 0.55);
+  outline-offset: 2px;
+}
+
 @media (max-width: 767px) {
   body:has(.sigma-landing-root) {
     overflow-x: clip;

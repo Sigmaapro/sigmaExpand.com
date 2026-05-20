@@ -143,10 +143,10 @@ export function LiveSupportButton({
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.02] text-[#adb5bd] transition-colors hover:border-white/[0.16] hover:text-white"
+                  className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.02] text-[#adb5bd] transition-colors hover:border-white/[0.16] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
                   aria-label={panel.closeAria}
                 >
-                  ×
+                  <span aria-hidden>×</span>
                 </button>
               </div>
             </div>
@@ -161,45 +161,64 @@ export function LiveSupportButton({
                 className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
                 defaultValue=""
               />
+              <label htmlFor="live-support-name" className="sr-only">
+                {panel.namePlaceholder}
+              </label>
               <input
+                id="live-support-name"
                 type="text"
                 inputMode="text"
                 autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={panel.namePlaceholder}
-                className="min-h-11 w-full rounded-md border border-white/[0.11] bg-[#0a0d14] px-3 py-2.5 text-base text-[#e9ecef] placeholder:text-[#6c757d] outline-none transition-colors focus:border-[#1c39bb]/60 sm:text-sm"
+                className="min-h-11 w-full rounded-md border border-white/[0.11] bg-[#0a0d14] px-3 py-2.5 text-base text-[#e9ecef] placeholder:text-[#8b939e] outline-none transition-colors focus:border-[#1c39bb]/60 focus:ring-2 focus:ring-[#1c39bb]/25 sm:text-sm"
               />
+              <label htmlFor="live-support-email" className="sr-only">
+                {panel.emailPlaceholder}
+              </label>
               <input
+                id="live-support-email"
                 type="email"
                 inputMode="email"
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={panel.emailPlaceholder}
-                className="min-h-11 w-full rounded-md border border-white/[0.11] bg-[#0a0d14] px-3 py-2.5 text-base text-[#e9ecef] placeholder:text-[#6c757d] outline-none transition-colors focus:border-[#1c39bb]/60 sm:text-sm"
+                className="min-h-11 w-full rounded-md border border-white/[0.11] bg-[#0a0d14] px-3 py-2.5 text-base text-[#e9ecef] placeholder:text-[#8b939e] outline-none transition-colors focus:border-[#1c39bb]/60 focus:ring-2 focus:ring-[#1c39bb]/25 sm:text-sm"
                 required
+                aria-required="true"
               />
+              <label htmlFor="live-support-message" className="sr-only">
+                {panel.messagePlaceholder}
+              </label>
               <textarea
+                id="live-support-message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={panel.messagePlaceholder}
                 rows={4}
-                className="min-h-[5.5rem] w-full resize-y rounded-md border border-white/[0.11] bg-[#0a0d14] px-3 py-2.5 text-base text-[#e9ecef] placeholder:text-[#6c757d] outline-none transition-colors focus:border-[#1c39bb]/60 sm:text-sm"
+                className="min-h-[5.5rem] w-full resize-y rounded-md border border-white/[0.11] bg-[#0a0d14] px-3 py-2.5 text-base text-[#e9ecef] placeholder:text-[#8b939e] outline-none transition-colors focus:border-[#1c39bb]/60 focus:ring-2 focus:ring-[#1c39bb]/25 sm:text-sm"
                 required
+                aria-required="true"
               />
 
               {submitState === "success" ? (
-                <p className="text-xs text-[#7bf1d2]">{panel.successBody}</p>
+                <p className="text-xs text-[#7bf1d2]" role="status" aria-live="polite">
+                  {panel.successBody}
+                </p>
               ) : null}
               {submitState === "error" ? (
-                <p className="text-xs text-[#ff8f8f]">{errorText}</p>
+                <p className="text-xs text-[#ff8f8f]" role="alert" aria-live="assertive">
+                  {errorText}
+                </p>
               ) : null}
 
               <button
                 type="submit"
                 disabled={submitState === "loading"}
-                className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.16em] text-white transition-[background,border-color] hover:border-[#bde0fe]/45 hover:bg-[#17309f] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+                aria-busy={submitState === "loading"}
+                className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.16em] text-white transition-[background,border-color] hover:border-[#bde0fe]/45 hover:bg-[#17309f] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
               >
                 {submitState === "loading" ? panel.submitSending : panel.submit}
               </button>
@@ -215,7 +234,7 @@ export function LiveSupportButton({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="group relative flex h-[3.25rem] min-h-[3.25rem] w-[3.25rem] min-w-[3.25rem] cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/12 bg-[#07090f]/90 text-[#e9ecef] shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-[transform,box-shadow,border-color,background-color] hover:scale-[1.05] hover:border-[#1c39bb]/45 hover:bg-[#1c39bb]/25 hover:text-white hover:shadow-[0_16px_48px_rgba(28,57,187,0.35)] active:scale-[0.98] md:h-[3.75rem] md:min-h-[3.75rem] md:w-[3.75rem] md:min-w-[3.75rem]"
+        className="group relative flex h-[3.25rem] min-h-[3.25rem] w-[3.25rem] min-w-[3.25rem] cursor-pointer touch-manipulation items-center justify-center rounded-full border border-white/12 bg-[#07090f]/90 text-[#e9ecef] shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-[transform,box-shadow,border-color,background-color] hover:scale-[1.05] hover:border-[#1c39bb]/45 hover:bg-[#1c39bb]/25 hover:text-white hover:shadow-[0_16px_48px_rgba(28,57,187,0.35)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 md:h-[3.75rem] md:min-h-[3.75rem] md:w-[3.75rem] md:min-w-[3.75rem]"
         aria-label={label}
         aria-expanded={open}
         aria-controls="sigma-live-support-panel"

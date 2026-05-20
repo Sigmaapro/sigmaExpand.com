@@ -5,6 +5,7 @@ import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaf
 import { faqPageContentByLang } from "@/content/global/marketing/faqContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
+import { localeEyebrow, localeHeading } from "@/lib/localeTypography";
 
 export function FaqPageView() {
   const { language } = useLanguage();
@@ -14,10 +15,14 @@ export function FaqPageView() {
     <MarketingSubpageScaffold>
       <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
         <header className="text-center">
-          <p className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb]">
+          <p
+            className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}
+          >
             {c.kicker}
           </p>
-          <h1 className="font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h1
+            className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          >
             {c.headline}
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#b6bcc4]">{c.intro}</p>

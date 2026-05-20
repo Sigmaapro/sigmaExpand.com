@@ -7,7 +7,7 @@ import type { InsightPost } from "@/content/insights";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
 import { getInsightCategoryLabel } from "@/lib/insightCategoryLabel";
-import { localeBody, localeMeta, localeNav } from "@/lib/localeTypography";
+import { localeBody, localeHeading, localeMeta, localeNav } from "@/lib/localeTypography";
 import { InsightCard } from "./InsightCard";
 
 const DATE_LOCALE: Record<LangCode, string> = {
@@ -129,7 +129,9 @@ export function InsightsListingClient({
                   · {featured.readTime}
                 </span>
               </div>
-              <h3 className="font-display text-xl font-semibold leading-tight tracking-tight text-[#f1f3f5] text-balance sm:text-2xl md:text-3xl">
+              <h3
+                className={`font-display text-xl font-semibold leading-tight tracking-tight text-[#f1f3f5] text-balance sm:text-2xl md:text-3xl ${localeHeading(lang)}`}
+              >
                 <Link
                   href={`/insights/${featured.slug}`}
                   className="transition-colors hover:text-[#bde0fe]"
@@ -142,7 +144,7 @@ export function InsightsListingClient({
               </p>
               <Link
                 href={`/insights/${featured.slug}`}
-                className="mt-7 inline-flex w-fit items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#bde0fe] transition-colors hover:text-white"
+                className={`mt-7 inline-flex w-fit items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#bde0fe] transition-colors hover:text-white ${localeNav(lang)}`}
               >
                 {t.insights.readLabel}
                 <span aria-hidden className="inline-block rtl:rotate-180">

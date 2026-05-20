@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { ROUTES } from "@/content/global/routes";
+import { localeCta, localeEyebrow, localeHeading } from "@/lib/localeTypography";
 import { ArrowUpRight } from "lucide-react";
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
  * Does not alter global header/footer (InnerPageShell).
  */
 export function MarketingSubpageScaffold({ children }: Props) {
-  const { t, isRtl } = useLanguage();
+  const { t, isRtl, language } = useLanguage();
   const c = t.cta;
 
   return (
@@ -35,24 +36,26 @@ export function MarketingSubpageScaffold({ children }: Props) {
           <div className="mx-auto max-w-2xl text-center">
             <h2
               id="subpage-cta-heading"
-              className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb]"
+              className={`font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] ${localeEyebrow(language)}`}
             >
               {c.title}
             </h2>
-            <p className="mt-3 font-display text-lg font-semibold uppercase tracking-[0.12em] text-[#e9ecef] md:text-xl">
+            <p
+              className={`mt-3 font-display text-lg font-semibold uppercase tracking-[0.12em] text-[#e9ecef] md:text-xl ${localeHeading(language)}`}
+            >
               {c.description}
             </p>
             <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
               <Link
                 href={ROUTES.anchor.capabilities}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/25 px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,transform] hover:bg-[#1c39bb]/45 active:scale-[0.99]"
+                className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/25 px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,transform] hover:bg-[#1c39bb]/45 active:scale-[0.99] ${localeCta(language)}`}
               >
                 {c.primaryCta}
                 <ArrowUpRight className={`size-4 shrink-0 opacity-80 ${isRtl ? "rotate-180" : ""}`} aria-hidden />
               </Link>
               <Link
                 href={ROUTES.contact}
-                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07]"
+                className={`inline-flex min-h-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] ${localeCta(language)}`}
               >
                 {c.secondaryCta}
               </Link>

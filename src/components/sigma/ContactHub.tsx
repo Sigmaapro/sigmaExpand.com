@@ -10,6 +10,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { localeEyebrow, localeHeading } from "@/lib/localeTypography";
 import type { SocialLabelKey } from "@/content/types";
 
 function normalizeEmail(raw: string): string {
@@ -145,7 +146,7 @@ const contactShellCss = `
 `;
 
 export function ContactHub() {
-  const { t, isRtl } = useLanguage();
+  const { t, isRtl, language } = useLanguage();
   const ct = t.contactHub;
   const links = collectLinks();
   const BackIcon = isRtl ? ArrowRight : ArrowLeft;
@@ -170,10 +171,14 @@ export function ContactHub() {
         </Link>
 
         <header className="mb-10 text-center">
-          <p className="sigma-contact-kicker font-display text-xs uppercase tracking-[0.28em] text-cadet/90">
+          <p
+            className={`sigma-contact-kicker font-display text-xs uppercase tracking-[0.28em] text-cadet/90 ${localeEyebrow(language)}`}
+          >
             {ct.pageEyebrow}
           </p>
-          <h1 className="font-display mt-3 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h1
+            className={`font-display mt-3 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          >
             {ct.title}
           </h1>
           <p className="sigma-contact-sub sigma-body-measure mx-auto mt-4 text-center text-sm leading-relaxed text-cadet md:text-base">

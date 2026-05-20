@@ -14,40 +14,44 @@ export function isZhLang(lang: LangCode): boolean {
   return lang === "ZH";
 }
 
+/** Neutralize Tailwind tracking at every breakpoint (base + sm/md/lg/xl). */
+export const TRACK_RESET =
+  "!tracking-normal sm:!tracking-normal md:!tracking-normal lg:!tracking-normal xl:!tracking-normal 2xl:!tracking-normal";
+
 function rtlEyebrow(): string {
-  return "!tracking-normal normal-case !leading-relaxed [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;
 }
 
 function zhEyebrow(): string {
-  return "!tracking-normal normal-case !leading-relaxed [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;
 }
 
 function rtlHeading(): string {
-  return "!tracking-normal normal-case !leading-[1.45] sm:!leading-snug [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-[1.45] sm:!leading-snug [word-spacing:normal]`;
 }
 
 function zhHeading(): string {
-  return "!tracking-normal normal-case sm:!leading-snug [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case sm:!leading-snug [word-spacing:normal]`;
 }
 
 function rtlNav(): string {
-  return "!tracking-normal normal-case !leading-snug [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-snug [word-spacing:normal]`;
 }
 
 function zhNav(): string {
-  return "!tracking-normal normal-case !leading-snug [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-snug [word-spacing:normal]`;
 }
 
 function rtlCta(): string {
-  return "!tracking-normal normal-case !leading-normal [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-normal [word-spacing:normal]`;
 }
 
 function zhCta(): string {
-  return "!tracking-normal normal-case !leading-normal [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-normal [word-spacing:normal]`;
 }
 
 function rtlFooter(): string {
-  return "!tracking-normal normal-case !leading-relaxed [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;
 }
 
 function rtlBody(): string {
@@ -55,7 +59,13 @@ function rtlBody(): string {
 }
 
 function rtlMeta(): string {
-  return "normal-case !tracking-normal !leading-relaxed [word-spacing:normal]";
+  return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;
+}
+
+/** Latin-only tracking classes; FA/AR/ZH get TRACK_RESET instead. */
+export function localeTrack(lang: LangCode, latin: string): string {
+  if (isRtlConnectedLang(lang) || isZhLang(lang)) return TRACK_RESET;
+  return latin;
 }
 
 /** Eyebrows / kickers */
@@ -113,15 +123,15 @@ export function localeBody(lang: LangCode): string {
 /** Small meta labels, dates, chips */
 export function localeMeta(lang: LangCode): string {
   if (isRtlConnectedLang(lang)) return rtlMeta();
-  if (isZhLang(lang)) return "!tracking-normal normal-case";
+  if (isZhLang(lang)) return `${TRACK_RESET} normal-case`;
   return "";
 }
 
 /** Hero subtitle row */
 export function localeHeroSubtitle(lang: LangCode): string {
   if (isLatinLang(lang)) return "tracking-[-0.01em]";
-  if (isZhLang(lang)) return "!tracking-normal !leading-relaxed";
-  return "!tracking-normal !leading-snug";
+  if (isZhLang(lang)) return `${TRACK_RESET} !leading-relaxed`;
+  return `${TRACK_RESET} !leading-snug`;
 }
 
 /** Hero supporting copy */
@@ -134,7 +144,7 @@ export function localeHeroSupporting(lang: LangCode): string {
 /** Compact labels (e.g. social grid) */
 export function localeSmallLabelTrack(lang: LangCode): string {
   if (isLatinLang(lang)) return "tracking-wide";
-  return "!tracking-normal leading-snug";
+  return `${TRACK_RESET} leading-snug`;
 }
 
 /** Large CTA description: Latin keeps wide tracking */
@@ -143,19 +153,21 @@ export function localeWideMutedTrack(lang: LangCode): string {
   return localeMutedTrack(lang);
 }
 
-/** Glass nav Σ wordmark — neutral letterspacing for non-Latin */
-export function localeWordmarkNav(lang: LangCode): string {
-  if (isLatinLang(lang)) return "";
-  return "!tracking-normal normal-case";
+/**
+ * Glass nav / footer Σ wordmark — Latin brand mark; keep component tracking classes.
+ * (Do not apply FA/AR resets to "SIGMA".)
+ */
+export function localeWordmarkNav(_lang: LangCode): string {
+  return "";
 }
 
 /** Language switcher listbox row — tracking follows the option label script, not UI locale */
 export function localeLanguageSwitcherOption(lang: LangCode): string {
   if (isRtlConnectedLang(lang)) {
-    return "normal-case tracking-normal leading-snug [word-spacing:normal]";
+    return `normal-case ${TRACK_RESET} leading-snug [word-spacing:normal]`;
   }
   if (isZhLang(lang)) {
-    return "normal-case tracking-normal leading-snug [word-spacing:normal]";
+    return `normal-case ${TRACK_RESET} leading-snug [word-spacing:normal]`;
   }
   return "uppercase tracking-[0.14em]";
 }

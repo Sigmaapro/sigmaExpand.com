@@ -398,8 +398,11 @@ html[lang="ar"] .sigma-hero-title {
 
 html[lang="fa"] .sigma-hero-eyebrow,
 html[lang="fa"] .sigma-hero-title,
-html[lang="fa"] .sigma-cta-wordmark {
-  letter-spacing: 0 !important;
+html[lang="fa"] .sigma-cta-wordmark,
+html[lang="ar"] .sigma-hero-eyebrow,
+html[lang="ar"] .sigma-hero-title,
+html[lang="ar"] .sigma-cta-wordmark {
+  letter-spacing: normal !important;
   text-transform: none;
 }
 

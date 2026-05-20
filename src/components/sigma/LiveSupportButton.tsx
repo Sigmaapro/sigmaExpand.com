@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Headphones } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { LiveSupportPanelContent } from "@/content/types";
+import { useLanguage } from "@/context/LanguageContext";
+import { localeCta, localeNav } from "@/lib/localeTypography";
 import { isValidEmail } from "@/lib/contact/sanitize";
 import { submitLead } from "@/lib/contact/client";
 
@@ -30,6 +32,7 @@ export function LiveSupportButton({
   unavailableError,
   onSubmit,
 }: LiveSupportButtonProps) {
+  const { language } = useLanguage();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -133,7 +136,9 @@ export function LiveSupportButton({
             <div className="border-b border-white/[0.07] bg-gradient-to-r from-[#0d1320] via-[#0b0f17] to-[#0b0f17] px-4 py-3.5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-display text-sm font-semibold uppercase tracking-[0.12em] text-[#f1f3f5]">
+                  <p
+                    className={`font-display text-sm font-semibold uppercase tracking-[0.12em] text-[#f1f3f5] ${localeNav(language)}`}
+                  >
                     {panel.panelTitle}
                   </p>
                   <p className="mt-1 text-xs text-[#9aa3ad]">
@@ -218,7 +223,7 @@ export function LiveSupportButton({
                 type="submit"
                 disabled={submitState === "loading"}
                 aria-busy={submitState === "loading"}
-                className="inline-flex min-h-12 w-full touch-manipulation items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.16em] text-white transition-[background,border-color] hover:border-[#bde0fe]/45 hover:bg-[#17309f] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
+                className={`inline-flex min-h-12 w-full touch-manipulation items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.16em] text-white transition-[background,border-color] hover:border-[#bde0fe]/45 hover:bg-[#17309f] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(language)}`}
               >
                 {submitState === "loading" ? panel.submitSending : panel.submit}
               </button>
@@ -247,7 +252,9 @@ export function LiveSupportButton({
         >
           <span className="h-2 w-2 animate-pulse rounded-full bg-white/90" />
         </span>
-        <span className="pointer-events-none absolute end-full me-3 hidden whitespace-nowrap rounded-md border border-white/10 bg-[#0b0f17]/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#dbe4ee] shadow-[0_8px_28px_rgba(0,0,0,0.45)] transition-opacity duration-200 group-hover:opacity-100 md:inline-flex md:opacity-0">
+        <span
+          className={`pointer-events-none absolute end-full me-3 hidden whitespace-nowrap rounded-md border border-white/10 bg-[#0b0f17]/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#dbe4ee] shadow-[0_8px_28px_rgba(0,0,0,0.45)] transition-opacity duration-200 group-hover:opacity-100 md:inline-flex md:opacity-0 ${localeNav(language)}`}
+        >
           {label}
         </span>
       </button>

@@ -105,7 +105,8 @@ export function MarketingFooter() {
                 Σ
               </span>
               <span
-                className={`font-display text-sm font-semibold tracking-[0.14em] text-[#c5ccd3] normal-case ${localeNav(language)}`}
+                data-latin-tracking
+                className="font-display text-sm font-semibold tracking-[0.14em] text-[#c5ccd3] normal-case"
               >
                 {f.brandWordmark}
               </span>

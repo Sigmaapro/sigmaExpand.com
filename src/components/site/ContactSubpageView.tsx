@@ -27,6 +27,13 @@ import {
 import { isValidEmail } from "@/lib/contact/sanitize";
 import { submitLead } from "@/lib/contact/client";
 import { useLanguage } from "@/context/LanguageContext";
+import {
+  localeCta,
+  localeEyebrow,
+  localeHeading,
+  localeNav,
+  localeSmallLabelTrack,
+} from "@/lib/localeTypography";
 
 const SOCIAL_ORDER: SocialPlatformKey[] = [
   "x",
@@ -127,10 +134,14 @@ export function ContactSubpageView() {
         className="relative z-10 mx-auto w-full min-w-0 max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8"
       >
         <header className="mx-auto max-w-2xl text-center">
-          <p className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb]">
+          <p
+            className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}
+          >
             {copy.kicker}
           </p>
-          <h1 className="font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h1
+            className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          >
             {copy.headline}
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">
@@ -151,7 +162,7 @@ export function ContactSubpageView() {
             <button
               type="button"
               onClick={() => setBookOpen(true)}
-              className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/25 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,transform] hover:bg-[#1c39bb]/45 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
+              className={`mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/25 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,transform] hover:bg-[#1c39bb]/45 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(language)}`}
             >
               <CalendarPlus className="size-4 shrink-0" strokeWidth={2} aria-hidden />
               {copy.bookCall.cta}
@@ -189,7 +200,7 @@ export function ContactSubpageView() {
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#868e96]"
+                    className={`block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#868e96] ${localeNav(language)}`}
                   >
                     {copy.form.nameLabel}
                   </label>
@@ -205,7 +216,7 @@ export function ContactSubpageView() {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#868e96]"
+                    className={`block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#868e96] ${localeNav(language)}`}
                   >
                     {copy.form.emailLabel}
                   </label>
@@ -223,7 +234,7 @@ export function ContactSubpageView() {
                 <div>
                   <label
                     htmlFor="contact-message"
-                    className="block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#868e96]"
+                    className={`block text-[11px] font-semibold uppercase tracking-[0.12em] text-[#868e96] ${localeNav(language)}`}
                   >
                     {copy.form.messageLabel}
                   </label>
@@ -241,7 +252,7 @@ export function ContactSubpageView() {
                   type="submit"
                   disabled={formState === "loading"}
                   aria-busy={formState === "loading"}
-                  className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-[background,opacity] hover:bg-[#152a8a] disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
+                  className={`inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-[background,opacity] hover:bg-[#152a8a] disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(language)}`}
                 >
                   {formState === "loading" ? copy.form.sending : copy.form.submit}
                 </button>
@@ -251,7 +262,9 @@ export function ContactSubpageView() {
         </div>
 
         <section className="mx-auto mt-14 max-w-5xl">
-          <h2 className="font-display text-center text-sm font-semibold uppercase tracking-[0.14em] text-[#8b939e]">
+          <h2
+            className={`font-display text-center text-sm font-semibold uppercase tracking-[0.14em] text-[#8b939e] ${localeNav(language)}`}
+          >
             {copy.social.title}
           </h2>
           <div className="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4">
@@ -271,7 +284,9 @@ export function ContactSubpageView() {
                   <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.02] text-[#bde0fe] transition-colors group-hover:text-white">
                     <Icon className="h-4.5 w-4.5" />
                   </span>
-                  <span className="text-xs font-medium tracking-wide">{label}</span>
+                  <span className={`text-xs font-medium ${localeSmallLabelTrack(language)}`}>
+                    {label}
+                  </span>
                 </>
               );
 

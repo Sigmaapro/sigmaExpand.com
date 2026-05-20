@@ -67,7 +67,6 @@ import {
   localeNav,
   localeSmallLabelTrack,
   localeWideMutedTrack,
-  localeWordmarkNav,
 } from "@/lib/localeTypography";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
 
@@ -1465,7 +1464,8 @@ const Navbar = () => {
               Σ
             </span>
             <span
-              className={`truncate font-display text-[11px] font-semibold uppercase tracking-[0.14em] text-[#c5ccd3] sm:text-lg sm:tracking-[0.12em] ${localeWordmarkNav(currentLang)}`}
+              data-latin-tracking
+              className="truncate font-display text-[11px] font-semibold uppercase tracking-[0.14em] text-[#c5ccd3] sm:text-lg sm:tracking-[0.12em]"
             >
               SIGMA
             </span>

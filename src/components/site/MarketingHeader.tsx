@@ -28,7 +28,8 @@ export function MarketingHeader() {
             Σ
           </span>
           <span
-            className={`hidden font-display text-[0.95rem] font-semibold uppercase tracking-[0.14em] sm:inline ${localeNav(language)}`}
+            data-latin-tracking
+            className="hidden font-display text-[0.95rem] font-semibold uppercase tracking-[0.14em] sm:inline"
           >
             {t.insights.sigmaHome}
           </span>

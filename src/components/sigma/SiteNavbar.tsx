@@ -10,7 +10,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
 import { ROUTES } from "@/content/global/routes";
 import { buildLocaleSearchParams, routePathForLang } from "@/lib/i18n";
-import { localeCta, localeNav } from "@/lib/localeTypography";
+import { localeCta, localeLanguageSwitcherOption, localeNav } from "@/lib/localeTypography";
 
 export function SiteNavbar() {
   const { t, language, setLanguage, isRtl } = useLanguage();
@@ -104,7 +104,7 @@ export function SiteNavbar() {
                       applyLanguage(l.code);
                       setOpen(false);
                     }}
-                    className={`block w-full px-4 py-3 text-start font-body text-[11px] font-bold uppercase tracking-widest transition-colors ${localeNav(language)} ${
+                    className={`block w-full px-4 py-3 text-start font-body text-[11px] font-bold transition-colors ${localeLanguageSwitcherOption(l.code)} ${
                       language === l.code
                         ? "bg-persian text-white"
                         : "text-cadet hover:bg-cadet/10 hover:text-white"

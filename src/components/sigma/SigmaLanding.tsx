@@ -19,6 +19,7 @@ import { MidConversionCta, FinalConversionCta } from "@/components/sigma/Convers
 import { BookCallModal } from "@/components/sigma/BookCallModal";
 import { getConversion } from "@/content/conversion";
 import { HeroGlassCarousel } from "@/components/sigma/HeroGlassCarousel";
+import { MobileHeroSigmaVisual } from "@/components/sigma/MobileHeroSigmaVisual";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
 import { SeoHiddenImages } from "@/components/seo/SeoHiddenImages";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
@@ -567,7 +568,7 @@ const WebGLBackground = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-[#080a0f] via-[#151a22] to-[#0c111a]" />
       {shouldRenderCanvas ? <WebGLScene lowPower={lowPowerDevice} /> : null}
       <div
-        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.35]"}`}
+        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.42] lg:opacity-100"}`}
         aria-hidden
       />
     </div>
@@ -677,7 +678,7 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
         className="pointer-events-none absolute inset-0 z-0"
         aria-hidden
       >
-        <div className="absolute -inset-[14%] bg-[radial-gradient(ellipse_92%_78%_at_50%_38%,rgba(28,57,187,0.02),transparent_74%)] opacity-70 md:opacity-100 md:bg-[radial-gradient(ellipse_92%_78%_at_50%_38%,rgba(28,57,187,0.048),transparent_74%)]" />
+        <div className="absolute -inset-[14%] bg-[radial-gradient(ellipse_92%_78%_at_50%_38%,rgba(28,57,187,0.06),transparent_74%)] opacity-80 md:opacity-100 md:bg-[radial-gradient(ellipse_92%_78%_at_50%_38%,rgba(28,57,187,0.048),transparent_74%)]" />
         <div className="absolute left-1/2 top-[36%] h-[min(70vw,30rem)] w-[min(82vw,36rem)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_62%_52%_at_48%_46%,rgba(28,57,187,0.03)_0%,rgba(28,57,187,0.012)_48%,transparent_76%)] opacity-80 md:opacity-100 md:bg-[radial-gradient(ellipse_62%_52%_at_48%_46%,rgba(28,57,187,0.072)_0%,rgba(28,57,187,0.028)_48%,transparent_76%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_56%_44%_at_68%_52%,rgba(189,224,254,0.008),transparent_62%)] md:bg-[radial-gradient(ellipse_56%_44%_at_68%_52%,rgba(189,224,254,0.022),transparent_62%)]" />
       </div>
@@ -812,8 +813,10 @@ const HeroSection = ({
   isRtl: boolean;
 }) => {
   const { lang } = useLanguage();
+  const heroRef = useRef<HTMLElement>(null);
   return (
   <section
+    ref={heroRef}
     id="hero"
     className="relative flex min-h-[min(100svh,920px)] scroll-mt-24 items-center overflow-x-clip px-5 pb-10 pt-[max(5.25rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:pb-14 sm:pt-28 md:min-h-screen md:px-16 md:pt-32 lg:px-24"
   >
@@ -822,6 +825,7 @@ const HeroSection = ({
       <div className="absolute inset-0 bg-sigma-radial opacity-[0.14] sm:opacity-[0.2] md:opacity-[0.26]" />
       <div className="absolute inset-0 sigma-hero-vignette opacity-[0.35] sm:opacity-[0.45] md:opacity-[0.55]" />
     </div>
+    <MobileHeroSigmaVisual containerRef={heroRef} />
     <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-16 lg:gap-y-10 xl:gap-x-24">
       <div className="relative z-20 order-2 flex w-full min-w-0 max-w-full flex-col justify-center sm:order-1 md:max-w-xl lg:order-none lg:max-w-none lg:pe-4">
         <div

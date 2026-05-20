@@ -1,3 +1,4 @@
+import { organizationSameAs } from "@/content/data/socials";
 import { SEO_PAGES } from "@/content/seo";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -25,6 +26,7 @@ export function getPublisherJsonLdGraph() {
           "@type": "ImageObject",
           url: `${origin}/logo.png`,
         },
+        sameAs: [...organizationSameAs],
       },
       {
         "@type": "WebSite",

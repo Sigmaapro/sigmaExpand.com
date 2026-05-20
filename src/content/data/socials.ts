@@ -14,7 +14,7 @@ export const socials = {
   x: "https://x.com/sigmaapro",
   instagram: "https://www.instagram.com/",
   telegram: "https://telegram.org/",
-  linkedin: "https://www.linkedin.com/",
+  linkedin: "https://www.linkedin.com/company/sigmaapro",
   youtube: "https://www.youtube.com/",
   whatsapp: "https://www.whatsapp.com/",
   discord: "https://discord.com/",
@@ -22,3 +22,9 @@ export const socials = {
 } as const;
 
 export const contactEmail = "BD@sigmaa.pro";
+
+/** Verified company profiles for Organization JSON-LD `sameAs` (non-placeholder URLs only). */
+export const organizationSameAs = [
+  socials.linkedin,
+  socials.x,
+] as const;

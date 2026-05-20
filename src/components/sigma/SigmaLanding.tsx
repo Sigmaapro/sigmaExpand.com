@@ -19,7 +19,6 @@ import { MidConversionCta, FinalConversionCta } from "@/components/sigma/Convers
 import { BookCallModal } from "@/components/sigma/BookCallModal";
 import { getConversion } from "@/content/conversion";
 import { HeroGlassCarousel } from "@/components/sigma/HeroGlassCarousel";
-import { MobileHeroSigmaVisual } from "@/components/sigma/MobileHeroSigmaVisual";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
 import { SeoHiddenImages } from "@/components/seo/SeoHiddenImages";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
@@ -569,7 +568,7 @@ const WebGLBackground = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-[#080a0f] via-[#151a22] to-[#0c111a]" />
       {shouldRenderCanvas ? <WebGLScene lowPower={lowPowerDevice} /> : null}
       <div
-        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.42] lg:opacity-100"}`}
+        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.35]"}`}
         aria-hidden
       />
     </div>
@@ -702,7 +701,7 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
               ? { duration: 0 }
               : { duration: 8.5, repeat: Infinity, ease: "easeInOut" }
           }
-          className="group relative z-10 block w-full max-w-full overflow-hidden rounded-2xl border border-[#bde0fe]/[0.22] bg-[#0a0f18]/[0.32] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.22)] backdrop-blur-md transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] max-lg:backdrop-blur-sm lg:bg-[#0a0f18]/[0.44] lg:backdrop-blur-xl md:max-w-[min(35rem,88%)] lg:max-w-[min(39rem,92%)] lg:p-5"
+          className="group relative block w-full max-w-full overflow-hidden rounded-2xl border border-[#bde0fe]/[0.15] bg-[#0a0f18]/[0.44] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.16)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] md:max-w-[min(35rem,88%)] lg:max-w-[min(39rem,92%)] lg:p-5"
         >
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.035)_38%,transparent_74%)]" />
           <HeroGlassCarousel t={t} />
@@ -814,10 +813,8 @@ const HeroSection = ({
   isRtl: boolean;
 }) => {
   const { lang } = useLanguage();
-  const heroRef = useRef<HTMLElement>(null);
   return (
   <section
-    ref={heroRef}
     id="hero"
     className="relative flex min-h-[min(100svh,920px)] scroll-mt-24 items-center overflow-x-clip px-5 pb-10 pt-[max(5.25rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:pb-14 sm:pt-28 md:min-h-screen md:px-16 md:pt-32 lg:px-24"
   >
@@ -897,8 +894,7 @@ const HeroSection = ({
       </div>
 
       <div className="relative z-10 order-1 min-h-0 w-full min-w-0 max-w-full justify-self-stretch sm:order-2 md:max-w-[min(100%,28rem)] md:justify-self-center lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
-        <div className="relative min-h-[min(220px,38svh)] w-full sm:min-h-[min(280px,42vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
-          <MobileHeroSigmaVisual containerRef={heroRef} />
+        <div className="relative min-h-[min(180px,30svh)] w-full sm:min-h-[min(260px,38vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
           <HeroVisual t={t} />
         </div>
       </div>

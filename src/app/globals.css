@@ -189,25 +189,6 @@ html[lang="zh-CN"] .sigma-contact-root h1 {
   }
 }
 
-@keyframes sigma-mobile-orbit {
-  from {
-    rotate: 0deg;
-  }
-  to {
-    rotate: 360deg;
-  }
-}
-
-.sigma-mobile-orbit-spin {
-  animation: sigma-mobile-orbit 28s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sigma-mobile-orbit-spin {
-    animation: none !important;
-  }
-}
-
 .sigma-hero-vignette {
   background: radial-gradient(
       ellipse 85% 70% at 18% 38%,

@@ -7,7 +7,11 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { LangCode } from "@/content/types";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
 import { buildLocaleSearchParams, routePathForLang } from "@/lib/i18n";
-import { localeLanguageSwitcherOption, localeNav } from "@/lib/localeTypography";
+import {
+  isLatinLang,
+  localeLanguageSwitcherOption,
+  localeNav,
+} from "@/lib/localeTypography";
 
 export function LanguageSwitcherButton({
   currentLang,
@@ -183,6 +187,7 @@ export function LanguageSwitcherButton({
                     triggerRef.current?.focus();
                   }
                 }}
+                data-latin-label={isLatinLang(lang.code) ? true : undefined}
                 className={`px-4 py-3 text-start text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[#bde0fe]/60 ${localeLanguageSwitcherOption(lang.code)} ${
                   currentLang === lang.code
                     ? "bg-[#1c39bb] text-white"

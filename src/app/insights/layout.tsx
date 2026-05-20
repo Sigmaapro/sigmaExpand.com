@@ -1,5 +1,6 @@
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { MarketingHeader } from "@/components/site/MarketingHeader";
+import { RtlScriptSurface } from "@/components/site/RtlScriptSurface";
 
 export default function InsightsLayout({
   children,
@@ -11,7 +12,7 @@ export default function InsightsLayout({
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(28,57,187,0.12),transparent_50%)]" />
       <div className="relative z-10 flex min-h-screen flex-col">
         <MarketingHeader />
-        <div className="flex-1">{children}</div>
+        <RtlScriptSurface className="flex-1">{children}</RtlScriptSurface>
         <MarketingFooter />
       </div>
     </div>

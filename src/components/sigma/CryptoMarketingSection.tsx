@@ -6,7 +6,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { getCryptoAgency } from "@/content/sections/cryptoAgency";
-import { localeCta, localeEyebrow, localeHeading, localeNav } from "@/lib/localeTypography";
+import {
+  isLatinAcronymLabel,
+  localeCta,
+  localeEyebrow,
+  localeHeading,
+  localeNav,
+} from "@/lib/localeTypography";
 
 export function CryptoMarketingSection() {
   const { lang, isRtl } = useLanguage();
@@ -83,6 +89,7 @@ export function CryptoMarketingSection() {
               return (
                 <button
                   key={regionTab.key}
+                  data-latin-label={isLatinAcronymLabel(regionTab.label) ? true : undefined}
                   ref={(node) => {
                     tabBtnRefs.current[i] = node;
                   }}

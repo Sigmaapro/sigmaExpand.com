@@ -36,10 +36,10 @@ export function MobileHeroSigmaVisual({ containerRef }: Props) {
     offset: ["start start", "end start"],
   });
 
-  const clusterY = useTransform(scrollYProgress, [0, 1], [0, -32]);
-  const clusterScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
-  const glowOpacity = useTransform(scrollYProgress, [0, 0.55, 1], [0.92, 0.7, 0.45]);
-  const orbitScale = useTransform(scrollYProgress, [0, 0.35, 1], [1, 1.08, 1.16]);
+  const clusterY = useTransform(scrollYProgress, [0, 1], [0, -28]);
+  const clusterScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const glowOpacity = useTransform(scrollYProgress, [0, 0.55, 1], [1, 0.82, 0.58]);
+  const orbitScale = useTransform(scrollYProgress, [0, 0.35, 1], [1, 1.1, 1.2]);
 
   if (isDesktop) return null;
 
@@ -47,11 +47,11 @@ export function MobileHeroSigmaVisual({ containerRef }: Props) {
 
   return (
     <div
-      className="pointer-events-none absolute inset-x-0 top-[max(4.5rem,env(safe-area-inset-top,0px)+3rem)] z-[1] flex h-[min(52svh,26rem)] max-h-[420px] w-full items-center justify-center overflow-x-clip sm:top-[5.5rem] sm:h-[min(48svh,28rem)] md:h-[min(52svh,32rem)]"
+      className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center overflow-hidden lg:hidden"
       aria-hidden
     >
       <motion.div
-        className="relative h-full w-full max-w-[min(100%,26rem)]"
+        className="relative h-[min(100%,22rem)] w-full max-w-[min(100%,22rem)]"
         style={
           reduceMotion
             ? undefined
@@ -62,16 +62,16 @@ export function MobileHeroSigmaVisual({ containerRef }: Props) {
         }
       >
         <motion.div
-          className="absolute left-1/2 top-[42%] h-[min(72vw,18rem)] w-[min(88vw,22rem)] -translate-x-1/2 -translate-y-1/2"
-          style={reduceMotion ? undefined : { opacity: glowOpacity }}
+          className="absolute left-1/2 top-1/2 h-[min(88vw,20rem)] w-[min(96vw,24rem)] -translate-x-1/2 -translate-y-1/2"
+          style={reduceMotion ? { opacity: 1 } : { opacity: glowOpacity }}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_68%_58%_at_50%_48%,rgba(28,57,187,0.38)_0%,rgba(28,57,187,0.12)_42%,transparent_72%)]" />
-          <div className="absolute inset-[8%] bg-[radial-gradient(ellipse_52%_48%_at_55%_42%,rgba(189,224,254,0.14)_0%,transparent_68%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(28,57,187,0.08)_0%,transparent_55%)] blur-2xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_62%_at_50%_48%,rgba(28,57,187,0.58)_0%,rgba(28,57,187,0.22)_45%,transparent_74%)]" />
+          <div className="absolute inset-[4%] bg-[radial-gradient(ellipse_58%_52%_at_52%_44%,rgba(189,224,254,0.28)_0%,transparent_68%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(28,57,187,0.16)_0%,transparent_58%)] blur-2xl" />
         </motion.div>
 
         <motion.div
-          className={`absolute left-1/2 top-[42%] size-[min(58vw,14.5rem)] -translate-x-1/2 -translate-y-1/2 ${
+          className={`absolute left-1/2 top-1/2 size-[min(68vw,17rem)] -translate-x-1/2 -translate-y-1/2 ${
             animateOrbit ? "sigma-mobile-orbit-spin" : ""
           }`}
           style={reduceMotion ? undefined : { scale: orbitScale }}
@@ -79,15 +79,15 @@ export function MobileHeroSigmaVisual({ containerRef }: Props) {
           {SHARD_ANGLES.map((deg, i) => (
             <span
               key={deg}
-              className="absolute left-1/2 top-1/2 block h-3 w-3 origin-center sm:h-3.5 sm:w-3.5"
+              className="absolute left-1/2 top-1/2 block h-3.5 w-3.5 origin-center sm:h-4 sm:w-4"
               style={{
-                transform: `rotate(${deg}deg) translateY(calc(-1 * (36% + ${(i % 4) * 3}%)))`,
+                transform: `rotate(${deg}deg) translateY(calc(-1 * (38% + ${(i % 4) * 3}%)))`,
               }}
             >
               <span
-                className={`absolute left-1/2 top-0 block size-full -translate-x-1/2 rounded-[1px] border border-[#bde0fe]/35 bg-[linear-gradient(135deg,rgba(28,57,187,0.55)_0%,rgba(13,22,48,0.85)_100%)] shadow-[0_0_14px_rgba(28,57,187,0.35)] ${
+                className={`absolute left-1/2 top-0 block size-full -translate-x-1/2 rounded-[1px] border border-[#bde0fe]/50 bg-[linear-gradient(135deg,rgba(28,57,187,0.72)_0%,rgba(13,22,48,0.92)_100%)] shadow-[0_0_18px_rgba(28,57,187,0.45)] ${
                   i % 2 === 0 ? "rotate-45" : "-rotate-12"
-                } ${i % 3 === 0 ? "scale-110" : "scale-90 opacity-80"}`}
+                } ${i % 3 === 0 ? "scale-110" : "scale-95 opacity-90"}`}
                 style={{
                   clipPath:
                     i % 2 === 0
@@ -101,18 +101,18 @@ export function MobileHeroSigmaVisual({ containerRef }: Props) {
 
         <svg
           viewBox="0 0 200 200"
-          className="absolute left-1/2 top-[42%] h-[min(52vw,13rem)] w-[min(52vw,13rem)] -translate-x-1/2 -translate-y-1/2 opacity-[0.42] sm:opacity-[0.5]"
+          className="absolute left-1/2 top-1/2 h-[min(62vw,15.5rem)] w-[min(62vw,15.5rem)] -translate-x-1/2 -translate-y-1/2 opacity-[0.72] drop-shadow-[0_0_28px_rgba(28,57,187,0.55)] sm:opacity-[0.78]"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
             <linearGradient id="sigma-mobile-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#bde0fe" stopOpacity="0.85" />
-              <stop offset="55%" stopColor="#1c39bb" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#6ea8ff" stopOpacity="0.7" />
+              <stop offset="0%" stopColor="#bde0fe" stopOpacity="0.95" />
+              <stop offset="55%" stopColor="#4a6fd6" stopOpacity="1" />
+              <stop offset="100%" stopColor="#bde0fe" stopOpacity="0.85" />
             </linearGradient>
-            <filter id="sigma-mobile-glow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <filter id="sigma-mobile-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -127,7 +127,7 @@ export function MobileHeroSigmaVisual({ containerRef }: Props) {
               x2={s.bx}
               y2={s.by}
               stroke="url(#sigma-mobile-stroke)"
-              strokeWidth="2.25"
+              strokeWidth="3"
               strokeLinecap="round"
               filter="url(#sigma-mobile-glow)"
             />
@@ -135,14 +135,14 @@ export function MobileHeroSigmaVisual({ containerRef }: Props) {
         </svg>
 
         <motion.div
-          className="absolute left-1/2 top-[42%] size-[min(44vw,11rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#1c39bb]/20 bg-[radial-gradient(circle_at_50%_42%,rgba(28,57,187,0.18)_0%,transparent_70%)]"
+          className="absolute left-1/2 top-1/2 size-[min(50vw,12.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#1c39bb]/35 bg-[radial-gradient(circle_at_50%_42%,rgba(28,57,187,0.28)_0%,transparent_72%)] shadow-[0_0_40px_rgba(28,57,187,0.35)]"
           animate={
             animateOrbit
               ? {
-                  scale: [1, 1.04, 1],
-                  opacity: [0.35, 0.5, 0.35],
+                  scale: [1, 1.06, 1],
+                  opacity: [0.45, 0.65, 0.45],
                 }
-              : undefined
+              : { opacity: 0.5 }
           }
           transition={
             animateOrbit

@@ -68,6 +68,7 @@ import {
   localeNav,
   localeSmallLabelTrack,
   localeWideMutedTrack,
+  rtlScriptSurfaceClass,
 } from "@/lib/localeTypography";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
 
@@ -701,7 +702,7 @@ const HeroVisual = ({ t }: { t: SiteTranslations }) => {
               ? { duration: 0 }
               : { duration: 8.5, repeat: Infinity, ease: "easeInOut" }
           }
-          className="group relative block w-full max-w-full overflow-hidden rounded-2xl border border-[#bde0fe]/[0.15] bg-[#0a0f18]/[0.44] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.16)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] md:max-w-[min(35rem,88%)] lg:max-w-[min(39rem,92%)] lg:p-5"
+          className="group relative z-10 block w-full max-w-full overflow-hidden rounded-2xl border border-[#bde0fe]/[0.22] bg-[#0a0f18]/[0.32] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.22)] backdrop-blur-md transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] max-lg:backdrop-blur-sm lg:bg-[#0a0f18]/[0.44] lg:backdrop-blur-xl md:max-w-[min(35rem,88%)] lg:max-w-[min(39rem,92%)] lg:p-5"
         >
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.035)_38%,transparent_74%)]" />
           <HeroGlassCarousel t={t} />
@@ -825,7 +826,6 @@ const HeroSection = ({
       <div className="absolute inset-0 bg-sigma-radial opacity-[0.14] sm:opacity-[0.2] md:opacity-[0.26]" />
       <div className="absolute inset-0 sigma-hero-vignette opacity-[0.35] sm:opacity-[0.45] md:opacity-[0.55]" />
     </div>
-    <MobileHeroSigmaVisual containerRef={heroRef} />
     <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-16 lg:gap-y-10 xl:gap-x-24">
       <div className="relative z-20 order-2 flex w-full min-w-0 max-w-full flex-col justify-center sm:order-1 md:max-w-xl lg:order-none lg:max-w-none lg:pe-4">
         <div
@@ -897,7 +897,8 @@ const HeroSection = ({
       </div>
 
       <div className="relative z-10 order-1 min-h-0 w-full min-w-0 max-w-full justify-self-stretch sm:order-2 md:max-w-[min(100%,28rem)] md:justify-self-center lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
-        <div className="relative min-h-[min(180px,30svh)] w-full sm:min-h-[min(260px,38vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
+        <div className="relative min-h-[min(220px,38svh)] w-full sm:min-h-[min(280px,42vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
+          <MobileHeroSigmaVisual containerRef={heroRef} />
           <HeroVisual t={t} />
         </div>
       </div>
@@ -1632,7 +1633,7 @@ export default function SigmaLanding() {
 
       <main
         key={currentLang}
-        className="relative z-10 min-w-0 max-w-[100vw] overflow-x-clip font-body selection:bg-[#1c39bb] selection:text-white"
+        className={`relative z-10 min-w-0 max-w-[100vw] overflow-x-clip font-body selection:bg-[#1c39bb] selection:text-white ${rtlScriptSurfaceClass(currentLang)}`}
         dir={isRtl ? "rtl" : "ltr"}
       >
         <SeoHiddenImages lang={currentLang} />

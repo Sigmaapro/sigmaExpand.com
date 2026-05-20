@@ -10,13 +10,28 @@ export function isRtlConnectedLang(lang: LangCode): boolean {
   return lang === "FA" || lang === "AR";
 }
 
+/** Alias for typography guards (Persian + Arabic UI locales). */
+export const isArabicScriptLang = isRtlConnectedLang;
+
+/** Apply on localized page shells to enforce natural FA/AR letter-spacing via CSS. */
+export function rtlScriptSurfaceClass(lang: LangCode): string {
+  return isRtlConnectedLang(lang) ? "sigma-rtl-script" : "";
+}
+
+/** Latin acronyms (WANA, LATAM, Web3) — keep premium tracking when embedded in FA/AR UI. */
+export function isLatinAcronymLabel(label: string): boolean {
+  const t = label.trim();
+  if (!t || t.length > 20) return false;
+  return /^[A-Za-z0-9][A-Za-z0-9\s/.&-]{0,18}$/.test(t) && /[A-Za-z]/.test(t);
+}
+
 export function isZhLang(lang: LangCode): boolean {
   return lang === "ZH";
 }
 
 /** Neutralize Tailwind tracking at every breakpoint (base + sm/md/lg/xl). */
 export const TRACK_RESET =
-  "!tracking-normal sm:!tracking-normal md:!tracking-normal lg:!tracking-normal xl:!tracking-normal 2xl:!tracking-normal";
+  "![letter-spacing:normal] !tracking-normal sm:![letter-spacing:normal] sm:!tracking-normal md:![letter-spacing:normal] md:!tracking-normal lg:![letter-spacing:normal] lg:!tracking-normal xl:![letter-spacing:normal] xl:!tracking-normal 2xl:![letter-spacing:normal] 2xl:!tracking-normal";
 
 function rtlEyebrow(): string {
   return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;

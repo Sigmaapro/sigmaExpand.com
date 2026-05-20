@@ -459,3 +459,45 @@ html[lang="ar"] button {
   text-transform: none;
   line-height: 1.6;
 }
+
+/**
+ * FA/AR typography enforcement — applied via rtlScriptSurfaceClass() on localized shells.
+ * Overrides Tailwind tracking utilities and .sigma-hero-eyebrow global letter-spacing.
+ */
+.sigma-rtl-script :is(
+    button,
+    a,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    label,
+    li
+  ):not([data-latin-tracking]):not([data-latin-label]) {
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  word-spacing: normal !important;
+}
+
+.sigma-rtl-script .sigma-hero-eyebrow,
+.sigma-rtl-script .sigma-hero-title,
+.sigma-rtl-script .sigma-cta-wordmark,
+.sigma-rtl-script .sigma-contact-kicker {
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  word-spacing: normal !important;
+}
+
+.sigma-rtl-script [data-latin-label] {
+  text-transform: uppercase !important;
+  letter-spacing: 0.14em !important;
+}
+
+.sigma-rtl-script [data-latin-tracking] {
+  text-transform: none !important;
+  letter-spacing: 0.14em !important;
+}

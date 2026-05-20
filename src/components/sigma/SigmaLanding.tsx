@@ -1454,32 +1454,31 @@ const Navbar = () => {
           if (e.target === e.currentTarget) scrollToTop();
         }}
       >
-        <div className="relative flex h-[72px] min-w-0 w-[calc(100%-0.75rem)] max-w-[1440px] shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-[#07090f]/70 px-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:w-[calc(100%-1.25rem)] sm:gap-3 sm:px-3.5 md:gap-4 md:px-5 lg:gap-5 lg:px-6">
+        <div className="relative flex h-[72px] min-w-0 w-[calc(100%-0.75rem)] max-w-[1440px] shrink-0 items-center gap-2 rounded-full border border-white/[0.07] bg-[#07090f]/70 px-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:w-[calc(100%-1.25rem)] sm:gap-3 sm:px-3.5 md:gap-4 md:px-5 lg:gap-5 lg:px-6">
           <button
             type="button"
             onClick={() => scrollToTop()}
-            className="relative z-10 flex h-full min-w-0 shrink-0 cursor-pointer items-center gap-2.5 border-0 bg-transparent p-0 text-start transition-opacity hover:opacity-90"
+            className="relative z-10 flex h-full min-w-0 max-w-[min(42%,9.5rem)] shrink-0 cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-start transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 sm:max-w-none sm:gap-2.5"
             aria-label={t.ui.navChrome.brandAria}
           >
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center font-display text-[1.65rem] font-semibold leading-none tracking-tight text-white drop-shadow-[0_0_12px_rgba(189,224,254,0.2)] transition-transform duration-300 hover:scale-[1.02]">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center font-display text-[1.5rem] font-semibold leading-none tracking-tight text-white drop-shadow-[0_0_12px_rgba(189,224,254,0.2)] transition-transform duration-300 hover:scale-[1.02] sm:text-[1.65rem]">
               Σ
             </span>
             <span
-              className={`hidden font-display text-lg font-semibold tracking-[0.12em] text-[#c5ccd3] sm:inline ${localeWordmarkNav(currentLang)}`}
+              className={`truncate font-display text-[11px] font-semibold uppercase tracking-[0.14em] text-[#c5ccd3] sm:text-lg sm:tracking-[0.12em] ${localeWordmarkNav(currentLang)}`}
             >
               SIGMA
             </span>
           </button>
 
-          <div className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center lg:hidden">
-            <div className="pointer-events-auto">
-              <LanguageSwitcherButton
-                currentLang={currentLang}
-                setLang={setCurrentLang}
-                ariaLabel={t.ui.navChrome.languageMenuAria}
-                compactLabel={t.ui.languageSwitcherCompact[currentLang]}
-              />
-            </div>
+          <div className="relative z-10 ms-auto flex shrink-0 items-center gap-2 sm:gap-3 lg:ms-0 lg:hidden">
+            <LanguageSwitcherButton
+              currentLang={currentLang}
+              setLang={setCurrentLang}
+              ariaLabel={t.ui.navChrome.languageMenuAria}
+              compactLabel={t.ui.languageSwitcherCompact[currentLang]}
+              variant="navCompact"
+            />
           </div>
 
           <div className="relative z-0 hidden min-h-0 min-w-0 flex-1 justify-center overflow-x-auto overflow-y-visible px-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:flex">
@@ -1540,7 +1539,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="ms-auto flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 md:gap-4">
+          <div className="relative z-10 flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 md:gap-4 lg:ms-auto">
             <InsightsOuterLink
               className={`hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-white/[0.1] bg-white/[0.03] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color,box-shadow] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px] ${localeNav(currentLang)}`}
             >
@@ -1585,9 +1584,9 @@ const Navbar = () => {
               onClick={() => setMobileOpen((o) => !o)}
             >
               {mobileOpen ? (
-                <X className="size-[18px]" strokeWidth={2} />
+                <X className="size-[18px]" strokeWidth={2} aria-hidden />
               ) : (
-                <Menu className="size-[18px]" strokeWidth={2} />
+                <Menu className="size-[18px]" strokeWidth={2} aria-hidden />
               )}
             </button>
           </div>

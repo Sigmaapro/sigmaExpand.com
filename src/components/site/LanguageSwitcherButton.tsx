@@ -14,13 +14,18 @@ export function LanguageSwitcherButton({
   setLang,
   ariaLabel,
   compactLabel,
+  variant = "default",
 }: {
   currentLang: LangCode;
   setLang: (l: LangCode) => void;
   ariaLabel: string;
   /** Locale-aware short label for closed chip (not raw LangCode). */
   compactLabel: string;
+  /** Compact pill for mobile navbar — shows language code, smaller tap target styling. */
+  variant?: "default" | "navCompact";
 }) {
+  const isNavCompact = variant === "navCompact";
+  const closedLabel = isNavCompact ? currentLang : compactLabel;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -85,7 +90,11 @@ export function LanguageSwitcherButton({
           }
         }}
         aria-autocomplete="none"
-        className={`inline-flex h-12 min-h-12 min-w-[4.5rem] max-w-[min(7.25rem,32vw)] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[12px] font-semibold tracking-[0.04em] text-[#b8c0c8] transition-colors hover:border-white/18 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 sm:h-14 sm:min-h-14 sm:min-w-[72px] sm:max-w-[min(8.75rem,30vw)] sm:gap-2 sm:px-4 sm:text-[14px] sm:tracking-[0.06em] ${localeNav(currentLang)}`}
+        className={
+          isNavCompact
+            ? `inline-flex h-11 min-h-11 min-w-[2.75rem] max-w-[3.25rem] shrink-0 items-center justify-center gap-1 rounded-full border border-white/[0.1] bg-white/[0.03] px-2 text-[11px] font-semibold tracking-[0.06em] text-[#c5ccd3] transition-colors hover:border-white/20 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(currentLang)}`
+            : `inline-flex h-12 min-h-12 min-w-[4.5rem] max-w-[min(7.25rem,32vw)] shrink-0 items-center justify-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[12px] font-semibold tracking-[0.04em] text-[#b8c0c8] transition-colors hover:border-white/18 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 sm:h-14 sm:min-h-14 sm:min-w-[72px] sm:max-w-[min(8.75rem,30vw)] sm:gap-2 sm:px-4 sm:text-[14px] sm:tracking-[0.06em] ${localeNav(currentLang)}`
+        }
         aria-label={ariaLabel}
         aria-expanded={open}
         aria-haspopup="listbox"
@@ -93,8 +102,12 @@ export function LanguageSwitcherButton({
         aria-activedescendant={open ? `${listboxId}-option-${activeIndex}` : undefined}
         id={triggerId}
       >
-        <Globe className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-        <span className="min-w-0 truncate leading-none normal-case">{compactLabel}</span>
+        <Globe
+          className={`shrink-0 ${isNavCompact ? "size-3 opacity-80" : "size-4"}`}
+          strokeWidth={2}
+          aria-hidden
+        />
+        <span className="min-w-0 truncate leading-none normal-case">{closedLabel}</span>
       </button>
 
       <AnimatePresence>

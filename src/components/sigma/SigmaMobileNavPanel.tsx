@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { ROUTES } from "@/content/global/routes";
+import { siteSettings } from "@/content/siteSettings";
 import { getCryptoAgency } from "@/content/sections/cryptoAgency";
 import type { LangCode, MobileNavSheetStrings } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
@@ -140,14 +141,25 @@ function NavLinkRow({
 }) {
   const cls =
     `group flex min-h-[3rem] touch-manipulation items-center justify-between gap-3 rounded-xl border border-transparent px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] text-[#d8dde3] transition-all duration-200 hover:border-[#1c39bb]/35 hover:bg-[#1c39bb]/12 hover:text-white hover:shadow-[0_0_28px_rgba(28,57,187,0.18)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)}`;
+  const arrow = (
+    <ArrowUpRight
+      className="size-4 shrink-0 opacity-40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-90 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5 rtl:group-hover:translate-y-[-0.125rem]"
+      strokeWidth={2}
+      aria-hidden
+    />
+  );
+  if (href.startsWith("http")) {
+    return (
+      <a href={href} className={cls} onClick={onNavigate}>
+        <span className="min-w-0">{label}</span>
+        {arrow}
+      </a>
+    );
+  }
   return (
     <Link href={href} className={cls} onClick={onNavigate}>
       <span className="min-w-0">{label}</span>
-      <ArrowUpRight
-        className="size-4 shrink-0 opacity-40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-90 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5 rtl:group-hover:translate-y-[-0.125rem]"
-        strokeWidth={2}
-        aria-hidden
-      />
+      {arrow}
     </Link>
   );
 }
@@ -172,27 +184,22 @@ export function SigmaMobileNavPanel({
   const crypto = getCryptoAgency(lang);
   const locations = crypto.tabs.map((t) => ({ label: t.label, href: t.href }));
 
-  const serviceLinks = React.useMemo(
-    () =>
-      [
-        { label: mobileNav.linkGrowthEngine, href: `${ROUTES.services}#growth` },
-        { label: mobileNav.linkKolMarketing, href: "/insights/kol-strategy-distribution-logic" },
-        { label: mobileNav.linkLiquidity, href: `${ROUTES.services}#liquidity` },
-      ] as const,
-    [mobileNav.linkGrowthEngine, mobileNav.linkKolMarketing, mobileNav.linkLiquidity],
-  );
+  const serviceLinks = React.useMemo(() => {
+    const blogHref = siteSettings.insightsUrl;
+    return [
+      { label: mobileNav.linkGrowthEngine, href: `${ROUTES.services}#growth` },
+      { label: mobileNav.linkKolMarketing, href: blogHref },
+      { label: mobileNav.linkLiquidity, href: `${ROUTES.services}#liquidity` },
+    ] as const;
+  }, [mobileNav.linkGrowthEngine, mobileNav.linkKolMarketing, mobileNav.linkLiquidity]);
 
-  const insightLinks = React.useMemo(
-    () =>
-      [
-        { label: mobileNav.linkFeatured, href: "/insights/how-web3-growth-scales" },
-        {
-          label: mobileNav.linkCryptoMarketing101,
-          href: "/insights/kol-strategy-distribution-logic",
-        },
-      ] as const,
-    [mobileNav.linkFeatured, mobileNav.linkCryptoMarketing101],
-  );
+  const insightLinks = React.useMemo(() => {
+    const blogHref = siteSettings.insightsUrl;
+    return [
+      { label: mobileNav.linkFeatured, href: blogHref },
+      { label: mobileNav.linkCryptoMarketing101, href: blogHref },
+    ] as const;
+  }, [mobileNav.linkFeatured, mobileNav.linkCryptoMarketing101]);
 
   const [accLocations, setAccLocations] = React.useState(false);
   const [accServices, setAccServices] = React.useState(false);

@@ -26,7 +26,7 @@ export type NavContent = {
   sigmaPro: string;
   contact: string;
   navCta: string;
-  /** External blog / insights — opens in new tab from navbar */
+  /** Insights nav label (href from siteSettings.insightsUrl / WordPress blog) */
   insights: string;
   /** Short homepage CTA label used in Insights chrome */
   insightsAccessLabel: string;

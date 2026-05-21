@@ -2,6 +2,9 @@
  * Stable routes for marketing nav/footer — single source for hrefs (labels live in nav/footer content).
  */
 
+/** WordPress CMS — destination for user-facing Insights / Blog / Articles navigation */
+export const WORDPRESS_INSIGHTS_URL = "https://blog.sigmaa.pro";
+
 export const ROUTES = {
   home: "/",
   about: "/about",

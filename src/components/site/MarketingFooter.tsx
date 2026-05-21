@@ -58,13 +58,13 @@ function FooterColumnBlock({
             );
           }
           const isExternal = link.external === true || link.href.startsWith("http");
+          const openInNewTab = link.openInNewTab ?? true;
           if (isExternal) {
             return (
               <li key={link.label}>
                 <a
                   href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className={common}
                 >
                   {link.label}

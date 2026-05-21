@@ -44,7 +44,11 @@ export function SectionDeepLink({
 
   if (isExternal) {
     return (
-      <a href={href} className={cls} target="_blank" rel="noopener noreferrer">
+      <a
+        href={href}
+        className={cls}
+        {...(openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      >
         {inner}
       </a>
     );

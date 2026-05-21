@@ -65,6 +65,7 @@ export function HeroGlassCarousel({ t }: { t: SiteTranslations }) {
           label={H.heroInsights.label}
           className="text-xs tracking-[0.14em] text-[#dce8f4] hover:text-white"
           external={/^https?:\/\//i.test(H.heroInsights.href)}
+          openInNewTab={false}
         />
       );
     }

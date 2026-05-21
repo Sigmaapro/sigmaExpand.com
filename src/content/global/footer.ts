@@ -1,11 +1,24 @@
 import { contactEmail, type SocialPlatformKey } from "../data/socials";
+import { siteSettings } from "../siteSettings";
 import type { LangCode } from "../types";
 import { ROUTES } from "./routes";
+
+/** User-facing Insights / Blog / Research footer links → WordPress CMS */
+const insightsNavHref = siteSettings.insightsUrl;
+
+function insightsFooterLink(label: string): FooterColumnLink {
+  if (insightsNavHref.startsWith("http")) {
+    return { label, href: insightsNavHref, external: true, openInNewTab: false };
+  }
+  return { label, href: insightsNavHref };
+}
 
 export type FooterColumnLink = {
   label: string;
   href: string;
   external?: boolean;
+  /** When external, open in same tab if false (default true for generic external URLs) */
+  openInNewTab?: boolean;
   disabled?: boolean;
 };
 
@@ -44,7 +57,7 @@ const PLATFORM_EN: FooterColumn = {
     { label: "Capabilities", href: A.capabilities },
     { label: "Network", href: A.network },
     { label: "Sigma Pro", href: A.sigmaPro },
-    { label: "Insights", href: ROUTES.insights },
+    insightsFooterLink("Insights"),
   ],
 };
 
@@ -62,8 +75,8 @@ const COMPANY_EN: FooterColumn = {
 const RESOURCES_EN: FooterColumn = {
   title: "Resources",
   links: [
-    { label: "Research / Insights", href: ROUTES.insights },
-    { label: "Case Studies", href: ROUTES.insights },
+    insightsFooterLink("Research / Insights"),
+    insightsFooterLink("Case Studies"),
     { label: "Privacy", href: ROUTES.privacy },
     { label: "Terms", href: ROUTES.terms },
     { label: "Book a Call", href: ROUTES.contact },
@@ -116,7 +129,7 @@ const FOOTER_TR: GlobalFooterContent = {
       { label: "Yetenekler", href: A.capabilities },
       { label: "Ağ", href: A.network },
       { label: "Sigma Pro", href: A.sigmaPro },
-      { label: "İçgörüler", href: ROUTES.insights },
+      insightsFooterLink("İçgörüler"),
     ],
   },
   columnCompany: {
@@ -132,8 +145,8 @@ const FOOTER_TR: GlobalFooterContent = {
   columnResources: {
     title: "Kaynaklar",
     links: [
-      { label: "Araştırma / İçgörüler", href: ROUTES.insights },
-      { label: "Örnek olaylar", href: ROUTES.insights },
+      insightsFooterLink("Araştırma / İçgörüler"),
+      insightsFooterLink("Örnek olaylar"),
       { label: "Gizlilik", href: ROUTES.privacy },
       { label: "Şartlar", href: ROUTES.terms },
       { label: "Görüşme ayırt", href: ROUTES.contact },
@@ -173,7 +186,7 @@ const FOOTER_FA: GlobalFooterContent = {
       { label: "قابلیت‌ها", href: A.capabilities },
       { label: "شبکه", href: A.network },
       { label: "سیگما پرو", href: A.sigmaPro },
-      { label: "بینش‌ها", href: ROUTES.insights },
+      insightsFooterLink("بینش‌ها"),
     ],
   },
   columnCompany: {
@@ -189,8 +202,8 @@ const FOOTER_FA: GlobalFooterContent = {
   columnResources: {
     title: "منابع",
     links: [
-      { label: "تحقیق / بینش", href: ROUTES.insights },
-      { label: "مطالعات موردی", href: ROUTES.insights },
+      insightsFooterLink("تحقیق / بینش"),
+      insightsFooterLink("مطالعات موردی"),
       { label: "حریم خصوصی", href: ROUTES.privacy },
       { label: "شرایط", href: ROUTES.terms },
       { label: "رزرو تماس", href: ROUTES.contact },
@@ -230,7 +243,7 @@ const FOOTER_AR: GlobalFooterContent = {
       { label: "القدرات", href: A.capabilities },
       { label: "الشبكة", href: A.network },
       { label: "سيغما برو", href: A.sigmaPro },
-      { label: "الرؤى", href: ROUTES.insights },
+      insightsFooterLink("الرؤى"),
     ],
   },
   columnCompany: {
@@ -246,8 +259,8 @@ const FOOTER_AR: GlobalFooterContent = {
   columnResources: {
     title: "المصادر",
     links: [
-      { label: "البحث / الرؤى", href: ROUTES.insights },
-      { label: "دراسات حالة", href: ROUTES.insights },
+      insightsFooterLink("البحث / الرؤى"),
+      insightsFooterLink("دراسات حالة"),
       { label: "الخصوصية", href: ROUTES.privacy },
       { label: "الشروط", href: ROUTES.terms },
       { label: "احجز مكالمة", href: ROUTES.contact },
@@ -286,7 +299,7 @@ const FOOTER_ZH: GlobalFooterContent = {
       { label: "能力", href: A.capabilities },
       { label: "网络", href: A.network },
       { label: "Sigma Pro", href: A.sigmaPro },
-      { label: "洞察", href: ROUTES.insights },
+      insightsFooterLink("洞察"),
     ],
   },
   columnCompany: {
@@ -302,8 +315,8 @@ const FOOTER_ZH: GlobalFooterContent = {
   columnResources: {
     title: "资源",
     links: [
-      { label: "研究 / 洞察", href: ROUTES.insights },
-      { label: "案例研究", href: ROUTES.insights },
+      insightsFooterLink("研究 / 洞察"),
+      insightsFooterLink("案例研究"),
       { label: "隐私", href: ROUTES.privacy },
       { label: "条款", href: ROUTES.terms },
       { label: "预约通话", href: ROUTES.contact },
@@ -343,7 +356,7 @@ const FOOTER_ES: GlobalFooterContent = {
       { label: "Capacidades", href: A.capabilities },
       { label: "Red", href: A.network },
       { label: "Sigma Pro", href: A.sigmaPro },
-      { label: "Perspectivas", href: ROUTES.insights },
+      insightsFooterLink("Perspectivas"),
     ],
   },
   columnCompany: {
@@ -359,8 +372,8 @@ const FOOTER_ES: GlobalFooterContent = {
   columnResources: {
     title: "Recursos",
     links: [
-      { label: "Investigación / Perspectivas", href: ROUTES.insights },
-      { label: "Casos de estudio", href: ROUTES.insights },
+      insightsFooterLink("Investigación / Perspectivas"),
+      insightsFooterLink("Casos de estudio"),
       { label: "Privacidad", href: ROUTES.privacy },
       { label: "Términos", href: ROUTES.terms },
       { label: "Reservar llamada", href: ROUTES.contact },
@@ -400,7 +413,7 @@ const FOOTER_RU: GlobalFooterContent = {
       { label: "Возможности", href: A.capabilities },
       { label: "Сеть", href: A.network },
       { label: "Sigma Pro", href: A.sigmaPro },
-      { label: "Инсайты", href: ROUTES.insights },
+      insightsFooterLink("Инсайты"),
     ],
   },
   columnCompany: {
@@ -416,8 +429,8 @@ const FOOTER_RU: GlobalFooterContent = {
   columnResources: {
     title: "Ресурсы",
     links: [
-      { label: "Исследования / Инсайты", href: ROUTES.insights },
-      { label: "Кейсы", href: ROUTES.insights },
+      insightsFooterLink("Исследования / Инсайты"),
+      insightsFooterLink("Кейсы"),
       { label: "Конфиденциальность", href: ROUTES.privacy },
       { label: "Условия", href: ROUTES.terms },
       { label: "Записаться на звонок", href: ROUTES.contact },

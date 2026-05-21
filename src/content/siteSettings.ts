@@ -3,6 +3,8 @@
  * Prefer env vars in deployment; fallbacks keep local dev working.
  */
 
+import { WORDPRESS_INSIGHTS_URL } from "./global/routes";
+
 const read = (k: string, fallback: string) => {
   if (typeof process === "undefined") return fallback;
   const v = process.env[k]?.trim();
@@ -32,8 +34,8 @@ function normalizeInsightsUrl(raw: string): string {
 }
 
 export const siteSettings = {
-  /** Same-origin `/insights` by default; set `NEXT_PUBLIC_INSIGHTS_URL` for a real external blog */
-  insightsUrl: normalizeInsightsUrl(read("NEXT_PUBLIC_INSIGHTS_URL", "/insights")),
+  /** WordPress blog for navbar/footer/CTAs; override with `NEXT_PUBLIC_INSIGHTS_URL` */
+  insightsUrl: normalizeInsightsUrl(read("NEXT_PUBLIC_INSIGHTS_URL", WORDPRESS_INSIGHTS_URL)),
   /** Default hero logo if locale omits override */
   defaultHeroLogoSrc: read(
     "NEXT_PUBLIC_HERO_LOGO_URL",

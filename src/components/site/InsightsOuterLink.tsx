@@ -22,13 +22,7 @@ export function InsightsOuterLink({
     );
   }
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={onNavigate}
-      className={className}
-    >
+    <a href={href} onClick={onNavigate} className={className}>
       {children}
     </a>
   );

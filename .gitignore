@@ -29,3 +29,5 @@ yarn-error.log*
 
 # env
 .env*.local
+client-content/05-insights/wordpress-import/original-zip/*.zip
+client-content/05-insights/wordpress-import/extracted/wordpress/

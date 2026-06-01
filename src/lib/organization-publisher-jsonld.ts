@@ -21,12 +21,33 @@ export function getPublisherJsonLdGraph() {
         "@type": "Organization",
         "@id": orgId,
         name: "Sigma",
+        alternateName: ["Sigma Team", "Sigma Network"],
         url: base,
-        logo: {
-          "@type": "ImageObject",
-          url: `${origin}/logo.png`,
+        logo: `${origin}/logo.svg`,
+        description:
+          "Global financial growth infrastructure network for crypto exchanges, forex brokers, KOLs, IBs, and Web3 protocols.",
+        founder: {
+          "@type": "Person",
+          name: "Omid Modaber",
         },
         sameAs: [...organizationSameAs],
+        contactPoint: {
+          "@type": "ContactPoint",
+          email: "BD@sigmaa.pro",
+          contactType: "Business Development",
+          availableLanguage: ["English", "Arabic", "Persian", "Turkish", "Spanish", "Russian"],
+        },
+        areaServed: ["MENA", "GCC", "Turkey", "Europe", "LATAM", "CIS", "East Asia", "Persian-speaking markets"],
+        knowsAbout: [
+          "Crypto exchange marketing",
+          "Forex broker marketing",
+          "KOL marketing",
+          "IB program design",
+          "Token launch marketing",
+          "Web3 growth",
+          "Liquidity activation",
+          "Crypto user acquisition",
+        ],
       },
       {
         "@type": "WebSite",

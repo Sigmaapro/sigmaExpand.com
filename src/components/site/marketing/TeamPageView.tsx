@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
 import { teamPageContentByLang } from "@/content/global/marketing/teamContent";
 import { pickLang } from "@/content/global/marketing/helpers";
@@ -37,6 +38,19 @@ export function TeamPageView() {
             </li>
           ))}
         </ul>
+
+        <section className="mt-8 rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md sm:p-8">
+          <p className={`text-sm leading-relaxed text-[#b6bcc4] ${localeBody(language)}`}>{c.extendedNetwork}</p>
+          <p className={`mt-3 text-xs leading-relaxed text-[#8f98a3] ${localeMeta(language)}`}>{c.ndaLine}</p>
+          <div className="mt-5">
+            <Link
+              href={c.ctaHref}
+              className={`inline-flex items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeMeta(language)}`}
+            >
+              {c.ctaLabel}
+            </Link>
+          </div>
+        </section>
       </div>
     </MarketingSubpageScaffold>
   );

@@ -23,6 +23,14 @@ export type SeoRouteKey =
   | "home"
   | "about"
   | "services"
+  | "servicePlatformGrowth"
+  | "serviceKolInfrastructure"
+  | "serviceIbProgram"
+  | "serviceTraderNetwork"
+  | "serviceTokenLaunch"
+  | "markets"
+  | "products"
+  | "riskDisclosure"
   | "contact"
   | "faq"
   | "privacy"
@@ -65,38 +73,51 @@ export function absoluteOgImage(path: string = DEFAULT_OG_IMAGE_PATH): string {
 export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   home: {
     path: "/",
-    title: "Sigma | Web3 Growth, Liquidity & Crypto Exchange Marketing",
+    title: "Sigma | Finance & Web3 Growth Partner for Exchanges, Brokers & KOLs",
     description:
-      "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
+      "Sigma is a global financial growth infrastructure network — user acquisition, KOL marketing, IB programs, and liquidity for crypto exchanges, forex brokers, and Web3 platforms.",
     keywords: [
-      "web3 marketing agency",
-      "crypto growth agency",
-      "exchange user acquisition",
-      "defi marketing",
-      "liquidity growth",
-      "web3 expansion services",
-      "crypto marketing agency",
-      "web3 infrastructure growth",
+      "finance and web3 growth partner",
+      "financial growth infrastructure",
+      "crypto exchange growth",
+      "forex broker marketing",
+      "crypto KOL agency",
+      "crypto IB program",
+      "crypto exchange marketing agency",
+      "crypto user acquisition",
+      "liquidity activation",
+      "web3 growth agency",
+      "operator-led crypto marketing",
     ],
-    ogTitle: "Sigma | Web3 Growth, Liquidity & Crypto Exchange Marketing",
+    ogTitle: "Sigma — Growth Infrastructure for Crypto, Forex, Stocks & Web3",
     ogDescription:
-      "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
-    twitterTitle: "Sigma | Web3 Growth, Liquidity & Crypto Marketing",
+      "1,500+ KOLs across crypto, forex & Web3. 40+ markets. $7B+ supported volume. Built by operators inside exchanges, not agencies outside them.",
+    twitterTitle: "Sigma — Growth Infrastructure for Crypto, Forex, Stocks & Web3",
     twitterDescription:
-      "Strategic growth infrastructure for exchanges, protocols, and Web3 platforms — acquisition, distribution, and liquidity systems.",
+      "1,500+ KOLs across crypto, forex & Web3. 40+ markets. $7B+ supported volume. Built by operators inside exchanges, not agencies outside them.",
   },
   about: {
     path: "/about",
-    title: "About Sigma",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
     description:
-      "Sigma builds Web3 growth infrastructure—liquidity, distribution, and execution for protocols and exchanges worldwide.",
-    keywords: ["Sigma", "about", "Web3 infrastructure", "crypto growth company", "exchange partnerships"],
-    ogTitle: "About Sigma | Web3 Growth Infrastructure",
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
+    keywords: [
+      "Sigma Team",
+      "Sigma founder",
+      "who is Sigma",
+      "Sigma Modaber",
+      "Sigma operators",
+      "how Sigma started",
+      "operator-led crypto marketing",
+      "trust-based crypto agency",
+      "long-term Web3 partnership",
+    ],
+    ogTitle: "About Sigma — Built From Inside the Industry",
     ogDescription:
-      "Learn how Sigma delivers liquidity, distribution, and execution systems for protocols and exchanges.",
-    twitterTitle: "About Sigma",
+      "Founded by Omid Modaber and core operators with experience inside LBank, BingX, MEXC, and Binance-era growth programs.",
+    twitterTitle: "About Sigma — Built From Inside the Industry",
     twitterDescription:
-      "Sigma builds Web3 growth infrastructure—liquidity, distribution, and execution for protocols and exchanges worldwide.",
+      "Founded by Omid Modaber and core operators with experience inside LBank, BingX, MEXC, and Binance-era growth programs.",
   },
   services: {
     path: "/services",
@@ -119,6 +140,166 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     twitterDescription:
       "Explore Sigma’s Web3 growth services: crypto marketing, liquidity solutions, exchange expansion, and user acquisition systems.",
   },
+  servicePlatformGrowth: {
+    path: "/services/platform-growth",
+    title: "Exchange, Broker & Platform Growth | Crypto Exchange Marketing Agency",
+    description:
+      "End-to-end growth for crypto exchanges, forex brokers, DEXs, prop firms, and fintech platforms — user acquisition, KOL activation, IB networks, localization, VIP onboarding, and liquidity activation.",
+    keywords: [
+      "crypto exchange marketing agency",
+      "crypto exchange growth",
+      "forex broker marketing",
+      "crypto user acquisition",
+      "liquidity activation",
+    ],
+    ogTitle: "Exchange, Broker & Platform Growth | Sigma",
+    ogDescription:
+      "Operator-led growth systems for exchanges, brokers, and platforms across crypto, forex, and Web3.",
+    twitterTitle: "Exchange, Broker & Platform Growth | Sigma",
+    twitterDescription:
+      "Operator-led growth systems for exchanges, brokers, and platforms across crypto, forex, and Web3.",
+  },
+  serviceKolInfrastructure: {
+    path: "/services/kol-infrastructure",
+    title: "KOL Marketing & Creator Infrastructure | Crypto KOL Agency",
+    description:
+      "Selective crypto, forex, stock, and Web3 creator network with affiliate bots, websites, SEO for KOLs, premium platform deals, and creator monetization infrastructure.",
+    keywords: [
+      "crypto KOL agency",
+      "crypto KOL marketing",
+      "KOL affiliate system",
+      "creator infrastructure",
+      "SEO for KOLs",
+    ],
+    ogTitle: "KOL Marketing & Creator Infrastructure | Sigma",
+    ogDescription:
+      "Infrastructure-first KOL systems for creator economics, distribution quality, and long-term compounding.",
+    twitterTitle: "KOL Marketing & Creator Infrastructure | Sigma",
+    twitterDescription:
+      "Infrastructure-first KOL systems for creator economics, distribution quality, and long-term compounding.",
+  },
+  serviceIbProgram: {
+    path: "/services/ib-program",
+    title: "IB & Affiliate Program Design | Crypto IB Program",
+    description:
+      "Structured IB programs for crypto exchanges and forex brokers — commission architecture, partner onboarding, conversion playbooks, retention systems, and regional BD expansion.",
+    keywords: [
+      "crypto IB program",
+      "forex IB network",
+      "IB affiliate program",
+      "broker IB programs",
+      "crypto affiliate program",
+    ],
+    ogTitle: "IB & Affiliate Program Design | Sigma",
+    ogDescription:
+      "Move from scattered referrals to a structured BD and affiliate operating system.",
+    twitterTitle: "IB & Affiliate Program Design | Sigma",
+    twitterDescription:
+      "Move from scattered referrals to a structured BD and affiliate operating system.",
+  },
+  serviceTraderNetwork: {
+    path: "/services/trader-network",
+    title: "Trader, VIP & Whale Access Network | Better Market Access",
+    description:
+      "Platform matching, VIP onboarding crypto workflows, whale onboarding support, copy trading access, options pathways, and data terminal introductions for serious traders.",
+    keywords: [
+      "VIP onboarding crypto",
+      "whale onboarding",
+      "copy trading platform",
+      "better market access",
+      "trader platform matching",
+    ],
+    ogTitle: "Trader, VIP & Whale Access Network | Sigma",
+    ogDescription:
+      "Operator-supported access infrastructure for high-seriousness trading participants.",
+    twitterTitle: "Trader, VIP & Whale Access Network | Sigma",
+    twitterDescription:
+      "Operator-supported access infrastructure for high-seriousness trading participants.",
+  },
+  serviceTokenLaunch: {
+    path: "/services/token-launch",
+    title: "Token Launch, Listing & Market-Making Introductions | Sigma",
+    description:
+      "Coordinated token launch distribution, exchange listing support, KOL synchronization, market maker introductions, and post-TGE retention systems.",
+    keywords: [
+      "token launch marketing",
+      "crypto exchange listing service",
+      "market maker introduction",
+      "token launch distribution",
+      "post-TGE retention",
+    ],
+    ogTitle: "Token Launch, Listing & Market-Making Introductions | Sigma",
+    ogDescription:
+      "Launch playbooks aligned to regional distribution, listing readiness, and post-TGE retention.",
+    twitterTitle: "Token Launch, Listing & Market-Making Introductions | Sigma",
+    twitterDescription:
+      "Launch playbooks aligned to regional distribution, listing readiness, and post-TGE retention.",
+  },
+  markets: {
+    path: "/markets",
+    title: "Built for Where Your Next Users Actually Live | Regional Crypto Marketing",
+    description:
+      "Regional crypto marketing infrastructure across MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking markets with native KOL and BD execution.",
+    keywords: [
+      "regional crypto marketing",
+      "MENA crypto marketing",
+      "GCC crypto agency",
+      "Dubai crypto agency",
+      "Turkey crypto KOL agency",
+      "LATAM crypto marketing",
+      "CIS crypto agency",
+      "MiCA crypto marketing",
+      "EU crypto agency",
+      "Canada crypto marketing agency",
+    ],
+    ogTitle: "Built for Where Your Next Users Actually Live | Sigma",
+    ogDescription:
+      "Region-by-region growth execution with native teams, local KOL networks, and on-the-ground BD.",
+    twitterTitle: "Built for Where Your Next Users Actually Live | Sigma",
+    twitterDescription:
+      "Region-by-region growth execution with native teams, local KOL networks, and on-the-ground BD.",
+  },
+  products: {
+    path: "/products",
+    title: "Sigma Helper Products — Tools, Bots, Dashboards & Analytics",
+    description:
+      "Crypto growth tools inside the Sigma network: analytics dashboards, affiliate systems, Telegram bots, creator monetization stacks, and reporting layers.",
+    keywords: [
+      "crypto growth tools",
+      "affiliate dashboards",
+      "Telegram bots",
+      "analytics dashboards",
+      "growth bots",
+      "creator monetization tools",
+      "KOL affiliate system",
+    ],
+    ogTitle: "Sigma Helper Products — Tools, Bots, Dashboards & Analytics",
+    ogDescription:
+      "Supporting product infrastructure for campaigns, affiliates, KOL operations, and execution telemetry.",
+    twitterTitle: "Sigma Helper Products — Tools, Bots, Dashboards & Analytics",
+    twitterDescription:
+      "Supporting product infrastructure for campaigns, affiliates, KOL operations, and execution telemetry.",
+  },
+  riskDisclosure: {
+    path: "/risk-disclosure",
+    title: "Risk & Transparency Disclosure | Sigma",
+    description:
+      "Crypto risk disclosure and transparency statement covering Sigma’s role, regulatory boundaries, and non-custodial, non-advisory positioning.",
+    keywords: [
+      "crypto risk disclosure",
+      "financial risk disclosure",
+      "crypto regulation",
+      "KYC AML",
+      "MiCA compliance",
+      "regulatory crypto marketing",
+    ],
+    ogTitle: "Risk & Transparency Disclosure | Sigma",
+    ogDescription:
+      "What Sigma is and what Sigma is not — including non-broker, non-custodial, and non-advisory boundaries.",
+    twitterTitle: "Risk & Transparency Disclosure | Sigma",
+    twitterDescription:
+      "What Sigma is and what Sigma is not — including non-broker, non-custodial, and non-advisory boundaries.",
+  },
   contact: {
     path: "/contact",
     title: "Contact",
@@ -134,16 +315,23 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   },
   faq: {
     path: "/faq",
-    title: "FAQ",
+    title: "Sigma — Common Questions",
     description:
-      "Answers about Sigma’s engagement model, timelines, regions, and how we work with protocols and exchanges.",
-    keywords: ["Sigma FAQ", "Web3 engagement", "crypto services questions"],
-    ogTitle: "FAQ | Sigma",
+      "What is Sigma, how crypto KOL and IB models work, where Sigma operates, and why Sigma never guarantees profits.",
+    keywords: [
+      "what is Sigma",
+      "what is a web3 growth agency",
+      "is Sigma a crypto marketing agency",
+      "how crypto IB programs work",
+      "how crypto KOL agency works",
+      "does Sigma guarantee profits",
+    ],
+    ogTitle: "Sigma — Common Questions",
     ogDescription:
-      "Common questions about Sigma’s model, timelines, regions, and collaboration with protocols and exchanges.",
-    twitterTitle: "Sigma FAQ",
+      "Answers about Sigma’s growth infrastructure model, regions, KOL and IB systems, and compliance-safe positioning.",
+    twitterTitle: "Sigma — Common Questions",
     twitterDescription:
-      "Engagement model, timelines, and how Sigma works with protocols and exchanges.",
+      "Answers about Sigma’s growth infrastructure model, regions, KOL and IB systems, and compliance-safe positioning.",
   },
   privacy: {
     path: "/privacy",
@@ -160,16 +348,26 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   },
   team: {
     path: "/team",
-    title: "Team",
+    title: "The People Behind Sigma",
     description:
-      "Meet the operators behind Sigma—execution-focused teams spanning markets, liquidity, and technical integration.",
-    keywords: ["Sigma team", "Web3 operators", "crypto marketing team"],
-    ogTitle: "Team | Sigma",
+      "Meet Omid Modaber, Arad Moaf, Novin Ghasemi, Hosein Rostami, and Mostafa Moradi — the core Sigma team operating global growth infrastructure.",
+    keywords: [
+      "Sigma Team",
+      "Sigma founder",
+      "Omid Modaber",
+      "Arad Moaf",
+      "Novin Ghasemi",
+      "Hosein Rostami",
+      "Mostafa Moradi",
+      "Sigma core team",
+      "Sigma partners",
+    ],
+    ogTitle: "The People Behind Sigma",
     ogDescription:
-      "Operators focused on markets, liquidity, and technical integration for Web3 growth.",
-    twitterTitle: "Sigma Team",
+      "Core partners and operators behind Sigma’s finance and Web3 growth infrastructure network.",
+    twitterTitle: "The People Behind Sigma",
     twitterDescription:
-      "Operators behind Sigma’s Web3 growth infrastructure.",
+      "Core partners and operators behind Sigma’s finance and Web3 growth infrastructure network.",
   },
   terms: {
     path: "/terms",

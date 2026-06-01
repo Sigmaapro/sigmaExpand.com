@@ -27,7 +27,7 @@ const EXTRA_LABELS_BY_LANG: Record<LangCode, ExtraLabels> = {
   EN: {
     heroInsights: "View insights",
     contact: "Contact us",
-    faq: "Read FAQ",
+    faq: "Read Full FAQ",
   },
   TR: {
     heroInsights: "İçgörülere git",

@@ -49,35 +49,50 @@ export const faqPageMetaByLang: Record<LangCode, PageMeta> = {
 
 export const faqPageContentByLang: Record<LangCode, FaqMarketingBody> = {
   EN: {
-    kicker: "Help",
-    headline: "Frequently asked questions",
+    kicker: "Frequently Asked",
+    headline: "Sigma — Common Questions",
     intro:
-      "If you don’t see your question here, reach out via the contact page—we respond to serious inquiries quickly.",
+      "Answers to the questions we hear most from exchanges, brokers, creators, IB networks, and Web3 operators.",
     items: [
       {
-        question: "What kinds of teams do you work with?",
+        question: "What is Sigma?",
         answer:
-          "We primarily partner with crypto exchanges, infrastructure protocols, and growth-stage Web3 products that need liquidity, distribution, or technical execution at scale. If your roadmap touches markets or institutional stakeholders, we’re likely a fit.",
+          "Sigma is a global financial growth infrastructure network that helps crypto exchanges, forex brokers, KOLs, IBs, traders, and Web3 platforms grow through user acquisition, KOL marketing, IB programs, liquidity activation, and regional market expansion across 40+ markets.",
       },
       {
-        question: "How do engagements typically start?",
+        question: "Is Sigma a crypto marketing agency?",
         answer:
-          "Most projects begin with a focused discovery phase: goals, constraints, jurisdictions, and success metrics. From there we propose a phased plan with clear milestones rather than open-ended retainers.",
+          "Not exactly. Most crypto marketing agencies focus on a single channel such as PR, KOLs, or ads. Sigma operates as the strategic layer above those channels — designing the growth system, deploying the network, and owning the outcome.",
       },
       {
-        question: "Do you work globally?",
+        question: "Does Sigma work with both crypto exchanges and forex brokers?",
         answer:
-          "Yes. We coordinate across time zones and tailor compliance and operational detail to the regions you operate in. Specific regulatory advice may require your counsel—we collaborate closely with your legal team.",
+          "Yes. Sigma covers crypto exchanges including CEX and DEX platforms, forex brokers, prop firms, Web3 protocols, fintech platforms, trading tools, and data providers — across crypto-native and traditional finance.",
       },
       {
-        question: "What should we prepare before the first call?",
+        question: "How does Sigma’s crypto KOL agency model work?",
         answer:
-          "Product context, target markets, current metrics (even rough), and any hard deadlines such as listings or launches. The more concrete the goals, the faster we can recommend a path.",
+          "Sigma operates a vetted 1,500+ KOL and BD network across crypto, forex, stock, and Web3. Beyond placing campaigns, Sigma builds infrastructure for KOLs — bots, affiliate stacks, SEO, premium platform deals, and data-tool partnerships — so creator economics compound.",
       },
       {
-        question: "How do we measure success?",
+        question: "How do crypto and forex IB programs work with Sigma?",
         answer:
-          "We align on quantitative targets up front—liquidity depth, volume bands, acquisition costs, retention, or technical reliability—plus qualitative checkpoints with your stakeholders.",
+          "Sigma designs custom commission structures, connects IBs directly to top-tier exchanges and brokers, and provides content, SEO, conversion playbooks, and retention systems. IBs move from scattered referrals to structured BD operations.",
+      },
+      {
+        question: "Which regions does Sigma operate in?",
+        answer:
+          "Sigma operates across 40+ markets including MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking communities — with physical team presence in Dubai, Istanbul, Bali, and Canada.",
+      },
+      {
+        question: "Is Sigma a broker, exchange, or investment fund?",
+        answer:
+          "No. Sigma does not operate as a broker, exchange, investment fund, or licensed financial advisor, and does not hold, custody, or trade user funds.",
+      },
+      {
+        question: "Does Sigma guarantee trading profits?",
+        answer:
+          "No. Financial markets carry risk. Sigma provides growth infrastructure and strategic services — never guaranteed financial outcomes.",
       },
     ],
   },

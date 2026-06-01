@@ -20,7 +20,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  const localizedStaticRoutes = ["/", "/services", "/insights", "/about", "/contact", "/faq", "/privacy", "/team"];
+  const localizedStaticRoutes = [
+    "/",
+    "/services",
+    "/services/platform-growth",
+    "/services/kol-infrastructure",
+    "/services/ib-program",
+    "/services/trader-network",
+    "/services/token-launch",
+    "/markets",
+    "/products",
+    "/insights",
+    "/about",
+    "/contact",
+    "/faq",
+    "/privacy",
+    "/team",
+    "/risk-disclosure",
+  ];
   const localized: MetadataRoute.Sitemap = localizedStaticRoutes.flatMap((path) =>
     SUPPORTED_LANGS.map((lang) => ({
       url: withLang(path, lang),
@@ -67,6 +84,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.75,
+    },
+    {
+      url: `${base}/markets`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.68,
+    },
+    {
+      url: `${base}/products`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.62,
+    },
+    {
+      url: `${base}/risk-disclosure`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.58,
     },
     {
       url: `${base}/ar`,

@@ -1,211 +1,277 @@
 import type { LangCode } from "@/content/types";
 import type { PageMeta } from "@/content/pages/meta";
+import { ROUTES } from "@/content/global/routes";
+
+export type AboutCoreMember = {
+  name: string;
+  role: string;
+  bio: string;
+};
 
 export type AboutPageBody = {
   kicker: string;
   headline: string;
-  story: { title: string; paragraphs: string[] };
-  mission: { title: string; body: string };
-  positioning: { title: string; bullets: string[] };
+  subhead: string;
+  bodyLine: string;
+  identity: [string, string, string];
+  whySigmaExists: {
+    eyebrow: string;
+    title: string;
+    paragraphs: string[];
+  };
+  story: {
+    eyebrow: string;
+    title: string;
+    paragraphs: string[];
+  };
+  founderNote: {
+    eyebrow: string;
+    title: string;
+    quote: string;
+    attribution: string;
+  };
+  coreTeam: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    members: AboutCoreMember[];
+    extendedNetwork: string;
+    ndaLine: string;
+    ctaLabel: string;
+    ctaHref: string;
+  };
+  industryPov: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    principles: string[];
+  };
+  insideNetwork: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    operatingPoints: { title: string; body: string }[];
+  };
+  vision: {
+    eyebrow: string;
+    title: string;
+    paragraphs: string[];
+  };
+  recognition: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    ctaLabel: string;
+    ctaHref: string;
+  };
+  transparency: {
+    eyebrow: string;
+    title: string;
+    body: string;
+  };
+  invitation: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    primaryCtaLabel: string;
+    primaryCtaHref: string;
+    secondaryCtaLabel: string;
+    secondaryCtaHref: string;
+  };
 };
 
 export const aboutPageMetaByLang: Record<LangCode, PageMeta> = {
   EN: {
-    title: "About",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
     description:
-      "Sigma builds Web3 growth infrastructure—liquidity, distribution, and execution for protocols and exchanges worldwide.",
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
   },
   TR: {
-    title: "Hakkımızda",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
     description:
-      "Sigma; likidite, dağıtım ve operasyonel yürütme ile protokoller ve borsalar için Web3 büyüme altyapısı sunar.",
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
   },
   FA: {
-    title: "درباره ما",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
     description:
-      "سیگما زیرساخت رشد وب۳ را با تمرکز بر نقدینگی، توزیع و اجرای عملیاتی برای پروتکل‌ها و صرافی‌ها می‌سازد.",
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
   },
   ZH: {
-    title: "关于我们",
-    description: "Sigma 为协议与交易所构建 Web3 增长基础设施——流动性、分发与落地执行。",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
+    description:
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
   },
   ES: {
-    title: "Acerca de",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
     description:
-      "Sigma impulsó infraestructura de crecimiento Web3—liquidez, distribución y ejecución para protocolos y exchanges.",
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
   },
   RU: {
-    title: "О нас",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
     description:
-      "Sigma создаёт инфраструктуру роста Web3 — ликвидность, дистрибуцию и операционное исполнение для протоколов и бирж.",
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
   },
   AR: {
-    title: "من نحن",
+    title: "About Sigma | The Operators Behind a Global Web3 Growth Network",
     description:
-      "تبني سيغما بنية تحتية للنمو في Web3 — سيولة، توزيع، وتنفيذ تشغيلي للبروتوكولات ومنصات التداول.",
+      "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
+  },
+};
+
+const EN_CONTENT: AboutPageBody = {
+  kicker: "Who We Are",
+  headline: "We Did Not Learn This Market From a Deck. We Built Inside It.",
+  subhead:
+    "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
+  bodyLine:
+    "This page is about the people, the principles, and the path that brought Sigma into existence — not what we sell.",
+  identity: ["Strategic.", "Trusted.", "Scalable."],
+  whySigmaExists: {
+    eyebrow: "Why Sigma Exists",
+    title: "The Gap We Kept Seeing From the Inside",
+    paragraphs: [
+      "Most growth networks in crypto and finance were built by marketers looking at this industry from outside. We were already inside it.",
+      "We watched exchanges spend millions on user acquisition while their IB programs ran in a different room. We watched brokers pay for KOL campaigns that hit the wrong audience in the wrong language. We watched token projects launch into 40 countries with one English deck and a Notion page. We watched creators build huge audiences they could not monetize. We watched IBs grind referrals without infrastructure, dashboards, or partner support.",
+      "Marketing, product, KOLs, IBs, distribution, liquidity — all running on different clocks. Growth was leaking everywhere in between, and nobody was building the layer that connects them.",
+      "Sigma exists to be that layer.",
+    ],
+  },
+  story: {
+    eyebrow: "Our Story",
+    title: "How Sigma Was Built",
+    paragraphs: [
+      "The earliest version of Sigma was a group chat. Operators across crypto exchanges, broker desks, KOL networks, and BD teams — people who had worked on growth programs at LBank, BingX, MEXC, and during the Binance-era expansion, alongside multiple other crypto and finance platforms — comparing notes on what was actually working in different regions.",
+      "What started as informal coordination became structural. We realized the same playbooks, the same KOL relationships, the same IB frameworks, the same regional intelligence — could be operated as infrastructure, not as one-off favors.",
+      "We began running joint campaigns. Then joint launches. Then we noticed a pattern: every venue that plugged into the shared network grew faster than the ones that kept running alone. Not because the campaigns were more clever, but because acquisition, distribution, and liquidity were finally running on the same operating clock.",
+      "That was the moment Sigma became a network, not a circle.",
+      "Today, Sigma is a global infrastructure layer connecting platforms, creators, partners, and traders across crypto, forex, stocks, and Web3 — with operators on the ground in Dubai, Istanbul, Bali, Canada, and across MENA, GCC, Turkey, LATAM, CIS, and Persian-speaking markets.",
+    ],
+  },
+  founderNote: {
+    eyebrow: "From the Founder",
+    title: "A Note from Omid Modaber",
+    quote:
+      "Sigma is the network I wished existed when I started inside this industry. Every operator I knew was solving the same problems alone — finding the right KOLs, structuring the right IB deals, breaking into the right regions, building the right campaigns. Everyone had pieces of the answer. Nobody had the system.\n\nSigma is the system. It is the infrastructure I would want to plug into if I were running an exchange today, growing a KOL channel, scaling an IB business, or entering a new market.\n\nWe are not here to be loud. We are here to be useful. Long after the bull market noise fades, the operators who built quietly — with structure, trust, and real performance — are the ones who compound. That is the brand we are building.",
+    attribution: "Omid Modaber, Founder, Sigma",
+  },
+  coreTeam: {
+    eyebrow: "The Core Team",
+    title: "Who Builds Sigma",
+    intro: "Sigma is led by five core partners, each running a domain of the network.",
+    members: [
+      {
+        name: "Omid Modaber",
+        role: "Strategic Growth Consultant",
+        bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
+      },
+      {
+        name: "Arad Moaf",
+        role: "Strategic Growth Consultant",
+        bio: "Owns how Sigma enters and grows in new regions. Builds the relationships and execution frameworks that make Sigma operate locally — not just globally.",
+      },
+      {
+        name: "Novin Ghasemi",
+        role: "Strategic Growth Consultant",
+        bio: "Runs the engine room. Translates strategy into campaigns, partnerships, and growth motions across the network’s platforms and creators.",
+      },
+      {
+        name: "Hosein Rostami",
+        role: "Strategic Growth Consultant",
+        bio: "Connects the moving parts. Ensures that what is promised on the strategy side is actually executable on the operations side — across teams, regions, and partners.",
+      },
+      {
+        name: "Mostafa Moradi",
+        role: "Strategic Growth Consultant",
+        bio: "Owns Sigma’s community side. Builds and maintains the human layer that turns campaigns into long-term loyalty and creators into compounding networks.",
+      },
+    ],
+    extendedNetwork:
+      "Beyond the five core partners, Sigma operates with regional community managers, KOL managers, BD specialists, content collaborators, localization leads, and partner operators in every priority market.",
+    ndaLine:
+      "Several Sigma team members hold senior roles inside operating financial platforms. Specific platform affiliations are protected under NDA.",
+    ctaLabel: "Full Team Page",
+    ctaHref: ROUTES.team,
+  },
+  industryPov: {
+    eyebrow: "Industry POV",
+    title: "The Principles Behind Every Decision We Make",
+    intro:
+      "These are the convictions Sigma was built on. They explain not just what we do, but what we refuse to do.",
+    principles: [
+      "We believe growth is a system, not a campaign. Any agency can run a campaign. Almost none can build the operating system around it. We build the system first — campaigns are outputs, not strategies.",
+      "We believe operators beat marketers in this industry. The financial industry is too technical, too risk-aware, and too compliance-bound for outside marketers to fake. The people running growth should have lived inside the product.",
+      "We believe distribution is the most underbuilt layer in Web3. Everyone builds product. Almost no one builds the network that gets that product to the right region, the right language, the right creator, the right user — in the right order. That is the gap we fill.",
+      "We believe trust outlasts every market cycle. Bull markets reward hype. Bear markets reward trust. We are building for both — which means no guaranteed-profit promises, no fake numbers, no shortcuts that cost partners later.",
+      "We believe regional execution beats global average. “Web3 is global” is true at the airport. On the ground, every market has its own KOLs, its own language, its own payment behavior, its own compliance constraints. We grow region by region.",
+      "We believe in long compounding over short impressions. We measure success in quarters and years, not weeks. Vanity metrics do not appear in Sigma reports.",
+    ],
+  },
+  insideNetwork: {
+    eyebrow: "Inside the Network",
+    title: "How We Run",
+    body:
+      "Sigma is not built like a traditional agency. There is no creative department, no account managers, no client-services layer between operators and partners.",
+    operatingPoints: [
+      {
+        title: "One operating rhythm.",
+        body: "Every partner engagement runs on a weekly telemetry cadence. Strategy, execution, and reporting happen on the same clock — not in different rooms.",
+      },
+      {
+        title: "Senior-led delivery.",
+        body: "The person you meet at kickoff is the person delivering the work three months later. We do not hand off to junior teams after the contract closes.",
+      },
+      {
+        title: "Cross-domain teams.",
+        body: "Every Sigma engagement includes operators from BD, KOL, community, and analytics — not handed off between silos. Growth problems are cross-functional; the team should be too.",
+      },
+      {
+        title: "Regional autonomy with central intelligence.",
+        body: "Local operators run local execution. Central Sigma intelligence shares what is working across regions — so playbooks compound instead of being reinvented.",
+      },
+    ],
+  },
+  vision: {
+    eyebrow: "Vision",
+    title: "The Sigma We’re Building",
+    paragraphs: [
+      "Inside one year, Sigma will be the recognized financial growth network across MENA, GCC, Turkey, Europe, LATAM, CIS, and Persian-speaking communities — with named regional operators and live execution in every priority market.",
+      "Inside three years, Sigma will be the default growth infrastructure layer for Finance and Web3 globally — with proprietary growth tools, an institutional KOL and BD network, helper products serving every layer of the financial value chain, and a brand position alongside the most trusted names in crypto growth.",
+      "But the more honest version of the vision is this: we want to be the network that operators inside the industry recommend to each other when nobody is watching. Public credibility is built; private credibility is earned.",
+      "We are building for private credibility first.",
+    ],
+  },
+  recognition: {
+    eyebrow: "The Network That Trusts Sigma",
+    title: "Who We Work With",
+    body:
+      "Sigma’s team has contributed to growth, BD, and KOL operations across major global exchange ecosystems, multiple crypto and finance platforms, and a network of token projects, brokers, prop firms, and Web3 protocols. Specific platform names and engagement details are protected under NDA. Verified case studies and references are available to qualified partners on request.",
+    ctaLabel: "Request References & Case Studies",
+    ctaHref: ROUTES.contact,
+  },
+  transparency: {
+    eyebrow: "Transparency",
+    title: "For the Avoidance of Doubt",
+    body:
+      "Sigma is a growth network. Sigma is not a broker, exchange, investment fund, fund manager, or licensed financial advisor. Sigma does not hold, custody, or trade user funds. Sigma does not guarantee profits, withdrawals, or financial outcomes. Users are responsible for their own financial decisions and regulatory compliance.",
+  },
+  invitation: {
+    eyebrow: "If You’re Reading This",
+    title: "Two Kinds of People Should Get In Touch",
+    body:
+      "If you operate a platform, run a KOL channel, lead an IB business, or trade at serious volume — and you have read this page and felt that we are speaking the same language — get in touch. That alignment usually predicts a good partnership.\n\nIf you came to this page looking for guaranteed returns, magic signals, or a shortcut to overnight growth — we are not the network for you, and we will save us both some time by saying so here.",
+    primaryCtaLabel: "Partner with Sigma",
+    primaryCtaHref: ROUTES.contact,
+    secondaryCtaLabel: "Apply as KOL / IB",
+    secondaryCtaHref: ROUTES.contact,
   },
 };
 
 export const aboutPageContentByLang: Record<LangCode, AboutPageBody> = {
-  EN: {
-    kicker: "Who we are",
-    headline: "Infrastructure for the next era of digital markets",
-    story: {
-      title: "Our story",
-      paragraphs: [
-        "Sigma started from a simple observation: teams building in Web3 spend too much energy fighting tooling and coordination—and not enough time shipping products users love.",
-        "We assembled operators, engineers, and growth specialists who have lived inside exchanges, market-making desks, and protocol teams. That cross-functional DNA shapes how we design programs: rigorous on risk, fast on execution, and transparent with partners.",
-      ],
-    },
-    mission: {
-      title: "Mission",
-      body: "Help ambitious teams scale liquidity, reach credible distribution, and operate with institutional-grade reliability—without sacrificing speed.",
-    },
-    positioning: {
-      title: "How we’re different",
-      bullets: [
-        "Outcome-led programs tied to measurable milestones—not vanity metrics.",
-        "Operator-led delivery with senior stakeholders who stay engaged after kickoff.",
-        "Infrastructure-first mindset: APIs, monitoring, and clear reporting baked in from day one.",
-      ],
-    },
-  },
-  TR: {
-    kicker: "Biz kimiz",
-    headline: "Dijital piyasaların bir sonraki dönemi için altyapı",
-    story: {
-      title: "Hikâyemiz",
-      paragraphs: [
-        "Sigma basit bir gözlemden doğdu: Web3 üzerinde ürün geliştiren ekipler çoğu zaman araçlara ve koordinasyona fazla, kullanıcıların seveceği ürünleri çıkarmaya ise az enerji harcıyor.",
-        "Borsalarda, piyasa yapıcı masalarında ve protokol ekiplerinde yaşamış operatör, mühendis ve büyüme uzmanlarından oluştuk. Bu çapraz yetenek, programlarımızı riskte disiplinli, yürütmede hızlı ve ortaklarla şeffaf kılıyor.",
-      ],
-    },
-    mission: {
-      title: "Misyon",
-      body: "Hırslı ekiplerin likiditeyi büyütmesine, güvenilir dağıtıma ulaşmasına ve kurumsal güvenilirlikle—hızdan ödün vermeden—çalışmasına yardımcı olmak.",
-    },
-    positioning: {
-      title: "Farkımız",
-      bullets: [
-        "Ölçülebilir kilometre taşlarına bağlı, sonuç odaklı programlar—gösteriş metriklerine değil.",
-        "Operatör liderliğinde yürütme; başlangıçtan sonra da aktif kalan kıdemli paydaşlar.",
-        "Altyapı öncelikli bakış: API’ler, izleme ve net raporlama ilk günden itibaren.",
-      ],
-    },
-  },
-  FA: {
-    kicker: "ما کیستیم",
-    headline: "زیرساخت دوران تازه بازارهای دیجیتال",
-    story: {
-      title: "روایت ما",
-      paragraphs: [
-        "سیگما از یک مشاهده ساده شروع شد: تیم‌های وب۳ بیش از حد درگیر ابزار و هماهنگی‌اند و زمان کمتری برای ساختن محصولی می‌گذارند که کاربران عاشقش شوند.",
-        "اپراتورها، مهندسان و متخصصان رشد را گرد آورده‌ایم که پشت میز بورس، نقدشوندگی و تیم‌های پروتکل زیسته‌اند. این ترکیب، طراحی برنامه‌های ما را شکل می‌دهد: سخت‌گیر در ریسک، چابک در اجرا، شفاف با همکاران.",
-      ],
-    },
-    mission: {
-      title: "مأموریت",
-      body: "کمک به تیم‌های بلندپرواز برای مقیاس نقدینگی، رسیدن به توزیع معتبر و عملکرد در سطح نهادی—بدون فدا کردن سرعت.",
-    },
-    positioning: {
-      title: "تمایز ما",
-      bullets: [
-        "برنامه‌های محور نتیجه با نقاط عطف قابل اندازه‌گیری—نه شاخص‌های ظاهری.",
-        "تحویل با حضور اپراتورها و ذینفعان ارشد پس از آغاز همکاری.",
-        "نگاه زیرساخت‌محور: API، پایش و گزارش شفاف از روز اول.",
-      ],
-    },
-  },
-  ZH: {
-    kicker: "我们是谁",
-    headline: "面向下一代数字市场的基础设施",
-    story: {
-      title: "我们的故事",
-      paragraphs: [
-        "Sigma 源于一个简单观察：Web3 团队在工具与协作上耗费过多精力，却把太少时间留给用户真正喜爱的产品。",
-        "我们汇聚了曾在交易所、做市台与协议团队一线作战的操盘手、工程师与增长专家。跨职能基因决定了我们的方案：风险上严谨、执行上敏捷、合作上透明。",
-      ],
-    },
-    mission: {
-      title: "使命",
-      body: "帮助有雄心的团队扩展流动性、建立可信分发，并以机构级可靠性运行——同时保持速度。",
-    },
-    positioning: {
-      title: "我们的不同",
-      bullets: [
-        "以可衡量的里程碑为导向——而非虚荣指标。",
-        "由资深操盘手交付，启动后核心干系人持续参与。",
-        "基础设施优先：从第一天起就内置 API、监控与清晰报表。",
-      ],
-    },
-  },
-  ES: {
-    kicker: "Quiénes somos",
-    headline: "Infraestructura para la próxima era de mercados digitales",
-    story: {
-      title: "Nuestra historia",
-      paragraphs: [
-        "Sigma nació de una observación simple: los equipos Web3 dedican demasiada energía a herramientas y coordinación—y muy poca a lanzar productos que los usuarios amen.",
-        "Reunimos operadores, ingenieros y especialistas en crecimiento con experiencia en exchanges, mesas de mercado y equipos de protocolo. Esa mezcla define nuestros programas: rigurosos en riesgo, rápidos en ejecución y transparentes con socios.",
-      ],
-    },
-    mission: {
-      title: "Misión",
-      body: "Ayudar a equipos ambiciosos a escalar liquidez, alcanzar distribución creíble y operar con fiabilidad institucional—sin sacrificar velocidad.",
-    },
-    positioning: {
-      title: "Qué nos distingue",
-      bullets: [
-        "Programas guiados por resultados con hitos medibles—no métricas vanidosas.",
-        "Entrega liderada por operadores con stakeholders senior tras el arranque.",
-        "Mentalidad infraestructura primero: APIs, monitorización e informes claros desde el día uno.",
-      ],
-    },
-  },
-  RU: {
-    kicker: "Кто мы",
-    headline: "Инфраструктура для следующей эры цифровых рынков",
-    story: {
-      title: "Наша история",
-      paragraphs: [
-        "Sigma выросла из простого наблюдения: команды Web3 тратят слишком много сил на инструменты и координацию — и слишком мало на продукты, которые полюбят пользователи.",
-        "Мы собрали операторов, инженеров и специалистов по росту с опытом бирж, маркет-мейкинга и протоколов. Эта кросс-функциональная ДНК задаёт формат программ: строгость к риску, скорость исполнения и прозрачность для партнёров.",
-      ],
-    },
-    mission: {
-      title: "Миссия",
-      body: "Помогать амбициозным командам масштабировать ликвидность, достигать честной дистрибуции и работать с надёжностью институционального уровня — без потери скорости.",
-    },
-    positioning: {
-      title: "Чем мы отличаемся",
-      bullets: [
-        "Программы от результатов и измеримых вех — не от vanity-метрик.",
-        "Операторское ведение и вовлечённость старших стейкхолдеров после старта.",
-        "Инфраструктурный подход: API, мониторинг и понятная отчётность с первого дня.",
-      ],
-    },
-  },
-  AR: {
-    kicker: "من نحن",
-    headline: "بنية تحتية لحقبة الأسواق الرقمية القادمة",
-    story: {
-      title: "قصتنا",
-      paragraphs: [
-        "بدأت سيغما من ملاحظة بسيطة: فرق Web3 تنفق طاقة كبيرة على الأدوات والتنسيق — وزمنًا أقل على منتجات يحبها المستخدمون.",
-        "جمعنا مشغّلين ومهندسين ومتخصصي نمو قضوا وقتًا داخل المنصات وفرق البروتوكول. هذه الخبرة المتداخلة تشكّل برامجنا: صارمة في المخاطر، سريعة في التنفيذ، شفافة مع الشركاء.",
-      ],
-    },
-    mission: {
-      title: "المهمة",
-      body: "مساعدة الفرق الطموحة على توسيع السيولة والوصول إلى توزيع موثوق والعمل بموثوقية على مستوى المؤسسات — دون التفريط بالسرعة.",
-    },
-    positioning: {
-      title: "ما يميزنا",
-      bullets: [
-        "برامج موجهة بالنتائج ومعالم قابلة للقياس — لا مقاييس صورية.",
-        "تسليم بقيادة مشغّلين مع استمرار مشاركة القادة بعد الانطلاق.",
-        "عقلية بنية تحتية أولاً: واجهات برمجة، مراقبة، وتقارير واضحة من اليوم الأول.",
-      ],
-    },
-  },
+  EN: EN_CONTENT,
+  TR: EN_CONTENT,
+  FA: EN_CONTENT,
+  ZH: EN_CONTENT,
+  ES: EN_CONTENT,
+  RU: EN_CONTENT,
+  AR: EN_CONTENT,
 };

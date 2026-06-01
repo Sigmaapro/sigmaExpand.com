@@ -75,11 +75,13 @@ const COMPANY_EN: FooterColumn = {
 const RESOURCES_EN: FooterColumn = {
   title: "Resources",
   links: [
-    insightsFooterLink("Research / Insights"),
-    insightsFooterLink("Case Studies"),
+    insightsFooterLink("Read All Insights"),
+    { label: "Request References & Case Studies", href: ROUTES.contact },
+    { label: "Explore Sigma Tools", href: ROUTES.products },
+    { label: "Read Full Risk Disclosure", href: ROUTES.riskDisclosure },
     { label: "Privacy", href: ROUTES.privacy },
     { label: "Terms", href: ROUTES.terms },
-    { label: "Book a Call", href: ROUTES.contact },
+    { label: "Read Full FAQ", href: ROUTES.faq },
   ],
 };
 

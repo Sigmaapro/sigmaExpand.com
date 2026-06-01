@@ -18,7 +18,7 @@ export function FaqStructuredData() {
       },
     })),
     url,
-    name: "Sigma FAQ",
+    name: "Sigma — Common Questions",
   };
 
   return (

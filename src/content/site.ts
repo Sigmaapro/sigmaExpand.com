@@ -133,14 +133,14 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       metrics: "Metrics",
       sigmaPro: "Sigma Pro",
       contact: "Contact",
-      navCta: "Get Access",
+      navCta: "Partner with Sigma",
       insights: "Insights",
       insightsAccessLabel: "Access",
     },
     insights: {
       pageTitle: "Sigma Insights",
       pageSubtitle:
-        "Market intelligence, execution breakdowns, and growth systems for Web3.",
+        "Field notes from the finance and Web3 growth frontier — regional playbooks, IB economics, KOL strategy, and launch distribution.",
       pageEyebrow: "INSIGHTS",
       filterAllLabel: "All",
       readLabel: "Read Insight",
@@ -169,31 +169,33 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     whatIsSigma: {
       label: "WHAT IS SIGMA",
-      headline: "A Strategic Growth Engine for Web3",
+      headline:
+        "A Financial Growth Infrastructure Network for Crypto, Forex, Stocks, and Web3",
       description:
-        "Sigma connects liquidity, users, and distribution into one scalable system.",
+        "Sigma is a global financial growth infrastructure network that helps crypto exchanges, forex brokers, prop firms, stock and Web3 KOLs, IBs, traders, and financial platforms grow through user acquisition, KOL infrastructure, IB and affiliate programs, liquidity activation, community management, regional market expansion, and strategic partnerships. Unlike traditional crypto marketing agencies focused on a single channel, Sigma operates as the growth operating layer above the entire financial value chain. Sigma is not a broker, exchange, investment fund, or licensed financial advisor — and does not manage, custody, or trade user funds.",
       pillars: [
         {
-          title: "User Acquisition",
+          title: "Growth Intelligence",
           description:
-            "From zero to high-intent traders through targeted funnels.",
+            "Market audits, competitor SEO and SERP analysis, audience research, and product-market-fit feedback — every campaign starts with signal, not assumption.",
         },
         {
-          title: "Liquidity Activation",
-          description: "Turning traffic into real volume and sustained activity.",
+          title: "Distribution Network",
+          description:
+            "1,500+ vetted crypto, forex, stock, and Web3 KOLs, IBs, community managers, and BD partners across MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking markets — deployable on day one.",
         },
         {
-          title: "Network Expansion",
+          title: "Liquidity & Volume",
           description:
-            "Scaling through KOLs, communities, and strategic partnerships.",
+            "Campaign architectures that convert acquisition into recurring trading volume — VIP and whale onboarding, market-maker introductions, listing coordination, and retention loops calibrated to your venue.",
         },
       ],
     },
     about: {
-      kicker: "ABOUT US",
-      title: "WE DO NOT ADAPT TO THE FUTURE. WE ENGINEER IT.",
+      kicker: "BUILT BY OPERATORS",
+      title: "THE PEOPLE BEHIND SIGMA",
       description:
-        "Sigma operates at the intersection of high-frequency finance, military-grade cryptography, and advanced distributed networks. Precision is not an option; it is the protocol.",
+        "Sigma is led by a core team of growth, BD, marketing, and market-expansion consultants with hands-on experience across major exchange ecosystems and financial platforms — supported by regional operators across 40+ markets.",
     },
     metrics: {
       kicker: "Network",
@@ -212,30 +214,31 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     sigmaPro: {
       badge: "VIP · ELITE ACCESS",
-      title: "SigmaPRO",
+      title: "SigmaPRO — Dedicated Growth Operations for High-Volume Partners",
       description:
-        "Private throughput, priority routing, and dedicated growth operations for high-volume teams, exchanges, and protocols.",
+        "Private throughput, priority routing, and a senior growth desk reserved for high-volume exchanges, brokers, protocols, and institutional partners.",
       bullets: [
         "Dedicated growth desk with SLA-backed execution playbooks",
         "Priority routing across liquidity and distribution surfaces",
         "Confidential telemetry, bespoke reporting, and direct escalation",
+        "Quarterly strategic reviews with Sigma leadership",
       ],
       footnote: "Access is limited and subject to qualification.",
     },
     contact: {
-      kicker: "CONTACT",
-      title: "REACH SIGMA",
+      kicker: "INITIATE · ACCESS THE MAINFRAME",
+      title: "STAY CONNECTED WITH SIGMA",
       description:
-        "Partnerships, media, and institutional inquiries — email the desk or open the full channel list (social, Telegram, and more).",
+        "For partnerships, exchange and broker growth, KOL applications, IB programs, and institutional inquiries — email the desk or open the full channel list.",
       emailCta: "Email",
       socialCta: "Channels & social",
       fallbackMailto: "mailto:BD@sigmaa.pro",
     },
     stayConnected: {
-      kicker: "CONTACT",
-      title: "Stay Connected with Sigma",
+      kicker: "INITIATE · ACCESS THE MAINFRAME",
+      title: "Stay Connected With Sigma",
       description:
-        "Follow Sigma across strategic channels for network updates, market intelligence, and direct communication with our growth infrastructure team.",
+        "For partnerships, exchange and broker growth, KOL applications, IB programs, and institutional inquiries.",
       reachUsPrefix: "Reach us at",
       socialLabels: {
         x: "X",
@@ -309,14 +312,14 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       metrics: "Metrikler",
       sigmaPro: "Sigma Pro",
       contact: "İletişim",
-      navCta: "Erişim Al",
+      navCta: "Sigma ile Ortak Olun",
       insights: "İçgörüler",
       insightsAccessLabel: "Erişim",
     },
     insights: {
       pageTitle: "Sigma İçgörüleri",
       pageSubtitle:
-        "Web3 için pazar zekası, uygulama analizleri ve büyüme sistemleri.",
+        "Finans ve Web3 büyüme cephesinden saha notları — bölgesel playbook'lar, IB ekonomisi, KOL stratejisi ve lansman dağıtımı.",
       pageEyebrow: "İÇGÖRÜLER",
       filterAllLabel: "Tümü",
       readLabel: "İçgörüyü Oku",
@@ -346,29 +349,33 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     whatIsSigma: {
       label: "SIGMA NEDİR",
-      headline: "Web3 İçin Stratejik Bir Büyüme Motoru",
+      headline:
+        "Kripto, Forex, Hisse ve Web3 İçin Finansal Büyüme Altyapı Ağı",
       description:
-        "Sigma, likiditeyi, kullanıcıları ve dağıtımı tek bir ölçeklenebilir sistemde birleştirir.",
+        "Sigma; kripto borsaları, forex brokerları, prop firmalar, hisse ve Web3 KOL'ları, IB'ler, trader'lar ve finansal platformların kullanıcı edinimi, KOL altyapısı, IB/affiliate programları, likidite aktivasyonu, topluluk yönetimi, bölgesel pazar genişlemesi ve stratejik ortaklıklarla büyümesine yardımcı olan küresel bir finansal büyüme altyapı ağıdır. Tek kanala odaklanan geleneksel kripto pazarlama ajanslarının aksine Sigma, tüm finansal değer zincirinin üzerindeki büyüme operasyon katmanı olarak çalışır. Sigma bir broker, borsa, yatırım fonu veya lisanslı finansal danışman değildir — kullanıcı fonlarını yönetmez, saklamaz veya işlem yapmaz.",
       pillars: [
         {
-          title: "Kullanıcı Edinimi",
-          description: "Hedefli hunilerle sıfırdan yüksek niyetli trader’lara.",
+          title: "Büyüme İstihbaratı",
+          description:
+            "Pazar denetimleri, rakip SEO/SERP analizi, kitle araştırması ve ürün-pazar uyumu geri bildirimi — her kampanya varsayımla değil, sinyalle başlar.",
         },
         {
-          title: "Likidite Aktivasyonu",
-          description: "Trafiği gerçek hacim ve sürdürülebilir aktiviteye dönüştürme.",
+          title: "Dağıtım Ağı",
+          description:
+            "MENA, GCC, Türkiye, Avrupa, LATAM, BDT ve Farsça konuşulan pazarlarda 1.500+ doğrulanmış KOL, IB, topluluk yöneticisi ve BD ortağı — ilk günden devreye alınabilir.",
         },
         {
-          title: "Ağ Genişlemesi",
-          description: "KOL’lar, topluluklar ve stratejik ortaklıklarla ölçekleme.",
+          title: "Likidite ve Hacim",
+          description:
+            "Edinimi tekrarlayan işlem hacmine dönüştüren kampanya mimarileri — VIP/whale onboarding, market maker tanıtımları, listing koordinasyonu ve mekanınıza göre retention döngüleri.",
         },
       ],
     },
     about: {
-      kicker: "HAKKIMIZDA",
-      title: "GELECEĞE UYUM SAĞLAMIYORUZ. ONU İNŞA EDİYORUZ.",
+      kicker: "OPERATÖRLER TARAFINDAN KURULDU",
+      title: "SIGMA'NIN ARKASINDAKİ İNSANLAR",
       description:
-        "Sigma, yüksek frekanslı finans, askeri düzeyde kriptografi ve gelişmiş dağıtık ağların kesişiminde çalışır. Kesinlik bir seçenek değil; protokoldür.",
+        "Sigma; büyük borsa ekosistemleri ve finansal platformlarda sahada deneyimli büyüme, BD, pazarlama ve pazar genişletme danışmanlarından oluşan bir çekirdek ekip tarafından yönetilir — 40+ pazarda bölgesel operatörlerle desteklenir.",
     },
     metrics: {
       kicker: "Ağ",
@@ -387,30 +394,31 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     sigmaPro: {
       badge: "VIP · ELİT ERİŞİM",
-      title: "SigmaPRO",
+      title: "SigmaPRO — Yüksek Hacimli Ortaklar İçin Ayrılmış Büyüme Operasyonları",
       description:
-        "Yüksek hacimli ekipler, borsalar ve protokoller için özel işlem hacmi, öncelikli yönlendirme ve ayrılmış büyüme operasyonları.",
+        "Yüksek hacimli borsalar, brokerlar, protokoller ve kurumsal ortaklar için özel throughput, öncelikli yönlendirme ve kıdemli büyüme masası.",
       bullets: [
         "SLA destekli yürütme planlarıyla ayrılmış büyüme masası",
         "Likidite ve dağıtım katmanlarında öncelikli yönlendirme",
         "Gizli telemetri, özel raporlama ve doğrudan eskalasyon",
+        "Sigma liderliği ile üç aylık stratejik değerlendirmeler",
       ],
       footnote: "Erişim sınırlıdır ve uygunluk koşullarına tabidir.",
     },
     contact: {
-      kicker: "İLETİŞİM",
-      title: "SIGMA İLE TEMAS",
+      kicker: "BAŞLAT · ANA SİSTEME ERİŞ",
+      title: "SIGMA İLE BAĞLANTIDA KALIN",
       description:
-        "Ortaklıklar, basın ve kurumsal talepler — ekibe e-posta gönderin veya tüm kanallar listesini açın.",
+        "Ortaklıklar, borsa ve broker büyümesi, KOL başvuruları, IB programları ve kurumsal talepler — ekibe e-posta gönderin veya kanal listesini açın.",
       emailCta: "E-posta",
       socialCta: "Kanallar ve sosyal",
       fallbackMailto: "mailto:BD@sigmaa.pro",
     },
     stayConnected: {
-      kicker: "İLETİŞİM",
+      kicker: "BAŞLAT · ANA SİSTEME ERİŞ",
       title: "Sigma ile bağlantıda kalın",
       description:
-        "Ağ güncellemeleri, pazar istihbaratı ve büyüme altyapısı ekibimizle doğrudan iletişim için Sigma'yı stratejik kanallardan takip edin.",
+        "Ortaklıklar, borsa ve broker büyümesi, KOL başvuruları, IB programları ve kurumsal talepler.",
       reachUsPrefix: "Bize ulaşın:",
       socialLabels: {
         x: "X",
@@ -484,13 +492,14 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       metrics: "指标",
       sigmaPro: "Sigma Pro",
       contact: "联系",
-      navCta: "获取权限",
+      navCta: "与 Sigma 合作",
       insights: "洞察",
       insightsAccessLabel: "接入",
     },
     insights: {
       pageTitle: "Sigma 洞察",
-      pageSubtitle: "面向 Web3 的市场情报、执行拆解与增长系统。",
+      pageSubtitle:
+        "来自金融与 Web3 增长前沿的实地笔记——区域 playbook、IB 经济学、KOL 策略与发行分发。",
       pageEyebrow: "洞察",
       filterAllLabel: "全部",
       readLabel: "阅读洞察",
@@ -517,28 +526,32 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     whatIsSigma: {
       label: "什么是 SIGMA",
-      headline: "面向 Web3 的战略增长引擎",
-      description: "Sigma 将流动性、用户与分发整合为一套可扩展的系统。",
+      headline: "面向加密、外汇、股票与 Web3 的金融增长基础设施网络",
+      description:
+        "Sigma 是全球金融增长基础设施网络，帮助加密交易所、外汇经纪商、prop firm、股票与 Web3 KOL、IB、交易者及金融平台实现用户获取、KOL 基础设施、IB/联盟计划、流动性激活、社区运营、区域市场扩张与战略合作。与专注单一渠道的传统加密营销机构不同，Sigma 作为整个金融价值链之上的增长运营层运作。Sigma 不是经纪商、交易所、投资基金或持牌金融顾问——不管理、托管或交易用户资金。",
       pillars: [
         {
-          title: "用户获取",
-          description: "通过精准漏斗，从零到高意向交易者。",
+          title: "增长情报",
+          description:
+            "市场审计、竞品 SEO/SERP 分析、受众研究与产品市场契合反馈——每个战役以信号而非假设起步。",
         },
         {
-          title: "流动性激活",
-          description: "把流量转化为真实交易量与持续活跃度。",
+          title: "分发网络",
+          description:
+            "覆盖 MENA、GCC、土耳其、欧洲、LATAM、独联体与波斯语市场的 1,500+ 经审核 KOL、IB、社区经理与 BD 伙伴——首日即可部署。",
         },
         {
-          title: "网络扩张",
-          description: "通过 KOL、社区与战略合作实现规模化。",
+          title: "流动性与交易量",
+          description:
+            "将获客转化为持续交易量的战役架构——VIP/大户入驻、做市商对接、上币协调与按平台校准的留存循环。",
         },
       ],
     },
     about: {
-      kicker: "关于我们",
-      title: "我们不适应未来。我们创造未来。",
+      kicker: "由操盘手打造",
+      title: "SIGMA 背后的人",
       description:
-        "Sigma 运作于高频金融、军用级密码学和高级分布式网络的交汇处。精准不是一种选择；它就是协议。",
+        "Sigma 由在主要交易所生态与金融平台拥有实战经验的成长、BD、市场与区域扩张顾问组成的核心团队领导——并由覆盖 40+ 市场的区域运营者支持。",
     },
     metrics: {
       kicker: "网络",
@@ -556,30 +569,30 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     sigmaPro: {
       badge: "VIP · 精英通道",
-      title: "SigmaPRO",
+      title: "SigmaPRO — 面向高量级合作伙伴的专属增长运营",
       description:
-        "为高交易量团队、交易所与协议提供私有吞吐、优先路由与专属增长运营。",
+        "为高量级交易所、经纪商、协议与机构合作伙伴保留的专属吞吐、优先路由与资深增长团队。",
       bullets: [
         "专属增长台与 SLA 级执行方案",
         "流动性与分发路径的优先路由",
         "保密遥测、定制报告与直连升级",
+        "与 Sigma 领导层的季度战略复盘",
       ],
       footnote: "名额有限，需通过资格审核。",
     },
     contact: {
-      kicker: "联系",
-      title: "联系 SIGMA",
+      kicker: "启动 · 访问主机",
+      title: "与 SIGMA 保持连接",
       description:
-        "合作、媒体与机构咨询 — 发送邮件或打开完整渠道列表（社交、Telegram 等）。",
+        "合作、交易所与经纪商增长、KOL 申请、IB 计划与机构咨询——发送邮件或打开完整渠道列表。",
       emailCta: "邮件",
       socialCta: "渠道与社交",
       fallbackMailto: "mailto:BD@sigmaa.pro",
     },
     stayConnected: {
-      kicker: "联系",
+      kicker: "启动 · 访问主机",
       title: "与 Sigma 保持连接",
-      description:
-        "通过战略渠道关注 Sigma，获取网络动态、市场情报，以及与增长基础设施团队的直接沟通。",
+      description: "合作、交易所与经纪商增长、KOL 申请、IB 计划与机构咨询。",
       reachUsPrefix: "联系我们：",
       socialLabels: {
         x: "X",
@@ -651,14 +664,14 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       metrics: "Métricas",
       sigmaPro: "Sigma Pro",
       contact: "Contacto",
-      navCta: "Obtener acceso",
+      navCta: "Asociarse con Sigma",
       insights: "Perspectivas",
       insightsAccessLabel: "Acceso",
     },
     insights: {
       pageTitle: "Perspectivas de Sigma",
       pageSubtitle:
-        "Inteligencia de mercado, análisis de ejecución y sistemas de crecimiento para Web3.",
+        "Notas de campo desde la frontera del crecimiento financiero y Web3 — playbooks regionales, economía IB, estrategia KOL y distribución de lanzamientos.",
       pageEyebrow: "INSIGHTS",
       filterAllLabel: "Todo",
       readLabel: "Leer insight",
@@ -687,31 +700,33 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     whatIsSigma: {
       label: "QUÉ ES SIGMA",
-      headline: "Un motor estratégico de crecimiento para Web3",
+      headline:
+        "Una red de infraestructura de crecimiento financiero para cripto, forex, acciones y Web3",
       description:
-        "Sigma conecta liquidez, usuarios y distribución en un sistema escalable.",
+        "Sigma es una red global de infraestructura de crecimiento financiero que ayuda a exchanges, brokers, prop firms, KOLs, IBs, traders y plataformas a crecer mediante adquisición de usuarios, infraestructura KOL, programas IB/afiliados, activación de liquidez, gestión de comunidad, expansión regional y alianzas estratégicas. A diferencia de las agencias de marketing cripto de un solo canal, Sigma opera como la capa operativa de crecimiento sobre toda la cadena de valor financiera. Sigma no es broker, exchange, fondo de inversión ni asesor financiero con licencia — no gestiona, custodia ni opera fondos de usuarios.",
       pillars: [
         {
-          title: "Adquisición de usuarios",
+          title: "Inteligencia de crecimiento",
           description:
-            "De cero a traders de alta intención mediante embudos dirigidos.",
+            "Auditorías de mercado, análisis SEO/SERP competitivo, investigación de audiencia y feedback de product-market fit — cada campaña empieza con señal, no suposición.",
         },
         {
-          title: "Activación de liquidez",
-          description: "Convierte tráfico en volumen real y actividad sostenida.",
+          title: "Red de distribución",
+          description:
+            "1.500+ KOLs, IBs, community managers y socios BD verificados en MENA, GCC, Turquía, Europa, LATAM, CEI y mercados persas — desplegables desde el día uno.",
         },
         {
-          title: "Expansión de red",
+          title: "Liquidez y volumen",
           description:
-            "Escala con KOLs, comunidades y alianzas estratégicas.",
+            "Arquitecturas de campaña que convierten adquisición en volumen recurrente — onboarding VIP/whale, intros a market makers, coordinación de listings y bucles de retención calibrados.",
         },
       ],
     },
     about: {
-      kicker: "NOSOTROS",
-      title: "NO NOS ADAPTAMOS AL FUTURO. LO INGENIERIZAMOS.",
+      kicker: "CONSTRUIDO POR OPERADORES",
+      title: "LAS PERSONAS DETRÁS DE SIGMA",
       description:
-        "Sigma opera en la intersección de finanzas de alta frecuencia, criptografía de nivel militar y redes distribuidas avanzadas.",
+        "Sigma está liderada por un equipo núcleo de consultores de crecimiento, BD, marketing y expansión de mercado con experiencia en grandes ecosistemas de exchange y plataformas financieras — apoyada por operadores regionales en más de 40 mercados.",
     },
     metrics: {
       kicker: "Red",
@@ -730,30 +745,31 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     sigmaPro: {
       badge: "VIP · ACCESO ÉLITE",
-      title: "SigmaPRO",
+      title: "SigmaPRO — Operaciones de crecimiento dedicadas para socios de alto volumen",
       description:
-        "Rendimiento privado, enrutamiento prioritario y operaciones de crecimiento dedicadas para equipos de alto volumen.",
+        "Throughput privado, enrutamiento prioritario y mesa de crecimiento senior reservados para exchanges, brokers, protocolos e instituciones de alto volumen.",
       bullets: [
         "Mesa de crecimiento dedicada con playbooks respaldados por SLA",
         "Enrutamiento prioritario en liquidez y distribución",
         "Telemetría confidencial, reportes a medida y escalación directa",
+        "Revisiones estratégicas trimestrales con el liderazgo de Sigma",
       ],
       footnote: "El acceso es limitado y sujeto a calificación.",
     },
     contact: {
-      kicker: "CONTACTO",
-      title: "CONTACTA A SIGMA",
+      kicker: "INICIAR · ACCEDER AL SISTEMA",
+      title: "MANTENTE CONECTADO CON SIGMA",
       description:
-        "Alianzas, medios e instituciones: escribe al equipo o abre la lista completa de canales.",
+        "Alianzas, crecimiento de exchanges y brokers, solicitudes KOL, programas IB y consultas institucionales — escribe al equipo o abre la lista de canales.",
       emailCta: "Correo",
       socialCta: "Canales y redes",
       fallbackMailto: "mailto:BD@sigmaa.pro",
     },
     stayConnected: {
-      kicker: "CONTACTO",
+      kicker: "INICIAR · ACCEDER AL SISTEMA",
       title: "Mantente conectado con Sigma",
       description:
-        "Sigue a Sigma en canales estratégicos para actualizaciones de red, inteligencia de mercado y comunicación directa con el equipo de infraestructura de crecimiento.",
+        "Alianzas, crecimiento de exchanges y brokers, solicitudes KOL, programas IB y consultas institucionales.",
       reachUsPrefix: "Escríbenos a",
       socialLabels: {
         x: "X",
@@ -827,14 +843,14 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       metrics: "Метрики",
       sigmaPro: "Sigma Pro",
       contact: "Контакты",
-      navCta: "Получить доступ",
+      navCta: "Стать партнёром Sigma",
       insights: "Инсайты",
       insightsAccessLabel: "Доступ",
     },
     insights: {
       pageTitle: "Инсайты Sigma",
       pageSubtitle:
-        "Рыночная аналитика, разборы исполнения и системы роста для Web3.",
+        "Полевые заметки с фронтира финансового и Web3-роста — региональные playbook’и, экономика IB, KOL-стратегия и дистрибуция запусков.",
       pageEyebrow: "ИНСАЙТЫ",
       filterAllLabel: "Все",
       readLabel: "Читать инсайт",
@@ -864,30 +880,33 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     whatIsSigma: {
       label: "ЧТО ТАКОЕ SIGMA",
-      headline: "Стратегический двигатель роста для Web3",
+      headline:
+        "Сеть финансовой инфраструктуры роста для crypto, forex, акций и Web3",
       description:
-        "Sigma объединяет ликвидность, пользователей и дистрибуцию в единую масштабируемую систему.",
+        "Sigma — глобальная сеть финансовой инфраструктуры роста, которая помогает crypto-биржам, forex-брокерам, prop firms, KOL, IB, трейдерам и финансовым платформам расти через привлечение пользователей, KOL-инфраструктуру, IB/affiliate-программы, активацию ликвидности, управление сообществами, региональную экспансию и стратегические партнёрства. В отличие от агентств с одним каналом, Sigma — операционный слой роста над всей финансовой цепочкой ценности. Sigma не является брокером, биржей, инвестфондом или лицензированным финансовым советником и не управляет, не хранит и не торгует средствами пользователей.",
       pillars: [
         {
-          title: "Привлечение пользователей",
-          description: "От нуля до целевых трейдеров через точные воронки.",
-        },
-        {
-          title: "Активация ликвидности",
-          description: "Превращаем трафик в реальный объём и устойчивую активность.",
-        },
-        {
-          title: "Расширение сети",
+          title: "Аналитика роста",
           description:
-            "Масштабирование через KOL, сообщества и стратегические партнёрства.",
+            "Аудиты рынка, конкурентный SEO/SERP, исследование аудитории и product-market fit — каждая кампания начинается с сигнала, а не догадок.",
+        },
+        {
+          title: "Сеть дистрибуции",
+          description:
+            "1 500+ проверенных KOL, IB, community-менеджеров и BD-партнёров в MENA, GCC, Турции, Европе, LATAM, СНГ и персоязычных рынках — готовы с первого дня.",
+        },
+        {
+          title: "Ликвидность и объём",
+          description:
+            "Архитектуры кампаний, превращающие привлечение в повторяющийся торговый объём — VIP/whale onboarding, интро к market makers, листинги и retention-циклы под вашу площадку.",
         },
       ],
     },
     about: {
-      kicker: "О НАС",
-      title: "МЫ НЕ АДАПТИРУЕМСЯ К БУДУЩЕМУ. МЫ ЕГО ПРОЕКТИРУЕМ.",
+      kicker: "СОЗДАНО ОПЕРАТОРАМИ",
+      title: "ЛЮДИ ЗА SIGMA",
       description:
-        "Sigma работает на стыке высокочастотных финансов, криптографии военного уровня и распределённых сетей.",
+        "Sigma возглавляется ядром консультантов по росту, BD, маркетингу и экспансии с практическим опытом в крупных биржевых экосистемах и финансовых платформах — при поддержке региональных операторов в 40+ рынках.",
     },
     metrics: {
       kicker: "Сеть",
@@ -906,30 +925,31 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     sigmaPro: {
       badge: "VIP · ЭЛИТНЫЙ ДОСТУП",
-      title: "SigmaPRO",
+      title: "SigmaPRO — выделенные операции роста для партнёров с высоким объёмом",
       description:
-        "Приватная пропускная способность, приоритетная маршрутизация и выделенные операции роста для высокообъёмных команд.",
+        "Приватный throughput, приоритетная маршрутизация и senior growth-деск для высокообъёмных бирж, брокеров, протоколов и институциональных партнёров.",
       bullets: [
         "Выделенный growth-деск с плейбуками и SLA",
         "Приоритетная маршрутизация по ликвидности и дистрибуции",
         "Конфиденциальная телеметрия, кастомная отчётность и прямая эскалация",
+        "Ежеквартальные стратегические сессии с руководством Sigma",
       ],
       footnote: "Доступ ограничен и предоставляется после квалификации.",
     },
     contact: {
-      kicker: "КОНТАКТЫ",
-      title: "СВЯЗАТЬСЯ С SIGMA",
+      kicker: "ЗАПУСК · ДОСТУП К СИСТЕМЕ",
+      title: "ОСТАВАЙТЕСЬ НА СВЯЗИ С SIGMA",
       description:
-        "Партнёрства, медиа и институциональные запросы — напишите команде или откройте полный список каналов.",
+        "Партнёрства, рост бирж и брокеров, заявки KOL, IB-программы и институциональные запросы — напишите команде или откройте список каналов.",
       emailCta: "Почта",
       socialCta: "Каналы и соцсети",
       fallbackMailto: "mailto:BD@sigmaa.pro",
     },
     stayConnected: {
-      kicker: "КОНТАКТЫ",
+      kicker: "ЗАПУСК · ДОСТУП К СИСТЕМЕ",
       title: "Оставайтесь на связи с Sigma",
       description:
-        "Следите за Sigma в стратегических каналах: обновления сети, рыночная аналитика и прямое общение с командой инфраструктуры роста.",
+        "Партнёрства, рост бирж и брокеров, заявки KOL, IB-программы и институциональные запросы.",
       reachUsPrefix: "Напишите нам:",
       socialLabels: {
         x: "X",
@@ -1003,14 +1023,14 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       metrics: "متریک‌ها",
       sigmaPro: "Sigma Pro",
       contact: "تماس",
-      navCta: "دریافت دسترسی",
+      navCta: "همکاری با Sigma",
       insights: "بینش‌ها",
       insightsAccessLabel: "دسترسی",
     },
     insights: {
-      pageTitle: "بینش‌های سیگما",
+      pageTitle: "بینش‌های Sigma",
       pageSubtitle:
-        "هوش بازار، کالبدشکافی اجرا و سیستم‌های رشد برای Web3.",
+        "یادداشت‌های میدانی از مرز رشد مالی و Web3 — playbookهای منطقه‌ای، اقتصاد IB، استراتژی KOL و توزیع عرضه.",
       pageEyebrow: "بینش‌ها",
       filterAllLabel: "همه",
       readLabel: "مطالعه بینش",
@@ -1038,30 +1058,34 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       },
     },
     whatIsSigma: {
-      label: "سیگما چیست",
-      headline: "موتور رشد استراتژیک برای Web3",
+      label: "Sigma چیست",
+      headline:
+        "شبکه زیرساخت رشد مالی برای کریپتو، فارکس، سهام و Web3",
       description:
-        "سیگما نقدینگی، کاربران و توزیع را در یک سیستم مقیاس‌پذیر به هم وصل می‌کند.",
+        "Sigma یک شبکه جهانی زیرساخت رشد مالی است که به صرافی‌های کریپتو، بروکرهای فارکس، prop firmها، KOLها و IBهای سهام و Web3، تریدرها و پلتفرم‌های مالی در جذب کاربر، زیرساخت KOL، برنامه‌های IB/affiliate، فعال‌سازی نقدینگی، مدیریت جامعه، گسترش بازار منطقه‌ای و مشارکت‌های استراتژیک کمک می‌کند. برخلاف آژانس‌های بازاریابی تک‌کاناله، Sigma به‌عنوان لایه عملیاتی رشد بالای کل زنجیره ارزش مالی عمل می‌کند. Sigma بروکر، صرافی، صندوق سرمایه‌گذاری یا مشاور مالی دارای مجوز نیست — وجوه کاربران را مدیریت، نگهداری یا معامله نمی‌کند.",
       pillars: [
         {
-          title: "جذب کاربر",
-          description: "از صفر تا معامله‌گران با نیت بالا از مسیرهای هدفمند.",
+          title: "هوش رشد",
+          description:
+            "ممیزی بازار، تحلیل SEO/SERP رقبا، تحقیق مخاطب و بازخورد product-market fit — هر کمپین با سیگنال شروع می‌شود، نه حدس.",
         },
         {
-          title: "فعال‌سازی نقدینگی",
-          description: "تبدیل ترافیک به حجم واقعی و فعالیت پایدار.",
+          title: "شبکه توزیع",
+          description:
+            "بیش از ۱٬۵۰۰ KOL، IB، مدیر جامعه و شریک BD تأییدشده در MENA، GCC، ترکیه، اروپا، LATAM، CIS و بازارهای فارسی‌زبان — از روز اول قابل استقرار.",
         },
         {
-          title: "گسترش شبکه",
-          description: "مقیاس‌دهی از طریق KOLها، جامعه‌ها و مشارکت‌های استراتژیک.",
+          title: "نقدینگی و حجم",
+          description:
+            "معماری کمپین که جذب را به حجم معاملاتی تکرارشونده تبدیل می‌کند — VIP/whale onboarding، معرفی market maker، هماهنگی لیستینگ و حلقه‌های retention متناسب با پلتفرم شما.",
         },
       ],
     },
     about: {
-      kicker: "دربارهٔ ما",
-      title: "ما با آینده سازگار نمی‌شویم. ما آن را مهندسی می‌کنیم.",
+      kicker: "ساخته‌شده توسط اپراتورها",
+      title: "افراد پشت Sigma",
       description:
-        "سیگما در تقاطع مالی با فرکانس بالا، رمزنگاری درجه نظامی و شبکه‌های توزیع شده پیشرفته عمل می‌کند. دقت یک گزینه نیست؛ این خود پروتکل است.",
+        "Sigma توسط تیمی از مشاوران رشد، BD، بازاریابی و گسترش بازار با تجربه عملی در اکوسیستم‌های بزرگ صرافی و پلتفرم‌های مالی هدایت می‌شود — با پشتیبانی اپراتورهای منطقه‌ای در بیش از ۴۰ بازار.",
     },
     metrics: {
       kicker: "شبکه",
@@ -1080,30 +1104,31 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     sigmaPro: {
       badge: "VIP · دسترسی ویژه",
-      title: "SigmaPRO",
+      title: "SigmaPRO — عملیات رشد اختصاصی برای شرکای پرحجم",
       description:
-        "برای تیم‌های پرحجم، صرافی‌ها و پروتکل‌ها: توان اختصاصی، مسیریابی اولویت‌دار و عملیات رشد اختصاصی.",
+        "توان اختصاصی، مسیریابی اولویت‌دار و میز رشد ارشد برای صرافی‌ها، بروکرها، پروتکل‌ها و شرکای نهادی پرحجم.",
       bullets: [
         "میز رشد اختصاصی با نقشه‌های اجرای تضمین‌شده SLA",
         "مسیریابی اولویت‌دار در مسیرهای نقدینگی و توزیع",
         "تلهمتری محرمانه، گزارش سفارشی و اسکالیشن مستقیم",
+        "بازبینی‌های استراتژیک فصلی با رهبری Sigma",
       ],
       footnote: "دسترسی محدود و مشروط به تأیید صلاحیت است.",
     },
     contact: {
-      kicker: "تماس",
-      title: "ارتباط با سیگما",
+      kicker: "آغاز · دسترسی به سیستم اصلی",
+      title: "با Sigma در ارتباط بمانید",
       description:
-        "همکاری، رسانه و درخواست‌های سازمانی — به تیم ایمیل بزنید یا فهرست کامل کانال‌ها را باز کنید.",
+        "همکاری، رشد صرافی و بروکر، درخواست KOL، برنامه‌های IB و پرسش‌های سازمانی — به تیم ایمیل بزنید یا فهرست کانال‌ها را باز کنید.",
       emailCta: "ایمیل",
       socialCta: "کانال‌ها و شبکه‌ها",
       fallbackMailto: "mailto:BD@sigmaa.pro",
     },
     stayConnected: {
-      kicker: "تماس",
-      title: "با سیگما در ارتباط بمانید",
+      kicker: "آغاز · دسترسی به سیستم اصلی",
+      title: "با Sigma در ارتباط بمانید",
       description:
-        "سیگما را در کانال‌های استراتژیک دنبال کنید: به‌روزرسانی شبکه، هوش بازار و ارتباط مستقیم با تیم زیرساخت رشد.",
+        "همکاری، رشد صرافی و بروکر، درخواست KOL، برنامه‌های IB و پرسش‌های سازمانی.",
       reachUsPrefix: "راه تماس:",
       socialLabels: {
         x: "X",
@@ -1177,14 +1202,14 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       metrics: "المؤشرات",
       sigmaPro: "Sigma Pro",
       contact: "اتصل",
-      navCta: "احصل على وصول",
+      navCta: "شارك مع Sigma",
       insights: "الرؤى",
       insightsAccessLabel: "الوصول",
     },
     insights: {
-      pageTitle: "رؤى سيغما",
+      pageTitle: "رؤى Sigma",
       pageSubtitle:
-        "ذكاء السوق، تحليل التنفيذ، وأنظمة النمو لـ Web3.",
+        "مذكرات ميدانية من خط نمو التمويل وWeb3 — playbooks إقليمية، اقتصاد IB، استراتيجية KOL وتوزيع الإطلاق.",
       pageEyebrow: "الرؤى",
       filterAllLabel: "الكل",
       readLabel: "اقرأ الرؤية",
@@ -1212,30 +1237,34 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
       },
     },
     whatIsSigma: {
-      label: "ما هي سيغما",
-      headline: "محرك نمو استراتيجي لـ Web3",
+      label: "ما هو Sigma",
+      headline:
+        "شبكة بنية تحتية للنمو المالي في crypto وforex والأسهم وWeb3",
       description:
-        "تربط سيغما السيولة والمستخدمين والتوزيع في نظام واحد قابل للتوسّع.",
+        "Sigma شبكة عالمية للبنية التحتية للنمو المالي تساعد بورصات crypto ووسطاء forex وشركات prop وKOL وIB في الأسهم وWeb3 والمتداولين والمنصات المالية على النمو عبر اكتساب المستخدمين، بنية KOL، برامج IB/affiliate، تنشيط السيولة، إدارة المجتمعات، التوسع الإقليمي والشراكات الاستراتيجية. على عكس وكالات التسويق أحادية القناة، تعمل Sigma كطبقة تشغيل نمو فوق سلسلة القيمة المالية بأكملها. Sigma ليست وسيطاً أو بورصة أو صندوق استثمار أو مستشاراً مالياً مرخصاً — ولا تدير أو تحتفظ أو تتداول أموال المستخدمين.",
       pillars: [
         {
-          title: "اكتساس المستخدمين",
-          description: "من الصفر إلى متداولين ذوي نية عالية عبر مسارات دقيقة.",
+          title: "ذكاء النمو",
+          description:
+            "تدقيق السوق، تحليل SEO/SERP للمنافسين، بحث الجمهور وملاءمة المنتج للسوق — كل حملة تبدأ بالإشارة لا بالافتراض.",
         },
         {
-          title: "تنشيط السيولة",
-          description: "تحويل الزيارات إلى حجم حقيقي ونشاط مستدام.",
+          title: "شبكة التوزيع",
+          description:
+            "أكثر من 1,500 KOL وIB ومدير مجتمع وشريك BD موثّقين عبر MENA وGCC وتركيا وأوروبا وLATAM وCIS والأسواق الناطقة بالفارسية — جاهزون من اليوم الأول.",
         },
         {
-          title: "توسيع الشبكة",
-          description: "التوسّع عبر المؤثرين والمجتمعات والشراكات الاستراتيجية.",
+          title: "السيولة والحجم",
+          description:
+            "هندسة حملات تحوّل الاكتساب إلى حجم تداول متكرر — VIP/whale onboarding، تعريف market makers، تنسيق الإدراج وحلقات احتفاظ مضبوطة لمنصتك.",
         },
       ],
     },
     about: {
-      kicker: "من نحن",
-      title: "لا نتأقلم مع المستقبل. نصنعه.",
+      kicker: "بناها مشغّلون",
+      title: "الأشخاص وراء Sigma",
       description:
-        "تعمل سيغما عند تقاطع التمويل عالي التردد والتشفير بمستوى المؤسسات والشبكات الموزعة المتقدمة. الدقة ليست خياراً — إنها البروتوكول.",
+        "تقود Sigma فريق أساسي من مستشاري النمو وBD والتسويق وتوسع السوق بخبرة ميدانية في منظومات البورصات الكبرى والمنصات المالية — مدعوماً بمشغّلين إقليميين في أكثر من 40 سوقاً.",
     },
     metrics: {
       kicker: "الشبكة",
@@ -1254,30 +1283,31 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     sigmaPro: {
       badge: "VIP · وصول نخبوي",
-      title: "SigmaPRO",
+      title: "SigmaPRO — عمليات نمو مخصصة للشركاء عالي الحجم",
       description:
-        "سعة مخصصة، توجيه أسبقية، وعمليات نمو مخصصة للفرق عالية الحجم.",
+        "سعة مخصصة، توجيه أسبقية، ومكتب نمو أول للبورصات والوسطاء والبروتوكولات والشركاء المؤسسيين عالي الحجم.",
       bullets: [
         "مكتب نمو مخصص مع خطط تنفيذ واتفاقيات مستوى الخدمة",
         "توجيه أسبقية عبر مسارات السيولة والتوزيع",
         "بيانات تشغيل سرية، تقارير مخصصة، وتصعيد مباشر",
+        "مراجعات استراتيجية ربع سنوية مع قيادة Sigma",
       ],
       footnote: "الوصول محدود ويُمنح بعد الأهلية.",
     },
     contact: {
-      kicker: "اتصل",
-      title: "تواصل مع سيغما",
+      kicker: "ابدأ · الوصول إلى النظام",
+      title: "ابقَ على تواصل مع Sigma",
       description:
-        "للشراكات والإعلام والاستفسارات المؤسسية — راسل الفريق أو افتح قائمة القنوات الكاملة.",
+        "للشراكات ونمو البورصات والوسطاء وطلبات KOL وبرامج IB والاستفسارات المؤسسية — راسل الفريق أو افتح قائمة القنوات.",
       emailCta: "البريد",
       socialCta: "القنوات والشبكات",
       fallbackMailto: "mailto:BD@sigmaa.pro",
     },
     stayConnected: {
-      kicker: "اتصل",
-      title: "ابقَ على تواصل مع سيغما",
+      kicker: "ابدأ · الوصول إلى النظام",
+      title: "ابقَ على تواصل مع Sigma",
       description:
-        "تابع سيغما في القنوات الاستراتيجية: تحديثات الشبكة، ذكاء السوق، وتواصل مباشر مع فريق البنية التحتية للنمو.",
+        "للشراكات ونمو البورصات والوسطاء وطلبات KOL وبرامج IB والاستفسارات المؤسسية.",
       reachUsPrefix: "تواصل معنا:",
       socialLabels: {
         x: "X",

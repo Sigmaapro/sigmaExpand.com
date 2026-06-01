@@ -49,21 +49,21 @@ export type ConversionBundle = {
 };
 
 const EN_MID: MidConversionCopy = {
-  label: "READY TO SCALE",
-  headline: "Start Scaling with Sigma",
+  label: "PROOF IN NUMBERS",
+  headline: "Execution That Moves Users, Volume, and Reach",
   supporting:
-    "Access a structured growth system built for Web3 execution — from acquisition surfaces to liquidity checkpoints.",
-  primaryLabel: "Get Access",
+    "Figures reflect aggregated network activity. Past performance is not indicative of future results.",
+  primaryLabel: "Partner with Sigma",
   primaryHref: ROUTES.contact,
 };
 
 const EN_FINAL: FinalConversionCopy = {
   headline: "Build Growth That Actually Converts",
   supporting:
-    "From user acquisition to liquidity, Sigma connects the full system. Brief the desk and we will map the shortest path to measurable throughput.",
-  primaryLabel: "Work With Sigma",
+    "From user acquisition to liquidity, Sigma connects the full system across crypto, forex, stocks, and Web3. Brief the desk and we'll map the shortest path to measurable throughput.",
+  primaryLabel: "Partner with Sigma",
   primaryHref: ROUTES.contact,
-  secondaryLabel: "Book a Call",
+  secondaryLabel: "Request a Growth Consultation",
 };
 
 const EN_BOOK: BookCallModalCopy = {
@@ -96,20 +96,20 @@ const enBundle: ConversionBundle = {
 
 const trBundle: ConversionBundle = {
   mid: {
-    label: "ÖLÇEKLEMEYE HAZIR",
-    headline: "Sigma ile Ölçeklenmeye Başlayın",
+    label: "SAYILARLA KANIT",
+    headline: "Kullanıcıları, Hacmi ve Erişimi Hareket Ettiren Yürütme",
     supporting:
-      "Web3 yürütmesi için tasarlanmış yapılandırılmış bir büyüme sistemine erişin.",
-    primaryLabel: "Erişim Al",
+      "Rakamlar toplam ağ aktivitesini yansıtır. Geçmiş performans gelecekteki sonuçların göstergesi değildir.",
+    primaryLabel: "Sigma ile Ortak Olun",
     primaryHref: ROUTES.contact,
   },
   final: {
     headline: "Gerçekten Dönüşen Büyüme İnşa Edin",
     supporting:
-      "Kullanıcı ediniminden likiditeye kadar Sigma tüm sistemi birbirine bağlar.",
-    primaryLabel: "Sigma ile Çalış",
+      "Kullanıcı ediniminden likiditeye kadar Sigma; kripto, forex, hisse ve Web3 genelinde tüm sistemi birbirine bağlar. Masaya brief verin, ölçülebilir throughput için en kısa yolu birlikte çizelim.",
+    primaryLabel: "Sigma ile Ortak Olun",
     primaryHref: ROUTES.contact,
-    secondaryLabel: "Görüşme Planla",
+    secondaryLabel: "Büyüme Danışmanlığı Talep Edin",
   },
   bookCall: {
     title: "Görüşme planla",
@@ -134,18 +134,19 @@ const trBundle: ConversionBundle = {
 
 const zhBundle: ConversionBundle = {
   mid: {
-    label: "准备扩展",
-    headline: "与 Sigma 一起开始扩展",
-    supporting: "访问为 Web3 执行构建的结构化增长系统。",
-    primaryLabel: "获取权限",
+    label: "数据证明",
+    headline: "推动用户、交易量与覆盖面的执行能力",
+    supporting: "数据反映网络汇总活动。过往表现不代表未来结果。",
+    primaryLabel: "与 Sigma 合作",
     primaryHref: ROUTES.contact,
   },
   final: {
     headline: "构建真正可转化的增长",
-    supporting: "从获客到流动性，Sigma 连接完整系统。",
+    supporting:
+      "从获客到流动性，Sigma 在加密、外汇、股票与 Web3 领域连接完整系统。提交需求，我们将规划最短的可衡量产出路径。",
     primaryLabel: "与 Sigma 合作",
     primaryHref: ROUTES.contact,
-    secondaryLabel: "预约通话",
+    secondaryLabel: "申请增长咨询",
   },
   bookCall: {
     title: "预约通话",
@@ -169,20 +170,20 @@ const zhBundle: ConversionBundle = {
 
 const faBundle: ConversionBundle = {
   mid: {
-    label: "آماده مقیاس‌دهی",
-    headline: "با سیگما مقیاس دهید",
+    label: "اثبات در اعداد",
+    headline: "اجرایی که کاربران، حجم و گستره را حرکت می‌دهد",
     supporting:
-      "به یک سیستم رشد ساختاریافته برای اجرای Web3 دسترسی پیدا کنید.",
-    primaryLabel: "دریافت دسترسی",
+      "ارقام بازتاب فعالیت تجمیعی شبکه است. عملکرد گذشته نشان‌دهنده نتایج آینده نیست.",
+    primaryLabel: "همکاری با Sigma",
     primaryHref: ROUTES.contact,
   },
   final: {
-    headline: "رشد واقعی و قابل تبدیل بسازید",
+    headline: "رشدی بسازید که واقعاً تبدیل می‌شود",
     supporting:
-      "از جذب کاربر تا نقدینگی، سیگما کل سیستم را به هم متصل می‌کند.",
-    primaryLabel: "همکاری با سیگما",
+      "از جذب کاربر تا نقدینگی، Sigma کل سیستم را در crypto، forex، سهام و Web3 به هم متصل می‌کند. brief دهید تا کوتاه‌ترین مسیر به throughput قابل اندازه‌گیری را ترسیم کنیم.",
+    primaryLabel: "همکاری با Sigma",
     primaryHref: ROUTES.contact,
-    secondaryLabel: "رزرو تماس",
+    secondaryLabel: "درخواست مشاوره رشد",
   },
   bookCall: {
     title: "رزرو تماس",
@@ -207,20 +208,20 @@ const faBundle: ConversionBundle = {
 
 const arBundle: ConversionBundle = {
   mid: {
-    label: "جاهزون للتوسّع",
-    headline: "ابدأ التوسّع مع سيغما",
+    label: "أدلة بالأرقام",
+    headline: "تنفيذ يحرّك المستخدمين والحجم والوصول",
     supporting:
-      "استخدم نظام نمو منظمًا مصمماً لتنفيذ Web3 — من سطح الاكتساس إلى نقاط السيولة.",
-    primaryLabel: "احصل على وصول",
+      "الأرقام تعكس نشاط الشبكة المجمّع. الأداء السابق لا يدل على النتائج المستقبلية.",
+    primaryLabel: "شارك مع Sigma",
     primaryHref: ROUTES.contact,
   },
   final: {
     headline: "ابنِ نموًا يتحول فعلياً",
     supporting:
-      "من جذب المستخدمين إلى السيولة، تربط سيغما النظام بالكامل. قدّم الإحاطة وسنرسم أقصر مسار لنتائج قابلة للقياس.",
-    primaryLabel: "اعمل مع سيغما",
+      "من اكتساب المستخدمين إلى السيولة، تربط Sigma النظام بالكامل عبر crypto وforex والأسهم وWeb3. قدّم الإحاطة وسنرسم أقصر مسار لنتائج قابلة للقياس.",
+    primaryLabel: "شارك مع Sigma",
     primaryHref: ROUTES.contact,
-    secondaryLabel: "احجز مكالمة",
+    secondaryLabel: "اطلب استشارة نمو",
   },
   bookCall: {
     title: "احجز مكالمة",
@@ -245,20 +246,20 @@ const arBundle: ConversionBundle = {
 
 const esBundle: ConversionBundle = {
   mid: {
-    label: "LISTO PARA ESCALAR",
-    headline: "Empieza a escalar con Sigma",
+    label: "PRUEBA EN NÚMEROS",
+    headline: "Ejecución que mueve usuarios, volumen y alcance",
     supporting:
-      "Accede a un sistema de crecimiento estructurado para ejecución en Web3.",
-    primaryLabel: "Obtener acceso",
+      "Las cifras reflejan la actividad agregada de la red. El rendimiento pasado no garantiza resultados futuros.",
+    primaryLabel: "Asociarse con Sigma",
     primaryHref: ROUTES.contact,
   },
   final: {
     headline: "Construye crecimiento que sí convierte",
     supporting:
-      "Desde adquisición de usuarios hasta liquidez, Sigma conecta todo el sistema.",
-    primaryLabel: "Trabajar con Sigma",
+      "Desde adquisición hasta liquidez, Sigma conecta el sistema completo en crypto, forex, acciones y Web3. Envíe el brief y trazaremos el camino más corto a resultados medibles.",
+    primaryLabel: "Asociarse con Sigma",
     primaryHref: ROUTES.contact,
-    secondaryLabel: "Reservar llamada",
+    secondaryLabel: "Solicitar consultoría de crecimiento",
   },
   bookCall: {
     title: "Reservar una llamada",
@@ -283,20 +284,20 @@ const esBundle: ConversionBundle = {
 
 const ruBundle: ConversionBundle = {
   mid: {
-    label: "ГОТОВЫ К МАСШТАБУ",
-    headline: "Начните масштабирование с Sigma",
+    label: "ДОКАЗАТЕЛЬСТВО В ЦИФРАХ",
+    headline: "Исполнение, которое двигает пользователей, объём и охват",
     supporting:
-      "Получите доступ к структурированной growth-системе для Web3-исполнения.",
-    primaryLabel: "Получить доступ",
+      "Цифры отражают агрегированную активность сети. Прошлые результаты не гарантируют будущих.",
+    primaryLabel: "Стать партнёром Sigma",
     primaryHref: ROUTES.contact,
   },
   final: {
     headline: "Стройте рост, который действительно конвертирует",
     supporting:
-      "От привлечения пользователей до ликвидности — Sigma соединяет всю систему.",
-    primaryLabel: "Работать с Sigma",
+      "От привлечения до ликвидности Sigma соединяет всю систему в crypto, forex, акциях и Web3. Опишите задачу — мы наметим кратчайший путь к измеримому throughput.",
+    primaryLabel: "Стать партнёром Sigma",
     primaryHref: ROUTES.contact,
-    secondaryLabel: "Забронировать звонок",
+    secondaryLabel: "Запросить консультацию по росту",
   },
   bookCall: {
     title: "Забронировать звонок",

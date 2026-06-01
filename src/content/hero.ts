@@ -2,105 +2,111 @@ import type { HeroContent, LangCode } from "./types";
 import { ROUTES } from "./global/routes";
 
 const EN: HeroContent = {
-  eyebrow: "Web3 Growth Infrastructure",
+  eyebrow: "Finance & Web3 Growth Infrastructure · 40+ Markets · 1,500+ Network",
   title: "SIGMA",
-  subtitle: "Built to move users, liquidity, and markets.",
+  subtitle:
+    "The Finance and Web3 Growth Partner for Exchanges, Brokers, KOLs, and Trading Communities",
   supporting:
-    "A data-driven engine for user acquisition, network activation, and scalable market expansion.",
-  primaryCta: "Start Scaling",
-  secondaryCta: "See the System",
+    "We are not a marketing agency. Sigma is the operating layer between your product, your distribution, and your liquidity — built by operators who have grown exchanges, run BD desks, and onboarded whales.",
+  primaryCta: "Partner with Sigma",
+  secondaryCta: "Request a Growth Consultation",
   primaryHref: ROUTES.contact,
-  secondaryHref: "#capabilities",
+  secondaryHref: ROUTES.contact,
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
   scrollHint: "Scroll",
 };
 
 const TR: HeroContent = {
-  eyebrow: "Web3 Büyüme Altyapısı",
+  eyebrow: "Finans ve Web3 Büyüme Altyapısı · 40+ Pazar · 1.500+ Ağ",
   title: "SIGMA",
-  subtitle: "Kullanıcıları, likiditeyi ve piyasaları hareket etmek için tasarlandı.",
+  subtitle:
+    "Borsalar, Aracı Kurumlar, KOL'lar ve Ticaret Toplulukları İçin Finans ve Web3 Büyüme Ortağı",
   supporting:
-    "Kullanıcı edinimi, ağ aktivasyonu ve ölçeklenebilir pazar genişlemesi için veri odaklı bir motor.",
-  primaryCta: "Ölçeklemeye Başla",
-  secondaryCta: "Sistemi Gör",
+    "Bir pazarlama ajansı değiliz. Sigma; borsaları büyüten, BD masalarını yöneten ve balinaları onboard eden operatörler tarafından kurulan, ürününüz, dağıtımınız ve likiditeniz arasındaki operasyon katmanıdır.",
+  primaryCta: "Sigma ile Ortak Olun",
+  secondaryCta: "Büyüme Danışmanlığı Talep Edin",
   primaryHref: ROUTES.contact,
-  secondaryHref: "#capabilities",
+  secondaryHref: ROUTES.contact,
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
   scrollHint: "Kaydır",
 };
 
 const ZH: HeroContent = {
-  eyebrow: "Web3 增长基础设施",
+  eyebrow: "金融与 Web3 增长基础设施 · 40+ 市场 · 1,500+ 网络",
   title: "SIGMA",
-  subtitle: "为用户、流动性与市场流动而构建。",
+  subtitle: "面向交易所、经纪商、KOL 与交易社群的金融与 Web3 增长合作伙伴",
   supporting:
-    "以数据驱动的引擎，实现用户增长、网络激活与可扩展的市场扩张。",
-  primaryCta: "开始扩展",
-  secondaryCta: "了解系统",
+    "我们不是营销代理。Sigma 是连接您的产品、分发与流动性之间的运营层——由曾在交易所实现增长、运营 BD 团队并完成大户入驻的操盘手打造。",
+  primaryCta: "与 Sigma 合作",
+  secondaryCta: "申请增长咨询",
   primaryHref: ROUTES.contact,
-  secondaryHref: "#capabilities",
+  secondaryHref: ROUTES.contact,
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
   scrollHint: "滚动",
 };
 
 const FA: HeroContent = {
-  eyebrow: "زیرساخت رشد Web3",
-  title: "سیگما",
-  subtitle: "برای حرکت کاربران، نقدینگی و بازارها ساخته شده است.",
+  eyebrow: "زیرساخت رشد مالی و Web3 · ۴۰+ بازار · ۱٬۵۰۰+ شبکه",
+  title: "SIGMA",
+  subtitle:
+    "شریک رشد مالی و Web3 برای صرافی‌ها، بروکرها، KOLها و جامعه‌های معاملاتی",
   supporting:
-    "موتوری مبتنی بر داده برای جذب کاربر، فعال‌سازی شبکه و گسترش بازار در مقیاس.",
-  primaryCta: "شروع مقیاس‌دهی",
-  secondaryCta: "مشاهده سیستم",
+    "ما آژانس بازاریابی نیستیم. Sigma لایه عملیاتی میان محصول، توزیع و نقدینگی شماست — ساخته‌شده توسط اپراتورهایی که صرافی‌ها را رشد داده‌اند، میزهای BD را اداره کرده‌اند و وال‌ها را onboard کرده‌اند.",
+  primaryCta: "همکاری با Sigma",
+  secondaryCta: "درخواست مشاوره رشد",
   primaryHref: ROUTES.contact,
-  secondaryHref: "#capabilities",
+  secondaryHref: ROUTES.contact,
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
   scrollHint: "اسکرول",
 };
 
 const ES: HeroContent = {
-  eyebrow: "Infraestructura de crecimiento Web3",
+  eyebrow: "Infraestructura de crecimiento financiero y Web3 · 40+ mercados · 1.500+ red",
   title: "SIGMA",
-  subtitle: "Diseñado para mover usuarios, liquidez y mercados.",
+  subtitle:
+    "Socio de crecimiento financiero y Web3 para exchanges, brokers, KOLs y comunidades de trading",
   supporting:
-    "Un motor basado en datos para adquisición de usuarios, activación de red y expansión escalable del mercado.",
-  primaryCta: "Empezar a escalar",
-  secondaryCta: "Ver el sistema",
+    "No somos una agencia de marketing. Sigma es la capa operativa entre su producto, su distribución y su liquidez — construida por operadores que han hecho crecer exchanges, dirigido mesas de BD y onboarded whales.",
+  primaryCta: "Asociarse con Sigma",
+  secondaryCta: "Solicitar consultoría de crecimiento",
   primaryHref: ROUTES.contact,
-  secondaryHref: "#capabilities",
+  secondaryHref: ROUTES.contact,
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
   scrollHint: "Desplazar",
 };
 
 const RU: HeroContent = {
-  eyebrow: "Инфраструктура роста Web3",
+  eyebrow: "Инфраструктура роста в финансах и Web3 · 40+ рынков · 1 500+ сеть",
   title: "SIGMA",
-  subtitle: "Создано для движения пользователей, ликвидности и рынков.",
+  subtitle:
+    "Партнёр по росту в финансах и Web3 для бирж, брокеров, KOL и торговых сообществ",
   supporting:
-    "Движок на данных для привлечения пользователей, активации сети и масштабируемого расширения рынка.",
-  primaryCta: "Начать масштабирование",
-  secondaryCta: "Смотреть систему",
+    "Мы не маркетинговое агентство. Sigma — операционный слой между вашим продуктом, дистрибуцией и ликвидностью, созданный операторами, которые масштабировали биржи, вели BD-дески и онбордили китов.",
+  primaryCta: "Стать партнёром Sigma",
+  secondaryCta: "Запросить консультацию по росту",
   primaryHref: ROUTES.contact,
-  secondaryHref: "#capabilities",
+  secondaryHref: ROUTES.contact,
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
   scrollHint: "Прокрутка",
 };
 
 const AR: HeroContent = {
-  eyebrow: "بنية تحتية للنمو في Web3",
+  eyebrow: "بنية تحتية للنمو المالي وWeb3 · أكثر من 40 سوقاً · شبكة 1,500+",
   title: "SIGMA",
-  subtitle: "صُممت لتحريك المستخدمين والسيولة والأسواق.",
+  subtitle:
+    "شريك النمو المالي وWeb3 للبورصات والوسطاء وKOL ومجتمعات التداول",
   supporting:
-    "محرك قائم على البيانات لاكتساب المستخدمين وتنشيط الشبكة وتوسعة السوق بشكل قابل للتوسع.",
-  primaryCta: "ابدأ التوسّع",
-  secondaryCta: "استكشف النظام",
+    "لسنا وكالة تسويق. Sigma هي الطبقة التشغيلية بين منتجك وتوزيعك وسيولتك — بناها مشغّلون نمّوا البورصات، وأداروا مكاتب BD، وأتمّوا onboarding للحيتان.",
+  primaryCta: "شارك مع Sigma",
+  secondaryCta: "اطلب استشارة نمو",
   primaryHref: ROUTES.contact,
-  secondaryHref: "#capabilities",
+  secondaryHref: ROUTES.contact,
   logoSrc:
     "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
   scrollHint: "مرر للأسفل",

@@ -97,9 +97,11 @@ const SOCIAL_LABELS_EN: Record<SocialPlatformKey, string> = {
 const FOOTER_EN: GlobalFooterContent = {
   brandWordmark: "Sigma",
   brandTagline:
-    "Web3 growth infrastructure for users, liquidity, and market expansion.",
-  trustLine: "Built for growth teams, exchanges, and Web3 networks.",
-  contactIntro: "For partnerships and growth inquiries",
+    "Global financial growth infrastructure for exchanges, brokers, KOLs, IBs, and Web3 platforms.",
+  trustLine:
+    "$7B+ supported monthly volume · 2.4M+ users activated · 1,500+ network partners · 40+ markets",
+  contactIntro:
+    "For partnerships, exchange and broker growth, KOL applications, IB programs, and institutional inquiries",
   email: contactEmail,
   columnPlatform: PLATFORM_EN,
   columnCompany: COMPANY_EN,
@@ -118,9 +120,11 @@ const FOOTER_EN: GlobalFooterContent = {
 const FOOTER_TR: GlobalFooterContent = {
   brandWordmark: "Sigma",
   brandTagline:
-    "Web3 büyüme altyapısı: kullanıcılar, likidite ve pazar genişlemesi için.",
-  trustLine: "Büyüme ekipleri, borsalar ve Web3 ağları için tasarlandı.",
-  contactIntro: "Ortaklık ve büyüme talepleri için",
+    "Borsalar, brokerlar, KOL'lar, IB'ler ve Web3 platformları için küresel finansal büyüme altyapısı.",
+  trustLine:
+    "7B$+ desteklenen aylık hacim · 2,4M+ aktifleştirilen kullanıcı · 1.500+ ağ ortağı · 40+ pazar",
+  contactIntro:
+    "Ortaklıklar, borsa ve broker büyümesi, KOL başvuruları, IB programları ve kurumsal talepler için",
   email: contactEmail,
   columnPlatform: {
     title: "Platform",
@@ -173,11 +177,13 @@ const FOOTER_TR: GlobalFooterContent = {
 };
 
 const FOOTER_FA: GlobalFooterContent = {
-  brandWordmark: "سیگما",
+  brandWordmark: "Sigma",
   brandTagline:
-    "زیرساخت رشد وب۳ برای کاربران، نقدینگی و گسترش بازار.",
-  trustLine: "ساخته‌شده برای تیم‌های رشد، صرافی‌ها و شبکه‌های وب۳.",
-  contactIntro: "برای همکاری و پرسش‌های رشد",
+    "زیرساخت جهانی رشد مالی برای صرافی‌ها، بروکرها، KOLها، IBها و پلتفرم‌های Web3.",
+  trustLine:
+    "حجم ماهانه ۷B$+ · ۲٫۴M+ کاربر فعال‌شده · ۱٬۵۰۰+ شریک شبکه · ۴۰+ بازار",
+  contactIntro:
+    "همکاری، رشد صرافی و بروکر، درخواست KOL، برنامه‌های IB و پرسش‌های سازمانی",
   email: contactEmail,
   columnPlatform: {
     title: "پلتفرم",
@@ -230,11 +236,13 @@ const FOOTER_FA: GlobalFooterContent = {
 };
 
 const FOOTER_AR: GlobalFooterContent = {
-  brandWordmark: "سيغما",
+  brandWordmark: "Sigma",
   brandTagline:
-    "بنية تحتية للنمو في Web3 للمستخدمين والسيولة وتوسعة السوق.",
-  trustLine: "مُصمَّمة لفرق النمو ومنصات التداول وشبكات Web3.",
-  contactIntro: "للشراكات واستفسارات النمو",
+    "بنية تحتية عالمية للنمو المالي للبورصات والوسطاء وKOL وIB ومنصات Web3.",
+  trustLine:
+    "حجم شهري مدعوم 7B$+ · 2.4M+ مستخدم مفعّل · 1,500+ شريك شبكة · 40+ سوقاً",
+  contactIntro:
+    "للشراكات ونمو البورصات والوسطاء وطلبات KOL وبرامج IB والاستفسارات المؤسسية",
   email: contactEmail,
   columnPlatform: {
     title: "المنصة",
@@ -287,10 +295,10 @@ const FOOTER_AR: GlobalFooterContent = {
 };
 
 const FOOTER_ZH: GlobalFooterContent = {
-  brandWordmark: "西格玛",
-  brandTagline: "面向用户、流动性与市场扩张的 Web3 增长基础设施。",
-  trustLine: "为增长团队、交易所与 Web3 网络而打造。",
-  contactIntro: "合作与增长咨询",
+  brandWordmark: "Sigma",
+  brandTagline: "面向交易所、经纪商、KOL、IB 与 Web3 平台的全球金融增长基础设施。",
+  trustLine: "月名义量 $7B+ · 激活用户 2.4M+ · 网络伙伴 1,500+ · 覆盖市场 40+",
+  contactIntro: "合作、交易所与经纪商增长、KOL 申请、IB 计划与机构咨询",
   email: contactEmail,
   columnPlatform: {
     title: "平台",
@@ -345,9 +353,11 @@ const FOOTER_ZH: GlobalFooterContent = {
 const FOOTER_ES: GlobalFooterContent = {
   brandWordmark: "Sigma",
   brandTagline:
-    "Infraestructura de crecimiento Web3 para usuarios, liquidez y expansión de mercado.",
-  trustLine: "Diseñado para equipos de crecimiento, exchanges y redes Web3.",
-  contactIntro: "Para alianzas y consultas de crecimiento",
+    "Infraestructura global de crecimiento financiero para exchanges, brokers, KOL, IB y plataformas Web3.",
+  trustLine:
+    "Volumen mensual respaldado $7B+ · 2,4M+ usuarios activados · 1.500+ socios de red · 40+ mercados",
+  contactIntro:
+    "Alianzas, crecimiento de exchanges y brokers, solicitudes KOL, programas IB y consultas institucionales",
   email: contactEmail,
   columnPlatform: {
     title: "Plataforma",
@@ -400,11 +410,13 @@ const FOOTER_ES: GlobalFooterContent = {
 };
 
 const FOOTER_RU: GlobalFooterContent = {
-  brandWordmark: "Сигма",
+  brandWordmark: "Sigma",
   brandTagline:
-    "Инфраструктура роста Web3: пользователи, ликвидность и расширение рынка.",
-  trustLine: "Для команд роста, бирж и Web3-сетей.",
-  contactIntro: "Партнёрства и запросы по росту",
+    "Глобальная инфраструктура финансового роста для бирж, брокеров, KOL, IB и Web3-платформ.",
+  trustLine:
+    "Поддерживаемый месячный объём $7B+ · 2,4M+ активированных пользователей · 1 500+ партнёров сети · 40+ рынков",
+  contactIntro:
+    "Партнёрства, рост бирж и брокеров, заявки KOL, IB-программы и институциональные запросы",
   email: contactEmail,
   columnPlatform: {
     title: "Платформа",

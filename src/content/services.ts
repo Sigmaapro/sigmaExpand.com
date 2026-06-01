@@ -1,213 +1,217 @@
 import type { LangCode, ServicesContent } from "./types";
 
 const EN: ServicesContent = {
-  sectionLabel: "01 // ARCHITECTURE",
-  headline: "CORE ECOSYSTEM",
+  sectionLabel: "03 // WHO WE BUILD FOR",
+  headline: "ONE GROWTH NETWORK. FOUR ENGINES.",
   cards: [
     {
-      title: "LIQUIDITY PROTOCOLS",
+      title: "EXCHANGES & PLATFORMS",
       description:
-        "Algorithmic market making engines designed for zero-slippage trade execution at institutional scale.",
+        "Scale users, trading volume, and regional market share — KOL activation, IB networks, localized funnels, market-maker introductions, listing coordination, and VIP onboarding for CEX, DEX, forex brokers, prop firms, wallets, DeFi, and fintech.",
       icon: "activity",
     },
     {
-      title: "NETWORK SECURITY",
+      title: "KOLS & CREATORS",
       description:
-        "Cryptographic consensus mechanisms engineered to withstand quantum-level attack vectors.",
-      icon: "shield",
-    },
-    {
-      title: "NODE INFRASTRUCTURE",
-      description:
-        "Decentralized, globally distributed bare-metal networks ensuring 100% uptime.",
+        "Build your financial creator infrastructure — affiliate stacks, Telegram bots, websites, SEO for KOLs, premium platform deals, and partnerships across exchanges, brokers, prop firms, and data tools.",
       icon: "cpu",
     },
     {
-      title: "SMART CONTRACTS",
+      title: "IBs & BD NETWORKS",
       description:
-        "Formal verification and rigorous auditing of complex financial primitives.",
+        "Move from scattered referrals to a structured BD operation — custom commission architecture, conversion playbooks, retention systems, and direct access to top-tier exchanges, brokers, and prop firms.",
+      icon: "shield",
+    },
+    {
+      title: "TRADERS & VIPs",
+      description:
+        "Better fees, better tools, better support — platform matching, VIP and whale onboarding, copy trading, options, prop firms, and pro-grade data terminals matched to your trading style.",
       icon: "code2",
     },
   ],
 };
 
 const TR: ServicesContent = {
-  sectionLabel: "01 // MİMARİ",
-  headline: "TEMEL EKOSİSTEM",
+  sectionLabel: "03 // KİMİN İÇİN İNŞA EDİYORUZ",
+  headline: "TEK BÜYÜME AĞI. DÖRT MOTOR.",
   cards: [
     {
-      title: "LİKİDİTE PROTOKOLLERİ",
+      title: "BORSA VE PLATFORMLAR",
       description:
-        "Kurumsal ölçekte sıfır kayma ile işlem yürütmek için tasarlanmış algoritmik piyasa yapıcı motorlar.",
+        "Kullanıcı, işlem hacmi ve bölgesel pazar payını ölçekleyin — KOL aktivasyonu, IB ağları, yerelleştirilmiş huniler, market maker tanıtımları, listing koordinasyonu ve VIP onboarding.",
       icon: "activity",
     },
     {
-      title: "AĞ GÜVENLİĞİ",
+      title: "KOL VE İÇERİK ÜRETİCİLER",
       description:
-        "Kuantum düzeyindeki saldırı vektörlerine dayanacak şekilde tasarlanmış kriptografik mutabakat mekanizmaları.",
-      icon: "shield",
-    },
-    {
-      title: "DÜĞÜM ALTYAPISI",
-      description:
-        "%100 çalışma süresi sağlayan merkeziyetsiz, küresel olarak dağıtılmış donanım ağları.",
+        "Finansal içerik üretici altyapınızı kurun — affiliate yığınları, Telegram botları, web siteleri, KOL SEO, premium platform anlaşmaları ve veri araçları ortaklıkları.",
       icon: "cpu",
     },
     {
-      title: "AKILLI SÖZLEŞMELER",
+      title: "IB VE BD AĞLARI",
       description:
-        "Karmaşık finansal temellerin resmi doğrulaması ve titiz denetimi.",
+        "Dağınık referanslardan yapılandırılmış BD operasyonuna — özel komisyon mimarisi, dönüşüm playbook'ları, retention sistemleri ve üst düzey borsa/broker erişimi.",
+      icon: "shield",
+    },
+    {
+      title: "TRADER VE VIP'LER",
+      description:
+        "Daha iyi ücretler, araçlar ve destek — platform eşleştirme, VIP/whale onboarding, copy trading, opsiyonlar, prop firmalar ve pro veri terminalleri.",
       icon: "code2",
     },
   ],
 };
 
 const ZH: ServicesContent = {
-  sectionLabel: "01 // 架构",
-  headline: "核心生态系统",
+  sectionLabel: "03 // 我们服务的对象",
+  headline: "一个增长网络。四大引擎。",
   cards: [
     {
-      title: "流动性协议",
+      title: "交易所与平台",
       description:
-        "专为机构规模的零滑点交易执行而设计的算法做市引擎。",
+        "扩展用户、交易量与区域市场份额——KOL 激活、IB 网络、本地化漏斗、做市商对接、上币协调与 VIP 入驻，覆盖 CEX、DEX、外汇经纪、prop、fintech 等。",
       icon: "activity",
     },
     {
-      title: "网络安全",
-      description: "旨在抵御量子级攻击向量的加密共识机制。",
-      icon: "shield",
-    },
-    {
-      title: "节点基础设施",
-      description: "确保 100% 正常运行时间的去中心化、全球分布的裸金属网络。",
+      title: "KOL 与创作者",
+      description:
+        "构建金融创作者基础设施——联盟栈、Telegram 机器人、网站、KOL SEO、优质平台合作，以及交易所、经纪商与数据工具伙伴关系。",
       icon: "cpu",
     },
     {
-      title: "智能合约",
-      description: "对复杂金融原语的正式验证和严格审计。",
+      title: "IB 与 BD 网络",
+      description:
+        "从分散推荐转向结构化 BD 运营——定制佣金架构、转化 playbook、留存系统，以及直连顶级交易所与经纪商。",
+      icon: "shield",
+    },
+    {
+      title: "交易者与 VIP",
+      description:
+        "更优费率、工具与支持——平台匹配、VIP/大户入驻、跟单、期权、prop firm 与专业数据终端，贴合您的交易风格。",
       icon: "code2",
     },
   ],
 };
 
 const FA: ServicesContent = {
-  sectionLabel: "01 // معماری",
-  headline: "اکوسیستم هسته",
+  sectionLabel: "03 // برای چه کسانی می‌سازیم",
+  headline: "یک شبکه رشد. چهار موتور.",
   cards: [
     {
-      title: "پروتکل‌های نقدینگی",
+      title: "صرافی‌ها و پلتفرم‌ها",
       description:
-        "موتورهای بازارساز الگوریتمی طراحی شده برای اجرای معاملات بدون لغزش در مقیاس نهادی.",
+        "مقیاس کاربر، حجم معاملات و سهم بازار منطقه‌ای — فعال‌سازی KOL، شبکه IB، قیف‌های بومی‌سازی‌شده، معرفی market maker، هماهنگی لیستینگ و VIP onboarding.",
       icon: "activity",
     },
     {
-      title: "امنیت شبکه",
+      title: "KOL و خالقان محتوا",
       description:
-        "مکانیسم‌های اجماع رمزنگاری مهندسی شده برای مقاومت در برابر بردارهای حمله سطح کوانتومی.",
-      icon: "shield",
-    },
-    {
-      title: "زیرساخت نود",
-      description:
-        "شبکه‌های فلز لخت غیرمتمرکز و توزیع شده در سطح جهانی که 100٪ آپتایم را تضمین می‌کنند.",
+        "زیرساخت خالق مالی خود را بسازید — استک affiliate، ربات تلگرام، وب‌سایت، SEO برای KOL، معاملات پلتفرمی ممتاز و شراکت با ابزارهای داده.",
       icon: "cpu",
     },
     {
-      title: "قراردادهای هوشمند",
-      description: "تأیید رسمی و حسابرسی دقیق اصول اولیه مالی پیچیده.",
+      title: "شبکه IB و BD",
+      description:
+        "از ارجاعات پراکنده به عملیات BD ساخت‌یافته — معماری کمیسیون سفارشی، playbook تبدیل، سیستم‌های retention و دسترسی مستقیم به صرافی‌ها و بروکرهای برتر.",
+      icon: "shield",
+    },
+    {
+      title: "تریدرها و VIP",
+      description:
+        "کارمزد، ابزار و پشتیبانی بهتر — تطبیق پلتفرم، VIP/whale onboarding، کپی تریدینگ، آپشن، prop firm و ترمینال‌های داده حرفه‌ای.",
       icon: "code2",
     },
   ],
 };
 
 const ES: ServicesContent = {
-  sectionLabel: "01 // ARQUITECTURA",
-  headline: "ECOSISTEMA CENTRAL",
+  sectionLabel: "03 // PARA QUIÉN CONSTRUIMOS",
+  headline: "UNA RED DE CRECIMIENTO. CUATRO MOTORES.",
   cards: [
     {
-      title: "PROTOCOLOS DE LIQUIDEZ",
+      title: "EXCHANGES Y PLATAFORMAS",
       description:
-        "Motores algorítmicos de market making diseñados para ejecución institucional con deslizamiento mínimo.",
+        "Escale usuarios, volumen y cuota regional — activación KOL, redes IB, embudos localizados, introducciones a market makers, coordinación de listings y onboarding VIP.",
       icon: "activity",
     },
     {
-      title: "SEGURIDAD DE RED",
+      title: "KOL Y CREADORES",
       description:
-        "Mecanismos criptográficos de consenso diseñados para resistir vectores de ataque de nivel cuántico.",
-      icon: "shield",
-    },
-    {
-      title: "INFRAESTRUCTURA DE NODOS",
-      description:
-        "Redes bare-metal descentralizadas y distribuidas globalmente para alta disponibilidad.",
+        "Construya su infraestructura de creador financiero — stacks de afiliados, bots de Telegram, sitios web, SEO para KOL y acuerdos premium con plataformas y herramientas de datos.",
       icon: "cpu",
     },
     {
-      title: "CONTRATOS INTELIGENTES",
+      title: "IB Y REDES BD",
       description:
-        "Verificación formal y auditoría rigurosa de primitivas financieras complejas.",
+        "Pase de referidos dispersos a una operación BD estructurada — arquitectura de comisiones, playbooks de conversión, sistemas de retención y acceso directo a exchanges y brokers de primer nivel.",
+      icon: "shield",
+    },
+    {
+      title: "TRADERS Y VIP",
+      description:
+        "Mejores comisiones, herramientas y soporte — matching de plataforma, onboarding VIP/whale, copy trading, opciones, prop firms y terminales de datos profesionales.",
       icon: "code2",
     },
   ],
 };
 
 const RU: ServicesContent = {
-  sectionLabel: "01 // АРХИТЕКТУРА",
-  headline: "ЯДРО ЭКОСИСТЕМЫ",
+  sectionLabel: "03 // ДЛЯ КОГО МЫ СТРОИМ",
+  headline: "ОДНА СЕТЬ РОСТА. ЧЕТЫРЕ ДВИГАТЕЛЯ.",
   cards: [
     {
-      title: "ПРОТОКОЛЫ ЛИКВИДНОСТИ",
+      title: "БИРЖИ И ПЛАТФОРМЫ",
       description:
-        "Алгоритмические движки маркет-мейкинга для исполнения сделок институционального уровня с минимальным проскальзыванием.",
+        "Масштабируйте пользователей, объём и долю рынка — KOL-активация, IB-сети, локализованные воронки, интро к market makers, листинги и VIP-онбординг.",
       icon: "activity",
     },
     {
-      title: "БЕЗОПАСНОСТЬ СЕТИ",
+      title: "KOL И КРЕАТОРЫ",
       description:
-        "Криптографические механизмы консенсуса, рассчитанные на устойчивость к атакам квантового уровня.",
-      icon: "shield",
-    },
-    {
-      title: "ИНФРАСТРУКТУРА УЗЛОВ",
-      description:
-        "Децентрализованные глобально распределённые bare-metal сети для стабильного аптайма.",
+        "Постройте инфраструктуру финансового креатора — affiliate-стеки, Telegram-боты, сайты, SEO для KOL, премиальные сделки с платформами и data-tools.",
       icon: "cpu",
     },
     {
-      title: "СМАРТ-КОНТРАКТЫ",
+      title: "IB И BD-СЕТИ",
       description:
-        "Формальная верификация и строгий аудит сложных финансовых примитивов.",
+        "От разрозненных рефералов к структурированной BD-операции — комиссионная архитектура, conversion playbook’и, retention и прямой доступ к топ-биржам и брокерам.",
+      icon: "shield",
+    },
+    {
+      title: "ТРЕЙДЕРЫ И VIP",
+      description:
+        "Лучшие комиссии, инструменты и поддержка — подбор платформы, VIP/whale onboarding, copy trading, опционы, prop firms и pro-терминалы данных.",
       icon: "code2",
     },
   ],
 };
 
 const AR: ServicesContent = {
-  sectionLabel: "٠١ // الهيكل",
-  headline: "النظام البيئي الأساسي",
+  sectionLabel: "03 // لمن نبني",
+  headline: "شبكة نمو واحدة. أربعة محركات.",
   cards: [
     {
-      title: "بروتوكولات السيولة",
+      title: "البورصات والمنصات",
       description:
-        "محركات صناعة السوق الخوارزمية المصممة لتنفيذ الصفقات بانزلاق منخفض على مستوى المؤسسات.",
+        "وسّع المستخدمين وحجم التداول والحصة الإقليمية — تفعيل KOL، شبكات IB، مسارات محلية، تعريف market makers، تنسيق الإدراج وVIP onboarding.",
       icon: "activity",
     },
     {
-      title: "أمان الشبكة",
+      title: "KOL والمبدعون",
       description:
-        "آليات توافق تشفيرية مصممة لمواجهة نماذج الهجوم المتقدمة.",
-      icon: "shield",
-    },
-    {
-      title: "بنية العقد",
-      description:
-        "شبكات موزعة عالمياً لضمان وقت تشغيل مستقر.",
+        "ابنِ بنية المبدع المالي — stacks تابعة، بوتات تيليغرام، مواقع، SEO للـKOL، صفقات منصات مميزة وشراكات أدوات بيانات.",
       icon: "cpu",
     },
     {
-      title: "العقود الذكية",
+      title: "شبكات IB وBD",
       description:
-        "تحقق صوري وتدقيق صارم للأدوات المالية المعقدة.",
+        "من إحالات متفرقة إلى عملية BD منظمة — هيكل عمولات، playbooks تحويل، أنظمة احتفاظ ووصول مباشر لبورصات ووسطاء من الدرجة الأولى.",
+      icon: "shield",
+    },
+    {
+      title: "المتداولون وVIP",
+      description:
+        "رسوم وأدوات ودعم أفضل — مطابقة منصة، VIP/whale onboarding، نسخ تداول، خيارات، prop firms ومحطات بيانات احترافية.",
       icon: "code2",
     },
   ],

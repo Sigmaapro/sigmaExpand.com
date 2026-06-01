@@ -73,7 +73,7 @@ export function absoluteOgImage(path: string = DEFAULT_OG_IMAGE_PATH): string {
 export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   home: {
     path: "/",
-    title: "Sigma | Finance & Web3 Growth Partner for Exchanges, Brokers & KOLs",
+    title: "Sigma | Finance & Web3 Growth Partner",
     description:
       "Sigma is a global financial growth infrastructure network — user acquisition, KOL marketing, IB programs, and liquidity for crypto exchanges, forex brokers, and Web3 platforms.",
     keywords: [

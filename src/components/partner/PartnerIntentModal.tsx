@@ -35,7 +35,7 @@ type CompanyState = {
 type KolState = {
   fullName: string;
   email: string;
-  role: KolRole | "";
+  roles: KolRole[];
   socialLink: string;
   country: string;
   description: string;
@@ -93,7 +93,7 @@ export function PartnerIntentModalHost() {
   const [kolForm, setKolForm] = useState<KolState>({
     fullName: "",
     email: "",
-    role: "",
+    roles: [],
     socialLink: "",
     country: "",
     description: "",
@@ -213,7 +213,7 @@ export function PartnerIntentModalHost() {
     if (!kolForm.fullName.trim()) nextErrors.fullName = copy.requiredMessage;
     if (!kolForm.email.trim()) nextErrors.email = copy.requiredMessage;
     else if (!isValidEmailFormat(kolForm.email.trim())) nextErrors.email = copy.invalidEmailMessage;
-    if (!kolForm.role) nextErrors.role = copy.requiredMessage;
+    if (kolForm.roles.length === 0) nextErrors.role = copy.requiredMessage;
     if (!kolForm.description.trim()) nextErrors.description = copy.requiredMessage;
     const socialLinkInvalid = !isReasonableUrl(kolForm.socialLink);
 
@@ -239,7 +239,9 @@ export function PartnerIntentModalHost() {
     fd.set("intentType", "kol");
     fd.set("fullName", kolForm.fullName.trim());
     fd.set("email", kolForm.email.trim());
-    fd.set("role", kolForm.role);
+    for (const role of kolForm.roles) {
+      fd.append("roles", role);
+    }
     fd.set("socialLink", kolForm.socialLink.trim());
     fd.set("country", kolForm.country.trim());
     fd.set("description", kolForm.description.trim());
@@ -340,7 +342,7 @@ export function PartnerIntentModalHost() {
     <AnimatePresence>
       {open ? (
         <motion.div
-          className="fixed inset-0 z-[10070] flex items-end justify-center p-0 pb-[env(safe-area-inset-bottom,0px)] sm:items-center sm:p-4"
+          className="fixed inset-0 z-[10070] flex cursor-auto items-end justify-center p-0 pb-[env(safe-area-inset-bottom,0px)] sm:items-center sm:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -349,7 +351,7 @@ export function PartnerIntentModalHost() {
         >
           <button
             type="button"
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 cursor-auto bg-black/70 backdrop-blur-sm"
             aria-label={copy.backdropCloseAria}
             onClick={closeModal}
             tabIndex={-1}
@@ -364,7 +366,7 @@ export function PartnerIntentModalHost() {
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.985 }}
             transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
-            className="relative z-10 flex max-h-[min(88dvh,calc(100dvh-env(safe-area-inset-bottom,0px)-0.5rem))] w-full max-w-xl flex-col overflow-hidden rounded-t-2xl border border-white/[0.1] border-b-0 bg-gradient-to-b from-[#12161f] to-[#0a0c12] shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:max-h-[min(92vh,720px)] sm:rounded-xl sm:border-b"
+            className="relative z-10 flex max-h-[min(88dvh,calc(100dvh-env(safe-area-inset-bottom,0px)-0.5rem))] w-full max-w-xl cursor-auto flex-col overflow-hidden rounded-t-2xl border border-white/[0.1] border-b-0 bg-gradient-to-b from-[#12161f] to-[#0a0c12] shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:max-h-[min(92vh,720px)] sm:rounded-xl sm:border-b [&_button]:cursor-pointer [&_input]:cursor-auto [&_label]:cursor-pointer [&_textarea]:cursor-auto"
             ref={dialogRef}
           >
             <div className="flex items-start justify-between gap-3 border-b border-white/[0.06] px-4 py-3.5 sm:gap-4 sm:px-6 sm:py-4">
@@ -396,9 +398,9 @@ export function PartnerIntentModalHost() {
                   <button
                     type="button"
                     onClick={() => setStep("company")}
-                    className="group rounded-2xl border border-[#1c39bb]/35 bg-[#1c39bb]/10 p-4 text-start transition-colors hover:border-[#1c39bb]/55 hover:bg-[#1c39bb]/18"
+                    className="group rounded-2xl border border-white/[0.11] bg-white/[0.03] p-4 text-start transition-colors hover:border-[#bde0fe]/28 hover:bg-white/[0.06]"
                   >
-                    <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#1c39bb]/40 bg-[#1c39bb]/16 text-[#c7dbff]">
+                    <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.14] bg-[#0f141f] text-[#d0d6df]">
                       <Building2 className="size-5" aria-hidden />
                     </span>
                     <p className={`font-display text-sm font-semibold uppercase tracking-[0.1em] text-white ${localeNav(language)}`}>
@@ -511,12 +513,50 @@ export function PartnerIntentModalHost() {
                   </div>
                   <div>
                     <label className={`block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#868e96] ${localeNav(language)}`}>{copy.roleLabel}</label>
-                    <select value={kolForm.role} onChange={(e) => setKolForm((prev) => ({ ...prev, role: e.target.value as KolRole }))} className="mt-1.5 min-h-11 w-full rounded-md border border-white/[0.1] bg-[#07090f] px-3 py-2.5 text-base text-[#f1f3f5] outline-none transition-[border-color,box-shadow] focus:border-[#1c39bb]/55 focus:ring-2 focus:ring-[#1c39bb]/25 sm:text-sm">
-                      <option value=""></option>
-                      <option value="KOL">{copy.roleKol}</option>
-                      <option value="IB">{copy.roleIb}</option>
-                      <option value="Trader">{copy.roleTrader}</option>
-                    </select>
+                    <p className={`mt-1 text-xs text-[#9ea8b4] ${localeBody(language)}`}>{copy.selectRolesHint}</p>
+                    <div className="mt-2 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+                      {([
+                        { id: "KOL" as const, label: copy.roleKol },
+                        { id: "IB" as const, label: copy.roleIb },
+                        { id: "Trader" as const, label: copy.roleTrader },
+                      ]).map((option) => {
+                        const selected = kolForm.roles.includes(option.id);
+                        return (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() =>
+                              setKolForm((prev) => ({
+                                ...prev,
+                                roles: prev.roles.includes(option.id)
+                                  ? prev.roles.filter((r) => r !== option.id)
+                                  : [...prev.roles, option.id],
+                              }))
+                            }
+                            aria-pressed={selected}
+                            className={`rounded-xl border px-3 py-2.5 text-start text-xs font-semibold uppercase tracking-[0.1em] transition-colors ${
+                              selected
+                                ? "border-[#1c39bb]/55 bg-[#1c39bb]/18 text-white"
+                                : "border-white/[0.12] bg-white/[0.03] text-[#d7dde4] hover:border-[#bde0fe]/30 hover:bg-white/[0.06]"
+                            } ${localeNav(language)}`}
+                          >
+                            <span className="inline-flex items-center gap-2">
+                              <span
+                                className={`inline-flex h-4 w-4 items-center justify-center rounded border ${
+                                  selected
+                                    ? "border-[#1c39bb]/65 bg-[#1c39bb]/45"
+                                    : "border-white/[0.24] bg-transparent"
+                                }`}
+                                aria-hidden
+                              >
+                                {selected ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}
+                              </span>
+                              {option.label}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
                     {errors.role ? <p className="mt-1 text-xs text-[#ff8f8f]">{errors.role}</p> : null}
                   </div>
                   <div>

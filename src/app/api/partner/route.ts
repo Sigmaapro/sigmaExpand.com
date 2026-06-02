@@ -24,6 +24,7 @@ const ALLOWED_FILE_TYPES = new Set([
 
 type IntentType = "company" | "kol";
 type KolRole = "KOL" | "IB" | "Trader";
+const ALLOWED_KOL_ROLES = new Set<KolRole>(["KOL", "IB", "Trader"]);
 
 function normalizeOptionalUrl(raw: string): string | null {
   const value = sanitizeText(raw, MAX_URL);
@@ -44,10 +45,23 @@ function parseIntentType(value: FormDataEntryValue | null): IntentType | null {
   return null;
 }
 
-function parseKolRole(value: FormDataEntryValue | null): KolRole | null {
-  if (typeof value !== "string") return null;
-  if (value === "KOL" || value === "IB" || value === "Trader") return value;
-  return null;
+function parseKolRoles(values: FormDataEntryValue[]): { roles: KolRole[]; hasInvalid: boolean } {
+  const roleStrings = values
+    .filter((v): v is string => typeof v === "string")
+    .map((v) => v.trim())
+    .filter((v) => v.length > 0);
+
+  const roles: KolRole[] = [];
+  let hasInvalid = false;
+  for (const value of roleStrings) {
+    if (ALLOWED_KOL_ROLES.has(value as KolRole)) {
+      roles.push(value as KolRole);
+    } else {
+      hasInvalid = true;
+    }
+  }
+
+  return { roles: Array.from(new Set(roles)), hasInvalid };
 }
 
 function getFromAddress() {
@@ -172,8 +186,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    const role = parseKolRole(formData.get("role"));
-    if (!role) {
+    const { roles, hasInvalid } = parseKolRoles(formData.getAll("roles"));
+    if (hasInvalid) {
+      return NextResponse.json({ error: "Invalid role value" }, { status: 400 });
+    }
+    if (roles.length === 0) {
       return NextResponse.json({ error: "Role required" }, { status: 400 });
     }
 
@@ -224,7 +241,7 @@ export async function POST(req: Request) {
       })}
       <p><strong>Name &amp; Last Name:</strong> ${escapeHtml(fullName)}</p>
       <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-      <p><strong>Role:</strong> ${escapeHtml(role)}</p>
+      <p><strong>Role(s):</strong> ${escapeHtml(roles.join(", "))}</p>
       <p><strong>Social Media Link:</strong> ${escapeHtml(socialLink ?? "—")}</p>
       <p><strong>Country:</strong> ${escapeHtml(country || "—")}</p>
       <p><strong>Performance Screenshot:</strong> ${escapeHtml(screenshotText)}</p>

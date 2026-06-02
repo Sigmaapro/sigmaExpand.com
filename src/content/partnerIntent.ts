@@ -17,6 +17,7 @@ export type PartnerIntentCopy = {
   websiteOptionalLabel: string;
   descriptionLabel: string;
   roleLabel: string;
+  selectRolesHint: string;
   roleKol: string;
   roleIb: string;
   roleTrader: string;
@@ -60,6 +61,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     websiteOptionalLabel: "Website Address (optional)",
     descriptionLabel: "Description",
     roleLabel: "Role",
+    selectRolesHint: "Select one or more roles",
     roleKol: "KOL",
     roleIb: "IB",
     roleTrader: "Trader",
@@ -97,6 +99,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     websiteOptionalLabel: "آدرس وب‌سایت (اختیاری)",
     descriptionLabel: "توضیحات",
     roleLabel: "نقش",
+    selectRolesHint: "یک یا چند نقش را انتخاب کنید",
     roleKol: "KOL",
     roleIb: "IB",
     roleTrader: "Trader",
@@ -135,6 +138,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     websiteOptionalLabel: "عنوان الموقع الإلكتروني (اختياري)",
     descriptionLabel: "الوصف",
     roleLabel: "الدور",
+    selectRolesHint: "اختر دورًا واحدًا أو أكثر",
     roleKol: "KOL",
     roleIb: "IB",
     roleTrader: "Trader",
@@ -172,6 +176,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     websiteOptionalLabel: "Web Sitesi Adresi (opsiyonel)",
     descriptionLabel: "Açıklama",
     roleLabel: "Rol",
+    selectRolesHint: "Bir veya daha fazla rol seçin",
     roleKol: "KOL",
     roleIb: "IB",
     roleTrader: "Trader",
@@ -210,6 +215,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     websiteOptionalLabel: "Адрес сайта (необязательно)",
     descriptionLabel: "Описание",
     roleLabel: "Роль",
+    selectRolesHint: "Выберите одну или несколько ролей",
     roleKol: "KOL",
     roleIb: "IB",
     roleTrader: "Trader",
@@ -247,6 +253,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     websiteOptionalLabel: "网站地址（可选）",
     descriptionLabel: "描述",
     roleLabel: "角色",
+    selectRolesHint: "选择一个或多个角色",
     roleKol: "KOL",
     roleIb: "IB",
     roleTrader: "Trader",
@@ -286,6 +293,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     websiteOptionalLabel: "Sitio web (opcional)",
     descriptionLabel: "Descripción",
     roleLabel: "Rol",
+    selectRolesHint: "Selecciona uno o más roles",
     roleKol: "KOL",
     roleIb: "IB",
     roleTrader: "Trader",

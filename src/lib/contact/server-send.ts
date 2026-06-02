@@ -1,6 +1,11 @@
 import { escapeHtml } from "./sanitize";
 
 export type LeadSource = "book-call" | "live-support";
+export type EmailAttachment = {
+  filename: string;
+  content: string;
+  type?: string;
+};
 
 function getResendKey(): string | undefined {
   const k = process.env.RESEND_API_KEY ?? process.env.EMAIL_API_KEY;
@@ -29,17 +34,37 @@ export async function sendLeadEmail(params: {
     <pre style="white-space:pre-wrap;font-family:inherit;">${escapeHtml(params.message || "—")}</pre>
   `;
 
+  await sendResendEmail({
+    key,
+    from: params.from,
+    to: params.to,
+    subject,
+    html,
+  });
+}
+
+async function sendResendEmail(params: {
+  key: string;
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+  attachments?: EmailAttachment[];
+}): Promise<void> {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${key}`,
+      Authorization: `Bearer ${params.key}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       from: params.from,
       to: [params.to],
-      subject,
-      html,
+      subject: params.subject,
+      html: params.html,
+      ...(params.attachments && params.attachments.length > 0
+        ? { attachments: params.attachments }
+        : {}),
     }),
   });
 
@@ -47,6 +72,28 @@ export async function sendLeadEmail(params: {
     const body = await res.text().catch(() => "");
     throw new Error(`Resend ${res.status}: ${body.slice(0, 200)}`);
   }
+}
+
+export async function sendPartnerEmail(params: {
+  to: string;
+  from: string;
+  subject: string;
+  html: string;
+  attachments?: EmailAttachment[];
+}): Promise<void> {
+  const key = getResendKey();
+  if (!key) {
+    throw new Error("Email API key not configured");
+  }
+
+  await sendResendEmail({
+    key,
+    from: params.from,
+    to: params.to,
+    subject: params.subject,
+    html: params.html,
+    attachments: params.attachments,
+  });
 }
 
 export async function sendLeadTelegram(params: {

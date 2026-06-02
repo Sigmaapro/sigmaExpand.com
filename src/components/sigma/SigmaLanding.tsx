@@ -825,7 +825,7 @@ const HeroSection = ({
       <div className="absolute inset-0 sigma-hero-vignette opacity-[0.35] sm:opacity-[0.45] md:opacity-[0.55]" />
     </div>
     <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-16 lg:gap-y-10 xl:gap-x-24">
-      <div className="relative z-20 order-2 flex w-full min-w-0 max-w-full flex-col justify-center sm:order-1 md:max-w-xl lg:order-none lg:max-w-none lg:pe-4">
+      <div className="relative z-20 order-1 flex w-full min-w-0 max-w-full flex-col justify-center md:max-w-xl lg:order-none lg:max-w-none lg:pe-4">
         <div
           className={`absolute -top-2 hidden h-[calc(100%+1rem)] w-px bg-gradient-to-b from-[#1c39bb]/50 via-[#1c39bb]/15 to-transparent lg:block ${isRtl ? "-right-3" : "-left-3"}`}
           aria-hidden
@@ -894,7 +894,7 @@ const HeroSection = ({
         </motion.div>
       </div>
 
-      <div className="relative z-10 order-1 min-h-0 w-full min-w-0 max-w-full justify-self-stretch sm:order-2 md:max-w-[min(100%,28rem)] md:justify-self-center lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
+      <div className="relative z-10 order-2 min-h-0 w-full min-w-0 max-w-full justify-self-stretch md:max-w-[min(100%,28rem)] md:justify-self-center lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
         <div className="relative min-h-[min(180px,30svh)] w-full sm:min-h-[min(260px,38vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
           <HeroVisual t={t} />
         </div>

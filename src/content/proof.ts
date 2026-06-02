@@ -90,7 +90,7 @@ const EN: ProofContent = {
     headline: "Execution That Moves Users, Volume, and Reach",
   },
   partnerFeedback: {
-    sectionLabel: "PARTNER FEEDBACK",
+    sectionLabel: "Partner Feedback",
     headline: "What Operators Say About Working With Sigma",
   },
   metrics: [
@@ -202,26 +202,26 @@ const FA: ProofContent = {
     {
       id: "t1",
       quote:
-        "Sigma کمپین نمایشی اجرا نمی‌کند. جذب کاربر را به نقاط کنترل نقدینگی وصل می‌کند و تا زمانی که میز بتواند اقدام کند، خط گزارش‌دهی را حفظ می‌کند.",
-      name: "شریک",
-      role: "مدیر رشد",
-      company: "میز CEX جهانی",
+        "Sigma کمپین‌های نمایشی و بی‌اثر اجرا نمی‌کند. آن‌ها جذب کاربر را به نقاط واقعی نقدینگی وصل می‌کنند و گزارش‌دهی را تا جایی ادامه می‌دهند که تیم بتواند بر اساس آن تصمیم بگیرد.",
+      name: "Partner",
+      role: "Head of Growth، Global CEX Desk",
+      company: "",
     },
     {
       id: "t2",
       quote:
         "بالاخره یک ریتم عملیاتی واحد بین KOLها، نقاط عطف محصول و رویدادهای بازار داشتیم.",
-      name: "شریک",
-      role: "معاون اکوسیستم",
-      company: "بنیاد Layer-1",
+      name: "Partner",
+      role: "VP Ecosystem، Layer-1 Foundation",
+      company: "",
     },
     {
       id: "t3",
       quote:
-        "تیم‌شان زبان اجرا را می‌فهمد: دک کمتر، playbook بیشتر، تله‌متری که واقعاً اولویت‌های هفتگی ما را تغییر می‌دهد.",
-      name: "شریک",
-      role: "مدیر ارشد بازاریابی",
-      company: "پروتکل DeFi",
+        "تیم آن‌ها زبان اجرا را می‌فهمد: اسلاید کمتر، playbook بیشتر، و telemetryای که واقعاً اولویت‌های هفتگی ما را تغییر می‌دهد.",
+      name: "Partner",
+      role: "CMO، DeFi Protocol",
+      company: "",
     },
   ],
 };
@@ -236,8 +236,8 @@ const TR: ProofContent = {
     headline: "Kullanıcıları, hacmi ve erişimi hareket ettiren yürütme",
   },
   partnerFeedback: {
-    sectionLabel: "ORTAK GERİ BİLDİRİMİ",
-    headline: "Operatörler Sigma ile Çalışma Hakkında Ne Diyor",
+    sectionLabel: "Partner Geri Bildirimleri",
+    headline: "Operatörler Sigma ile Çalışmak Hakkında Ne Diyor",
   },
   metrics: [
     {
@@ -275,26 +275,26 @@ const TR: ProofContent = {
     {
       id: "t1",
       quote:
-        "Sigma gösteriş kampanyaları yürütmüyor. Edinimi likidite kontrol noktalarına bağlıyor ve masa ekibi aksiyon alana kadar rapor disiplinini koruyor.",
-      name: "Ortak",
-      role: "Büyüme Direktörü",
-      company: "Global CEX Masası",
+        "Sigma gösteriş kampanyaları üretmez. Kullanıcı kazanımını likidite kontrol noktalarına bağlar ve ekip aksiyon alana kadar raporlama disiplinini korur.",
+      name: "Partner",
+      role: "Head of Growth",
+      company: "Global CEX Desk",
     },
     {
       id: "t2",
       quote:
-        "Sonunda KOL'lar, ürün kilometre taşları ve piyasa olayları arasında tek bir operasyon ritmimiz oldu.",
-      name: "Ortak",
-      role: "Ekosistem Başkan Yardımcısı",
+        "KOL’ler, ürün kilometre taşları ve piyasa etkinlikleri arasında sonunda tek bir operasyon ritmi yakaladık.",
+      name: "Partner",
+      role: "VP Ecosystem",
       company: "Layer-1 Foundation",
     },
     {
       id: "t3",
       quote:
-        "Ekipleri yürütme dilini konuşuyor: daha az sunum, daha çok playbook, haftalık önceliklerimizi gerçekten değiştiren telemetri.",
-      name: "Ortak",
+        "Ekipleri uygulama dilini konuşuyor: daha az deck, daha fazla playbook ve haftalık önceliklerimizi gerçekten değiştiren telemetry.",
+      name: "Partner",
       role: "CMO",
-      company: "DeFi Protokolü",
+      company: "DeFi Protocol",
     },
   ],
 };
@@ -309,8 +309,8 @@ const ZH: ProofContent = {
     headline: "推动用户、交易量与覆盖面的执行能力",
   },
   partnerFeedback: {
-    sectionLabel: "合作反馈",
-    headline: "运营方如何评价与 Sigma 的合作",
+    sectionLabel: "合作伙伴反馈",
+    headline: "运营者如何评价与 Sigma 合作",
   },
   metrics: [
     {
@@ -348,26 +348,26 @@ const ZH: ProofContent = {
     {
       id: "t1",
       quote:
-        "Sigma 不做虚荣式营销。他们将获客与流动性检查点打通，并在交易台能够行动前始终保持报告纪律。",
-      name: "合作伙伴",
-      role: "增长负责人",
-      company: "全球 CEX 交易台",
+        "Sigma 不做虚荣指标式的活动。他们把用户获取连接到流动性检查点，并持续推进报告机制，直到团队能够真正采取行动。",
+      name: "Partner",
+      role: "Global CEX Desk 增长负责人",
+      company: "",
     },
     {
       id: "t2",
       quote:
         "我们终于在 KOL、产品里程碑和市场事件之间建立了统一运营节奏。",
-      name: "合作伙伴",
-      role: "生态副总裁",
-      company: "Layer-1 基金会",
+      name: "Partner",
+      role: "Layer-1 Foundation 生态副总裁",
+      company: "",
     },
     {
       id: "t3",
       quote:
-        "他们真正懂执行：更少演示、更多 playbook，以及能改变我们每周优先级的遥测体系。",
-      name: "合作伙伴",
-      role: "CMO",
-      company: "DeFi 协议",
+        "他们的团队讲的是执行语言：更少的方案堆叠，更多的 playbook，以及真正改变我们每周优先级的 telemetry。",
+      name: "Partner",
+      role: "DeFi Protocol CMO",
+      company: "",
     },
   ],
 };
@@ -382,8 +382,8 @@ const ES: ProofContent = {
     headline: "Ejecución que mueve usuarios, volumen y alcance",
   },
   partnerFeedback: {
-    sectionLabel: "OPINIÓN DE SOCIOS",
-    headline: "Qué dicen los operadores sobre trabajar con Sigma",
+    sectionLabel: "Feedback de Partners",
+    headline: "Qué Dicen los Operadores Sobre Trabajar con Sigma",
   },
   metrics: [
     {
@@ -422,25 +422,25 @@ const ES: ProofContent = {
       id: "t1",
       quote:
         "Sigma no lanza campañas de vanidad. Conectan adquisición con checkpoints de liquidez y mantienen la disciplina de reporting hasta que la mesa puede actuar.",
-      name: "Socio",
-      role: "Director de Growth",
-      company: "Mesa CEX global",
+      name: "Partner",
+      role: "Head of Growth",
+      company: "Global CEX Desk",
     },
     {
       id: "t2",
       quote:
         "Por fin tuvimos un ritmo operativo único entre KOLs, hitos de producto y eventos de mercado.",
-      name: "Socio",
-      role: "VP de Ecosistema",
-      company: "Fundación Layer-1",
+      name: "Partner",
+      role: "VP Ecosystem",
+      company: "Layer-1 Foundation",
     },
     {
       id: "t3",
       quote:
-        "Su equipo habla de ejecución: menos presentaciones, más playbooks, telemetría que cambia nuestras prioridades semanales.",
-      name: "Socio",
+        "Su equipo habla el lenguaje de la ejecución: menos decks, más playbooks y telemetry que realmente cambia nuestras prioridades semanales.",
+      name: "Partner",
       role: "CMO",
-      company: "Protocolo DeFi",
+      company: "DeFi Protocol",
     },
   ],
 };
@@ -455,7 +455,7 @@ const RU: ProofContent = {
     headline: "Исполнение, которое двигает пользователей, объём и охват",
   },
   partnerFeedback: {
-    sectionLabel: "ОТЗЫВЫ ПАРТНЕРОВ",
+    sectionLabel: "Отзывы партнёров",
     headline: "Что операторы говорят о работе с Sigma",
   },
   metrics: [
@@ -494,26 +494,26 @@ const RU: ProofContent = {
     {
       id: "t1",
       quote:
-        "Sigma не делает кампании ради шума. Они связывают привлечение с чекпоинтами ликвидности и держат дисциплину отчётности, пока desk не может действовать.",
-      name: "Партнёр",
-      role: "Руководитель роста",
-      company: "Глобальный CEX desk",
+        "Sigma не запускает кампании ради красивых метрик. Они связывают привлечение пользователей с контрольными точками ликвидности и держат отчётность на уровне, пока команда не может действовать на её основе.",
+      name: "Partner",
+      role: "Head of Growth",
+      company: "Global CEX Desk",
     },
     {
       id: "t2",
       quote:
-        "Наконец появился единый операционный ритм между KOL, продуктовыми вехами и рыночными событиями.",
-      name: "Партнёр",
-      role: "VP Экосистемы",
+        "У нас наконец появился единый операционный ритм между KOL, продуктовыми вехами и рыночными событиями.",
+      name: "Partner",
+      role: "VP Ecosystem",
       company: "Layer-1 Foundation",
     },
     {
       id: "t3",
       quote:
-        "Их команда говорит на языке исполнения: меньше слайдов, больше playbook’ов, телеметрия, которая меняет наши недельные приоритеты.",
-      name: "Партнёр",
+        "Их команда говорит языком исполнения: меньше презентаций, больше playbook’ов и telemetry, которая реально меняет наши недельные приоритеты.",
+      name: "Partner",
       role: "CMO",
-      company: "DeFi-протокол",
+      company: "DeFi Protocol",
     },
   ],
 };
@@ -567,26 +567,26 @@ const AR: ProofContent = {
     {
       id: "t1",
       quote:
-        "Sigma لا تطلق حملات صورية. تربط الاكتساب بنقاط تحقق السيولة وتحافظ على انضباط التقارير حتى يمكن لمكتب التداول التصرّف.",
-      name: "شريك",
-      role: "رئيس النمو",
-      company: "مكتب CEX عالمي",
+        "Sigma لا تطلق حملات سطحية. إنهم يربطون اكتساب المستخدمين بنقاط سيولة قابلة للقياس ويحافظون على وضوح التقارير حتى يتمكن الفريق من اتخاذ قرارات فعلية.",
+      name: "Partner",
+      role: "رئيس النمو، Global CEX Desk",
+      company: "",
     },
     {
       id: "t2",
       quote:
-        "أخيراً صار لدينا إيقاع تشغيل واحد بين المؤثرين ومراحل المنتج وأحداث السوق.",
-      name: "شريك",
-      role: "نائب رئيس المنظومة",
-      company: "مؤسسة Layer-1",
+        "أخيراً أصبح لدينا إيقاع تشغيلي واحد بين KOLs، مراحل المنتج، وأحداث السوق.",
+      name: "Partner",
+      role: "نائب رئيس المنظومة، Layer-1 Foundation",
+      company: "",
     },
     {
       id: "t3",
       quote:
-        "فريقهم يتحدث بلغة التنفيذ: عروض أقل، playbooks أكثر، وبيانات تشغيل تغيّر أولوياتنا الأسبوعية فعلياً.",
-      name: "شريك",
-      role: "مديرة التسويق",
-      company: "بروتوكول DeFi",
+        "فريقهم يتحدث بلغة التنفيذ: عروض أقل، playbooks أكثر، وقياسات تغيّر أولوياتنا الأسبوعية فعلاً.",
+      name: "Partner",
+      role: "CMO، DeFi Protocol",
+      company: "",
     },
   ],
 };

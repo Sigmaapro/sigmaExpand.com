@@ -16,13 +16,6 @@ import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeEyebrow, localeHeading, localeNav } from "@/lib/localeTypography";
 
-function initialsFromName(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  const a = parts[0]?.[0] ?? "";
-  const b = parts.length > 1 ? parts[parts.length - 1]![0]! : parts[0]?.[1] ?? "";
-  return `${a}${b}`.toUpperCase();
-}
-
 function LogoCell({ logo, lang }: { logo: ProofClientLogo; lang: LangCode }) {
   const inner = (
     <div className="flex min-h-[3.25rem] min-w-[7.5rem] max-w-[11rem] items-center justify-center px-5 py-3 sm:min-h-[3.5rem] sm:min-w-[8.5rem]">
@@ -126,7 +119,7 @@ function TestimonialCard({
   lang: LangCode;
   reduceMotion: boolean;
 }) {
-  const initials = initialsFromName(item.name);
+  const attribution = item.company ? `${item.role}, ${item.company}` : item.role;
   return (
     <motion.article
       initial={reduceMotion ? false : { opacity: 0, y: 16 }}
@@ -140,46 +133,12 @@ function TestimonialCard({
         {item.quote}
         <span className="text-[#8a939e] md:text-[#6c757d]">”</span>
       </blockquote>
-      <div className="mt-8 flex min-w-0 flex-col gap-4 border-t border-white/[0.06] pt-6 sm:flex-row sm:flex-wrap sm:items-center">
-        {item.avatarSrc ? (
-          <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-white/10 bg-[#111318]">
-            <Image
-              src={item.avatarSrc}
-              alt={`Photo of ${item.name}`}
-              fill
-              className="object-cover"
-              sizes="44px"
-            />
-          </div>
-        ) : (
-          <div
-            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#1c39bb]/35 bg-[#1c39bb]/12 text-[11px] font-semibold uppercase tracking-wide text-[#bde0fe] ${localeNav(lang)}`}
-            aria-hidden
-          >
-            {initials}
-          </div>
-        )}
-        <div className="min-w-0 flex-1">
-          <p className="font-display text-sm font-semibold text-white">{item.name}</p>
-          <p
-            className={`mt-0.5 text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96] ${localeNav(lang)}`}
-          >
-            {item.role}
-            {item.role && item.company ? " · " : null}
-            {item.company}
-          </p>
-        </div>
-        {item.logoSrc ? (
-          <div className="relative mt-1 h-7 w-[100px] shrink-0 self-start opacity-80 sm:mt-0 sm:h-8 sm:w-[112px] sm:self-auto sm:ms-auto">
-            <Image
-              src={item.logoSrc}
-              alt={item.company}
-              fill
-              className="object-contain object-right"
-              sizes="112px"
-            />
-          </div>
-        ) : null}
+      <div className="mt-8 border-t border-white/[0.06] pt-6">
+        <p
+          className={`text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96] ${localeNav(lang)}`}
+        >
+          {attribution}
+        </p>
       </div>
     </motion.article>
   );

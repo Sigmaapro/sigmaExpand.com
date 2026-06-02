@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import {
   getServiceDetailContent,
   type ServiceDetailKey,
@@ -55,12 +56,12 @@ export function ServiceDetailPageView({ serviceKey }: { serviceKey: ServiceDetai
             {c.primaryCtaLabel}
           </Link>
           {c.secondaryCtaHref && c.secondaryCtaLabel ? (
-            <Link
-              href={c.secondaryCtaHref}
+            <PartnerIntentTriggerButton
               className={`inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}
+              ariaLabel={c.secondaryCtaLabel}
             >
               {c.secondaryCtaLabel}
-            </Link>
+            </PartnerIntentTriggerButton>
           ) : null}
         </div>
       </article>

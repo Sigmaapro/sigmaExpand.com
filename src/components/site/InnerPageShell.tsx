@@ -2,6 +2,7 @@
 
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { MarketingHeader } from "@/components/site/MarketingHeader";
+import { PartnerIntentModalHost } from "@/components/partner/PartnerIntentModal";
 import { useLanguage } from "@/context/LanguageContext";
 import { rtlScriptSurfaceClass } from "@/lib/localeTypography";
 
@@ -14,6 +15,7 @@ export function InnerPageShell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <MarketingFooter />
+      <PartnerIntentModalHost />
     </div>
   );
 }

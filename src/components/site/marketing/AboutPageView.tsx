@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import { aboutPageContentByLang } from "@/content/global/marketing/aboutContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
@@ -201,12 +202,12 @@ export function AboutPageView() {
           </h2>
           <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{c.invitation.body}</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={c.invitation.primaryCtaHref}
+            <PartnerIntentTriggerButton
               className={`inline-flex items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeCta(language)}`}
+              ariaLabel={c.invitation.primaryCtaLabel}
             >
               {c.invitation.primaryCtaLabel}
-            </Link>
+            </PartnerIntentTriggerButton>
             <Link
               href={c.invitation.secondaryCtaHref}
               className={`inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}

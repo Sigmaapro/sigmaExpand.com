@@ -22,6 +22,7 @@ import { ROUTES } from "@/content/global/routes";
 import { siteSettings } from "@/content/siteSettings";
 import { getCryptoAgency } from "@/content/sections/cryptoAgency";
 import type { LangCode, MobileNavSheetStrings } from "@/content/types";
+import { openPartnerIntentFlow } from "@/components/partner/PartnerIntentModal";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeCta, localeEyebrow, localeNav } from "@/lib/localeTypography";
 
@@ -464,7 +465,10 @@ export function SigmaMobileNavPanel({
               <div className="relative shrink-0 border-t border-white/[0.07] bg-[linear-gradient(180deg,transparent,rgba(6,8,14,0.95)_35%)] pt-4">
                 <button
                   type="button"
-                  onClick={() => goToSection("connect")}
+                  onClick={() => {
+                    onClose();
+                    openPartnerIntentFlow();
+                  }}
                   className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-center gap-2 rounded-2xl border border-[#1c39bb]/45 bg-[linear-gradient(180deg,rgba(28,57,187,0.35)_0%,rgba(28,57,187,0.12)_100%)] px-5 py-4 font-display text-[12px] font-semibold uppercase tracking-[0.16em] text-white shadow-[0_8px_36px_rgba(28,57,187,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[transform,box-shadow] hover:border-[#3d5cdf]/55 hover:shadow-[0_12px_48px_rgba(28,57,187,0.45)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(lang)}`}
                 >
                   {workWithSigmaLabel}

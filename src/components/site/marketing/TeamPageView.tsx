@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import type { TeamMember } from "@/content/global/marketing/teamContent";
 import { teamPageContentByLang } from "@/content/global/marketing/teamContent";
 import { pickLang } from "@/content/global/marketing/helpers";
@@ -130,12 +131,12 @@ export function TeamPageView() {
           <p className={`text-sm leading-relaxed text-[#b6bcc4] ${localeBody(language)}`}>{c.extendedNetwork}</p>
           <p className={`mt-3 text-xs leading-relaxed text-[#8f98a3] ${localeMeta(language)}`}>{c.ndaLine}</p>
           <div className="mt-5">
-            <Link
-              href={c.ctaHref}
+            <PartnerIntentTriggerButton
               className={`inline-flex items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeMeta(language)}`}
+              ariaLabel={c.ctaLabel}
             >
               {c.ctaLabel}
-            </Link>
+            </PartnerIntentTriggerButton>
           </div>
         </section>
       </div>

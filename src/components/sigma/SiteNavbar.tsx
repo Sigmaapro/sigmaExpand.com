@@ -8,7 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
-import { ROUTES } from "@/content/global/routes";
+import { openPartnerIntentFlow } from "@/components/partner/PartnerIntentModal";
 import { buildLocaleSearchParams, routePathForLang } from "@/lib/i18n";
 import { localeCta, localeLanguageSwitcherOption, localeNav } from "@/lib/localeTypography";
 
@@ -118,12 +118,13 @@ export function SiteNavbar() {
           </AnimatePresence>
         </div>
 
-        <Link
-          href={routePathForLang(ROUTES.contact, language)}
+        <button
+          type="button"
+          onClick={openPartnerIntentFlow}
           className={`border border-white/20 px-4 py-2 font-body text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-white hover:text-erie ${localeCta(language)}`}
         >
           {t.nav.navCta}
-        </Link>
+        </button>
       </div>
     </nav>
   );

@@ -17,6 +17,7 @@ import { ProofLayer } from "@/components/sigma/ProofLayer";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
 import { MidConversionCta, FinalConversionCta } from "@/components/sigma/ConversionSections";
 import { BookCallModal } from "@/components/sigma/BookCallModal";
+import { PartnerIntentModalHost, openPartnerIntentFlow } from "@/components/partner/PartnerIntentModal";
 import { getConversion } from "@/content/conversion";
 import { HeroGlassCarousel } from "@/components/sigma/HeroGlassCarousel";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
@@ -877,7 +878,7 @@ const HeroSection = ({
             <MagneticButton
               primary
               isRtl={isRtl}
-              href={t.hero.primaryHref}
+              onClick={openPartnerIntentFlow}
               fullWidthMobile
             >
               {t.hero.primaryCta}
@@ -1559,7 +1560,7 @@ const Navbar = () => {
 
             <button
               type="button"
-              onClick={() => goToSection("connect")}
+              onClick={openPartnerIntentFlow}
               className={`hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.26)_0%,rgba(28,57,187,0.09)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_22px_rgba(28,57,187,0.14)] transition-[background,box-shadow,border-color,transform] hover:border-[#2a4acd]/70 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_28px_rgba(28,57,187,0.22)] active:scale-[0.99] md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px] ${localeCta(currentLang)}`}
             >
               {t.nav.navCta}
@@ -1668,6 +1669,7 @@ export default function SigmaLanding() {
         isRtl={isRtl}
         lang={currentLang}
       />
+      <PartnerIntentModalHost />
 
       <Navbar />
     </div>

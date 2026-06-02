@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import { riskDisclosureContentByLang } from "@/content/global/marketing/riskDisclosureContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
@@ -33,12 +34,12 @@ export function RiskDisclosurePageView() {
         </section>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Link
-            href={c.primaryCtaHref}
+          <PartnerIntentTriggerButton
             className={`inline-flex min-h-11 items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeCta(language)}`}
+            ariaLabel={c.primaryCtaLabel}
           >
             {c.primaryCtaLabel}
-          </Link>
+          </PartnerIntentTriggerButton>
           <Link
             href={c.secondaryCtaHref}
             className={`inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}

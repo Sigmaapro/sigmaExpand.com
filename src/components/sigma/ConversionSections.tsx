@@ -5,6 +5,7 @@ import { usePrefersReducedMotion } from "@/hooks/useMedia";
 import { getConversion } from "@/content/conversion";
 import type { LangCode } from "@/content/types";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
+import { openPartnerIntentFlow } from "@/components/partner/PartnerIntentModal";
 import { localeEyebrow, localeHeading, localeMutedTrack } from "@/lib/localeTypography";
 
 export function MidConversionCta({
@@ -45,7 +46,7 @@ export function MidConversionCta({
           {c.supporting}
         </p>
         <div className="mt-8 flex w-full justify-center px-1 sm:px-0">
-          <MagneticButton primary href={c.primaryHref} isRtl={isRtl} fullWidthMobile>
+          <MagneticButton primary onClick={openPartnerIntentFlow} isRtl={isRtl} fullWidthMobile>
             {c.primaryLabel}
           </MagneticButton>
         </div>
@@ -89,7 +90,7 @@ export function FinalConversionCta({
           {c.supporting}
         </p>
         <div className="mx-auto mt-10 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:mt-12 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
-          <MagneticButton primary href={c.primaryHref} isRtl={isRtl} fullWidthMobile>
+          <MagneticButton primary onClick={openPartnerIntentFlow} isRtl={isRtl} fullWidthMobile>
             {c.primaryLabel}
           </MagneticButton>
           <MagneticButton onClick={onBookCall} isRtl={isRtl} fullWidthMobile>

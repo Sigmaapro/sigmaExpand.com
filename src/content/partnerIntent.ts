@@ -64,7 +64,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     selectRolesHint: "Select one or more roles",
     roleKol: "KOL",
     roleIb: "IB",
-    roleTrader: "Yatırımcı",
+    roleTrader: "Trader",
     socialOptionalLabel: "Social Media Link (optional)",
     countryOptionalLabel: "Country (optional)",
     performanceOptionalLabel: "Performance screenshot (optional)",

@@ -1039,7 +1039,6 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
           </p>
           <AnimatedText
             text={t.services.headline}
-            mobileWordStack
             as="h2"
             className={`font-display w-full min-w-0 max-w-full text-[clamp(1.3rem,5.8vw,1.85rem)] font-semibold uppercase leading-snug tracking-normal text-balance sm:text-4xl md:text-5xl md:tracking-tight ${localeHeading(language)}`}
           />

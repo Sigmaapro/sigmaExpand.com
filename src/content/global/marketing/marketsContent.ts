@@ -79,10 +79,52 @@ const EN_CONTENT: MarketsIndexContent = {
 
 export const marketsIndexContentByLang: Record<LangCode, MarketsIndexContent> = {
   EN: EN_CONTENT,
-  TR: EN_CONTENT,
-  ZH: EN_CONTENT,
-  FA: EN_CONTENT,
-  ES: EN_CONTENT,
-  RU: EN_CONTENT,
-  AR: EN_CONTENT,
+  TR: {
+    ...EN_CONTENT,
+    kicker: "Bölgesel Kripto Pazarlama",
+    title: "Bir Sonraki Kullanıcılarınızın Gerçekten Yaşadığı Yerler İçin",
+    intro:
+      "Web3 büyümesi küresel ortalamada değil, bölge bölge gerçekleşir. Sigma; yerel KOL, saha BD ve bölgesel hunilerle yüksek hızdaki finans pazarlarında çalışır.",
+    ctaLabel: "Bölgesel Genişlemenizi Planlayın",
+  },
+  ZH: {
+    ...EN_CONTENT,
+    kicker: "区域加密营销",
+    title: "为下一批用户真正所在的市场而打造",
+    intro:
+      "Web3 增长并非发生在全球平均值，而是按区域发生。Sigma 通过本地 KOL、在地 BD 和区域化漏斗在高增长金融市场执行。",
+    ctaLabel: "规划您的区域扩张",
+  },
+  FA: {
+    ...EN_CONTENT,
+    kicker: "مارکتینگ منطقه‌ای کریپتو",
+    title: "برای جایی ساخته شده که کاربران بعدی شما واقعاً آنجا هستند",
+    intro:
+      "رشد Web3 در میانگین جهانی رخ نمی‌دهد؛ منطقه‌به‌منطقه اتفاق می‌افتد. Sigma با KOLهای بومی، BD میدانی و قیف‌های محلی در بازارهای پرسرعت مالی فعالیت می‌کند.",
+    ctaLabel: "برنامه‌ریزی توسعه منطقه‌ای",
+  },
+  ES: {
+    ...EN_CONTENT,
+    kicker: "Marketing Cripto Regional",
+    title: "Diseñado para donde viven de verdad tus próximos usuarios",
+    intro:
+      "El crecimiento Web3 no ocurre en el promedio global; ocurre región por región. Sigma ejecuta con KOL nativos, BD en terreno y embudos locales.",
+    ctaLabel: "Planifica tu expansión regional",
+  },
+  RU: {
+    ...EN_CONTENT,
+    kicker: "Региональный криптомаркетинг",
+    title: "Сделано для рынков, где реально живут ваши следующие пользователи",
+    intro:
+      "Рост Web3 не происходит по «среднему миру» — он происходит регион за регионом. Sigma работает через локальные KOL, полевой BD и локальные воронки.",
+    ctaLabel: "Спланировать региональную экспансию",
+  },
+  AR: {
+    ...EN_CONTENT,
+    kicker: "تسويق إقليمي للعملات المشفرة",
+    title: "مصمّم للأسواق التي يعيش فيها مستخدموك القادمون فعلياً",
+    intro:
+      "نمو Web3 لا يحدث عند المتوسط العالمي، بل منطقةً بمنطقة. تعمل Sigma عبر KOL محليين وBD ميداني ومسارات جذب مُعايرة لكل سوق.",
+    ctaLabel: "خطّط لتوسّعك الإقليمي",
+  },
 };

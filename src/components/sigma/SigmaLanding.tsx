@@ -1,17 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback, type ComponentType } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import {
-  FaDiscord,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTelegram,
-  FaTiktok,
-  FaWhatsapp,
-  FaXTwitter,
-  FaYoutube,
-} from "react-icons/fa6";
 import { LiveSupportButton } from "@/components/sigma/LiveSupportButton";
 import { ProofLayer } from "@/components/sigma/ProofLayer";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
@@ -42,11 +32,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { ServiceIconId, SiteTranslations } from "@/content/types";
-import {
-  socialContactEmail,
-  socialLinks,
-  type SocialPlatformKey,
-} from "@/content/socials";
 import { InsightsOuterLink } from "@/components/site/InsightsOuterLink";
 import { LanguageSwitcherButton } from "@/components/site/LanguageSwitcherButton";
 import { SigmaMobileNavPanel } from "@/components/sigma/SigmaMobileNavPanel";
@@ -55,7 +40,6 @@ import { aboutPageMetaByLang } from "@/content/global/marketing/aboutContent";
 import { teamPageMetaByLang } from "@/content/global/marketing/teamContent";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
-import { ROUTES } from "@/content/global/routes";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import { useLanguage } from "@/context/LanguageContext";
 import {
@@ -66,8 +50,6 @@ import {
   localeHeroSubtitle,
   localeHeroSupporting,
   localeNav,
-  localeSmallLabelTrack,
-  localeWideMutedTrack,
   rtlScriptSurfaceClass,
 } from "@/lib/localeTypography";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
@@ -1132,177 +1114,6 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
   );
 };
 
-function readPublicEnvString(name: string): string | undefined {
-  if (typeof process === "undefined") return undefined;
-  return (process.env as Record<string, string | undefined>)[name];
-}
-
-const CONTACT_SOCIAL_ORDER: SocialPlatformKey[] = [
-  "x",
-  "instagram",
-  "telegram",
-  "linkedin",
-  "youtube",
-  "whatsapp",
-  "discord",
-  "tiktok",
-];
-
-const SOCIAL_ICON_MAP: Record<
-  SocialPlatformKey,
-  ComponentType<{ className?: string }>
-> = {
-  x: FaXTwitter,
-  instagram: FaInstagram,
-  telegram: FaTelegram,
-  linkedin: FaLinkedinIn,
-  youtube: FaYoutube,
-  whatsapp: FaWhatsapp,
-  discord: FaDiscord,
-  tiktok: FaTiktok,
-};
-
-const ContactSection = ({ t }: { t: SiteTranslations }) => {
-  const { language } = useLanguage();
-  const H = getHomeSectionLinks(language);
-  const raw = readPublicEnvString("NEXT_PUBLIC_SOCIAL_EMAIL")?.trim();
-  const mailto =
-    raw && raw.length > 0
-      ? raw.startsWith("mailto:")
-        ? raw
-        : `mailto:${raw.replace(/^mailto:/i, "")}`
-      : t.contact.fallbackMailto;
-
-  const sc = t.stayConnected;
-
-  return (
-    <section
-      id="contact"
-      className="relative z-10 scroll-mt-24 border-t border-white/[0.06] bg-gradient-to-b from-[#0d1016] via-[#0a0c12] to-[#080a0f] px-5 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-28"
-    >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px max-w-3xl bg-gradient-to-r from-transparent via-[#1c39bb]/40 to-transparent opacity-80" />
-      <div className="relative mx-auto max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <p
-            className={`sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
-          >
-            {sc.kicker}
-          </p>
-          <h3
-            className={`max-w-full font-display text-[clamp(1.125rem,4vw,1.65rem)] font-semibold uppercase tracking-normal text-balance text-white sm:text-3xl sm:tracking-tight md:text-4xl ${localeHeading(language)}`}
-          >
-            {sc.title}
-          </h3>
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
-            {sc.description}
-          </p>
-          <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <SectionDeepLink href={H.contact.href} label={H.contact.label} openInNewTab />
-            <SectionDeepLink href={H.faq.href} label={H.faq.label} openInNewTab />
-          </div>
-          <p className="mx-auto mt-6 max-w-2xl text-xs text-[#aeb6c1] sm:text-sm md:text-[#8f98a3]">
-            {sc.reachUsPrefix}{" "}
-            <a
-              href={`mailto:${socialContactEmail}`}
-              className="font-medium text-[#d4e8ff] underline-offset-4 hover:underline"
-            >
-              {socialContactEmail}
-            </a>
-          </p>
-          <div className="mt-10 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:mx-auto sm:flex-row sm:items-center sm:gap-4">
-            <a
-              href={mailto}
-              className={`inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/20 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.25)] transition-[background,box-shadow,transform] hover:bg-[#1c39bb]/40 hover:shadow-[0_12px_40px_rgba(28,57,187,0.35)] active:scale-[0.99] sm:w-auto sm:px-8 ${localeCta(language)}`}
-            >
-              <Mail className="size-4 shrink-0" strokeWidth={2} aria-hidden />
-              {t.contact.emailCta}
-            </a>
-            <Link
-              href={ROUTES.contact}
-              className={`inline-flex min-h-12 w-full touch-manipulation items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-[#e9ecef] transition-[background,border-color] hover:border-[#bde0fe]/35 hover:bg-white/[0.07] active:scale-[0.99] sm:w-auto sm:px-8 ${localeCta(language)}`}
-            >
-              {t.contact.socialCta}
-              <ArrowUpRight className="size-4 shrink-0 opacity-80" strokeWidth={2} aria-hidden />
-            </Link>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-14 grid w-full max-w-7xl grid-cols-1 gap-2.5 sm:gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {CONTACT_SOCIAL_ORDER.map((key) => {
-            const Icon = SOCIAL_ICON_MAP[key];
-            const href = socialLinks[key].trim();
-            const enabled = href.length > 0;
-            const cardClass =
-              "group flex min-h-[76px] items-center gap-2.5 rounded-xl border px-3 py-3 transition-[transform,border-color,box-shadow,background-color] duration-250 " +
-              (enabled
-                ? "border-white/[0.1] bg-white/[0.03] text-[#e3edf8] hover:scale-[1.06] hover:border-[#6ea8ff]/50 hover:bg-[#1c39bb]/[0.14] hover:shadow-[0_0_28px_rgba(28,57,187,0.25)]"
-                : "cursor-not-allowed border-white/[0.06] bg-white/[0.015] text-[#6f7884] opacity-55");
-
-            const label = sc.socialLabels[key];
-            const content = (
-              <>
-                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.02] text-[#bde0fe] transition-colors group-hover:text-white">
-                  <Icon className="h-4.5 w-4.5" />
-                </span>
-                <span className={`text-xs font-medium ${localeSmallLabelTrack(language)}`}>
-                  {label}
-                </span>
-              </>
-            );
-
-            if (!enabled) {
-              return (
-                <div key={key} className={cardClass} aria-disabled>
-                  {content}
-                </div>
-              );
-            }
-
-            return (
-              <Link
-                key={key}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cardClass}
-              >
-                {content}
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const CTASection = ({ t }: { t: SiteTranslations }) => {
-  const { lang } = useLanguage();
-  return (
-    <section
-      id="connect"
-      className="relative z-10 flex min-h-[min(68dvh,560px)] scroll-mt-24 flex-col items-center justify-center overflow-x-clip bg-gradient-to-t from-[#0a0c12] to-transparent px-5 py-14 sm:min-h-[min(80dvh,720px)] sm:px-6 sm:py-16 md:min-h-screen md:scroll-mt-28"
-    >
-      <motion.div
-        initial={{ opacity: 1, scale: 0.985 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
-        className="group max-w-[min(100%,42rem)] cursor-pointer px-2 text-center"
-      >
-        <p className="sigma-cta-wordmark max-w-full break-words text-[clamp(1.85rem,11vw,4rem)] font-bold uppercase leading-[1.05] tracking-normal transition-[background-image] duration-500 sm:text-7xl sm:leading-none sm:tracking-tighter md:text-9xl">
-          {t.cta.title}
-        </p>
-        <div className="mx-auto mt-4 h-1 w-0 bg-[#1c39bb] transition-all duration-700 ease-in-out group-hover:w-full" />
-        <p
-          className={`mt-6 max-w-full break-words text-xs text-[#c5ccd4] transition-colors group-hover:text-[#bde0fe] sm:mt-8 sm:text-sm md:text-[#adb5bd] ${localeWideMutedTrack(lang)}`}
-        >
-          {t.cta.description}
-        </p>
-      </motion.div>
-    </section>
-  );
-};
-
 type GlassNavId =
   | "about"
   | "capabilities"
@@ -1645,8 +1456,8 @@ export default function SigmaLanding() {
         <ProofLayer />
         <MidConversionCta isRtl={isRtl} lang={currentLang} />
         <SigmaProSection t={t} />
-        <CTASection t={t} />
-        <ContactSection t={t} />
+        <div id="connect" className="h-0" aria-hidden />
+        <div id="contact" className="h-0" aria-hidden />
         <FinalConversionCta
           isRtl={isRtl}
           lang={currentLang}

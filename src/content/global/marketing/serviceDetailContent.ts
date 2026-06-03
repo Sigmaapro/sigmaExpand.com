@@ -127,24 +127,62 @@ const EN_CONTENT: Record<ServiceDetailKey, ServiceDetailContent> = {
   },
 };
 
-function localizedFallback(en: ServiceDetailContent): Record<LangCode, ServiceDetailContent> {
+function localizedFallback(
+  en: ServiceDetailContent,
+  overrides?: Partial<Record<Exclude<LangCode, "EN">, Partial<ServiceDetailContent>>>,
+): Record<LangCode, ServiceDetailContent> {
   return {
     EN: en,
-    TR: en,
-    ZH: en,
-    FA: en,
-    ES: en,
-    RU: en,
-    AR: en,
+    TR: { ...en, ...(overrides?.TR ?? {}) },
+    ZH: { ...en, ...(overrides?.ZH ?? {}) },
+    FA: { ...en, ...(overrides?.FA ?? {}) },
+    ES: { ...en, ...(overrides?.ES ?? {}) },
+    RU: { ...en, ...(overrides?.RU ?? {}) },
+    AR: { ...en, ...(overrides?.AR ?? {}) },
   };
 }
 
 const localized = {
-  platformGrowth: localizedFallback(EN_CONTENT.platformGrowth),
-  kolInfrastructure: localizedFallback(EN_CONTENT.kolInfrastructure),
-  ibProgram: localizedFallback(EN_CONTENT.ibProgram),
-  traderNetwork: localizedFallback(EN_CONTENT.traderNetwork),
-  tokenLaunch: localizedFallback(EN_CONTENT.tokenLaunch),
+  platformGrowth: localizedFallback(EN_CONTENT.platformGrowth, {
+    TR: { eyebrow: "Hizmet", primaryCtaLabel: "Platformunuzu Ölçekleyin", secondaryCtaLabel: "Sigma ile Ortak Olun" },
+    FA: { eyebrow: "خدمت", primaryCtaLabel: "پلتفرم خود را مقیاس دهید", secondaryCtaLabel: "همکاری با Sigma" },
+    ZH: { eyebrow: "服务", primaryCtaLabel: "扩展您的平台", secondaryCtaLabel: "与 Sigma 合作" },
+    ES: { eyebrow: "Servicio", primaryCtaLabel: "Escala tu plataforma", secondaryCtaLabel: "Asociarse con Sigma" },
+    RU: { eyebrow: "Сервис", primaryCtaLabel: "Масштабируйте платформу", secondaryCtaLabel: "Стать партнёром Sigma" },
+    AR: { eyebrow: "الخدمة", primaryCtaLabel: "وسّع منصتك", secondaryCtaLabel: "شارك مع Sigma" },
+  }),
+  kolInfrastructure: localizedFallback(EN_CONTENT.kolInfrastructure, {
+    TR: { eyebrow: "Hizmet", primaryCtaLabel: "Finansal Creator Altyapınızı Kurun", secondaryCtaLabel: "Sigma ile Ortak Olun" },
+    FA: { eyebrow: "خدمت", primaryCtaLabel: "زیرساخت مالی کریتور خود را بسازید", secondaryCtaLabel: "همکاری با Sigma" },
+    ZH: { eyebrow: "服务", primaryCtaLabel: "构建您的金融创作者基础设施", secondaryCtaLabel: "与 Sigma 合作" },
+    ES: { eyebrow: "Servicio", primaryCtaLabel: "Construye tu infraestructura de creadores financieros", secondaryCtaLabel: "Asociarse con Sigma" },
+    RU: { eyebrow: "Сервис", primaryCtaLabel: "Постройте инфраструктуру финансового креатора", secondaryCtaLabel: "Стать партнёром Sigma" },
+    AR: { eyebrow: "الخدمة", primaryCtaLabel: "ابنِ بنية صانع المحتوى المالي", secondaryCtaLabel: "شارك مع Sigma" },
+  }),
+  ibProgram: localizedFallback(EN_CONTENT.ibProgram, {
+    TR: { eyebrow: "Hizmet", primaryCtaLabel: "Sigma Partneri Olarak Başvurun", secondaryCtaLabel: "Sigma ile Ortak Olun" },
+    FA: { eyebrow: "خدمت", primaryCtaLabel: "به‌عنوان شریک Sigma درخواست دهید", secondaryCtaLabel: "همکاری با Sigma" },
+    ZH: { eyebrow: "服务", primaryCtaLabel: "申请成为 Sigma 合作伙伴", secondaryCtaLabel: "与 Sigma 合作" },
+    ES: { eyebrow: "Servicio", primaryCtaLabel: "Aplica como partner de Sigma", secondaryCtaLabel: "Asociarse con Sigma" },
+    RU: { eyebrow: "Сервис", primaryCtaLabel: "Подать заявку как партнёр Sigma", secondaryCtaLabel: "Стать партнёром Sigma" },
+    AR: { eyebrow: "الخدمة", primaryCtaLabel: "قدّم كشريك مع Sigma", secondaryCtaLabel: "شارك مع Sigma" },
+  }),
+  traderNetwork: localizedFallback(EN_CONTENT.traderNetwork, {
+    TR: { eyebrow: "Hizmet", primaryCtaLabel: "Daha İyi Pazar Erişimi Bulun", secondaryCtaLabel: "Sigma ile Ortak Olun" },
+    FA: { eyebrow: "خدمت", primaryCtaLabel: "به دسترسی بهتر بازار برسید", secondaryCtaLabel: "همکاری با Sigma" },
+    ZH: { eyebrow: "服务", primaryCtaLabel: "获取更好的市场准入", secondaryCtaLabel: "与 Sigma 合作" },
+    ES: { eyebrow: "Servicio", primaryCtaLabel: "Encuentra mejor acceso al mercado", secondaryCtaLabel: "Asociarse con Sigma" },
+    RU: { eyebrow: "Сервис", primaryCtaLabel: "Получите лучший доступ к рынку", secondaryCtaLabel: "Стать партнёром Sigma" },
+    AR: { eyebrow: "الخدمة", primaryCtaLabel: "احصل على وصول أفضل إلى السوق", secondaryCtaLabel: "شارك مع Sigma" },
+  }),
+  tokenLaunch: localizedFallback(EN_CONTENT.tokenLaunch, {
+    TR: { eyebrow: "Hizmet", primaryCtaLabel: "Token Lansman ve Listeleme Hizmetleri", secondaryCtaLabel: "Sigma ile Ortak Olun" },
+    FA: { eyebrow: "خدمت", primaryCtaLabel: "خدمات لانچ و لیستینگ توکن", secondaryCtaLabel: "همکاری با Sigma" },
+    ZH: { eyebrow: "服务", primaryCtaLabel: "代币发行与上市服务", secondaryCtaLabel: "与 Sigma 合作" },
+    ES: { eyebrow: "Servicio", primaryCtaLabel: "Servicios de lanzamiento y listing de token", secondaryCtaLabel: "Asociarse con Sigma" },
+    RU: { eyebrow: "Сервис", primaryCtaLabel: "Сервисы запуска и листинга токена", secondaryCtaLabel: "Стать партнёром Sigma" },
+    AR: { eyebrow: "الخدمة", primaryCtaLabel: "خدمات إطلاق وإدراج التوكن", secondaryCtaLabel: "شارك مع Sigma" },
+  }),
 } as const;
 
 export function getServiceDetailContent(key: ServiceDetailKey, lang: LangCode): ServiceDetailContent {

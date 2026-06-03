@@ -102,7 +102,6 @@ export function AboutPageView() {
                 <p className={`mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1c39bb] ${localeMeta(language)}`}>
                   {member.role}
                 </p>
-                <p className={`mt-3 text-sm leading-relaxed text-[#b6bcc4] ${localeBody(language)}`}>{member.bio}</p>
               </li>
             ))}
           </ul>

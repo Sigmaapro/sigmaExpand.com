@@ -37,17 +37,52 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/markets/uae",
-        destination: "/markets/gcc",
+        destination: "/markets/wana",
         permanent: true,
       },
       {
         source: "/markets/turkey",
-        destination: "/markets/eurasia",
+        destination: "/markets/europe",
         permanent: true,
       },
       {
         source: "/markets/china",
-        destination: "/markets/east-asia",
+        destination: "/markets/apac",
+        permanent: true,
+      },
+      {
+        source: "/markets/gcc",
+        destination: "/markets/wana",
+        permanent: true,
+      },
+      {
+        source: "/markets/east-asia",
+        destination: "/markets/apac",
+        permanent: true,
+      },
+      {
+        source: "/markets/balkans",
+        destination: "/markets/europe",
+        permanent: true,
+      },
+      {
+        source: "/markets/global",
+        destination: "/markets",
+        permanent: true,
+      },
+      {
+        source: "/markets/eurasia",
+        destination: "/markets/cis",
+        permanent: true,
+      },
+      {
+        source: "/markets/persian-speaking",
+        destination: "/markets/wana",
+        permanent: true,
+      },
+      {
+        source: "/markets/north-america",
+        destination: "/markets",
         permanent: true,
       },
     ];

@@ -37,13 +37,11 @@ export type SeoRouteKey =
   | "team"
   | "terms"
   | "insights"
-  | "marketsGcc"
-  | "marketsEurasia"
   | "marketsWana"
-  | "marketsEastAsia"
+  | "marketsCis"
+  | "marketsApac"
+  | "marketsEurope"
   | "marketsLatam"
-  | "marketsBalkans"
-  | "marketsGlobal";
 
 export type SeoPageDefinition = {
   /** URL pathname, e.g. `/about` */
@@ -237,27 +235,121 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   },
   markets: {
     path: "/markets",
-    title: "Built for Where Your Next Users Actually Live | Regional Crypto Marketing",
+    title: "Sigma Markets | Regional Crypto & Web3 Growth Network",
     description:
-      "Regional crypto marketing infrastructure across MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking markets with native KOL and BD execution.",
+      "Explore Sigma’s regional growth network across MENA/WANA, CIS, APAC, Europe, and LATAM — built for crypto exchanges, brokers, KOLs, IBs, and Web3 platforms.",
     keywords: [
       "regional crypto marketing",
       "MENA crypto marketing",
-      "GCC crypto agency",
-      "Dubai crypto agency",
-      "Turkey crypto KOL agency",
-      "LATAM crypto marketing",
+      "APAC crypto marketing",
       "CIS crypto agency",
       "MiCA crypto marketing",
-      "EU crypto agency",
-      "Canada crypto marketing agency",
+      "LATAM crypto marketing",
+      "regional Web3 growth",
     ],
-    ogTitle: "Built for Where Your Next Users Actually Live | Sigma",
+    ogTitle: "Sigma Markets | Regional Crypto & Web3 Growth Network",
     ogDescription:
-      "Region-by-region growth execution with native teams, local KOL networks, and on-the-ground BD.",
-    twitterTitle: "Built for Where Your Next Users Actually Live | Sigma",
+      "Regional growth execution across MENA/WANA, CIS, APAC, Europe, and LATAM with native KOL networks and localized BD support.",
+    twitterTitle: "Sigma Markets | Regional Crypto & Web3 Growth Network",
     twitterDescription:
-      "Region-by-region growth execution with native teams, local KOL networks, and on-the-ground BD.",
+      "Regional growth execution across MENA/WANA, CIS, APAC, Europe, and LATAM with native KOL networks and localized BD support.",
+  },
+  marketsWana: {
+    path: "/markets/wana",
+    title: "MENA / WANA Crypto Marketing | Sigma",
+    description:
+      "Sigma operates across MENA and WANA with Arabic, Persian, and GCC-native KOL networks, regional BD support, broker IB infrastructure, and locally calibrated growth funnels for exchanges, brokers, protocols, and financial platforms.",
+    keywords: [
+      "MENA crypto marketing",
+      "Arabic crypto KOL",
+      "crypto marketing agency GCC",
+      "Dubai crypto agency",
+      "Persian crypto KOL agency",
+      "Farsi crypto marketing",
+    ],
+    ogTitle: "MENA / WANA Crypto Marketing | Sigma",
+    ogDescription:
+      "Arabic, Persian, and GCC-native regional growth infrastructure across MENA and WANA.",
+    twitterTitle: "MENA / WANA Crypto Marketing | Sigma",
+    twitterDescription:
+      "Regional crypto and Web3 growth execution across MENA and WANA.",
+  },
+  marketsCis: {
+    path: "/markets/cis",
+    title: "CIS Crypto Marketing | Sigma",
+    description:
+      "Sigma supports CIS market expansion through Russian-language distribution, regional KOL networks, trading communities, futures and prop-trading audiences, and localized BD execution.",
+    keywords: [
+      "CIS crypto agency",
+      "Russian crypto marketing",
+      "Russian-language crypto distribution",
+      "CIS crypto marketing",
+    ],
+    ogTitle: "CIS Crypto Marketing | Sigma",
+    ogDescription:
+      "Russian-language distribution and regional BD execution for CIS crypto and finance markets.",
+    twitterTitle: "CIS Crypto Marketing | Sigma",
+    twitterDescription:
+      "Localized CIS growth systems with Russian-language distribution and trading-community access.",
+  },
+  marketsApac: {
+    path: "/markets/apac",
+    title: "APAC Crypto Marketing | Sigma",
+    description:
+      "Sigma supports APAC growth through Asia-Pacific KOL surfaces, regional community channels, and localized execution across Korean, Vietnamese, Thai, Indonesian, and broader Southeast Asian crypto and Web3 markets.",
+    keywords: [
+      "APAC crypto marketing",
+      "Asia crypto KOL",
+      "Bali crypto agency",
+      "Asia-Pacific Web3 growth",
+      "Southeast Asia crypto marketing",
+    ],
+    ogTitle: "APAC Crypto Marketing | Sigma",
+    ogDescription:
+      "Asia-Pacific growth execution with localized KOL distribution and regional community infrastructure.",
+    twitterTitle: "APAC Crypto Marketing | Sigma",
+    twitterDescription:
+      "Regional APAC growth systems for crypto and Web3 platforms.",
+  },
+  marketsEurope: {
+    path: "/markets/europe",
+    title: "Europe Crypto Marketing | Sigma",
+    description:
+      "Sigma supports European and Turkey-linked expansion through MiCA-aware campaign planning, localized KOL and BD coordination, Telegram-first Turkish communities, FX-aware messaging, native Turkish creators, and region-specific growth infrastructure across Germany, Spain, Italy, Poland, the Balkans, Turkey, and broader European markets.",
+    keywords: [
+      "MiCA crypto marketing",
+      "EU crypto agency",
+      "Europe crypto marketing",
+      "Balkans crypto marketing",
+      "Turkey crypto KOL agency",
+      "Istanbul crypto marketing",
+      "European Web3 growth",
+    ],
+    ogTitle: "Europe Crypto Marketing | Sigma",
+    ogDescription:
+      "MiCA-aware European growth execution across EU, Balkan, and Turkey-linked markets.",
+    twitterTitle: "Europe Crypto Marketing | Sigma",
+    twitterDescription:
+      "Localized KOL and BD infrastructure for European and Turkey-linked crypto and Web3 expansion.",
+  },
+  marketsLatam: {
+    path: "/markets/latam",
+    title: "LATAM Crypto Marketing | Sigma",
+    description:
+      "Sigma supports LATAM and Spain-focused growth through Spanish and Portuguese funnels, stablecoin-first narratives, regional KOL access, trading communities, and localized acquisition infrastructure.",
+    keywords: [
+      "LATAM crypto marketing",
+      "Spanish crypto KOL",
+      "Spain crypto marketing",
+      "Latin America crypto agency",
+      "Portuguese crypto marketing",
+    ],
+    ogTitle: "LATAM Crypto Marketing | Sigma",
+    ogDescription:
+      "Spanish and Portuguese growth funnels with stablecoin-first regional narratives.",
+    twitterTitle: "LATAM Crypto Marketing | Sigma",
+    twitterDescription:
+      "Localized LATAM and Spain-linked crypto and Web3 growth execution.",
   },
   products: {
     path: "/products",
@@ -394,97 +486,6 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     twitterTitle: "Sigma Insights",
     twitterDescription:
       "Market intelligence and growth systems for Web3.",
-  },
-  marketsGcc: {
-    path: "/markets/gcc",
-    title: "GCC Crypto Agency Marketing | Sigma",
-    description:
-      "Sigma’s GCC-focused Web3 marketing: Gulf Cooperation Council corridors, regional partnerships, and institutional-grade execution.",
-    keywords: ["GCC crypto marketing", "Gulf Web3", "Sigma GCC", "Middle East crypto growth"],
-    ogTitle: "GCC Crypto Agency Marketing | Sigma",
-    ogDescription:
-      "Regional Web3 marketing and expansion across GCC crypto corridors.",
-    twitterTitle: "GCC Crypto Marketing | Sigma",
-    twitterDescription:
-      "Web3 agency marketing for GCC markets.",
-  },
-  marketsEurasia: {
-    path: "/markets/eurasia",
-    title: "Eurasia Crypto Agency Marketing | Sigma",
-    description:
-      "Eurasia market programs for crypto exchanges and protocols—localized narratives, listings-aligned milestones, and community activation.",
-    keywords: ["Eurasia crypto marketing", "Sigma Eurasia", "Web3 Eurasia"],
-    ogTitle: "Eurasia Crypto Agency Marketing | Sigma",
-    ogDescription:
-      "Localized Web3 growth execution for Eurasian crypto corridors.",
-    twitterTitle: "Eurasia Crypto Marketing | Sigma",
-    twitterDescription:
-      "Crypto agency marketing for Eurasia.",
-  },
-  marketsWana: {
-    path: "/markets/wana",
-    title: "WANA Regional Crypto Marketing | Sigma",
-    description:
-      "Strategic market expansion across West Asia and North Africa—localized acquisition, partner networks, community activation, and liquidity-aware growth systems.",
-    keywords: ["WANA crypto marketing", "West Asia Web3", "North Africa crypto growth", "Sigma WANA"],
-    ogTitle: "WANA Regional Crypto Marketing | Sigma",
-    ogDescription:
-      "Regional growth infrastructure for West Asia and North Africa.",
-    twitterTitle: "WANA Crypto Marketing | Sigma",
-    twitterDescription:
-      "Web3 market expansion across West Asia and North Africa.",
-  },
-  marketsEastAsia: {
-    path: "/markets/east-asia",
-    title: "East Asia Crypto Marketing | Sigma",
-    description:
-      "East Asia execution for Web3 teams—ecosystem-aligned messaging, partner coordination, and institutional narratives.",
-    keywords: ["East Asia crypto marketing", "East Asia Web3", "Sigma"],
-    ogTitle: "East Asia Crypto Marketing | Sigma",
-    ogDescription:
-      "Web3 marketing execution aligned with East Asian ecosystems.",
-    twitterTitle: "East Asia Crypto Marketing | Sigma",
-    twitterDescription:
-      "Web3 growth execution for East Asia.",
-  },
-  marketsLatam: {
-    path: "/markets/latam",
-    title: "LATAM Crypto Agency Marketing | Sigma",
-    description:
-      "Growth systems for Spanish- and Portuguese-speaking Web3 communities across Latin America—localized acquisition, creator networks, and regional market activation.",
-    keywords: ["LATAM crypto marketing", "Latin America Web3", "Sigma LATAM"],
-    ogTitle: "LATAM Crypto Agency Marketing | Sigma",
-    ogDescription:
-      "Localized Web3 growth execution for Latin American crypto markets.",
-    twitterTitle: "LATAM Crypto Marketing | Sigma",
-    twitterDescription:
-      "Crypto agency marketing for Latin America.",
-  },
-  marketsBalkans: {
-    path: "/markets/balkans",
-    title: "Balkans Crypto Agency Marketing | Sigma",
-    description:
-      "Regional expansion support across Balkan crypto communities—localized messaging, partner coordination, and high-trust distribution.",
-    keywords: ["Balkans crypto marketing", "Balkan Web3", "Sigma Balkans"],
-    ogTitle: "Balkans Crypto Agency Marketing | Sigma",
-    ogDescription:
-      "Web3 growth execution for Balkan crypto communities.",
-    twitterTitle: "Balkans Crypto Marketing | Sigma",
-    twitterDescription:
-      "Regional crypto marketing for the Balkans.",
-  },
-  marketsGlobal: {
-    path: "/markets/global",
-    title: "Global Crypto Agency Marketing | Sigma",
-    description:
-      "Multi-region launches with unified liquidity, user acquisition, and narrative continuity across key crypto corridors.",
-    keywords: ["global crypto marketing", "Web3 agency", "multi-region launch", "Sigma"],
-    ogTitle: "Global Crypto Agency Marketing | Sigma",
-    ogDescription:
-      "Unified playbook for multi-region Web3 growth and marketing.",
-    twitterTitle: "Global Crypto Marketing | Sigma",
-    twitterDescription:
-      "Multi-region Web3 agency marketing.",
   },
 };
 

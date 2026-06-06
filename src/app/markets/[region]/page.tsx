@@ -8,13 +8,11 @@ import type { LangCode } from "@/content/types";
 import { langFromUnknown } from "@/lib/i18n";
 
 const REGION_TO_SEO: Record<string, SeoRouteKey> = {
-  gcc: "marketsGcc",
-  eurasia: "marketsEurasia",
   wana: "marketsWana",
-  "east-asia": "marketsEastAsia",
+  cis: "marketsCis",
+  apac: "marketsApac",
+  europe: "marketsEurope",
   latam: "marketsLatam",
-  balkans: "marketsBalkans",
-  global: "marketsGlobal",
 };
 
 type Props = {

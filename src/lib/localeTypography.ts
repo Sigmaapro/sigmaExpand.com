@@ -34,7 +34,7 @@ export const TRACK_RESET =
   "![letter-spacing:normal] !tracking-normal sm:![letter-spacing:normal] sm:!tracking-normal md:![letter-spacing:normal] md:!tracking-normal lg:![letter-spacing:normal] lg:!tracking-normal xl:![letter-spacing:normal] xl:!tracking-normal 2xl:![letter-spacing:normal] 2xl:!tracking-normal";
 
 function rtlEyebrow(): string {
-  return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;
+  return `${TRACK_RESET} !normal-case !leading-relaxed [word-spacing:normal]`;
 }
 
 function zhEyebrow(): string {
@@ -42,7 +42,7 @@ function zhEyebrow(): string {
 }
 
 function rtlHeading(): string {
-  return `${TRACK_RESET} normal-case !leading-[1.45] sm:!leading-snug [word-spacing:normal]`;
+  return `${TRACK_RESET} !normal-case !leading-[1.45] sm:!leading-snug [word-spacing:normal]`;
 }
 
 function zhHeading(): string {
@@ -50,7 +50,7 @@ function zhHeading(): string {
 }
 
 function rtlNav(): string {
-  return `${TRACK_RESET} normal-case !leading-snug [word-spacing:normal]`;
+  return `${TRACK_RESET} !normal-case !leading-snug [word-spacing:normal]`;
 }
 
 function zhNav(): string {
@@ -58,7 +58,7 @@ function zhNav(): string {
 }
 
 function rtlCta(): string {
-  return `${TRACK_RESET} normal-case !leading-normal [word-spacing:normal]`;
+  return `${TRACK_RESET} !normal-case !leading-normal [word-spacing:normal]`;
 }
 
 function zhCta(): string {
@@ -66,20 +66,20 @@ function zhCta(): string {
 }
 
 function rtlFooter(): string {
-  return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;
+  return `${TRACK_RESET} !normal-case !leading-relaxed [word-spacing:normal]`;
 }
 
 function rtlBody(): string {
-  return "normal-case !tracking-normal !leading-[1.95] [word-spacing:0.02em]";
+  return `${TRACK_RESET} !normal-case !leading-[1.95] [word-spacing:0.02em]`;
 }
 
 function rtlMeta(): string {
-  return `${TRACK_RESET} normal-case !leading-relaxed [word-spacing:normal]`;
+  return `${TRACK_RESET} !normal-case !leading-relaxed [word-spacing:normal]`;
 }
 
 /** Latin-only tracking classes; FA/AR/ZH get TRACK_RESET instead. */
 export function localeTrack(lang: LangCode, latin: string): string {
-  if (isRtlConnectedLang(lang) || isZhLang(lang)) return TRACK_RESET;
+  if (isRtlConnectedLang(lang) || isZhLang(lang)) return `${TRACK_RESET} !normal-case`;
   return latin;
 }
 
@@ -179,7 +179,7 @@ export function localeWordmarkNav(_lang: LangCode): string {
 /** Language switcher listbox row — tracking follows the option label script, not UI locale */
 export function localeLanguageSwitcherOption(lang: LangCode): string {
   if (isRtlConnectedLang(lang)) {
-    return `normal-case ${TRACK_RESET} leading-snug [word-spacing:normal]`;
+    return `!normal-case ${TRACK_RESET} leading-snug [word-spacing:normal]`;
   }
   if (isZhLang(lang)) {
     return `normal-case ${TRACK_RESET} leading-snug [word-spacing:normal]`;

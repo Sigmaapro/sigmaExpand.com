@@ -6,7 +6,7 @@ import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentMo
 import { aboutPageContentByLang } from "@/content/global/marketing/aboutContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
-import { localeBody, localeCta, localeEyebrow, localeHeading, localeMeta } from "@/lib/localeTypography";
+import { localeBody, localeCta, localeEyebrow, localeHeading, localeMeta, localeNav } from "@/lib/localeTypography";
 
 export function AboutPageView() {
   const { language } = useLanguage();
@@ -143,7 +143,9 @@ export function AboutPageView() {
           <div className="mt-5 space-y-4">
             {c.insideNetwork.operatingPoints.map((point) => (
               <div key={point.title} className="rounded-xl border border-white/[0.06] bg-[#05070c]/75 p-4">
-                <h3 className="font-display text-sm font-semibold uppercase tracking-[0.12em] text-white">{point.title}</h3>
+                <h3 className={`font-display text-sm font-semibold uppercase tracking-[0.12em] text-white ${localeNav(language)}`}>
+                  {point.title}
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#b6bcc4]">{point.body}</p>
               </div>
             ))}

@@ -540,7 +540,7 @@ export function PartnerIntentModalHost() {
                                 : "border-white/[0.12] bg-white/[0.03] text-[#d7dde4] hover:border-[#bde0fe]/30 hover:bg-white/[0.06]"
                             } ${localeNav(language)}`}
                           >
-                            <span className="inline-flex items-center gap-2">
+                            <span className={`inline-flex items-center gap-2 ${localeNav(language)}`}>
                               <span
                                 className={`inline-flex h-4 w-4 items-center justify-center rounded border ${
                                   selected

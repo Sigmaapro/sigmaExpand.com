@@ -11,7 +11,7 @@ import {
 const MAX_NAME = 200;
 const MAX_MESSAGE = 8000;
 
-const SOURCES = new Set<LeadSource>(["book-call", "live-support"]);
+const SOURCES = new Set<LeadSource>(["book-call", "live-support", "contact-form"]);
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -46,7 +46,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
   }
 
-  if (source === "live-support" && !message) {
+  if (source === "contact-form" && !name) {
+    return NextResponse.json({ error: "Name required" }, { status: 400 });
+  }
+
+  if ((source === "live-support" || source === "contact-form") && !message) {
     return NextResponse.json({ error: "Message required" }, { status: 400 });
   }
 

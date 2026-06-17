@@ -18,7 +18,6 @@ import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaf
 import {
   contactSubpageContentByLang,
 } from "@/content/global/marketing/contactSubpageContent";
-import { getConversion } from "@/content/conversion";
 import { pickLang } from "@/content/global/marketing/helpers";
 import {
   socialLinks,
@@ -61,6 +60,8 @@ const SOCIAL_ICON_MAP: Record<
 };
 
 type FormState = "idle" | "loading" | "success" | "error";
+type ContactField = "name" | "email" | "message";
+type FieldErrors = Partial<Record<ContactField, string>>;
 
 export function ContactSubpageView() {
   const { t, isRtl, language } = useLanguage();
@@ -72,43 +73,78 @@ export function ContactSubpageView() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [formState, setFormState] = useState<FormState>("idle");
+  const [submitted, setSubmitted] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [errorText, setErrorText] = useState("");
+
+  const validateFields = useCallback(
+    (nextName: string, nextEmail: string, nextMessage: string): FieldErrors => {
+      const errors: FieldErrors = {};
+      if (!nextName.trim()) {
+        errors.name = copy.form.requiredFieldError;
+      }
+      const emailValue = nextEmail.trim();
+      if (!emailValue) {
+        errors.email = copy.form.requiredFieldError;
+      } else if (!isValidEmail(emailValue)) {
+        errors.email = copy.form.invalidEmailError;
+      }
+      if (!nextMessage.trim()) {
+        errors.message = copy.form.requiredFieldError;
+      }
+      return errors;
+    },
+    [copy.form],
+  );
+
+  const updateField = useCallback(
+    (field: ContactField, value: string) => {
+      if (field === "name") setName(value);
+      if (field === "email") setEmail(value);
+      if (field === "message") setMessage(value);
+
+      if (!submitted) return;
+      setErrorText("");
+      const nextName = field === "name" ? value : name;
+      const nextEmail = field === "email" ? value : email;
+      const nextMessage = field === "message" ? value : message;
+      const errors = validateFields(nextName, nextEmail, nextMessage);
+      setFieldErrors((prev) => ({ ...prev, [field]: errors[field] }));
+    },
+    [submitted, name, email, message, validateFields],
+  );
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
+      setSubmitted(true);
       setErrorText("");
+      const errors = validateFields(name, email, message);
+      setFieldErrors(errors);
+      if (errors.name || errors.email || errors.message) {
+        setFormState("error");
+        return;
+      }
+      const nm = name.trim();
       const em = email.trim();
       const msg = message.trim();
-      if (!em || !msg) {
-        setFormState("error");
-        setErrorText(copy.form.validationError);
-        return;
-      }
-      if (!isValidEmail(em)) {
-        setFormState("error");
-        setErrorText(copy.form.invalidEmailError);
-        return;
-      }
       try {
         setFormState("loading");
         const result = await submitLead({
           email: em,
-          name: name.trim() || undefined,
+          name: nm,
           message: msg,
-          source: "live-support",
+          source: "contact-form",
           website: "",
         });
         if (!result.ok) {
           setFormState("error");
-          setErrorText(
-            result.status === 503
-              ? getConversion(language).bookCall.unavailableError
-              : copy.form.sendError,
-          );
+          setErrorText(copy.form.sendError);
           return;
         }
         setFormState("success");
+        setSubmitted(false);
+        setFieldErrors({});
         setName("");
         setEmail("");
         setMessage("");
@@ -117,7 +153,7 @@ export function ContactSubpageView() {
         setErrorText(copy.form.sendError);
       }
     },
-    [copy.form, email, message, name, language],
+    [copy.form, email, message, name, validateFields],
   );
 
   return (
@@ -182,6 +218,7 @@ export function ContactSubpageView() {
                 onSubmit={handleSubmit}
                 className="mt-6 space-y-4"
                 aria-busy={formState === "loading"}
+                noValidate
               >
                 <input
                   type="text"
@@ -197,6 +234,11 @@ export function ContactSubpageView() {
                     {errorText}
                   </p>
                 ) : null}
+                {formState === "loading" ? (
+                  <p className="text-sm text-[#b6bcc4]" role="status" aria-live="polite">
+                    {copy.form.sending}
+                  </p>
+                ) : null}
                 <div>
                   <label
                     htmlFor="contact-name"
@@ -209,9 +251,20 @@ export function ContactSubpageView() {
                     name="name"
                     autoComplete="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="mt-1.5 min-h-11 w-full rounded-md border border-white/[0.1] bg-[#05070c] px-3 py-2.5 text-sm text-[#f1f3f5] outline-none focus:border-[#1c39bb]/55 focus:ring-2 focus:ring-[#1c39bb]/25"
+                    onChange={(e) => updateField("name", e.target.value)}
+                    aria-invalid={Boolean(fieldErrors.name)}
+                    aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
+                    className={`mt-1.5 min-h-11 w-full rounded-md border bg-[#05070c] px-3 py-2.5 text-sm text-[#f1f3f5] outline-none focus:ring-2 ${
+                      fieldErrors.name
+                        ? "border-[#ff8f8f] ring-1 ring-[#ff8f8f]/35 focus:border-[#ff8f8f] focus:ring-[#ff8f8f]/35"
+                        : "border-white/[0.1] focus:border-[#1c39bb]/55 focus:ring-[#1c39bb]/25"
+                    }`}
                   />
+                  {fieldErrors.name ? (
+                    <p id="contact-name-error" className="mt-1.5 text-xs text-[#ffb4b4]">
+                      {fieldErrors.name}
+                    </p>
+                  ) : null}
                 </div>
                 <div>
                   <label
@@ -224,12 +277,22 @@ export function ContactSubpageView() {
                     id="contact-email"
                     name="email"
                     type="email"
-                    required
                     autoComplete="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1.5 min-h-11 w-full rounded-md border border-white/[0.1] bg-[#05070c] px-3 py-2.5 text-sm text-[#f1f3f5] outline-none focus:border-[#1c39bb]/55 focus:ring-2 focus:ring-[#1c39bb]/25"
+                    onChange={(e) => updateField("email", e.target.value)}
+                    aria-invalid={Boolean(fieldErrors.email)}
+                    aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
+                    className={`mt-1.5 min-h-11 w-full rounded-md border bg-[#05070c] px-3 py-2.5 text-sm text-[#f1f3f5] outline-none focus:ring-2 ${
+                      fieldErrors.email
+                        ? "border-[#ff8f8f] ring-1 ring-[#ff8f8f]/35 focus:border-[#ff8f8f] focus:ring-[#ff8f8f]/35"
+                        : "border-white/[0.1] focus:border-[#1c39bb]/55 focus:ring-[#1c39bb]/25"
+                    }`}
                   />
+                  {fieldErrors.email ? (
+                    <p id="contact-email-error" className="mt-1.5 text-xs text-[#ffb4b4]">
+                      {fieldErrors.email}
+                    </p>
+                  ) : null}
                 </div>
                 <div>
                   <label
@@ -241,12 +304,22 @@ export function ContactSubpageView() {
                   <textarea
                     id="contact-message"
                     name="message"
-                    required
                     rows={4}
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="mt-1.5 min-h-[6rem] w-full resize-y rounded-md border border-white/[0.1] bg-[#05070c] px-3 py-2.5 text-sm text-[#f1f3f5] outline-none focus:border-[#1c39bb]/55 focus:ring-2 focus:ring-[#1c39bb]/25"
+                    onChange={(e) => updateField("message", e.target.value)}
+                    aria-invalid={Boolean(fieldErrors.message)}
+                    aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
+                    className={`mt-1.5 min-h-[6rem] w-full resize-y rounded-md border bg-[#05070c] px-3 py-2.5 text-sm text-[#f1f3f5] outline-none focus:ring-2 ${
+                      fieldErrors.message
+                        ? "border-[#ff8f8f] ring-1 ring-[#ff8f8f]/35 focus:border-[#ff8f8f] focus:ring-[#ff8f8f]/35"
+                        : "border-white/[0.1] focus:border-[#1c39bb]/55 focus:ring-[#1c39bb]/25"
+                    }`}
                   />
+                  {fieldErrors.message ? (
+                    <p id="contact-message-error" className="mt-1.5 text-xs text-[#ffb4b4]">
+                      {fieldErrors.message}
+                    </p>
+                  ) : null}
                 </div>
                 <button
                   type="submit"

@@ -2,7 +2,7 @@ export type LeadPayload = {
   email: string;
   name?: string;
   message?: string;
-  source: "book-call" | "live-support";
+  source: "book-call" | "live-support" | "contact-form";
   /** Honeypot — must stay empty; never shown to users. */
   website?: string;
 };

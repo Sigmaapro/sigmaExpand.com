@@ -1,6 +1,6 @@
 import { escapeHtml } from "./sanitize";
 
-export type LeadSource = "book-call" | "live-support";
+export type LeadSource = "book-call" | "live-support" | "contact-form";
 export type EmailAttachment = {
   filename: string;
   content: string;

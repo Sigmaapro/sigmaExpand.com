@@ -259,7 +259,10 @@ const WebGLScene = ({
     let particlesMesh: THREE.Points | null = null;
     let pointLight: THREE.PointLight | null = null;
     let animationFrameId = 0;
+    let resizeFrameId = 0;
     let running = true;
+    let lastViewportWidth = 0;
+    let lastViewportHeight = 0;
 
     const handleScroll = () => {
       scrollY.current = window.scrollY;
@@ -270,13 +273,27 @@ const WebGLScene = ({
       mouse.current.y = event.clientY - windowHalf.current.y;
     };
 
-    const handleResize = () => {
+    const applyResize = () => {
       if (!camera || !renderer) return;
-      windowHalf.current.x = window.innerWidth / 2;
-      windowHalf.current.y = window.innerHeight / 2;
+      const nextWidth = window.innerWidth;
+      const nextHeight = window.innerHeight;
+      if (nextWidth === lastViewportWidth && nextHeight === lastViewportHeight) return;
+      lastViewportWidth = nextWidth;
+      lastViewportHeight = nextHeight;
+      windowHalf.current.x = nextWidth / 2;
+      windowHalf.current.y = nextHeight / 2;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(nextWidth, nextHeight);
+      updateMaxScroll();
+    };
+
+    const handleResize = () => {
+      if (resizeFrameId) return;
+      resizeFrameId = requestAnimationFrame(() => {
+        resizeFrameId = 0;
+        applyResize();
+      });
     };
 
     let maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
@@ -292,10 +309,13 @@ const WebGLScene = ({
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("resize", updateMaxScroll);
       document.removeEventListener("visibilitychange", onVisibility);
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
+      }
+      if (resizeFrameId) {
+        cancelAnimationFrame(resizeFrameId);
+        resizeFrameId = 0;
       }
       if (renderer && mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
@@ -391,6 +411,8 @@ const WebGLScene = ({
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.05 : isTablet ? 1.25 : 1.5));
       renderer.domElement.style.pointerEvents = "none";
       mount.appendChild(renderer.domElement);
+      lastViewportWidth = window.innerWidth;
+      lastViewportHeight = window.innerHeight;
 
       group = new THREE.Group();
       scene.add(group);
@@ -541,7 +563,6 @@ const WebGLScene = ({
       window.addEventListener("mousemove", handleMouseMove, { passive: true });
       window.addEventListener("resize", handleResize);
       document.addEventListener("visibilitychange", onVisibility);
-      window.addEventListener("resize", updateMaxScroll);
 
       updateMaxScroll();
       animate(performance.now());

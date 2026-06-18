@@ -256,6 +256,13 @@ export function SigmaMobileNavPanel({
     icon,
     label: labels[id],
   }));
+  const coreHrefById: Record<CoreNavId | "contact", string> = {
+    about: ROUTES.anchor.system,
+    capabilities: ROUTES.anchor.capabilities,
+    network: ROUTES.anchor.network,
+    sigmapro: ROUTES.anchor.sigmaPro,
+    contact: ROUTES.anchor.contactStrip,
+  };
 
   const sheetDir = isRtl ? "rtl" : "ltr";
 
@@ -313,10 +320,27 @@ export function SigmaMobileNavPanel({
                       const active = glassActive === id;
                       const isPro = id === "sigmapro";
                       return (
-                        <button
+                        <Link
                           key={id}
-                          type="button"
-                          onClick={() => goToSection(id)}
+                          href={coreHrefById[id]}
+                          onClick={(event) => {
+                            onClose();
+                            if (
+                              event.defaultPrevented ||
+                              event.button !== 0 ||
+                              event.metaKey ||
+                              event.ctrlKey ||
+                              event.shiftKey ||
+                              event.altKey
+                            ) {
+                              return;
+                            }
+                            event.preventDefault();
+                            goToSection(id);
+                            if (typeof window !== "undefined") {
+                              window.history.replaceState(null, "", coreHrefById[id]);
+                            }
+                          }}
                           className={`flex min-h-[3.25rem] touch-manipulation items-center justify-between gap-3 rounded-xl px-3 py-3 text-start transition-all duration-200 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${
                             active
                               ? "border border-[#1c39bb]/45 bg-[#1c39bb]/22 text-white shadow-[0_0_32px_rgba(28,57,187,0.28)]"
@@ -342,7 +366,7 @@ export function SigmaMobileNavPanel({
                             strokeWidth={2}
                             aria-hidden
                           />
-                        </button>
+                        </Link>
                       );
                     })}
                   </div>
@@ -443,9 +467,26 @@ export function SigmaMobileNavPanel({
                         aria-hidden
                       />
                     </Link>
-                    <button
-                      type="button"
-                      onClick={() => goToSection("contact")}
+                    <Link
+                      href={coreHrefById.contact}
+                      onClick={(event) => {
+                        onClose();
+                        if (
+                          event.defaultPrevented ||
+                          event.button !== 0 ||
+                          event.metaKey ||
+                          event.ctrlKey ||
+                          event.shiftKey ||
+                          event.altKey
+                        ) {
+                          return;
+                        }
+                        event.preventDefault();
+                        goToSection("contact");
+                        if (typeof window !== "undefined") {
+                          window.history.replaceState(null, "", coreHrefById.contact);
+                        }
+                      }}
                       className={`flex min-h-[3.25rem] w-full touch-manipulation items-center justify-between gap-3 rounded-xl border px-3 py-3 text-start font-display text-[12px] font-semibold uppercase tracking-[0.1em] transition-all active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeNav(lang)} ${
                         glassActive === "contact"
                           ? "border-[#1c39bb]/45 bg-[#1c39bb]/22 text-white shadow-[0_0_28px_rgba(28,57,187,0.22)]"
@@ -457,7 +498,7 @@ export function SigmaMobileNavPanel({
                         {labels.contact}
                       </span>
                       <ArrowUpRight className="size-4 opacity-40 rtl:-scale-x-100" strokeWidth={2} aria-hidden />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

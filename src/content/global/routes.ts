@@ -27,8 +27,8 @@ export const ROUTES = {
   anchor: {
     system: "/#about",
     capabilities: "/#capabilities",
-    /** Proof / metrics strip — closest on-page target for “Network” narrative */
-    network: "/#metrics",
+    /** Proof / metrics strip — primary section target for “Network” narrative */
+    network: "/#network",
     sigmaPro: "/#sigmapro",
     contactStrip: "/#contact",
     connect: "/#connect",

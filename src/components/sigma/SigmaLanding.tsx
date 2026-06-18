@@ -41,6 +41,7 @@ import { teamPageMetaByLang } from "@/content/global/marketing/teamContent";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
+import { ROUTES } from "@/content/global/routes";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   localeCardTitle,
@@ -1144,7 +1145,7 @@ const Navbar = () => {
   const scrollRafRef = useRef<number | null>(null);
 
   const primaryNav: {
-    id: Exclude<GlassNavId, "connect">;
+    id: Exclude<GlassNavId, "connect" | "metrics">;
     icon: typeof Mail;
     label: string;
   }[] = [
@@ -1154,6 +1155,13 @@ const Navbar = () => {
     { id: "sigmapro", icon: Sparkles, label: t.nav.sigmaPro },
     { id: "contact", icon: Mail, label: t.nav.contact },
   ];
+  const navHrefById: Record<Exclude<GlassNavId, "connect" | "metrics">, string> = {
+    about: ROUTES.anchor.system,
+    capabilities: ROUTES.anchor.capabilities,
+    network: ROUTES.anchor.network,
+    sigmapro: ROUTES.anchor.sigmaPro,
+    contact: ROUTES.anchor.contactStrip,
+  };
 
   const syncActiveFromScroll = useCallback(() => {
     if (navClickScrollingRef.current) return;
@@ -1235,6 +1243,28 @@ const Navbar = () => {
     }
   };
 
+  const navigateToSectionFromLink = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    id: Exclude<GlassNavId, "connect" | "metrics">,
+  ) => {
+    setMobileOpen(false);
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+    event.preventDefault();
+    goToSection(id);
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", navHrefById[id]);
+    }
+  };
+
   const scrollToTop = () => {
     beginNavClickScrollLock();
     setMobileOpen(false);
@@ -1302,10 +1332,10 @@ const Navbar = () => {
                 const isActive = glassActive === id;
                 const isPro = id === "sigmapro";
                 return (
-                  <button
+                  <Link
                     key={id}
-                    type="button"
-                    onClick={() => goToSection(id)}
+                    href={navHrefById[id]}
+                    onClick={(event) => navigateToSectionFromLink(event, id)}
                     className={`relative isolate box-border inline-flex h-14 min-h-14 max-h-14 shrink-0 items-center overflow-visible rounded-full border text-start transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c39bb]/45 focus-visible:ring-offset-1 focus-visible:ring-offset-[#07090f] ${
                       isActive
                         ? "min-w-0 border-transparent text-white"
@@ -1345,7 +1375,7 @@ const Navbar = () => {
                         {label}
                       </span>
                     </span>
-                  </button>
+                  </Link>
                 );
               })}
             </div>

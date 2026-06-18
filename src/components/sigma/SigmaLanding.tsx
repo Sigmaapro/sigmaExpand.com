@@ -223,7 +223,13 @@ const GlobalStyles = () => (
 );
 
 /** Heavy Three.js layer — only mounted from desktop-up to protect phone performance. */
-const WebGLScene = ({ lowPower }: { lowPower: boolean }) => {
+const WebGLScene = ({
+  lowPower,
+  onInitError,
+}: {
+  lowPower: boolean;
+  onInitError: () => void;
+}) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const scrollY = useRef(0);
   const mouse = useRef(new THREE.Vector2());
@@ -238,176 +244,22 @@ const WebGLScene = ({ lowPower }: { lowPower: boolean }) => {
     const w = window.innerWidth;
     const isTablet = w < 1024;
 
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(theme.colors.erie, isTablet ? 0.024 : 0.021);
-
-    const camera = new THREE.PerspectiveCamera(
-      72,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000,
-    );
-    camera.position.z = 15;
-
-    const renderer = new THREE.WebGLRenderer({
-      antialias: !lowPower,
-      alpha: true,
-      powerPreference: lowPower ? "low-power" : "high-performance",
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.05 : isTablet ? 1.25 : 1.5));
-    renderer.domElement.style.pointerEvents = "none";
-    mount.appendChild(renderer.domElement);
-
-    const group = new THREE.Group();
-    scene.add(group);
-
-    const baseScale = isTablet ? 1.12 : 1.34;
-
-    /**
-     * Pass 1 — original platonic cluster (tet / oct): exact composition baseline.
-     * Pass 2 — `buildSigmaShardGeometries()`: same loop, same motion; only mesh geometry changes.
-     */
+    let scene: THREE.Scene | null = null;
+    let camera: THREE.PerspectiveCamera | null = null;
+    let renderer: THREE.WebGLRenderer | null = null;
+    let group: THREE.Group | null = null;
     let tetGeo: THREE.BufferGeometry | null = null;
     let octGeo: THREE.BufferGeometry | null = null;
     let sigmaShardGeometries: THREE.BufferGeometry[] = [];
-
-    if (WEBGL_USE_SIGMA_SHARDS) {
-      sigmaShardGeometries = buildSigmaShardGeometries();
-    } else {
-      tetGeo = new THREE.TetrahedronGeometry(baseScale, 0);
-      octGeo = new THREE.OctahedronGeometry(baseScale * 0.92, 0);
-    }
-
-    const material = new THREE.MeshPhysicalMaterial({
-      color: theme.colors.persian,
-      emissive: theme.colors.erie,
-      emissiveIntensity: 0.12,
-      metalness: 0.82,
-      roughness: 0.22,
-      wireframe: false,
-      flatShading: true,
-    });
-
-    const wireMaterial = new THREE.LineBasicMaterial({
-      color: theme.colors.uranian,
-      transparent: true,
-      opacity: 0.17,
-    });
-
-    const numShards = lowPower ? 92 : isTablet ? 132 : 252;
+    let material: THREE.MeshPhysicalMaterial | null = null;
+    let wireMaterial: THREE.LineBasicMaterial | null = null;
     const shards: THREE.Mesh[] = [];
-
-    const SIGMA_W = 2.8;
-    const SIGMA_H = 4.2;
-    const SIGMA_THICKNESS = 0.20;
-    const SIGMA_DEPTH = 0.05;
-
-    // Σ has FOUR strokes. Coordinates in 2D, Y axis goes UP.
-    // Top bar runs across the top. Bottom bar runs across the bottom.
-    // The vertex of the < shape is on the LEFT at y=0.
-    const sigmaSegments: Array<{ sx: number; sy: number; ex: number; ey: number }> = [
-      { sx:  SIGMA_W, sy:  SIGMA_H, ex: -SIGMA_W, ey:  SIGMA_H }, // top bar
-      { sx: -SIGMA_W, sy:  SIGMA_H, ex:  SIGMA_W, ey:  0       }, // upper diag TL -> vertex right
-      { sx:  SIGMA_W, sy:  0,       ex: -SIGMA_W, ey: -SIGMA_H }, // lower diag vertex -> BL
-      { sx:  SIGMA_W, sy: -SIGMA_H, ex: -SIGMA_W, ey: -SIGMA_H }, // bottom bar
-    ];
-
-    const sigmaSegmentLengths = sigmaSegments.map((s) =>
-      Math.hypot(s.ex - s.sx, s.ey - s.sy),
-    );
-    const sigmaTotalLength = sigmaSegmentLengths.reduce((a, b) => a + b, 0);
-
-    const sampleSigmaPoint = (): THREE.Vector3 => {
-      let pick = Math.random() * sigmaTotalLength;
-      let segIdx = 0;
-      for (let s = 0; s < sigmaSegments.length; s++) {
-        if (pick <= sigmaSegmentLengths[s]!) { segIdx = s; break; }
-        pick -= sigmaSegmentLengths[s]!;
-      }
-      const seg = sigmaSegments[segIdx]!;
-      const t = Math.random();
-      const x = seg.sx + (seg.ex - seg.sx) * t;
-      const y = seg.sy + (seg.ey - seg.sy) * t;
-
-      const dx = seg.ex - seg.sx;
-      const dy = seg.ey - seg.sy;
-      const len = Math.hypot(dx, dy) || 1;
-      const nx = -dy / len;
-      const ny =  dx / len;
-
-      const jitter = (Math.random() - 0.5) * 2 * SIGMA_THICKNESS;
-      const z      = (Math.random() - 0.5) * 2 * SIGMA_DEPTH;
-
-      return new THREE.Vector3(x + nx * jitter, y + ny * jitter, z);
-    };
-
-    for (let i = 0; i < numShards; i++) {
-      const geometry = WEBGL_USE_SIGMA_SHARDS
-        ? sigmaShardGeometries[i % sigmaShardGeometries.length]!
-        : i % 3 === 0
-          ? octGeo!
-          : tetGeo!;
-      const mesh = new THREE.Mesh(geometry, material);
-      const sigmaPos = sampleSigmaPoint();
-      mesh.position.copy(sigmaPos);
-
-      mesh.userData = {
-        initialPos: mesh.position.clone(),
-        direction: mesh.position.clone().normalize(),
-        speed: Math.random() * 0.42 + 0.12,
-        rotSpeed: new THREE.Vector3(
-          Math.random() - 0.5,
-          Math.random() - 0.5,
-          Math.random() - 0.5,
-        ).multiplyScalar(0.042),
-      };
-
-      mesh.rotation.set(
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-      );
-
-      if (WEBGL_USE_SIGMA_SHARDS) {
-        mesh.scale.setScalar(i % 3 === 0 ? baseScale * 0.92 : baseScale);
-      }
-
-      const wireframe = new THREE.LineSegments(
-        new THREE.WireframeGeometry(geometry),
-        wireMaterial,
-      );
-      mesh.add(wireframe);
-
-      group.add(mesh);
-      shards.push(mesh);
-    }
-
-    const particlesGeo = new THREE.BufferGeometry();
-    const particlesCount = lowPower ? 140 : isTablet ? 220 : 480;
-    const posArray = new Float32Array(particlesCount * 3);
-    for (let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 40;
-    }
-    particlesGeo.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
-    const particlesMat = new THREE.PointsMaterial({
-      size: isTablet ? 0.04 : 0.045,
-      color: theme.colors.cadet,
-      transparent: true,
-      opacity: isTablet ? 0.22 : 0.3,
-    });
-    const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
-    scene.add(particlesMesh);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.36);
-    scene.add(ambientLight);
-
-    const pointLight = new THREE.PointLight(theme.colors.uranian, 1.65, 55);
-    scene.add(pointLight);
-
-    const rim = new THREE.DirectionalLight(0xffffff, 0.28);
-    rim.position.set(4, 6, 8);
-    scene.add(rim);
+    let particlesGeo: THREE.BufferGeometry | null = null;
+    let particlesMat: THREE.PointsMaterial | null = null;
+    let particlesMesh: THREE.Points | null = null;
+    let pointLight: THREE.PointLight | null = null;
+    let animationFrameId = 0;
+    let running = true;
 
     const handleScroll = () => {
       scrollY.current = window.scrollY;
@@ -419,6 +271,7 @@ const WebGLScene = ({ lowPower }: { lowPower: boolean }) => {
     };
 
     const handleResize = () => {
+      if (!camera || !renderer) return;
       windowHalf.current.x = window.innerWidth / 2;
       windowHalf.current.y = window.innerHeight / 2;
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -426,30 +279,43 @@ const WebGLScene = ({ lowPower }: { lowPower: boolean }) => {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    window.addEventListener("resize", handleResize);
-
-    let animationFrameId: number;
-    let running = true;
-    const clock = new THREE.Clock();
-
     let maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
     const updateMaxScroll = () => {
       maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
     };
 
-    const onVisibility = () => {
-      running = document.visibilityState !== "hidden";
-      if (running) {
-        animationFrameId = requestAnimationFrame(animate);
-      } else {
+    const clock = new THREE.Clock();
+
+    const cleanup = () => {
+      running = false;
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", updateMaxScroll);
+      document.removeEventListener("visibilitychange", onVisibility);
+      if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
+      if (renderer && mount.contains(renderer.domElement)) {
+        mount.removeChild(renderer.domElement);
+      }
+      shards.forEach((m) => {
+        m.children.forEach((ch) => {
+          if (ch instanceof THREE.LineSegments) ch.geometry.dispose();
+        });
+      });
+      if (tetGeo) tetGeo.dispose();
+      if (octGeo) octGeo.dispose();
+      sigmaShardGeometries.forEach((g) => g.dispose());
+      if (material) material.dispose();
+      if (wireMaterial) wireMaterial.dispose();
+      if (particlesGeo) particlesGeo.dispose();
+      if (particlesMat) particlesMat.dispose();
+      if (renderer) renderer.dispose();
     };
 
     const animate = () => {
-      if (!running) return;
+      if (!running || !group || !pointLight || !camera || !renderer || !particlesMesh) return;
       const time = clock.getElapsedTime();
       const scrollProgress = Math.min(scrollY.current / maxScroll, 1.0);
 
@@ -488,41 +354,205 @@ const WebGLScene = ({ lowPower }: { lowPower: boolean }) => {
       camera.position.z = 15 - scrollProgress * 4;
       camera.position.y = -(scrollProgress * 4);
 
-      renderer.render(scene, camera);
+      renderer.render(scene!, camera);
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    updateMaxScroll();
-    animate();
-    document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("resize", updateMaxScroll);
-
-    return () => {
-      running = false;
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("resize", updateMaxScroll);
-      document.removeEventListener("visibilitychange", onVisibility);
-      cancelAnimationFrame(animationFrameId);
-      if (mount.contains(renderer.domElement)) {
-        mount.removeChild(renderer.domElement);
+    const onVisibility = () => {
+      running = document.visibilityState !== "hidden";
+      if (running) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
-      shards.forEach((m) => {
-        m.children.forEach((ch) => {
-          if (ch instanceof THREE.LineSegments) ch.geometry.dispose();
-        });
-      });
-      if (tetGeo) tetGeo.dispose();
-      if (octGeo) octGeo.dispose();
-      sigmaShardGeometries.forEach((g) => g.dispose());
-      material.dispose();
-      wireMaterial.dispose();
-      particlesGeo.dispose();
-      particlesMat.dispose();
-      renderer.dispose();
     };
-  }, [lowPower]);
+
+    try {
+      scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(theme.colors.erie, isTablet ? 0.024 : 0.021);
+
+      camera = new THREE.PerspectiveCamera(
+        72,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+      );
+      camera.position.z = 15;
+
+      renderer = new THREE.WebGLRenderer({
+        antialias: !lowPower,
+        alpha: true,
+        powerPreference: lowPower ? "low-power" : "high-performance",
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.05 : isTablet ? 1.25 : 1.5));
+      renderer.domElement.style.pointerEvents = "none";
+      mount.appendChild(renderer.domElement);
+
+      group = new THREE.Group();
+      scene.add(group);
+
+      const baseScale = isTablet ? 1.12 : 1.34;
+
+      /**
+       * Pass 1 — original platonic cluster (tet / oct): exact composition baseline.
+       * Pass 2 — `buildSigmaShardGeometries()`: same loop, same motion; only mesh geometry changes.
+       */
+      if (WEBGL_USE_SIGMA_SHARDS) {
+        sigmaShardGeometries = buildSigmaShardGeometries();
+      } else {
+        tetGeo = new THREE.TetrahedronGeometry(baseScale, 0);
+        octGeo = new THREE.OctahedronGeometry(baseScale * 0.92, 0);
+      }
+
+      material = new THREE.MeshPhysicalMaterial({
+        color: theme.colors.persian,
+        emissive: theme.colors.erie,
+        emissiveIntensity: 0.12,
+        metalness: 0.82,
+        roughness: 0.22,
+        wireframe: false,
+        flatShading: true,
+      });
+
+      wireMaterial = new THREE.LineBasicMaterial({
+        color: theme.colors.uranian,
+        transparent: true,
+        opacity: 0.17,
+      });
+
+      const numShards = lowPower ? 92 : isTablet ? 132 : 252;
+
+      const SIGMA_W = 2.8;
+      const SIGMA_H = 4.2;
+      const SIGMA_THICKNESS = 0.20;
+      const SIGMA_DEPTH = 0.05;
+
+      // Σ has FOUR strokes. Coordinates in 2D, Y axis goes UP.
+      // Top bar runs across the top. Bottom bar runs across the bottom.
+      // The vertex of the < shape is on the LEFT at y=0.
+      const sigmaSegments: Array<{ sx: number; sy: number; ex: number; ey: number }> = [
+        { sx:  SIGMA_W, sy:  SIGMA_H, ex: -SIGMA_W, ey:  SIGMA_H }, // top bar
+        { sx: -SIGMA_W, sy:  SIGMA_H, ex:  SIGMA_W, ey:  0       }, // upper diag TL -> vertex right
+        { sx:  SIGMA_W, sy:  0,       ex: -SIGMA_W, ey: -SIGMA_H }, // lower diag vertex -> BL
+        { sx:  SIGMA_W, sy: -SIGMA_H, ex: -SIGMA_W, ey: -SIGMA_H }, // bottom bar
+      ];
+
+      const sigmaSegmentLengths = sigmaSegments.map((s) =>
+        Math.hypot(s.ex - s.sx, s.ey - s.sy),
+      );
+      const sigmaTotalLength = sigmaSegmentLengths.reduce((a, b) => a + b, 0);
+
+      const sampleSigmaPoint = (): THREE.Vector3 => {
+        let pick = Math.random() * sigmaTotalLength;
+        let segIdx = 0;
+        for (let s = 0; s < sigmaSegments.length; s++) {
+          if (pick <= sigmaSegmentLengths[s]!) { segIdx = s; break; }
+          pick -= sigmaSegmentLengths[s]!;
+        }
+        const seg = sigmaSegments[segIdx]!;
+        const t = Math.random();
+        const x = seg.sx + (seg.ex - seg.sx) * t;
+        const y = seg.sy + (seg.ey - seg.sy) * t;
+
+        const dx = seg.ex - seg.sx;
+        const dy = seg.ey - seg.sy;
+        const len = Math.hypot(dx, dy) || 1;
+        const nx = -dy / len;
+        const ny =  dx / len;
+
+        const jitter = (Math.random() - 0.5) * 2 * SIGMA_THICKNESS;
+        const z      = (Math.random() - 0.5) * 2 * SIGMA_DEPTH;
+
+        return new THREE.Vector3(x + nx * jitter, y + ny * jitter, z);
+      };
+
+      for (let i = 0; i < numShards; i++) {
+        const geometry = WEBGL_USE_SIGMA_SHARDS
+          ? sigmaShardGeometries[i % sigmaShardGeometries.length]!
+          : i % 3 === 0
+            ? octGeo!
+            : tetGeo!;
+        const mesh = new THREE.Mesh(geometry, material);
+        const sigmaPos = sampleSigmaPoint();
+        mesh.position.copy(sigmaPos);
+
+        mesh.userData = {
+          initialPos: mesh.position.clone(),
+          direction: mesh.position.clone().normalize(),
+          speed: Math.random() * 0.42 + 0.12,
+          rotSpeed: new THREE.Vector3(
+            Math.random() - 0.5,
+            Math.random() - 0.5,
+            Math.random() - 0.5,
+          ).multiplyScalar(0.042),
+        };
+
+        mesh.rotation.set(
+          Math.random() * Math.PI,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI,
+        );
+
+        if (WEBGL_USE_SIGMA_SHARDS) {
+          mesh.scale.setScalar(i % 3 === 0 ? baseScale * 0.92 : baseScale);
+        }
+
+        const wireframe = new THREE.LineSegments(
+          new THREE.WireframeGeometry(geometry),
+          wireMaterial,
+        );
+        mesh.add(wireframe);
+
+        group.add(mesh);
+        shards.push(mesh);
+      }
+
+      particlesGeo = new THREE.BufferGeometry();
+      const particlesCount = lowPower ? 140 : isTablet ? 220 : 480;
+      const posArray = new Float32Array(particlesCount * 3);
+      for (let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 40;
+      }
+      particlesGeo.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
+      particlesMat = new THREE.PointsMaterial({
+        size: isTablet ? 0.04 : 0.045,
+        color: theme.colors.cadet,
+        transparent: true,
+        opacity: isTablet ? 0.22 : 0.3,
+      });
+      particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+      scene.add(particlesMesh);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.36);
+      scene.add(ambientLight);
+
+      pointLight = new THREE.PointLight(theme.colors.uranian, 1.65, 55);
+      scene.add(pointLight);
+
+      const rim = new THREE.DirectionalLight(0xffffff, 0.28);
+      rim.position.set(4, 6, 8);
+      scene.add(rim);
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
+      window.addEventListener("resize", handleResize);
+      document.addEventListener("visibilitychange", onVisibility);
+      window.addEventListener("resize", updateMaxScroll);
+
+      updateMaxScroll();
+      animate();
+    } catch (error) {
+      cleanup();
+      if (process.env.NODE_ENV === "development") {
+        console.error("[Sigma WebGL] Falling back to static hero background.", error);
+      }
+      onInitError();
+      return;
+    }
+
+    return cleanup;
+  }, [lowPower, onInitError]);
 
   return (
     <div
@@ -537,6 +567,7 @@ const WebGLBackground = () => {
   const showCanvas = useMinWidth(1024);
   const reduceMotion = useReducedMotion() ?? false;
   const [lowPowerDevice, setLowPowerDevice] = useState(false);
+  const [webglFailed, setWebglFailed] = useState(false);
 
   useEffect(() => {
     const nav = navigator as Navigator & { deviceMemory?: number };
@@ -544,13 +575,21 @@ const WebGLBackground = () => {
     const cores = typeof navigator.hardwareConcurrency === "number" ? navigator.hardwareConcurrency : 8;
     setLowPowerDevice(memory <= 4 || cores <= 6);
   }, []);
+  const handleWebglInitError = useCallback(() => {
+    setWebglFailed(true);
+  }, []);
 
-  const shouldRenderCanvas = showCanvas && !reduceMotion && !lowPowerDevice;
+  const shouldRenderCanvas = showCanvas && !reduceMotion && !lowPowerDevice && !webglFailed;
 
   return (
     <div className="pointer-events-none fixed left-0 top-0 z-0 h-full w-full overflow-x-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#080a0f] via-[#151a22] to-[#0c111a]" />
-      {shouldRenderCanvas ? <WebGLScene lowPower={lowPowerDevice} /> : null}
+      {shouldRenderCanvas ? (
+        <WebGLScene
+          lowPower={lowPowerDevice}
+          onInitError={handleWebglInitError}
+        />
+      ) : null}
       <div
         className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.35]"}`}
         aria-hidden

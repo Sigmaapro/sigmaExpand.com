@@ -284,7 +284,8 @@ const WebGLScene = ({
       maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
     };
 
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
 
     const cleanup = () => {
       running = false;
@@ -312,11 +313,13 @@ const WebGLScene = ({
       if (particlesGeo) particlesGeo.dispose();
       if (particlesMat) particlesMat.dispose();
       if (renderer) renderer.dispose();
+      timer.dispose();
     };
 
-    const animate = () => {
+    const animate = (timestamp: number) => {
       if (!running || !group || !pointLight || !camera || !renderer || !particlesMesh) return;
-      const time = clock.getElapsedTime();
+      timer.update(timestamp);
+      const time = timer.getElapsed();
       const scrollProgress = Math.min(scrollY.current / maxScroll, 1.0);
 
       pointLight.position.x +=
@@ -541,7 +544,7 @@ const WebGLScene = ({
       window.addEventListener("resize", updateMaxScroll);
 
       updateMaxScroll();
-      animate();
+      animate(performance.now());
     } catch (error) {
       cleanup();
       if (process.env.NODE_ENV === "development") {

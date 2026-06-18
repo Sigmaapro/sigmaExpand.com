@@ -85,9 +85,8 @@ function MetricCard({
 }) {
   return (
     <motion.article
-      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
+      initial={reduceMotion ? false : { opacity: 1, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={reduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       className="group flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-lg border border-white/[0.07] bg-gradient-to-b from-[#10141c]/95 to-[#0a0c12]/95 px-5 py-6 transition-[border-color,box-shadow] duration-300 hover:border-[#1c39bb]/25 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:px-6 sm:py-7"
     >
@@ -122,9 +121,8 @@ function TestimonialCard({
   const attribution = item.company ? `${item.role}, ${item.company}` : item.role;
   return (
     <motion.article
-      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-48px" }}
+      initial={reduceMotion ? false : { opacity: 1, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={reduceMotion ? { duration: 0 } : { duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       className="flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-xl border border-white/[0.07] bg-[#0c0f14]/90 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:p-7"
     >

@@ -22,6 +22,9 @@ export default function Error({
       className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[#212529] px-6 font-body text-[#adb5bd]"
       style={{ backgroundColor: "#212529", minHeight: "100vh" }}
     >
+      <h1 className="font-display text-xl font-semibold tracking-tight text-white md:text-2xl">
+        {copy.title}
+      </h1>
       <p className="max-w-md text-center text-sm leading-relaxed">
         {copy.message}
       </p>

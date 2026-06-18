@@ -1,6 +1,7 @@
 import type { LangCode } from "@/content/types";
 
 export type ErrorPageCopy = {
+  title: string;
   message: string;
   retryLabel: string;
 };
@@ -15,39 +16,46 @@ export type NotFoundCopy = {
 
 const ERROR_COPY: Record<LangCode, ErrorPageCopy> = {
   EN: {
+    title: "Something went offline.",
     message:
-      "Something went wrong loading this page. If you are in development, stop the server, run npm run dev:clean, then hard-refresh the browser.",
+      "The Sigma interface could not complete this request. Please try again in a moment.",
     retryLabel: "Try again",
   },
   TR: {
+    title: "Bir şeyler ters gitti.",
     message:
-      "Bu sayfa yüklenirken bir sorun oluştu. Geliştirme ortamındaysanız sunucuyu durdurup npm run dev:clean çalıştırın, ardından tarayıcıyı sert yenileyin.",
+      "Sigma arayüzü bu isteği tamamlayamadı. Lütfen biraz sonra tekrar deneyin.",
     retryLabel: "Tekrar dene",
   },
   FA: {
+    title: "مشکلی پیش آمد.",
     message:
-      "در بارگذاری این صفحه مشکلی رخ داد. اگر در محیط توسعه هستید، سرور را متوقف کنید، npm run dev:clean را اجرا کنید و مرورگر را hard refresh کنید.",
+      "رابط Sigma نتوانست این درخواست را کامل کند. لطفاً چند لحظه دیگر دوباره تلاش کنید.",
     retryLabel: "تلاش دوباره",
   },
   AR: {
+    title: "حدث خطأ ما.",
     message:
-      "حدثت مشكلة أثناء تحميل هذه الصفحة. إذا كنت في بيئة التطوير، أوقف الخادم ثم شغّل npm run dev:clean وبعدها حدّث المتصفح تحديثًا كاملًا.",
-    retryLabel: "المحاولة مجددًا",
+      "تعذّر على واجهة Sigma إكمال هذا الطلب. يرجى المحاولة مرة أخرى بعد قليل.",
+    retryLabel: "حاول مرة أخرى",
   },
   ZH: {
+    title: "出现了一些问题。",
     message:
-      "页面加载时出现问题。如果你在开发环境，请停止服务，运行 npm run dev:clean，然后强制刷新浏览器。",
+      "Sigma 界面无法完成此请求。请稍后重试。",
     retryLabel: "重试",
   },
   ES: {
+    title: "Algo salió mal.",
     message:
-      "Hubo un problema al cargar esta página. Si estás en desarrollo, detén el servidor, ejecuta npm run dev:clean y luego haz una recarga forzada del navegador.",
-    retryLabel: "Reintentar",
+      "La interfaz de Sigma no pudo completar esta solicitud. Inténtalo de nuevo en un momento.",
+    retryLabel: "Intentar de nuevo",
   },
   RU: {
+    title: "Что-то пошло не так.",
     message:
-      "При загрузке страницы произошла ошибка. Если вы в режиме разработки, остановите сервер, выполните npm run dev:clean и сделайте жесткое обновление браузера.",
-    retryLabel: "Повторить",
+      "Интерфейс Sigma не смог завершить этот запрос. Попробуйте ещё раз через несколько минут.",
+    retryLabel: "Попробовать снова",
   },
 };
 

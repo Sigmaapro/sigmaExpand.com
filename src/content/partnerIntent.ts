@@ -179,7 +179,7 @@ export const partnerIntentCopyByLang: Record<LangCode, PartnerIntentCopy> = {
     selectRolesHint: "Bir veya daha fazla rol seçin",
     roleKol: "KOL",
     roleIb: "IB",
-    roleTrader: "Operador",
+    roleTrader: "Trader",
     socialOptionalLabel: "Sosyal Medya Linki (opsiyonel)",
     countryOptionalLabel: "Ülke (opsiyonel)",
     performanceOptionalLabel: "Performans ekran görüntüsü (opsiyonel)",

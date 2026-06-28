@@ -1386,7 +1386,7 @@ const Navbar = () => {
             />
           </div>
 
-          <div className="relative z-0 hidden min-h-0 min-w-0 flex-1 justify-center overflow-x-auto overflow-y-visible px-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:flex">
+          <div className="relative z-0 hidden min-h-0 min-w-0 flex-1 justify-center overflow-visible px-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:flex">
             <div
               className="inline-flex h-14 w-max flex-nowrap items-center gap-2 rounded-full border border-white/[0.06] bg-[#05070c]/50 px-3 shadow-[0_2px_12px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.03)] backdrop-blur-xl sm:gap-2.5 sm:px-3.5 md:gap-3 md:px-4 lg:gap-3.5"
               dir="ltr"

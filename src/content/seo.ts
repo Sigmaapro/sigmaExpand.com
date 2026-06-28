@@ -68,6 +68,10 @@ export function absoluteOgImage(path: string = DEFAULT_OG_IMAGE_PATH): string {
   return `${base}${p}`;
 }
 
+function asTemplateSafeTitle(title: string): Metadata["title"] {
+  return /\|\s*Sigma\s*$/i.test(title) ? { absolute: title } : title;
+}
+
 export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   home: {
     path: "/",
@@ -664,7 +668,7 @@ export function buildPageMetadata(key: SeoRouteKey, ogImagePath: string = DEFAUL
 
   return {
     ...base,
-    title: p.title,
+    title: asTemplateSafeTitle(p.title),
   };
 }
 

@@ -81,7 +81,7 @@ export function TeamPageView() {
             {c.kicker}
           </p>
           <h1 className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}>
-            {c.headline}
+            {language === "EN" ? "Sigma Team" : c.headline}
           </h1>
           <p className={`mx-auto mt-5 text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}>{c.intro}</p>
         </header>

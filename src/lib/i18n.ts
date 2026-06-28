@@ -68,14 +68,7 @@ export function buildLocaleSearchParams(current: URLSearchParams | { toString():
 export function buildLanguageAlternates(path: string): NonNullable<Metadata["alternates"]>["languages"] {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   const map = LOCALIZED_ROUTE_MAP[normalizedPath] ?? { defaultPath: normalizedPath };
-  const languages: NonNullable<Metadata["alternates"]>["languages"] = {
+  return {
     "x-default": map.defaultPath,
   };
-  for (const lang of SUPPORTED_LANGS) {
-    const html = HTML_LANG_BY_CODE[lang];
-    const basePath = lang === "AR" && map.arabicPath ? map.arabicPath : map.defaultPath;
-    const q = new URLSearchParams({ lang });
-    (languages as Record<string, string>)[html] = `${basePath}?${q.toString()}`;
-  }
-  return languages;
 }

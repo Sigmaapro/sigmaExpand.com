@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { getAllInsightsPosts } from "@/content/insights";
-import { SUPPORTED_LANGS } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
 
 const MARKET_REGIONS = ["wana", "cis", "apac", "europe", "latam"] as const;
@@ -8,10 +7,6 @@ const MARKET_REGIONS = ["wana", "cis", "apac", "europe", "latam"] as const;
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
   const posts = getAllInsightsPosts();
-  const withLang = (path: string, lang: string) => {
-    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-    return `${base}${normalizedPath}?lang=${lang}`;
-  };
 
   const articles: MetadataRoute.Sitemap = posts.map((p) => ({
     url: `${base}/insights/${p.slug}`,
@@ -19,33 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.75,
   }));
-
-  const localizedStaticRoutes = [
-    "/",
-    "/services",
-    "/services/platform-growth",
-    "/services/kol-infrastructure",
-    "/services/ib-program",
-    "/services/trader-network",
-    "/services/token-launch",
-    "/markets",
-    "/products",
-    "/insights",
-    "/about",
-    "/contact",
-    "/faq",
-    "/privacy",
-    "/team",
-    "/risk-disclosure",
-  ];
-  const localized: MetadataRoute.Sitemap = localizedStaticRoutes.flatMap((path) =>
-    SUPPORTED_LANGS.map((lang) => ({
-      url: withLang(path, lang),
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: path === "/" ? 0.95 : 0.6,
-    })),
-  );
 
   const markets: MetadataRoute.Sitemap = MARKET_REGIONS.map((region) => ({
     url: `${base}/markets/${region}`,
@@ -147,6 +115,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...markets,
     ...articles,
-    ...localized,
   ];
 }

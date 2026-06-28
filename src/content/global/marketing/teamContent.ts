@@ -129,7 +129,15 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
 }
 
 function buildContributorsMembers(roleLabel: string): TeamMember[] {
-  return [{ id: "babak-ravanbakhsh", name: "Babak Ravanbakhsh", role: roleLabel, group: "contributors", initials: "BR", imageSrc: null }];
+  return [
+    { id: "babak-ravanbakhsh", name: "Babak Ravanbakhsh", role: roleLabel, group: "contributors", initials: "BR", imageSrc: null },
+    {
+      id: "shahan-behkam-rad",
+      name: "Shahan Behkam Rad",
+      role: "SEO, GEO & Digital Marketing Consultant",
+      group: "contributors",
+    },
+  ];
 }
 
 const EN_CONTENT: TeamMarketingBody = {

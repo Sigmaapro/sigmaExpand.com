@@ -125,6 +125,7 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
     { id: "mahdyar-mehmandoost", name: "Mahdyar Mehmandoost", role: roleLabel, group: "innerCircle", initials: "MM", imageSrc: null },
     { id: "hamed-ghasemi", name: "Hamed Ghasemi", role: roleLabel, group: "innerCircle", initials: "HG", imageSrc: null },
     { id: "hayyam-modir-rosta", name: "Hayyam Modir Rosta", role: roleLabel, group: "innerCircle", initials: "HM", imageSrc: null },
+    { id: "shahrzad-rostami", name: "Shahrzad Rostami", role: roleLabel, group: "innerCircle", initials: "SR", imageSrc: null },
   ];
 }
 

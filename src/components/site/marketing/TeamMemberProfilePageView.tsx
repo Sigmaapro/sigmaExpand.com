@@ -108,6 +108,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const secondaryGlass =
     "border border-[#8ea4cd]/16 bg-[linear-gradient(155deg,rgba(9,14,25,0.56),rgba(8,13,23,0.52))] shadow-[0_14px_38px_rgba(0,0,0,0.28),0_0_0_1px_rgba(170,195,250,0.06)_inset,0_0_24px_rgba(56,94,176,0.1)] backdrop-blur-[16px]";
   const microSurface = "border border-white/[0.14] bg-[rgba(18,25,40,0.62)]";
+  const heroGlass =
+    "border border-[rgba(147,197,253,0.18)] bg-[linear-gradient(145deg,rgba(7,11,20,0.34),rgba(15,23,42,0.42))] shadow-[0_30px_90px_rgba(2,8,22,0.48),0_0_46px_rgba(58,103,196,0.18),inset_0_1px_0_rgba(210,228,255,0.16),inset_0_-1px_0_rgba(6,10,18,0.34)] backdrop-blur-[24px] [backdrop-filter:saturate(1.08)_blur(24px)]";
+  const heroPanelGlass =
+    "border border-[rgba(163,206,255,0.24)] bg-[linear-gradient(150deg,rgba(12,20,35,0.68),rgba(9,14,24,0.74))] shadow-[0_26px_70px_rgba(2,7,18,0.5),0_0_38px_rgba(63,110,204,0.18),inset_0_1px_0_rgba(207,225,255,0.12)] backdrop-blur-[20px]";
   const allMembers = getAllTeamMembers();
   const initials = member.initials ?? initialsFromName(member.name);
   const role = member.role ?? "Team Member";
@@ -160,12 +164,18 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
+    let targetA = 0.08;
+    let currentA = 0.08;
 
     const animate = () => {
       currentX += (targetX - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
+      currentA += (targetA - currentA) * 0.1;
       element.style.setProperty("--mx", currentX.toFixed(2));
       element.style.setProperty("--my", currentY.toFixed(2));
+      element.style.setProperty("--ra", currentA.toFixed(3));
+      element.style.setProperty("--rx", `${(50 + currentX * 2).toFixed(2)}%`);
+      element.style.setProperty("--ry", `${(50 + currentY * 2).toFixed(2)}%`);
       rafId = window.requestAnimationFrame(animate);
     };
 
@@ -176,11 +186,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       const normalizedY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
       targetX = Math.max(-1, Math.min(1, normalizedX)) * 8;
       targetY = Math.max(-1, Math.min(1, normalizedY)) * 8;
+      targetA = 0.14;
     };
 
     const onPointerLeave = () => {
       targetX = 0;
       targetY = 0;
+      targetA = 0.06;
     };
 
     rafId = window.requestAnimationFrame(animate);
@@ -193,6 +205,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       element.removeEventListener("pointerleave", onPointerLeave);
       element.style.removeProperty("--mx");
       element.style.removeProperty("--my");
+      element.style.removeProperty("--ra");
+      element.style.removeProperty("--rx");
+      element.style.removeProperty("--ry");
     };
   }, []);
 
@@ -229,7 +244,21 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </ol>
         </nav>
 
-        <section ref={heroRef} className={`relative overflow-hidden rounded-[30px] p-6 sm:p-8 lg:p-10 ${primaryGlass}`}>
+        <section ref={heroRef} className={`relative overflow-hidden rounded-[30px] p-6 sm:p-8 lg:p-10 ${heroGlass}`}>
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[var(--ra,0.08)]"
+            style={{
+              background:
+                "radial-gradient(560px circle at var(--rx,50%) var(--ry,50%), rgba(198,225,255,0.16) 0%, rgba(147,197,253,0.1) 38%, transparent 76%)",
+            }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 rounded-[30px] border border-[rgba(179,220,255,0.16)] opacity-[calc(var(--ra,0.08)*0.9)]"
+            style={{
+              background:
+                "radial-gradient(320px circle at var(--rx,50%) var(--ry,50%), rgba(170,215,255,0.18), transparent 72%)",
+            }}
+          />
           <div
             className="pointer-events-none absolute right-0 top-0 h-full w-[52%] bg-[radial-gradient(circle_at_75%_25%,rgba(86,130,255,0.18),transparent_56%)] motion-safe:transition-transform motion-safe:duration-300"
             style={{ transform: "translate3d(calc(var(--mx, 0) * -1px), calc(var(--my, 0) * -1px), 0)" }}
@@ -250,7 +279,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             {initials}
           </div>
 
-          <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(280px,0.92fr)] lg:items-center">
+          <div className="relative z-10 grid gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(280px,0.92fr)] lg:items-center">
             <div className="min-w-0">
               <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#86a8ff]">SIGMA TEAM</p>
               <h1 className="font-display mt-4 break-words text-4xl font-semibold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -322,7 +351,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 style={{ transform: "translate3d(calc(var(--mx, 0) * -0.85px), calc(var(--my, 0) * -0.85px), 0)" }}
               />
               <div
-                className={`relative overflow-hidden rounded-[30px] px-4 pb-4 pt-16 ${primaryGlass} motion-safe:transition-transform motion-safe:duration-300`}
+                className={`relative overflow-hidden rounded-[30px] px-4 pb-4 pt-16 ${heroPanelGlass} motion-safe:transition-transform motion-safe:duration-300`}
                 style={{
                   transform:
                     "translate3d(calc(var(--mx, 0) * 0.55px), calc(var(--my, 0) * 0.55px), 0) rotateX(calc(var(--my, 0) * -0.03deg)) rotateY(calc(var(--mx, 0) * 0.03deg))",

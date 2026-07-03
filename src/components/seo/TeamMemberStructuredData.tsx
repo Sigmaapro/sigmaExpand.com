@@ -39,8 +39,11 @@ export function TeamMemberPersonStructuredData({ member }: Props) {
   const profileUrl = getCanonicalUrl(`/team/${slug}`);
   const sameAs = [
     ...(member.linkedin ? [member.linkedin] : []),
+    ...(member.website ? [member.website] : []),
     ...((member.socialLinks ?? []).map((link) => link.href)),
   ].filter((value) => /^https?:\/\//.test(value));
+  const description = member.fullBio ?? member.shortBio ?? member.bio;
+  const knowsAbout = member.expertise?.filter((item) => item.trim().length > 0) ?? [];
 
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -55,12 +58,20 @@ export function TeamMemberPersonStructuredData({ member }: Props) {
     },
   };
 
-  if (member.imageSrc) {
-    data.image = toAbsoluteUrl(member.imageSrc, base);
+  if (member.portrait ?? member.imageSrc) {
+    data.image = toAbsoluteUrl((member.portrait ?? member.imageSrc) as string, base);
   }
 
   if (sameAs.length > 0) {
     data.sameAs = sameAs;
+  }
+
+  if (description) {
+    data.description = description;
+  }
+
+  if (knowsAbout.length > 0) {
+    data.knowsAbout = knowsAbout;
   }
 
   return (

@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonicalPath = `/team/${getTeamMemberSlug(member)}`;
   const title = `${member.name} | Sigma Team`;
   const description = buildDescription(member.name, member.role);
-  const image = resolveMemberImage(member.ogImage ?? member.imageSrc);
+  const image = resolveMemberImage(member.ogImage ?? member.portrait ?? member.imageSrc);
 
   return {
     title: { absolute: title },
@@ -84,12 +84,23 @@ export default async function TeamMemberProfilePage({ params }: PageProps) {
   const { slug } = await params;
   const member = getTeamMemberBySlug(slug, "EN");
   if (!member) notFound();
+  const members = getAllTeamMembers();
+  const currentSlug = getTeamMemberSlug(member);
+  const currentIndex = members.findIndex((item) => getTeamMemberSlug(item) === currentSlug);
+  if (currentIndex < 0) notFound();
+
+  const previous = members[(currentIndex - 1 + members.length) % members.length]!;
+  const next = members[(currentIndex + 1) % members.length]!;
 
   return (
     <InnerPageShell>
       <TeamMemberBreadcrumbStructuredData member={member} />
       <TeamMemberPersonStructuredData member={member} />
-      <TeamMemberProfilePageView member={member} />
+      <TeamMemberProfilePageView
+        member={member}
+        previousMember={{ name: previous.name, slug: getTeamMemberSlug(previous) }}
+        nextMember={{ name: next.name, slug: getTeamMemberSlug(next) }}
+      />
     </InnerPageShell>
   );
 }

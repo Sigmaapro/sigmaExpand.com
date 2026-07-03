@@ -8,16 +8,33 @@ export type TeamMember = {
   name: string;
   role?: string;
   group: "core" | "innerCircle" | "contributors";
+  eyebrow?: string;
+  headline?: string;
   initials?: string;
+  portrait?: string | null;
+  coverImage?: string | null;
   imageSrc?: string | null;
   shortBio?: string;
   fullBio?: string;
   expertise?: string[];
-  careerHistory?: string[];
-  achievements?: string[];
+  careerHistory?: Array<{
+    dateRange?: string;
+    role?: string;
+    organization?: string;
+    description?: string;
+  }>;
+  achievements?: Array<{
+    title?: string;
+    description?: string;
+    year?: string;
+    link?: string;
+  }>;
+  markets?: string[];
   location?: string;
   languages?: string[];
+  quote?: string;
   linkedin?: string;
+  website?: string;
   socialLinks?: Array<{ label: string; href: string }>;
   seoTitle?: string;
   metaDescription?: string;

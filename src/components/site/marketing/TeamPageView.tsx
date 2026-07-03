@@ -31,6 +31,7 @@ function MemberTile({
   const titleSize = tone === "core" ? "text-base sm:text-[17px]" : "text-sm sm:text-base";
   const roleSize = tone === "core" ? "text-[11px]" : "text-[10px]";
   const profileHref = `/team/${getTeamMemberSlug(member)}`;
+  const portrait = member.portrait ?? member.imageSrc;
 
   return (
     <Link
@@ -51,8 +52,8 @@ function MemberTile({
               tone === "core" ? "border-[#1c39bb]/40 bg-[#121b32]" : "border-white/[0.12] bg-[#121621]"
             } ${avatarSize}`}
           >
-            {member.imageSrc ? (
-              <Image src={member.imageSrc} alt={member.name} fill className="object-cover" sizes="72px" />
+            {portrait ? (
+              <Image src={portrait} alt={member.name} fill className="object-cover" sizes="72px" />
             ) : (
               <span
                 className={`flex h-full w-full items-center justify-center font-semibold uppercase tracking-[0.08em] ${

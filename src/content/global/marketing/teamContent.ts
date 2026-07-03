@@ -4,11 +4,25 @@ import { ROUTES } from "@/content/global/routes";
 
 export type TeamMember = {
   id: string;
+  slug?: string;
   name: string;
   role?: string;
   group: "core" | "innerCircle" | "contributors";
   initials?: string;
   imageSrc?: string | null;
+  shortBio?: string;
+  fullBio?: string;
+  expertise?: string[];
+  careerHistory?: string[];
+  achievements?: string[];
+  location?: string;
+  languages?: string[];
+  linkedin?: string;
+  socialLinks?: Array<{ label: string; href: string }>;
+  seoTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+  profileStatus?: "draft" | "active" | "archived";
   bio?: string;
 };
 
@@ -286,3 +300,28 @@ export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
     ctaLabel: "شارك مع Sigma",
   },
 };
+
+export function getTeamMemberSlug(member: TeamMember): string {
+  return member.slug?.trim() || member.id;
+}
+
+export function getTeamMembersByLang(lang: LangCode): TeamMember[] {
+  const content = teamPageContentByLang[lang] ?? teamPageContentByLang.EN;
+  return [...content.coreMembers, ...content.innerCircleMembers, ...content.contributorsMembers];
+}
+
+export function getAllTeamMembers(): TeamMember[] {
+  return getTeamMembersByLang("EN");
+}
+
+export function getTeamMemberBySlug(slug: string, lang: LangCode = "EN"): TeamMember | null {
+  const normalized = slug.trim().toLowerCase();
+  if (!normalized) return null;
+
+  return (
+    getTeamMembersByLang(lang).find((member) => {
+      const memberSlug = getTeamMemberSlug(member).toLowerCase();
+      return memberSlug === normalized;
+    }) ?? null
+  );
+}

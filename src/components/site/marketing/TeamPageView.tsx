@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
 import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
-import type { TeamMember } from "@/content/global/marketing/teamContent";
+import { getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
 import { teamPageContentByLang } from "@/content/global/marketing/teamContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
@@ -30,42 +30,49 @@ function MemberTile({
   const avatarSize = tone === "core" ? "h-16 w-16 sm:h-[72px] sm:w-[72px]" : "h-14 w-14 sm:h-16 sm:w-16";
   const titleSize = tone === "core" ? "text-base sm:text-[17px]" : "text-sm sm:text-base";
   const roleSize = tone === "core" ? "text-[11px]" : "text-[10px]";
+  const profileHref = `/team/${getTeamMemberSlug(member)}`;
 
   return (
-    <article
-      className={
-        tone === "core"
-          ? "rounded-2xl border border-[#1c39bb]/34 bg-[#1c39bb]/12 p-4 sm:p-5"
-          : "rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4"
-      }
+    <Link
+      href={profileHref}
+      className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#090e19]"
+      aria-label={`Open profile for ${member.name}`}
     >
-      <div className="flex items-center gap-3.5">
-        <div
-          className={`relative shrink-0 overflow-hidden rounded-2xl border ${
-            tone === "core" ? "border-[#1c39bb]/40 bg-[#121b32]" : "border-white/[0.12] bg-[#121621]"
-          } ${avatarSize}`}
-        >
-          {member.imageSrc ? (
-            <Image src={member.imageSrc} alt={member.name} fill className="object-cover" sizes="72px" />
-          ) : (
-            <span
-              className={`flex h-full w-full items-center justify-center font-semibold uppercase tracking-[0.08em] ${
-                tone === "core" ? "text-sm text-[#d0e0ff]" : "text-xs text-[#b7c0cc]"
-              }`}
-              aria-hidden
-            >
-              {initials}
-            </span>
-          )}
+      <article
+        className={`transition-colors ${
+          tone === "core"
+            ? "rounded-2xl border border-[#1c39bb]/34 bg-[#1c39bb]/12 p-4 hover:bg-[#1c39bb]/18 sm:p-5"
+            : "rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 hover:bg-white/[0.05]"
+        }`}
+      >
+        <div className="flex items-center gap-3.5">
+          <div
+            className={`relative shrink-0 overflow-hidden rounded-2xl border ${
+              tone === "core" ? "border-[#1c39bb]/40 bg-[#121b32]" : "border-white/[0.12] bg-[#121621]"
+            } ${avatarSize}`}
+          >
+            {member.imageSrc ? (
+              <Image src={member.imageSrc} alt={member.name} fill className="object-cover" sizes="72px" />
+            ) : (
+              <span
+                className={`flex h-full w-full items-center justify-center font-semibold uppercase tracking-[0.08em] ${
+                  tone === "core" ? "text-sm text-[#d0e0ff]" : "text-xs text-[#b7c0cc]"
+                }`}
+                aria-hidden
+              >
+                {initials}
+              </span>
+            )}
+          </div>
+          <div className="min-w-0">
+            <h3 className={`truncate font-display font-semibold text-white ${titleSize} ${localeHeading(language)}`}>{member.name}</h3>
+            {member.role ? (
+              <p className={`mt-1 uppercase tracking-[0.12em] text-[#9aa5b3] ${roleSize} ${localeMeta(language)}`}>{member.role}</p>
+            ) : null}
+          </div>
         </div>
-        <div className="min-w-0">
-          <h3 className={`truncate font-display font-semibold text-white ${titleSize} ${localeHeading(language)}`}>{member.name}</h3>
-          {member.role ? (
-            <p className={`mt-1 uppercase tracking-[0.12em] text-[#9aa5b3] ${roleSize} ${localeMeta(language)}`}>{member.role}</p>
-          ) : null}
-        </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }
 

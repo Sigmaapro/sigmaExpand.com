@@ -161,7 +161,36 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
 function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
   return [
     withPlaceholderImage(
-      { id: "ashkan-nobakht", name: "Ashkan Nobakht", role: roleLabel, group: "innerCircle", initials: "AN", imageSrc: null },
+      {
+        id: "ashkan-nobakht",
+        name: "Ashkan Nobakht",
+        role: roleLabel,
+        group: "innerCircle",
+        initials: "AN",
+        imageSrc: null,
+        headline: "Growth Marketing Strategist at Sigma",
+        shortBio:
+          "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
+        fullBio:
+          "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
+        expertise: [
+          "Marketing Management",
+          "Strategic Foresight",
+          "Growth Marketing Strategy",
+          "Performance Marketing",
+        ],
+        careerHistory: [
+          { dateRange: "Current", role: "Business Development", organization: "LBank" },
+          { dateRange: "Current", role: "Business Development", organization: "Cryptic" },
+          { dateRange: "Former", role: "Head of Partnerships", organization: "walllet.com" },
+        ],
+        location: "Istanbul",
+        socialLinks: [
+          { label: "X", href: "https://x.com/0naxes?s=11" },
+          { label: "Instagram", href: "https://www.instagram.com/nobakhthastam?utm_source=qr" },
+        ],
+        metaDescription: "Profile of Ashkan Nobakht, Growth Marketing Strategist and Inner Circle Partner at Sigma.",
+      },
       MALE_MEMBER_PLACEHOLDER,
     ),
     withPlaceholderImage(

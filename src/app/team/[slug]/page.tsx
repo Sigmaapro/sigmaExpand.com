@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const canonicalPath = `/team/${getTeamMemberSlug(member)}`;
   const title = `${member.name} | Sigma Team`;
-  const description = buildDescription(member.name, member.role);
+  const description = member.metaDescription ?? buildDescription(member.name, member.role);
   const image = resolveMemberImage(member.ogImage ?? member.portrait ?? member.imageSrc);
 
   return {

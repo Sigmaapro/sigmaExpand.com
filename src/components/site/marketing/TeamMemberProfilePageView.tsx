@@ -47,6 +47,7 @@ function isPlaceholderImage(src?: string | null): boolean {
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
   const initials = member.initials ?? initialsFromName(member.name);
   const role = member.role ?? "Team Member";
+  const headline = member.headline;
   const groupLabel = getGroupLabel(member.group);
   const portrait = member.portrait ?? member.imageSrc;
   const shortIntro = member.shortBio ?? member.bio;
@@ -100,6 +101,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           <div>
             <h1 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">{member.name}</h1>
             <p className="mt-3 text-sm uppercase tracking-[0.16em] text-[#93a2b7]">{role}</p>
+            {headline ? <p className="mt-2 text-sm text-[#d2d9e4]">{headline}</p> : null}
             <p className="mt-2 inline-flex rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#c7cfda]">
               {groupLabel}
             </p>
@@ -232,6 +234,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </Section>
         </div>
+
+        <Section title="Location">
+          {member.location ? (
+            <p>{member.location}</p>
+          ) : (
+            <ProfileContentPlaceholder label="Details to be added" lines={1} />
+          )}
+        </Section>
 
         {/* Section G — Quote / Personal Note */}
         <Section title="Quote / Personal Note">

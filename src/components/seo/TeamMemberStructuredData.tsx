@@ -75,7 +75,10 @@ export function TeamMemberPersonStructuredData({ member }: Props) {
   }
 
   if (member.location) {
-    data.homeLocation = { "@type": "Place", name: member.location };
+    data.homeLocation = {
+      "@type": "Place",
+      name: [member.location.city, member.location.country].filter(Boolean).join(", "),
+    };
   }
 
   return (

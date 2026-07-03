@@ -44,6 +44,12 @@ function isPlaceholderImage(src?: string | null): boolean {
   return Boolean(src && src.includes("/images/team/placeholders/member-placeholder-"));
 }
 
+function countryCodeToFlag(countryCode: string): string {
+  return countryCode
+    .toUpperCase()
+    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
+}
+
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
   const initials = member.initials ?? initialsFromName(member.name);
   const role = member.role ?? "Team Member";
@@ -251,7 +257,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
         <Section title="Location">
           {member.location ? (
-            <p>{member.location}</p>
+            <p>
+              {countryCodeToFlag(member.location.countryCode)}{" "}
+              {[member.location.city, member.location.country].filter(Boolean).join(", ")}
+            </p>
           ) : (
             <ProfileContentPlaceholder label="Details to be added" lines={1} />
           )}

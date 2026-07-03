@@ -36,7 +36,11 @@ export type TeamMember = {
     link?: string;
   }>;
   markets?: string[];
-  location?: string;
+  location?: {
+    city?: string;
+    country: string;
+    countryCode: string;
+  };
   languages?: string[];
   quote?: string;
   linkedin?: string;
@@ -55,9 +59,20 @@ function withPlaceholderImage(member: TeamMember, placeholderSrc: string): TeamM
 }
 
 function withMemberProfileDefaults(member: TeamMember): TeamMember {
+  const isUk = UK_MEMBER_IDS.has(member.id);
   return {
     ...member,
-    location: UK_MEMBER_IDS.has(member.id) ? "UK" : "Dubai",
+    location: isUk
+      ? {
+          country: "United Kingdom",
+          countryCode: "GB",
+        }
+      : {
+          city: "Dubai",
+          country: "United Arab Emirates",
+          countryCode: "AE",
+        },
+    languages: ["English"],
     markets: [...TEAM_PROFILE_MARKETS],
   };
 }

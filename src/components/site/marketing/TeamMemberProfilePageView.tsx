@@ -38,10 +38,13 @@ function SectionFrame({
   children: React.ReactNode;
   className?: string;
 }) {
+  const primaryGlass =
+    "border border-[#9ab0d8]/20 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
   return (
     <section
-      className={`relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[linear-gradient(160deg,rgba(10,16,30,0.86),rgba(7,10,18,0.75))] p-6 sm:p-8 ${className}`}
+      className={`relative overflow-hidden rounded-3xl p-6 sm:p-8 ${primaryGlass} ${className}`}
     >
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(198,214,255,0.06),transparent_35%,transparent_100%)]" />
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
         <div>
           <p className="font-mono text-[11px] tracking-[0.24em] text-[#88a8ff]">{number}</p>
@@ -71,6 +74,11 @@ function countryCodeToFlag(countryCode: string): string {
 }
 
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
+  const primaryGlass =
+    "border border-[#9ab0d8]/20 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
+  const secondaryGlass =
+    "border border-[#8ea4cd]/16 bg-[linear-gradient(155deg,rgba(9,14,25,0.56),rgba(8,13,23,0.52))] shadow-[0_14px_38px_rgba(0,0,0,0.28),0_0_0_1px_rgba(170,195,250,0.06)_inset,0_0_24px_rgba(56,94,176,0.1)] backdrop-blur-[16px]";
+  const microSurface = "border border-white/[0.14] bg-[rgba(18,25,40,0.62)]";
   const allMembers = getAllTeamMembers();
   const initials = member.initials ?? initialsFromName(member.name);
   const role = member.role ?? "Team Member";
@@ -133,10 +141,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </ol>
         </nav>
 
-        <section className="relative overflow-hidden rounded-[30px] border border-white/[0.12] bg-[linear-gradient(145deg,rgba(8,12,23,0.9),rgba(6,9,18,0.74))] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:p-8 lg:p-10">
+        <section className={`relative overflow-hidden rounded-[30px] p-6 sm:p-8 lg:p-10 ${primaryGlass}`}>
           <div className="pointer-events-none absolute right-0 top-0 h-full w-[52%] bg-[radial-gradient(circle_at_75%_25%,rgba(86,130,255,0.18),transparent_56%)]" />
           <div className="pointer-events-none absolute -right-12 top-12 h-[320px] w-[320px] rounded-full border border-[#84a8ff]/20" />
           <div className="pointer-events-none absolute -right-3 bottom-10 h-[150px] w-[150px] rounded-full border border-[#84a8ff]/25" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(196,214,255,0.08),transparent_28%,transparent_100%)]" />
           <div className="pointer-events-none absolute left-5 top-4 font-display text-[72px] font-bold leading-none text-[#88a8ff]/[0.06] sm:text-[96px]">
             {initials}
           </div>
@@ -156,11 +165,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               )}
 
               <div className="mt-6 flex flex-wrap gap-2.5">
-                <span className="rounded-full border border-[#86a8ff]/35 bg-[#86a8ff]/12 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-[#d3deff]">
+                <span className="rounded-full border border-[#86a8ff]/35 bg-[#86a8ff]/18 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-[#d3deff]">
                   {groupLabel}
                 </span>
                 {locationLabel ? (
-                  <span className="rounded-full border border-white/[0.14] bg-white/[0.04] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#c2ccda]">
+                  <span className={`rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#c2ccda] ${microSurface}`}>
                     {locationLabel}
                   </span>
                 ) : null}
@@ -168,13 +177,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   member.languages!.map((language) => (
                     <span
                       key={language}
-                      className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#abb6c9]"
+                      className={`rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#abb6c9] ${microSurface}`}
                     >
                       {language}
                     </span>
                   ))
                 ) : (
-                  <span className="rounded-full border border-dashed border-white/[0.16] bg-white/[0.02] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#7f8aa0]">
+                  <span className="rounded-full border border-dashed border-white/[0.16] bg-[rgba(16,22,35,0.62)] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#7f8aa0]">
                     Language data pending
                   </span>
                 )}
@@ -188,7 +197,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.16] bg-white/[0.03] px-3.5 py-1.5 text-xs tracking-[0.08em] text-[#d0dcff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/60 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111f]"
+                        className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs tracking-[0.08em] text-[#d0dcff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/60 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111f] ${microSurface}`}
                       >
                         {item.label}
                       </a>
@@ -200,7 +209,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
             <div className="relative mx-auto w-full max-w-[420px]">
               <div className="pointer-events-none absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_30%,rgba(90,135,255,0.32),transparent_62%)] blur-xl" />
-              <div className="relative overflow-hidden rounded-[30px] border border-[#84a8ff]/35 bg-[#0b1324] px-4 pb-4 pt-16 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
+              <div className={`relative overflow-hidden rounded-[30px] px-4 pb-4 pt-16 ${primaryGlass}`}>
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)]" />
                 <div className="pointer-events-none absolute left-4 top-4 font-mono text-[11px] tracking-[0.24em] text-[#9cb6ff]">
                   {profileIndex} / {totalProfiles}
@@ -252,7 +261,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   {member.skills.map((item, index) => (
                     <article
                       key={item}
-                      className="rounded-2xl border border-white/[0.1] bg-white/[0.03] p-3.5 motion-safe:transition-all motion-safe:hover:border-[#8cafef]/45 motion-safe:hover:bg-[#8cafef]/10"
+                      className={`rounded-2xl p-3.5 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#8cafef]/45 motion-safe:hover:bg-[#8cafef]/10 ${secondaryGlass}`}
                     >
                       <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da5df]">{String(index + 1).padStart(2, "0")}</p>
                       <p className="mt-2 text-sm text-[#d4ddf0]">{item}</p>
@@ -270,7 +279,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   {member.services.map((item, index) => (
                     <div
                       key={item}
-                      className="group flex items-center justify-between rounded-xl border border-white/[0.1] bg-white/[0.02] px-3.5 py-3 motion-safe:transition-all motion-safe:hover:border-[#9fc1ff]/45"
+                      className={`group flex items-center justify-between rounded-xl px-3.5 py-3 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#9fc1ff]/45 ${secondaryGlass}`}
                     >
                       <span className="text-sm text-[#d3ddef]">{item}</span>
                       <span className="font-mono text-[11px] tracking-[0.18em] text-[#96aff0]">{String(index + 1).padStart(2, "0")}</span>
@@ -310,7 +319,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     key={`${item.title ?? "achievement"}-${index}`}
                     className={`relative overflow-hidden rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 ${
                       index === 0 ? "sm:col-span-2" : ""
-                    } motion-safe:transition-all motion-safe:hover:border-[#93b2f8]/45`}
+                    } motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#93b2f8]/45 ${secondaryGlass}`}
                   >
                     <p className="pointer-events-none absolute -right-3 top-1 font-display text-5xl text-[#8ab0ff]/[0.08]">
                       {String(index + 1).padStart(2, "0")}
@@ -338,7 +347,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
           <SectionFrame number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
             <div className="grid gap-3 md:grid-cols-3">
-              <article className="rounded-2xl border border-white/[0.1] bg-white/[0.02] p-4">
+              <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Location</p>
                 {locationLabel ? (
                   <p className="mt-2 text-sm text-[#d4dded]">{locationLabel}</p>
@@ -346,12 +355,12 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   <ProfileContentPlaceholder label="Details to be added" lines={1} className="mt-2 p-3" />
                 )}
               </article>
-              <article className="rounded-2xl border border-white/[0.1] bg-white/[0.02] p-4">
+              <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Languages</p>
                 {hasLanguages ? (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {member.languages!.map((item) => (
-                      <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-2.5 py-1 text-xs text-[#cad4e8]">
+                      <span key={item} className={`rounded-full px-2.5 py-1 text-xs text-[#cad4e8] ${microSurface}`}>
                         {item}
                       </span>
                     ))}
@@ -360,12 +369,12 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   <ProfileContentPlaceholder label="Profile data pending" pills={3} className="mt-2 p-3" />
                 )}
               </article>
-              <article className="rounded-2xl border border-white/[0.1] bg-white/[0.02] p-4">
+              <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Markets / Regions</p>
                 {hasMarkets ? (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {member.markets!.map((item) => (
-                      <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-2.5 py-1 text-xs text-[#cad4e8]">
+                      <span key={item} className={`rounded-full px-2.5 py-1 text-xs text-[#cad4e8] ${microSurface}`}>
                         {item}
                       </span>
                     ))}
@@ -377,7 +386,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </div>
           </SectionFrame>
 
-          <section className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[linear-gradient(180deg,rgba(9,15,28,0.9),rgba(6,9,16,0.78))] p-6 sm:p-8">
+          <section className={`relative overflow-hidden rounded-3xl p-6 sm:p-8 ${primaryGlass}`}>
             <span className="pointer-events-none absolute left-5 top-2 font-display text-7xl text-[#9bb4ff]/[0.12]">&ldquo;</span>
             <div className="relative">
               <p className="font-mono text-[11px] tracking-[0.22em] text-[#88a8ff]">07</p>
@@ -401,7 +410,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex w-full items-center justify-between rounded-xl border border-white/[0.14] bg-white/[0.03] px-3.5 py-3 text-sm text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323]"
+                      className={`inline-flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-sm text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${secondaryGlass}`}
                     >
                       <span>{item.label}</span>
                       <span className="text-[#9cb7ff]">↗</span>
@@ -417,7 +426,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     type="button"
                     disabled
                     aria-disabled="true"
-                    className="cursor-not-allowed rounded-xl border border-dashed border-white/[0.14] bg-white/[0.02] px-3.5 py-3 text-sm text-[#788292]"
+                    className="cursor-not-allowed rounded-xl border border-dashed border-white/[0.14] bg-[rgba(17,24,38,0.6)] px-3.5 py-3 text-sm text-[#788292]"
                   >
                     {label} (pending)
                   </button>
@@ -426,38 +435,38 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <section className="rounded-3xl border border-[#1f43b8]/35 bg-[linear-gradient(120deg,rgba(11,19,37,0.92),rgba(8,13,24,0.9))] p-6 sm:p-8">
+          <section className={`rounded-3xl p-6 sm:p-8 ${primaryGlass}`}>
             <p className="font-mono text-[11px] tracking-[0.24em] text-[#8daeff]">09</p>
             <h2 className="font-display mt-1 text-2xl font-semibold text-white">WORK WITH SIGMA</h2>
             <p className="mt-2 max-w-2xl text-sm text-[#b3c0d6]">Continue through Sigma’s official channel for partnerships and strategic collaboration.</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-full border border-[#2e57d6]/65 bg-[#1f46c7]/18 px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-colors motion-safe:hover:bg-[#1f46c7]/32 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#88a7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
+                className="inline-flex items-center justify-center rounded-full border border-[#2e57d6]/65 bg-[#1f46c7]/20 px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-colors motion-safe:hover:bg-[#1f46c7]/34 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#88a7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
               >
                 Partner with Sigma
               </Link>
               <Link
                 href="/team"
-                className="inline-flex items-center justify-center rounded-full border border-white/[0.18] bg-white/[0.03] px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-colors motion-safe:hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#88a7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
+                className="inline-flex items-center justify-center rounded-full border border-white/[0.18] bg-[rgba(18,25,40,0.62)] px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-colors motion-safe:hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#88a7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
               >
                 Back to Team
               </Link>
             </div>
           </section>
 
-          <footer className="rounded-3xl border border-white/[0.1] bg-[linear-gradient(180deg,rgba(9,12,20,0.9),rgba(7,10,16,0.85))] p-6 sm:p-8">
+          <footer className={`rounded-3xl p-6 sm:p-8 ${primaryGlass}`}>
             <div className="grid gap-3 sm:grid-cols-2">
               <Link
                 href={`/team/${previousMember.slug}`}
-                className="group rounded-2xl border border-white/[0.1] bg-white/[0.02] px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c]"
+                className={`group rounded-2xl px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c] ${secondaryGlass}`}
               >
                 <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">← Previous Operator</span>
                 <span className="mt-1 block text-base font-medium text-white">{previousMember.name}</span>
               </Link>
               <Link
                 href={`/team/${nextMember.slug}`}
-                className="group rounded-2xl border border-white/[0.1] bg-white/[0.02] px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c] sm:text-right"
+                className={`group rounded-2xl px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c] sm:text-right ${secondaryGlass}`}
               >
                 <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">Next Operator →</span>
                 <span className="mt-1 block text-base font-medium text-white">{nextMember.name}</span>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import type { TeamMember } from "@/content/global/marketing/teamContent";
+import { getAllTeamMembers, getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
 import { ProfileContentPlaceholder } from "@/components/site/marketing/ProfileContentPlaceholder";
 
 type Props = {
@@ -25,11 +25,31 @@ function getGroupLabel(group: TeamMember["group"]): string {
   return "Contributors";
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function SectionFrame({
+  number,
+  title,
+  subtitle,
+  children,
+  className = "",
+}: {
+  number: string;
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <section className="rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-5 sm:p-6 lg:p-7">
-      <h2 className="font-display text-lg font-semibold text-white">{title}</h2>
-      <div className="mt-3 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{children}</div>
+    <section
+      className={`relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[linear-gradient(160deg,rgba(10,16,30,0.86),rgba(7,10,18,0.75))] p-6 sm:p-8 ${className}`}
+    >
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
+        <div>
+          <p className="font-mono text-[11px] tracking-[0.24em] text-[#88a8ff]">{number}</p>
+          <h2 className="font-display mt-1 text-2xl font-semibold tracking-tight text-white">{title}</h2>
+          {subtitle ? <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#8090a8]">{subtitle}</p> : null}
+        </div>
+      </div>
+      <div className="text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{children}</div>
     </section>
   );
 }
@@ -51,10 +71,15 @@ function countryCodeToFlag(countryCode: string): string {
 }
 
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
+  const allMembers = getAllTeamMembers();
   const initials = member.initials ?? initialsFromName(member.name);
   const role = member.role ?? "Team Member";
   const headline = member.headline;
   const groupLabel = getGroupLabel(member.group);
+  const profileSlug = getTeamMemberSlug(member);
+  const memberIndex = allMembers.findIndex((item) => getTeamMemberSlug(item) === profileSlug);
+  const profileIndex = memberIndex >= 0 ? String(memberIndex + 1).padStart(2, "0") : "00";
+  const totalProfiles = String(allMembers.length).padStart(2, "0");
   const portrait = member.portrait ?? member.imageSrc;
   const shortIntro = member.shortBio ?? member.bio;
   const fullOverview = member.fullBio;
@@ -73,11 +98,18 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [hasPortraitError, setHasPortraitError] = useState(false);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
+  const locationLabel = member.location ? `${countryCodeToFlag(member.location.countryCode)} ${[member.location.city, member.location.country].filter(Boolean).join(", ")}` : null;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16 lg:px-10">
-      {/* Section A — Hero with breadcrumb */}
-      <nav className="mb-6 text-xs text-[#9aa4af]" aria-label="Breadcrumb">
+    <div className="relative isolate overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_5%,rgba(32,73,180,0.18),transparent_40%),radial-gradient(circle_at_90%_15%,rgba(86,130,255,0.14),transparent_35%),linear-gradient(180deg,#05070e_0%,#070b14_45%,#05070e_100%)]" />
+        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(171,189,237,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(171,189,237,0.3)_1px,transparent_1px)] [background-size:44px_44px]" />
+        <div className="absolute left-1/2 top-0 h-[580px] w-[580px] -translate-x-1/2 rounded-full bg-[#1d4adb]/20 blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+        <nav className="mb-8 text-xs text-[#9aa4af]" aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
           <li>
             <Link href="/" className="transition-colors hover:text-white focus-visible:outline-none focus-visible:text-white">
@@ -99,257 +131,340 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             {member.name}
           </li>
         </ol>
-      </nav>
+        </nav>
 
-      <section className="rounded-3xl border border-white/[0.1] bg-[#070b14]/80 p-6 shadow-[0_24px_70px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8 lg:p-10">
-        <p className="font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb]">Sigma Team</p>
-        <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start">
-          <div>
-            <h1 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">{member.name}</h1>
-            <p className="mt-3 text-sm uppercase tracking-[0.16em] text-[#93a2b7]">{role}</p>
-            {headline ? <p className="mt-2 text-sm text-[#d2d9e4]">{headline}</p> : null}
-            <p className="mt-2 inline-flex rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#c7cfda]">
-              {groupLabel}
-            </p>
-            {shortIntro ? (
-              <p className="mt-5 max-w-3xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">{shortIntro}</p>
-            ) : (
-              <ProfileContentPlaceholder label="Details to be added" lines={3} className="mt-5 max-w-3xl" />
-            )}
+        <section className="relative overflow-hidden rounded-[30px] border border-white/[0.12] bg-[linear-gradient(145deg,rgba(8,12,23,0.9),rgba(6,9,18,0.74))] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:p-8 lg:p-10">
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-[52%] bg-[radial-gradient(circle_at_75%_25%,rgba(86,130,255,0.18),transparent_56%)]" />
+          <div className="pointer-events-none absolute -right-12 top-12 h-[320px] w-[320px] rounded-full border border-[#84a8ff]/20" />
+          <div className="pointer-events-none absolute -right-3 bottom-10 h-[150px] w-[150px] rounded-full border border-[#84a8ff]/25" />
+          <div className="pointer-events-none absolute left-5 top-4 font-display text-[72px] font-bold leading-none text-[#88a8ff]/[0.06] sm:text-[96px]">
+            {initials}
           </div>
 
-          <div className="mx-auto w-full max-w-[220px]">
-            <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/[0.12] bg-[#101523]">
-              {hasPortrait ? (
-                <Image
-                  src={portrait!}
-                  alt={portraitAlt}
-                  fill
-                  className="object-contain object-center p-2"
-                  sizes="220px"
-                  onError={() => setHasPortraitError(true)}
-                />
+          <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(280px,0.92fr)] lg:items-center">
+            <div className="min-w-0">
+              <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#86a8ff]">SIGMA TEAM</p>
+              <h1 className="font-display mt-4 break-words text-4xl font-semibold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl">
+                {member.name}
+              </h1>
+              <p className="mt-4 break-words text-sm uppercase tracking-[0.2em] text-[#9db2de]">{role}</p>
+              {headline ? <p className="mt-3 max-w-2xl text-lg leading-relaxed text-[#d9e3ff]">{headline}</p> : null}
+              {shortIntro ? (
+                <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#b6c2d8] sm:text-base">{shortIntro}</p>
               ) : (
-                <span className="flex h-full w-full items-center justify-center font-display text-4xl font-semibold uppercase tracking-[0.08em] text-[#c9d9ff]">
-                  {initials}
+                <ProfileContentPlaceholder label="Details to be added" lines={3} className="mt-5 max-w-2xl" />
+              )}
+
+              <div className="mt-6 flex flex-wrap gap-2.5">
+                <span className="rounded-full border border-[#86a8ff]/35 bg-[#86a8ff]/12 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-[#d3deff]">
+                  {groupLabel}
                 </span>
+                {locationLabel ? (
+                  <span className="rounded-full border border-white/[0.14] bg-white/[0.04] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#c2ccda]">
+                    {locationLabel}
+                  </span>
+                ) : null}
+                {hasLanguages ? (
+                  member.languages!.map((language) => (
+                    <span
+                      key={language}
+                      className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#abb6c9]"
+                    >
+                      {language}
+                    </span>
+                  ))
+                ) : (
+                  <span className="rounded-full border border-dashed border-white/[0.16] bg-white/[0.02] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#7f8aa0]">
+                    Language data pending
+                  </span>
+                )}
+              </div>
+
+              {socialLinks.length ? (
+                <ul className="mt-6 flex flex-wrap gap-2.5">
+                  {socialLinks.map((item) => (
+                    <li key={`${item.label}-${item.href}`}>
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.16] bg-white/[0.03] px-3.5 py-1.5 text-xs tracking-[0.08em] text-[#d0dcff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/60 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111f]"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+
+            <div className="relative mx-auto w-full max-w-[420px]">
+              <div className="pointer-events-none absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_30%,rgba(90,135,255,0.32),transparent_62%)] blur-xl" />
+              <div className="relative overflow-hidden rounded-[30px] border border-[#84a8ff]/35 bg-[#0b1324] px-4 pb-4 pt-16 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)]" />
+                <div className="pointer-events-none absolute left-4 top-4 font-mono text-[11px] tracking-[0.24em] text-[#9cb6ff]">
+                  {profileIndex} / {totalProfiles}
+                </div>
+                <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/[0.14] bg-white/[0.04] px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-[#95a3ba]">
+                  {member.profileStatus ?? "draft"}
+                </div>
+                <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px]">
+                  {hasPortrait ? (
+                    <Image
+                      src={portrait!}
+                      alt={portraitAlt}
+                      fill
+                      className="object-contain object-center motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-1 motion-reduce:transform-none"
+                      sizes="(min-width: 1024px) 360px, 80vw"
+                      onError={() => setHasPortraitError(true)}
+                    />
+                  ) : (
+                    <span className="flex h-full w-full items-center justify-center font-display text-6xl font-semibold uppercase tracking-[0.08em] text-[#c9d9ff]">
+                      {initials}
+                    </span>
+                  )}
+                </div>
+                <div className="pointer-events-none absolute inset-x-8 bottom-4 h-px bg-gradient-to-r from-transparent via-[#9bb4ff]/70 to-transparent" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="mt-10 grid gap-6">
+          <SectionFrame number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
+            {fullOverview ? (
+              <div className="grid gap-5 md:grid-cols-[92px_minmax(0,1fr)] md:items-start">
+                <p className="font-display text-6xl font-semibold leading-none text-[#88a8ff]/30 md:text-7xl">01</p>
+                <p className="text-base leading-relaxed text-[#c0cad8]">{fullOverview}</p>
+              </div>
+            ) : (
+              <div className="grid gap-5 md:grid-cols-[92px_minmax(0,1fr)] md:items-start">
+                <p className="font-display text-6xl font-semibold leading-none text-[#88a8ff]/30 md:text-7xl">01</p>
+                <ProfileContentPlaceholder label="Profile details pending" lines={4} />
+              </div>
+            )}
+          </SectionFrame>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            <SectionFrame number="02" title="SKILLS" subtitle="Core Capabilities">
+              {member.skills?.length ? (
+                <div className="grid gap-2.5 sm:grid-cols-2">
+                  {member.skills.map((item, index) => (
+                    <article
+                      key={item}
+                      className="rounded-2xl border border-white/[0.1] bg-white/[0.03] p-3.5 motion-safe:transition-all motion-safe:hover:border-[#8cafef]/45 motion-safe:hover:bg-[#8cafef]/10"
+                    >
+                      <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da5df]">{String(index + 1).padStart(2, "0")}</p>
+                      <p className="mt-2 text-sm text-[#d4ddf0]">{item}</p>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <ProfileContentPlaceholder label="Profile data pending" blocks={4} />
+              )}
+            </SectionFrame>
+
+            <SectionFrame number="03" title="SERVICES" subtitle="Engagement Focus">
+              {member.services?.length ? (
+                <div className="space-y-2.5">
+                  {member.services.map((item, index) => (
+                    <div
+                      key={item}
+                      className="group flex items-center justify-between rounded-xl border border-white/[0.1] bg-white/[0.02] px-3.5 py-3 motion-safe:transition-all motion-safe:hover:border-[#9fc1ff]/45"
+                    >
+                      <span className="text-sm text-[#d3ddef]">{item}</span>
+                      <span className="font-mono text-[11px] tracking-[0.18em] text-[#96aff0]">{String(index + 1).padStart(2, "0")}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <ProfileContentPlaceholder label="Profile data pending" lines={4} />
+              )}
+            </SectionFrame>
+          </div>
+
+          <SectionFrame number="04" title="CAREER TIMELINE" subtitle="Trajectory">
+            {hasTimeline ? (
+              <ol className="relative space-y-5 pl-6 before:absolute before:bottom-0 before:left-[9px] before:top-1 before:w-px before:bg-gradient-to-b before:from-[#7da4ff] before:to-white/10">
+                {member.careerHistory!.map((entry, index) => (
+                  <li key={`${entry.role ?? "role"}-${entry.organization ?? "org"}-${index}`} className="relative">
+                    <span aria-hidden className="absolute -left-[22px] top-1.5 h-3.5 w-3.5 rounded-full border border-[#84a8ff]/60 bg-[#0c172f]" />
+                    {entry.dateRange ? <p className="text-[11px] uppercase tracking-[0.14em] text-[#8ca2d3]">{entry.dateRange}</p> : null}
+                    {(entry.role || entry.organization) ? (
+                      <p className="mt-1 text-base font-medium text-white">{[entry.role, entry.organization].filter(Boolean).join(" · ")}</p>
+                    ) : null}
+                    {entry.description ? <p className="mt-1 text-sm text-[#b6c0d0]">{entry.description}</p> : null}
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <ProfileContentPlaceholder label="Details to be added" blocks={3} />
+            )}
+          </SectionFrame>
+
+          <SectionFrame number="05" title="SELECTED ACHIEVEMENTS" subtitle="Verified Highlights">
+            {hasAchievements ? (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {member.achievements!.map((item, index) => (
+                  <article
+                    key={`${item.title ?? "achievement"}-${index}`}
+                    className={`relative overflow-hidden rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 ${
+                      index === 0 ? "sm:col-span-2" : ""
+                    } motion-safe:transition-all motion-safe:hover:border-[#93b2f8]/45`}
+                  >
+                    <p className="pointer-events-none absolute -right-3 top-1 font-display text-5xl text-[#8ab0ff]/[0.08]">
+                      {String(index + 1).padStart(2, "0")}
+                    </p>
+                    {item.year ? <p className="text-[11px] uppercase tracking-[0.14em] text-[#8aa0d1]">{item.year}</p> : null}
+                    {item.title ? <h3 className="mt-1 text-base font-semibold text-white">{item.title}</h3> : null}
+                    {item.description ? <p className="mt-2 text-sm text-[#b6c1d3]">{item.description}</p> : null}
+                    {item.link ? (
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex rounded-full border border-white/[0.18] px-3 py-1 text-xs text-[#b8cbf5] motion-safe:transition-colors motion-safe:hover:border-[#8dadf4]/55 motion-safe:hover:bg-[#8dadf4]/10"
+                      >
+                        View detail
+                      </a>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <ProfileContentPlaceholder label="Profile data pending" blocks={4} />
+            )}
+          </SectionFrame>
+
+          <SectionFrame number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
+            <div className="grid gap-3 md:grid-cols-3">
+              <article className="rounded-2xl border border-white/[0.1] bg-white/[0.02] p-4">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Location</p>
+                {locationLabel ? (
+                  <p className="mt-2 text-sm text-[#d4dded]">{locationLabel}</p>
+                ) : (
+                  <ProfileContentPlaceholder label="Details to be added" lines={1} className="mt-2 p-3" />
+                )}
+              </article>
+              <article className="rounded-2xl border border-white/[0.1] bg-white/[0.02] p-4">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Languages</p>
+                {hasLanguages ? (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {member.languages!.map((item) => (
+                      <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-2.5 py-1 text-xs text-[#cad4e8]">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <ProfileContentPlaceholder label="Profile data pending" pills={3} className="mt-2 p-3" />
+                )}
+              </article>
+              <article className="rounded-2xl border border-white/[0.1] bg-white/[0.02] p-4">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Markets / Regions</p>
+                {hasMarkets ? (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {member.markets!.map((item) => (
+                      <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-2.5 py-1 text-xs text-[#cad4e8]">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <ProfileContentPlaceholder label="Details to be added" pills={4} className="mt-2 p-3" />
+                )}
+              </article>
+            </div>
+          </SectionFrame>
+
+          <section className="relative overflow-hidden rounded-3xl border border-white/[0.1] bg-[linear-gradient(180deg,rgba(9,15,28,0.9),rgba(6,9,16,0.78))] p-6 sm:p-8">
+            <span className="pointer-events-none absolute left-5 top-2 font-display text-7xl text-[#9bb4ff]/[0.12]">&ldquo;</span>
+            <div className="relative">
+              <p className="font-mono text-[11px] tracking-[0.22em] text-[#88a8ff]">07</p>
+              <h2 className="font-display mt-1 text-2xl font-semibold text-white">QUOTE / PERSONAL NOTE</h2>
+              {quote ? (
+                <blockquote className="mt-4 max-w-4xl border-l border-[#7da2ff]/50 pl-5 text-base leading-relaxed text-[#d2dcf0]">
+                  &ldquo;{quote}&rdquo;
+                </blockquote>
+              ) : (
+                <ProfileContentPlaceholder label="Profile details pending" lines={2} className="mt-4" />
               )}
             </div>
-            <div className="mt-3 rounded-lg border border-white/[0.08] bg-white/[0.02] px-3 py-2 text-[11px] uppercase tracking-[0.12em] text-[#7f8a97]">
-              Profile status: {member.profileStatus ?? "draft"}
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <div className="mt-8 grid gap-5">
-        {/* Section B — Profile Overview */}
-        <Section title="Profile Overview">
-          {fullOverview ? (
-            <p>{fullOverview}</p>
-          ) : (
-            <ProfileContentPlaceholder label="Profile details pending" lines={4} />
-          )}
-        </Section>
-
-        {/* Section C — Skills */}
-        <Section title="Skills">
-          {member.skills?.length ? (
-            <div className="flex flex-wrap gap-2">
-              {member.skills.map((item) => (
-                <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-xs text-[#c8d0db]">
-                  {item}
-                </span>
-              ))}
-            </div>
-          ) : (
-            <ProfileContentPlaceholder label="Profile data pending" pills={8} />
-          )}
-        </Section>
-
-        <Section title="Services">
-          {member.services?.length ? (
-            <div className="flex flex-wrap gap-2">
-              {member.services.map((item) => (
-                <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-xs text-[#c8d0db]">
-                  {item}
-                </span>
-              ))}
-            </div>
-          ) : (
-            <ProfileContentPlaceholder label="Profile data pending" pills={6} />
-          )}
-        </Section>
-
-        {/* Section D — Career Timeline */}
-        <Section title="Career Timeline">
-          {hasTimeline ? (
-            <ol className="relative space-y-4 border-l border-white/[0.12] pl-5">
-              {member.careerHistory!.map((entry, index) => (
-                <li key={`${entry.role ?? "role"}-${entry.organization ?? "org"}-${index}`} className="relative">
-                  <span aria-hidden className="absolute -left-[25px] top-1.5 h-2.5 w-2.5 rounded-full bg-[#9bb4ff]" />
-                  {entry.dateRange ? <p className="text-xs uppercase tracking-[0.12em] text-[#8e98a8]">{entry.dateRange}</p> : null}
-                  {(entry.role || entry.organization) ? (
-                    <p className="text-sm font-medium text-white">
-                      {[entry.role, entry.organization].filter(Boolean).join(" · ")}
-                    </p>
-                  ) : null}
-                  {entry.description ? <p className="mt-1 text-sm text-[#b6bcc4]">{entry.description}</p> : null}
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <ProfileContentPlaceholder label="Details to be added" blocks={3} />
-          )}
-        </Section>
-
-        {/* Section E — Selected Achievements */}
-        <Section title="Selected Achievements">
-          {hasAchievements ? (
-            <div className="grid gap-3 sm:grid-cols-2">
-              {member.achievements!.map((item, index) => (
-                <article key={`${item.title ?? "achievement"}-${index}`} className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
-                  {item.year ? <p className="text-xs uppercase tracking-[0.12em] text-[#8e98a8]">{item.year}</p> : null}
-                  {item.title ? <h3 className="mt-1 text-sm font-semibold text-white">{item.title}</h3> : null}
-                  {item.description ? <p className="mt-1 text-sm text-[#b6bcc4]">{item.description}</p> : null}
-                  {item.link ? (
-                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs text-[#9bb4ff]">
-                      View detail
+          <SectionFrame number="08" title="SOCIAL & PROFESSIONAL LINKS" subtitle="Verified Channels">
+            {socialLinks.length ? (
+              <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {socialLinks.map((item) => (
+                  <li key={`${item.label}-${item.href}`}>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-full items-center justify-between rounded-xl border border-white/[0.14] bg-white/[0.03] px-3.5 py-3 text-sm text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323]"
+                    >
+                      <span>{item.label}</span>
+                      <span className="text-[#9cb7ff]">↗</span>
                     </a>
-                  ) : null}
-                </article>
-              ))}
-            </div>
-          ) : (
-            <ProfileContentPlaceholder label="Profile data pending" blocks={4} />
-          )}
-        </Section>
-
-        {/* Section F — Markets and Languages */}
-        <div className="grid gap-5 lg:grid-cols-2">
-          <Section title="Markets / Regions">
-            {hasMarkets ? (
-              <div className="flex flex-wrap gap-2">
-                {member.markets!.map((item) => (
-                  <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-xs text-[#c8d0db]">
-                    {item}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             ) : (
-              <ProfileContentPlaceholder label="Details to be added" pills={5} />
-            )}
-          </Section>
-          <Section title="Languages">
-            {hasLanguages ? (
-              <div className="flex flex-wrap gap-2">
-                {member.languages!.map((item) => (
-                  <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-xs text-[#c8d0db]">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <ProfileContentPlaceholder label="Profile data pending" pills={4} />
-            )}
-          </Section>
-        </div>
-
-        <Section title="Location">
-          {member.location ? (
-            <p>
-              {countryCodeToFlag(member.location.countryCode)}{" "}
-              {[member.location.city, member.location.country].filter(Boolean).join(", ")}
-            </p>
-          ) : (
-            <ProfileContentPlaceholder label="Details to be added" lines={1} />
-          )}
-        </Section>
-
-        {/* Section G — Quote / Personal Note */}
-        <Section title="Quote / Personal Note">
-          {quote ? (
-            <blockquote className="border-l-2 border-[#6f8ee6] pl-4 text-[#d3d9e2]">
-              &ldquo;{quote}&rdquo;
-            </blockquote>
-          ) : (
-            <ProfileContentPlaceholder label="Profile details pending" lines={2} />
-          )}
-        </Section>
-
-        {/* Section H — Social and Professional Links */}
-        <Section title="Social and Professional Links">
-          {socialLinks.length ? (
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {socialLinks.map((item) => (
-                <li key={`${item.label}-${item.href}`}>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center rounded-lg border border-white/[0.12] bg-white/[0.03] px-3 py-2 text-sm text-[#c8d7ff] transition-colors hover:bg-white/[0.06]"
+              <div className="grid gap-2 sm:grid-cols-2">
+                {["LinkedIn", "Website", "Social Link", "Social Link"].map((label, index) => (
+                  <button
+                    key={`${label}-${index}`}
+                    type="button"
+                    disabled
+                    aria-disabled="true"
+                    className="cursor-not-allowed rounded-xl border border-dashed border-white/[0.14] bg-white/[0.02] px-3.5 py-3 text-sm text-[#788292]"
                   >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div className="grid gap-2 sm:grid-cols-2">
-              {["LinkedIn", "Website", "Social Link", "Social Link"].map((label, index) => (
-                <button
-                  key={`${label}-${index}`}
-                  type="button"
-                  disabled
-                  aria-disabled="true"
-                  className="cursor-not-allowed rounded-lg border border-dashed border-white/[0.14] bg-white/[0.02] px-3 py-2 text-sm text-[#788292]"
-                >
-                  {label} (pending)
-                </button>
-              ))}
+                    {label} (pending)
+                  </button>
+                ))}
+              </div>
+            )}
+          </SectionFrame>
+
+          <section className="rounded-3xl border border-[#1f43b8]/35 bg-[linear-gradient(120deg,rgba(11,19,37,0.92),rgba(8,13,24,0.9))] p-6 sm:p-8">
+            <p className="font-mono text-[11px] tracking-[0.24em] text-[#8daeff]">09</p>
+            <h2 className="font-display mt-1 text-2xl font-semibold text-white">WORK WITH SIGMA</h2>
+            <p className="mt-2 max-w-2xl text-sm text-[#b3c0d6]">Continue through Sigma’s official channel for partnerships and strategic collaboration.</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-full border border-[#2e57d6]/65 bg-[#1f46c7]/18 px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-colors motion-safe:hover:bg-[#1f46c7]/32 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#88a7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
+              >
+                Partner with Sigma
+              </Link>
+              <Link
+                href="/team"
+                className="inline-flex items-center justify-center rounded-full border border-white/[0.18] bg-white/[0.03] px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-colors motion-safe:hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#88a7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
+              >
+                Back to Team
+              </Link>
             </div>
-          )}
-        </Section>
+          </section>
 
-        {/* Section I — Sigma CTA */}
-        <section className="rounded-2xl border border-[#1c39bb]/30 bg-[#0a1226]/65 p-5 sm:p-6">
-          <h2 className="font-display text-lg font-semibold text-white">Work with Sigma</h2>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30"
-            >
-              Partner with Sigma
-            </Link>
-            <Link
-              href="/team"
-              className="inline-flex items-center justify-center rounded-full border border-white/[0.16] bg-white/[0.03] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-white/[0.08]"
-            >
-              Back to Team
-            </Link>
-          </div>
-        </section>
-
-        {/* Section J — Member Navigation */}
-        <section className="rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-5 sm:p-6">
-          <h2 className="font-display text-lg font-semibold text-white">Member Navigation</h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Link
-              href={`/team/${previousMember.slug}`}
-              className="rounded-xl border border-white/[0.1] bg-white/[0.02] px-4 py-3 text-sm text-[#b6bcc4] transition-colors hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c]"
-            >
-              <span className="block text-xs uppercase tracking-[0.12em] text-[#8f98a3]">Previous</span>
-              <span className="mt-1 block font-medium text-white">{previousMember.name}</span>
-            </Link>
-            <Link
-              href={`/team/${nextMember.slug}`}
-              className="rounded-xl border border-white/[0.1] bg-white/[0.02] px-4 py-3 text-sm text-[#b6bcc4] transition-colors hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c]"
-            >
-              <span className="block text-xs uppercase tracking-[0.12em] text-[#8f98a3]">Next</span>
-              <span className="mt-1 block font-medium text-white">{nextMember.name}</span>
-            </Link>
-          </div>
-        </section>
+          <footer className="rounded-3xl border border-white/[0.1] bg-[linear-gradient(180deg,rgba(9,12,20,0.9),rgba(7,10,16,0.85))] p-6 sm:p-8">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Link
+                href={`/team/${previousMember.slug}`}
+                className="group rounded-2xl border border-white/[0.1] bg-white/[0.02] px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c]"
+              >
+                <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">← Previous Operator</span>
+                <span className="mt-1 block text-base font-medium text-white">{previousMember.name}</span>
+              </Link>
+              <Link
+                href={`/team/${nextMember.slug}`}
+                className="group rounded-2xl border border-white/[0.1] bg-white/[0.02] px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c] sm:text-right"
+              >
+                <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">Next Operator →</span>
+                <span className="mt-1 block text-base font-medium text-white">{nextMember.name}</span>
+              </Link>
+            </div>
+          </footer>
+        </div>
       </div>
     </div>
   );

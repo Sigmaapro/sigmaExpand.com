@@ -40,15 +40,16 @@ function SectionFrame({
   className?: string;
 }) {
   const primaryGlass =
-    "border border-[#9ab0d8]/20 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
+    "border border-[#9ec5ff]/22 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
   return (
     <section
       className={`relative overflow-hidden rounded-3xl p-6 sm:p-8 ${primaryGlass} ${className}`}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(198,214,255,0.06),transparent_35%,transparent_100%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(198,214,255,0.06),transparent_35%,transparent_100%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#93C5FD]/75 to-transparent" />
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
         <div>
-          <p className="font-mono text-[11px] tracking-[0.24em] text-[#88a8ff]">{number}</p>
+          <p className="font-mono text-[11px] tracking-[0.24em] text-[#93C5FD]">{number}</p>
           <h2 className="font-display mt-1 text-2xl font-semibold tracking-tight text-white">{title}</h2>
           {subtitle ? <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#8090a8]">{subtitle}</p> : null}
         </div>
@@ -106,7 +107,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const primaryGlass =
     "border border-[#9ab0d8]/20 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
   const secondaryGlass =
-    "border border-[#8ea4cd]/16 bg-[linear-gradient(155deg,rgba(9,14,25,0.56),rgba(8,13,23,0.52))] shadow-[0_14px_38px_rgba(0,0,0,0.28),0_0_0_1px_rgba(170,195,250,0.06)_inset,0_0_24px_rgba(56,94,176,0.1)] backdrop-blur-[16px]";
+    "border border-[#93C5FD]/20 bg-[linear-gradient(155deg,rgba(9,14,25,0.58),rgba(8,13,23,0.54))] shadow-[0_14px_38px_rgba(0,0,0,0.28),0_0_0_1px_rgba(170,195,250,0.07)_inset,0_0_24px_rgba(56,94,176,0.12)] backdrop-blur-[16px]";
   const microSurface = "border border-white/[0.14] bg-[rgba(18,25,40,0.62)]";
   const heroGlass =
     "border border-[rgba(147,197,253,0.18)] bg-[linear-gradient(145deg,rgba(7,11,20,0.34),rgba(15,23,42,0.42))] shadow-[0_30px_90px_rgba(2,8,22,0.48),0_0_46px_rgba(58,103,196,0.18),inset_0_1px_0_rgba(210,228,255,0.16),inset_0_-1px_0_rgba(6,10,18,0.34)] backdrop-blur-[24px] [backdrop-filter:saturate(1.08)_blur(24px)]";
@@ -246,6 +247,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
         <section ref={heroRef} className={`relative overflow-hidden rounded-[30px] p-6 sm:p-8 lg:p-10 ${heroGlass}`}>
           <div
+            aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[var(--ra,0.08)]"
             style={{
               background:
@@ -253,6 +255,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           />
           <div
+            aria-hidden="true"
             className="pointer-events-none absolute inset-0 rounded-[30px] border border-[rgba(179,220,255,0.16)] opacity-[calc(var(--ra,0.08)*0.9)]"
             style={{
               background:
@@ -260,19 +263,23 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           />
           <div
+            aria-hidden="true"
             className="pointer-events-none absolute right-0 top-0 h-full w-[52%] bg-[radial-gradient(circle_at_75%_25%,rgba(86,130,255,0.18),transparent_56%)] motion-safe:transition-transform motion-safe:duration-300"
             style={{ transform: "translate3d(calc(var(--mx, 0) * -1px), calc(var(--my, 0) * -1px), 0)" }}
           />
           <div
+            aria-hidden="true"
             className="pointer-events-none absolute -right-12 top-12 h-[320px] w-[320px] rounded-full border border-[#84a8ff]/20 motion-safe:transition-transform motion-safe:duration-300"
             style={{ transform: "translate3d(calc(var(--mx, 0) * -0.8px), calc(var(--my, 0) * -0.8px), 0)" }}
           />
           <div
+            aria-hidden="true"
             className="pointer-events-none absolute -right-3 bottom-10 h-[150px] w-[150px] rounded-full border border-[#84a8ff]/25 motion-safe:transition-transform motion-safe:duration-300"
             style={{ transform: "translate3d(calc(var(--mx, 0) * -0.7px), calc(var(--my, 0) * -0.7px), 0)" }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(196,214,255,0.08),transparent_28%,transparent_100%)]" />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(196,214,255,0.08),transparent_28%,transparent_100%)]" />
           <div
+            aria-hidden="true"
             className="pointer-events-none absolute left-5 top-4 font-display text-[72px] font-bold leading-none text-[#88a8ff]/[0.06] sm:text-[96px]"
             style={{ transform: "translate3d(calc(var(--mx, 0) * 0.45px), calc(var(--my, 0) * 0.45px), 0)" }}
           >
@@ -281,7 +288,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
           <div className="relative z-10 grid gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(280px,0.92fr)] lg:items-center">
             <div className="min-w-0">
-              <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#86a8ff]">SIGMA TEAM</p>
+              <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">SIGMA TEAM</p>
               <h1 className="font-display mt-4 break-words text-4xl font-semibold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl">
                 {member.name}
               </h1>
@@ -347,30 +354,39 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
             <div className="relative mx-auto w-full max-w-[420px]">
               <div
+                aria-hidden="true"
                 className="pointer-events-none absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_30%,rgba(90,135,255,0.32),transparent_62%)] blur-xl motion-safe:transition-transform motion-safe:duration-300"
                 style={{ transform: "translate3d(calc(var(--mx, 0) * -0.85px), calc(var(--my, 0) * -0.85px), 0)" }}
               />
               <div
-                className={`relative overflow-hidden rounded-[30px] px-4 pb-4 pt-16 ${heroPanelGlass} motion-safe:transition-transform motion-safe:duration-300`}
+                className={`relative overflow-hidden rounded-[30px] px-4 pb-5 pt-16 ${heroPanelGlass} motion-safe:transition-transform motion-safe:duration-300`}
                 style={{
                   transform:
                     "translate3d(calc(var(--mx, 0) * 0.55px), calc(var(--my, 0) * 0.55px), 0) rotateX(calc(var(--my, 0) * -0.03deg)) rotateY(calc(var(--mx, 0) * 0.03deg))",
                 }}
               >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)]" />
+                <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)]" />
                 <div className="pointer-events-none absolute left-4 top-4 font-mono text-[11px] tracking-[0.24em] text-[#9cb6ff]">
                   {profileIndex} / {totalProfiles}
                 </div>
                 <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/[0.14] bg-white/[0.04] px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-[#95a3ba]">
                   {member.profileStatus ?? "draft"}
                 </div>
-                <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px]">
+                <div className="relative mx-auto mt-3 aspect-square w-full max-w-[350px]">
+                  <div aria-hidden="true" className="pointer-events-none absolute -inset-4 rounded-full bg-[radial-gradient(circle,rgba(125,211,252,0.32)_0%,rgba(96,165,250,0.14)_42%,transparent_72%)] blur-xl" />
+                  <div aria-hidden="true" className="pointer-events-none absolute -inset-1 rounded-full border border-[#7DD3FC]/45" />
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-[2%] rounded-full border border-[#60A5FA]/50" />
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-[8%] rounded-full border border-[#93C5FD]/24 bg-[linear-gradient(165deg,rgba(17,28,48,0.7),rgba(11,18,32,0.74))]" />
+                  <div aria-hidden="true" className="pointer-events-none absolute -left-3 top-[16%] h-8 w-8 rounded-full border border-[#93C5FD]/45" />
+                  <div aria-hidden="true" className="pointer-events-none absolute -right-2 top-[62%] h-5 w-5 rounded-full bg-[#60A5FA]/45 blur-[1px]" />
+                  <div aria-hidden="true" className="pointer-events-none absolute right-[6%] top-[20%] h-24 w-24 rounded-full border border-[#7DD3FC]/20" />
+                  <div className="absolute inset-[13%] overflow-hidden rounded-full border border-[#93C5FD]/20 bg-[#0a1325]">
                   {hasPortrait ? (
                     <Image
                       src={portrait!}
                       alt={portraitAlt}
                       fill
-                      className="object-contain object-center motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-1 motion-reduce:transform-none"
+                      className="object-contain object-center p-5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-1 motion-reduce:transform-none"
                       sizes="(min-width: 1024px) 360px, 80vw"
                       onError={() => setHasPortraitError(true)}
                     />
@@ -379,8 +395,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       {initials}
                     </span>
                   )}
+                  </div>
                 </div>
-                <div className="pointer-events-none absolute inset-x-8 bottom-4 h-px bg-gradient-to-r from-transparent via-[#9bb4ff]/70 to-transparent" />
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-8 bottom-4 h-px bg-gradient-to-r from-transparent via-[#93C5FD]/80 to-transparent" />
               </div>
             </div>
           </div>
@@ -408,10 +425,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   {member.skills.map((item, index) => (
                     <article
                       key={item}
-                      className={`rounded-2xl p-3.5 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#8cafef]/45 motion-safe:hover:bg-[#8cafef]/10 ${secondaryGlass}`}
+                      className={`group rounded-2xl p-3.5 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/55 motion-safe:hover:bg-[#8cafef]/10 ${secondaryGlass}`}
                     >
-                      <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da5df]">{String(index + 1).padStart(2, "0")}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] uppercase tracking-[0.16em] text-[#93C5FD]">{String(index + 1).padStart(2, "0")}</span>
+                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#7DD3FC]" />
+                      </div>
                       <p className="mt-2 text-sm text-[#d4ddf0]">{item}</p>
+                      <div aria-hidden="true" className="mt-2 h-px w-0 bg-gradient-to-r from-[#60A5FA]/85 to-transparent transition-all duration-200 group-hover:w-full" />
                     </article>
                   ))}
                 </div>
@@ -426,10 +447,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   {member.services.map((item, index) => (
                     <div
                       key={item}
-                      className={`group flex items-center justify-between rounded-xl px-3.5 py-3 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#9fc1ff]/45 ${secondaryGlass}`}
+                      className={`group flex items-center justify-between rounded-xl px-3.5 py-3 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/50 ${secondaryGlass}`}
                     >
-                      <span className="text-sm text-[#d3ddef]">{item}</span>
-                      <span className="font-mono text-[11px] tracking-[0.18em] text-[#96aff0]">{String(index + 1).padStart(2, "0")}</span>
+                      <span className="flex items-center gap-2 text-sm text-[#d3ddef]">
+                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#7DD3FC]" />
+                        {item}
+                      </span>
+                      <span className="font-mono text-[11px] tracking-[0.18em] text-[#93C5FD]">{String(index + 1).padStart(2, "0")}</span>
                     </div>
                   ))}
                 </div>
@@ -562,7 +586,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                         rel="noopener noreferrer"
                         aria-label={`Open ${member.name} on ${item.platformName}`}
                         title={item.platformName}
-                        className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 motion-safe:hover:shadow-[0_0_20px_rgba(92,136,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${microSurface}`}
+                        className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/70 motion-safe:hover:bg-[#60A5FA]/14 motion-safe:hover:shadow-[0_0_20px_rgba(125,211,252,0.22)] motion-safe:hover:text-[#e5f3ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${microSurface}`}
                       >
                         <Icon className="h-4 w-4" aria-hidden="true" />
                       </a>
@@ -585,7 +609,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-full border border-[#2e57d6]/65 bg-[#1f46c7]/20 px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-colors motion-safe:hover:bg-[#1f46c7]/34 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#88a7ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
+                className="inline-flex items-center justify-center rounded-full border border-[#60A5FA]/75 bg-[#2563eb]/26 px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white motion-safe:transition-all motion-safe:hover:bg-[#2563eb]/38 motion-safe:hover:shadow-[0_0_26px_rgba(96,165,250,0.32)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1324]"
               >
                 Partner with Sigma
               </Link>

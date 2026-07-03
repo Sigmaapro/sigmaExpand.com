@@ -146,11 +146,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           )}
         </Section>
 
-        {/* Section C — Expertise */}
-        <Section title="Expertise">
-          {member.expertise?.length ? (
+        {/* Section C — Skills */}
+        <Section title="Skills">
+          {member.skills?.length ? (
             <div className="flex flex-wrap gap-2">
-              {member.expertise.map((item) => (
+              {member.skills.map((item) => (
                 <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-xs text-[#c8d0db]">
                   {item}
                 </span>
@@ -158,6 +158,20 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </div>
           ) : (
             <ProfileContentPlaceholder label="Profile data pending" pills={8} />
+          )}
+        </Section>
+
+        <Section title="Services">
+          {member.services?.length ? (
+            <div className="flex flex-wrap gap-2">
+              {member.services.map((item) => (
+                <span key={item} className="rounded-full border border-white/[0.12] bg-white/[0.03] px-3 py-1 text-xs text-[#c8d0db]">
+                  {item}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <ProfileContentPlaceholder label="Profile data pending" pills={6} />
           )}
         </Section>
 

@@ -4,6 +4,8 @@ import { ROUTES } from "@/content/global/routes";
 
 const MALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-male.jpg";
 const FEMALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-female.jpg";
+const TEAM_PROFILE_MARKETS = ["Asia", "Americas", "Europe", "Africa"] as const;
+const UK_MEMBER_IDS = new Set(["omid-modaber", "shahrzad-rostami", "shahan-behkam-rad", "babak-ravanbakhsh"]);
 
 export type TeamMember = {
   id: string;
@@ -19,7 +21,8 @@ export type TeamMember = {
   imageSrc?: string | null;
   shortBio?: string;
   fullBio?: string;
-  expertise?: string[];
+  skills?: string[];
+  services?: string[];
   careerHistory?: Array<{
     dateRange?: string;
     role?: string;
@@ -49,6 +52,14 @@ export type TeamMember = {
 function withPlaceholderImage(member: TeamMember, placeholderSrc: string): TeamMember {
   if (member.portrait || member.imageSrc) return member;
   return { ...member, imageSrc: placeholderSrc };
+}
+
+function withMemberProfileDefaults(member: TeamMember): TeamMember {
+  return {
+    ...member,
+    location: UK_MEMBER_IDS.has(member.id) ? "UK" : "Dubai",
+    markets: [...TEAM_PROFILE_MARKETS],
+  };
 }
 
 export type TeamMarketingBody = {
@@ -110,122 +121,160 @@ export const teamPageMetaByLang: Record<LangCode, PageMeta> = {
 
 function buildCoreMembers(roleLabel: string): TeamMember[] {
   return [
-    withPlaceholderImage({
-      id: "omid-modaber",
-      name: "Omid Modaber",
-      role: roleLabel,
-      group: "core",
-      initials: "OM",
-      imageSrc: null,
-      bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
-    }, MALE_MEMBER_PLACEHOLDER),
-    withPlaceholderImage({
-      id: "novin-ghasemi",
-      name: "Novin Ghasemi",
-      role: roleLabel,
-      group: "core",
-      initials: "NG",
-      imageSrc: null,
-      bio: "Runs the engine room. Translates strategy into campaigns, partnerships, and growth motions across the network’s platforms and creators.",
-    }, MALE_MEMBER_PLACEHOLDER),
-    withPlaceholderImage({
-      id: "arad-moaf",
-      name: "Arad Moaf",
-      role: roleLabel,
-      group: "core",
-      initials: "AM",
-      imageSrc: null,
-      bio: "Owns how Sigma enters and grows in new regions. Builds the relationships and execution frameworks that make Sigma operate locally — not just globally.",
-    }, MALE_MEMBER_PLACEHOLDER),
-    withPlaceholderImage({
-      id: "hosein-rostami",
-      name: "Hosein Rostami",
-      role: roleLabel,
-      group: "core",
-      initials: "HR",
-      imageSrc: null,
-      bio: "Connects the moving parts. Ensures that what is promised on the strategy side is actually executable on the operations side — across teams, regions, and partners.",
-    }, MALE_MEMBER_PLACEHOLDER),
-    withPlaceholderImage({
-      id: "mostafa-moradi",
-      name: "Mostafa Moradi",
-      role: roleLabel,
-      group: "core",
-      initials: "MM",
-      imageSrc: null,
-      bio: "Owns Sigma’s community side. Builds and maintains the human layer that turns campaigns into long-term loyalty and creators into compounding networks.",
-    }, MALE_MEMBER_PLACEHOLDER),
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        {
+          id: "omid-modaber",
+          name: "Omid Modaber",
+          role: roleLabel,
+          group: "core",
+          initials: "OM",
+          imageSrc: null,
+          bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
+        },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
+    ),
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        {
+          id: "novin-ghasemi",
+          name: "Novin Ghasemi",
+          role: roleLabel,
+          group: "core",
+          initials: "NG",
+          imageSrc: null,
+          bio: "Runs the engine room. Translates strategy into campaigns, partnerships, and growth motions across the network’s platforms and creators.",
+        },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
+    ),
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        {
+          id: "arad-moaf",
+          name: "Arad Moaf",
+          role: roleLabel,
+          group: "core",
+          initials: "AM",
+          imageSrc: null,
+          bio: "Owns how Sigma enters and grows in new regions. Builds the relationships and execution frameworks that make Sigma operate locally — not just globally.",
+        },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
+    ),
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        {
+          id: "hosein-rostami",
+          name: "Hosein Rostami",
+          role: roleLabel,
+          group: "core",
+          initials: "HR",
+          imageSrc: null,
+          bio: "Connects the moving parts. Ensures that what is promised on the strategy side is actually executable on the operations side — across teams, regions, and partners.",
+        },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
+    ),
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        {
+          id: "mostafa-moradi",
+          name: "Mostafa Moradi",
+          role: roleLabel,
+          group: "core",
+          initials: "MM",
+          imageSrc: null,
+          bio: "Owns Sigma’s community side. Builds and maintains the human layer that turns campaigns into long-term loyalty and creators into compounding networks.",
+        },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
+    ),
   ];
 }
 
 function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
   return [
-    withPlaceholderImage(
-      {
-        id: "ashkan-nobakht",
-        name: "Ashkan Nobakht",
-        role: roleLabel,
-        group: "innerCircle",
-        initials: "AN",
-        imageSrc: null,
-        headline: "Growth Marketing Strategist at Sigma",
-        shortBio:
-          "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
-        fullBio:
-          "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
-        expertise: [
-          "Marketing Management",
-          "Strategic Foresight",
-          "Growth Marketing Strategy",
-          "Performance Marketing",
-        ],
-        careerHistory: [
-          { dateRange: "Current", role: "Business Development", organization: "LBank" },
-          { dateRange: "Current", role: "Business Development", organization: "Cryptic" },
-          { dateRange: "Former", role: "Head of Partnerships", organization: "walllet.com" },
-        ],
-        location: "Istanbul",
-        socialLinks: [
-          { label: "X", href: "https://x.com/0naxes?s=11" },
-          { label: "Instagram", href: "https://www.instagram.com/nobakhthastam?utm_source=qr" },
-        ],
-        metaDescription: "Profile of Ashkan Nobakht, Growth Marketing Strategist and Inner Circle Partner at Sigma.",
-      },
-      MALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        {
+          id: "ashkan-nobakht",
+          name: "Ashkan Nobakht",
+          role: roleLabel,
+          group: "innerCircle",
+          initials: "AN",
+          imageSrc: null,
+          headline: "Growth Marketing Strategist at Sigma",
+          shortBio:
+            "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
+          fullBio:
+            "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
+          skills: [
+            "Marketing Management",
+            "Strategic Foresight",
+            "Growth Marketing Strategy",
+            "Performance Marketing",
+          ],
+          careerHistory: [
+            { dateRange: "Current", role: "Business Development", organization: "LBank" },
+            { dateRange: "Current", role: "Business Development", organization: "Cryptic" },
+            { dateRange: "Former", role: "Head of Partnerships", organization: "walllet.com" },
+          ],
+          socialLinks: [
+            { label: "X", href: "https://x.com/0naxes?s=11" },
+            { label: "Instagram", href: "https://www.instagram.com/nobakhthastam?utm_source=qr" },
+          ],
+          metaDescription: "Profile of Ashkan Nobakht, Growth Marketing Strategist and Inner Circle Partner at Sigma.",
+        },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
     ),
-    withPlaceholderImage(
-      { id: "mahdyar-mehmandoost", name: "Mahdyar Mehmandoost", role: roleLabel, group: "innerCircle", initials: "MM", imageSrc: null },
-      MALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        { id: "mahdyar-mehmandoost", name: "Mahdyar Mehmandoost", role: roleLabel, group: "innerCircle", initials: "MM", imageSrc: null },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
     ),
-    withPlaceholderImage(
-      { id: "hamed-ghasemi", name: "Hamed Ghasemi", role: roleLabel, group: "innerCircle", initials: "HG", imageSrc: null },
-      MALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        { id: "hamed-ghasemi", name: "Hamed Ghasemi", role: roleLabel, group: "innerCircle", initials: "HG", imageSrc: null },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
     ),
-    withPlaceholderImage(
-      { id: "hayyam-modir-rosta", name: "Hayyam Modir Rosta", role: roleLabel, group: "innerCircle", initials: "HM", imageSrc: null },
-      MALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        { id: "hayyam-modir-rosta", name: "Hayyam Modir Rosta", role: roleLabel, group: "innerCircle", initials: "HM", imageSrc: null },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
     ),
-    withPlaceholderImage(
-      { id: "shahrzad-rostami", name: "Shahrzad Rostami", role: roleLabel, group: "innerCircle", initials: "SR", imageSrc: null },
-      FEMALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        { id: "shahrzad-rostami", name: "Shahrzad Rostami", role: roleLabel, group: "innerCircle", initials: "SR", imageSrc: null },
+        FEMALE_MEMBER_PLACEHOLDER,
+      ),
     ),
   ];
 }
 
 function buildContributorsMembers(roleLabel: string): TeamMember[] {
   return [
-    withPlaceholderImage(
-      { id: "babak-ravanbakhsh", name: "Babak Ravanbakhsh", role: roleLabel, group: "contributors", initials: "BR", imageSrc: null },
-      MALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        { id: "babak-ravanbakhsh", name: "Babak Ravanbakhsh", role: roleLabel, group: "contributors", initials: "BR", imageSrc: null },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
     ),
-    withPlaceholderImage(
-      {
-        id: "shahan-behkam-rad",
-        name: "Shahan Behkam Rad",
-        role: "SEO, GEO & Digital Marketing Consultant",
-        group: "contributors",
-      },
-      MALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults(
+      withPlaceholderImage(
+        {
+          id: "shahan-behkam-rad",
+          name: "Shahan Behkam Rad",
+          role: "SEO, GEO & Digital Marketing Consultant",
+          group: "contributors",
+        },
+        MALE_MEMBER_PLACEHOLDER,
+      ),
     ),
   ];
 }

@@ -43,7 +43,7 @@ export function TeamMemberPersonStructuredData({ member }: Props) {
     ...((member.socialLinks ?? []).map((link) => link.href)),
   ].filter((value) => /^https?:\/\//.test(value));
   const description = member.fullBio ?? member.shortBio ?? member.bio;
-  const knowsAbout = member.expertise?.filter((item) => item.trim().length > 0) ?? [];
+  const knowsAbout = member.skills?.filter((item) => item.trim().length > 0) ?? [];
 
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -72,6 +72,10 @@ export function TeamMemberPersonStructuredData({ member }: Props) {
 
   if (knowsAbout.length > 0) {
     data.knowsAbout = knowsAbout;
+  }
+
+  if (member.location) {
+    data.homeLocation = { "@type": "Place", name: member.location };
   }
 
   return (

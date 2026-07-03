@@ -386,7 +386,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       src={portrait!}
                       alt={portraitAlt}
                       fill
-                      className="object-contain object-center p-5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-1 motion-reduce:transform-none"
+                      className="object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none"
                       sizes="(min-width: 1024px) 360px, 80vw"
                       onError={() => setHasPortraitError(true)}
                     />

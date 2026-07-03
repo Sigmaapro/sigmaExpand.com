@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FaGlobe, FaInstagram, FaLinkedinIn, FaLink, FaXTwitter } from "react-icons/fa6";
 import { getAllTeamMembers, getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
 import { ProfileContentPlaceholder } from "@/components/site/marketing/ProfileContentPlaceholder";
 
@@ -73,6 +74,34 @@ function countryCodeToFlag(countryCode: string): string {
     .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
 }
 
+type SocialIconKey = "x" | "instagram" | "linkedin" | "website" | "generic";
+
+function getSocialIconKey(label: string, href: string): SocialIconKey {
+  const normalizedLabel = label.toLowerCase();
+  const normalizedHref = href.toLowerCase();
+  if (normalizedLabel === "x" || normalizedHref.includes("x.com") || normalizedHref.includes("twitter.com")) return "x";
+  if (normalizedLabel.includes("instagram") || normalizedHref.includes("instagram.com")) return "instagram";
+  if (normalizedLabel.includes("linkedin") || normalizedHref.includes("linkedin.com")) return "linkedin";
+  if (normalizedLabel.includes("website")) return "website";
+  return "generic";
+}
+
+function getSocialPlatformName(key: SocialIconKey, fallbackLabel: string): string {
+  if (key === "x") return "X";
+  if (key === "instagram") return "Instagram";
+  if (key === "linkedin") return "LinkedIn";
+  if (key === "website") return "Website";
+  return fallbackLabel;
+}
+
+const SOCIAL_ICON_MAP: Record<SocialIconKey, React.ComponentType<{ className?: string }>> = {
+  x: FaXTwitter,
+  instagram: FaInstagram,
+  linkedin: FaLinkedinIn,
+  website: FaGlobe,
+  generic: FaLink,
+};
+
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
   const primaryGlass =
     "border border-[#9ab0d8]/20 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
@@ -104,9 +133,68 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const hasMarkets = (member.markets?.length ?? 0) > 0;
   const hasLanguages = (member.languages?.length ?? 0) > 0;
   const [hasPortraitError, setHasPortraitError] = useState(false);
+  const heroRef = useRef<HTMLElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
   const locationLabel = member.location ? `${countryCodeToFlag(member.location.countryCode)} ${[member.location.city, member.location.country].filter(Boolean).join(", ")}` : null;
+  const socialIconLinks = socialLinks.map((item) => {
+    const iconKey = getSocialIconKey(item.label, item.href);
+    return {
+      ...item,
+      iconKey,
+      platformName: getSocialPlatformName(iconKey, item.label),
+    };
+  });
+
+  useEffect(() => {
+    const element = heroRef.current;
+    if (!element) return;
+
+    const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    if (reduceMotionQuery.matches || !desktopQuery.matches || !finePointerQuery.matches) return;
+
+    let rafId = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const animate = () => {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      element.style.setProperty("--mx", currentX.toFixed(2));
+      element.style.setProperty("--my", currentY.toFixed(2));
+      rafId = window.requestAnimationFrame(animate);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const normalizedX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+      const normalizedY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+      targetX = Math.max(-1, Math.min(1, normalizedX)) * 8;
+      targetY = Math.max(-1, Math.min(1, normalizedY)) * 8;
+    };
+
+    const onPointerLeave = () => {
+      targetX = 0;
+      targetY = 0;
+    };
+
+    rafId = window.requestAnimationFrame(animate);
+    element.addEventListener("pointermove", onPointerMove);
+    element.addEventListener("pointerleave", onPointerLeave);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      element.removeEventListener("pointermove", onPointerMove);
+      element.removeEventListener("pointerleave", onPointerLeave);
+      element.style.removeProperty("--mx");
+      element.style.removeProperty("--my");
+    };
+  }, []);
 
   return (
     <div className="relative isolate overflow-hidden">
@@ -141,12 +229,24 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </ol>
         </nav>
 
-        <section className={`relative overflow-hidden rounded-[30px] p-6 sm:p-8 lg:p-10 ${primaryGlass}`}>
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-[52%] bg-[radial-gradient(circle_at_75%_25%,rgba(86,130,255,0.18),transparent_56%)]" />
-          <div className="pointer-events-none absolute -right-12 top-12 h-[320px] w-[320px] rounded-full border border-[#84a8ff]/20" />
-          <div className="pointer-events-none absolute -right-3 bottom-10 h-[150px] w-[150px] rounded-full border border-[#84a8ff]/25" />
+        <section ref={heroRef} className={`relative overflow-hidden rounded-[30px] p-6 sm:p-8 lg:p-10 ${primaryGlass}`}>
+          <div
+            className="pointer-events-none absolute right-0 top-0 h-full w-[52%] bg-[radial-gradient(circle_at_75%_25%,rgba(86,130,255,0.18),transparent_56%)] motion-safe:transition-transform motion-safe:duration-300"
+            style={{ transform: "translate3d(calc(var(--mx, 0) * -1px), calc(var(--my, 0) * -1px), 0)" }}
+          />
+          <div
+            className="pointer-events-none absolute -right-12 top-12 h-[320px] w-[320px] rounded-full border border-[#84a8ff]/20 motion-safe:transition-transform motion-safe:duration-300"
+            style={{ transform: "translate3d(calc(var(--mx, 0) * -0.8px), calc(var(--my, 0) * -0.8px), 0)" }}
+          />
+          <div
+            className="pointer-events-none absolute -right-3 bottom-10 h-[150px] w-[150px] rounded-full border border-[#84a8ff]/25 motion-safe:transition-transform motion-safe:duration-300"
+            style={{ transform: "translate3d(calc(var(--mx, 0) * -0.7px), calc(var(--my, 0) * -0.7px), 0)" }}
+          />
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(196,214,255,0.08),transparent_28%,transparent_100%)]" />
-          <div className="pointer-events-none absolute left-5 top-4 font-display text-[72px] font-bold leading-none text-[#88a8ff]/[0.06] sm:text-[96px]">
+          <div
+            className="pointer-events-none absolute left-5 top-4 font-display text-[72px] font-bold leading-none text-[#88a8ff]/[0.06] sm:text-[96px]"
+            style={{ transform: "translate3d(calc(var(--mx, 0) * 0.45px), calc(var(--my, 0) * 0.45px), 0)" }}
+          >
             {initials}
           </div>
 
@@ -191,25 +291,43 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
               {socialLinks.length ? (
                 <ul className="mt-6 flex flex-wrap gap-2.5">
-                  {socialLinks.map((item) => (
+                  {socialIconLinks.map((item) => {
+                    const Icon = SOCIAL_ICON_MAP[item.iconKey];
+                    return (
                     <li key={`${item.label}-${item.href}`}>
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs tracking-[0.08em] text-[#d0dcff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/60 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111f] ${microSurface}`}
-                      >
-                        {item.label}
-                      </a>
+                      <div className="group relative">
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Open ${member.name} on ${item.platformName}`}
+                          title={item.platformName}
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-[#d0dcff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 motion-safe:hover:shadow-[0_0_18px_rgba(92,136,255,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111f] ${microSurface}`}
+                        >
+                          <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                        </a>
+                        <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 rounded-md border border-white/[0.14] bg-[rgba(9,13,22,0.92)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[#b8c6df] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+                          {item.platformName}
+                        </span>
+                      </div>
                     </li>
-                  ))}
+                  )})}
                 </ul>
               ) : null}
             </div>
 
             <div className="relative mx-auto w-full max-w-[420px]">
-              <div className="pointer-events-none absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_30%,rgba(90,135,255,0.32),transparent_62%)] blur-xl" />
-              <div className={`relative overflow-hidden rounded-[30px] px-4 pb-4 pt-16 ${primaryGlass}`}>
+              <div
+                className="pointer-events-none absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_30%,rgba(90,135,255,0.32),transparent_62%)] blur-xl motion-safe:transition-transform motion-safe:duration-300"
+                style={{ transform: "translate3d(calc(var(--mx, 0) * -0.85px), calc(var(--my, 0) * -0.85px), 0)" }}
+              />
+              <div
+                className={`relative overflow-hidden rounded-[30px] px-4 pb-4 pt-16 ${primaryGlass} motion-safe:transition-transform motion-safe:duration-300`}
+                style={{
+                  transform:
+                    "translate3d(calc(var(--mx, 0) * 0.55px), calc(var(--my, 0) * 0.55px), 0) rotateX(calc(var(--my, 0) * -0.03deg)) rotateY(calc(var(--mx, 0) * 0.03deg))",
+                }}
+              >
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)]" />
                 <div className="pointer-events-none absolute left-4 top-4 font-mono text-[11px] tracking-[0.24em] text-[#9cb6ff]">
                   {profileIndex} / {totalProfiles}
@@ -403,35 +521,31 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
           <SectionFrame number="08" title="SOCIAL & PROFESSIONAL LINKS" subtitle="Verified Channels">
             {socialLinks.length ? (
-              <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {socialLinks.map((item) => (
+              <ul className="flex flex-wrap gap-2.5">
+                {socialIconLinks.map((item) => {
+                  const Icon = SOCIAL_ICON_MAP[item.iconKey];
+                  return (
                   <li key={`${item.label}-${item.href}`}>
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`inline-flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-sm text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${secondaryGlass}`}
-                    >
-                      <span>{item.label}</span>
-                      <span className="text-[#9cb7ff]">↗</span>
-                    </a>
+                    <div className="group relative">
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open ${member.name} on ${item.platformName}`}
+                        title={item.platformName}
+                        className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 motion-safe:hover:shadow-[0_0_20px_rgba(92,136,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${microSurface}`}
+                      >
+                        <Icon className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                      <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 rounded-md border border-white/[0.14] bg-[rgba(9,13,22,0.92)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[#b8c6df] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+                        {item.platformName}
+                      </span>
+                    </div>
                   </li>
-                ))}
+                )})}
               </ul>
             ) : (
-              <div className="grid gap-2 sm:grid-cols-2">
-                {["LinkedIn", "Website", "Social Link", "Social Link"].map((label, index) => (
-                  <button
-                    key={`${label}-${index}`}
-                    type="button"
-                    disabled
-                    aria-disabled="true"
-                    className="cursor-not-allowed rounded-xl border border-dashed border-white/[0.14] bg-[rgba(17,24,38,0.6)] px-3.5 py-3 text-sm text-[#788292]"
-                  >
-                    {label} (pending)
-                  </button>
-                ))}
-              </div>
+              <ProfileContentPlaceholder label="Profile data pending" pills={3} />
             )}
           </SectionFrame>
 

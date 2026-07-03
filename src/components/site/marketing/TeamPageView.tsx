@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
 import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import { getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
@@ -15,6 +16,10 @@ function initialsFromName(name: string) {
   if (parts.length === 0) return "SG";
   if (parts.length === 1) return parts[0]!.slice(0, 2).toUpperCase();
   return `${parts[0]![0] ?? ""}${parts[parts.length - 1]![0] ?? ""}`.toUpperCase();
+}
+
+function isPlaceholderImage(src?: string | null): boolean {
+  return Boolean(src && src.includes("/images/team/placeholders/member-placeholder-"));
 }
 
 function MemberTile({
@@ -32,6 +37,9 @@ function MemberTile({
   const roleSize = tone === "core" ? "text-[11px]" : "text-[10px]";
   const profileHref = `/team/${getTeamMemberSlug(member)}`;
   const portrait = member.portrait ?? member.imageSrc;
+  const [hasImageError, setHasImageError] = useState(false);
+  const hasImage = Boolean(portrait && !hasImageError);
+  const altText = portrait && isPlaceholderImage(portrait) ? "" : member.name;
 
   return (
     <Link
@@ -52,8 +60,15 @@ function MemberTile({
               tone === "core" ? "border-[#1c39bb]/40 bg-[#121b32]" : "border-white/[0.12] bg-[#121621]"
             } ${avatarSize}`}
           >
-            {portrait ? (
-              <Image src={portrait} alt={member.name} fill className="object-cover" sizes="72px" />
+            {hasImage ? (
+              <Image
+                src={portrait!}
+                alt={altText}
+                fill
+                className="object-cover"
+                sizes="72px"
+                onError={() => setHasImageError(true)}
+              />
             ) : (
               <span
                 className={`flex h-full w-full items-center justify-center font-semibold uppercase tracking-[0.08em] ${

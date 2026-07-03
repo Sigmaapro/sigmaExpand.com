@@ -2,6 +2,9 @@ import type { LangCode } from "@/content/types";
 import type { PageMeta } from "@/content/pages/meta";
 import { ROUTES } from "@/content/global/routes";
 
+const MALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-male.jpg";
+const FEMALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-female.jpg";
+
 export type TeamMember = {
   id: string;
   slug?: string;
@@ -42,6 +45,11 @@ export type TeamMember = {
   profileStatus?: "draft" | "active" | "archived";
   bio?: string;
 };
+
+function withPlaceholderImage(member: TeamMember, placeholderSrc: string): TeamMember {
+  if (member.portrait || member.imageSrc) return member;
+  return { ...member, imageSrc: placeholderSrc };
+}
 
 export type TeamMarketingBody = {
   kicker: string;
@@ -102,7 +110,7 @@ export const teamPageMetaByLang: Record<LangCode, PageMeta> = {
 
 function buildCoreMembers(roleLabel: string): TeamMember[] {
   return [
-    {
+    withPlaceholderImage({
       id: "omid-modaber",
       name: "Omid Modaber",
       role: roleLabel,
@@ -110,8 +118,8 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       initials: "OM",
       imageSrc: null,
       bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
-    },
-    {
+    }, MALE_MEMBER_PLACEHOLDER),
+    withPlaceholderImage({
       id: "novin-ghasemi",
       name: "Novin Ghasemi",
       role: roleLabel,
@@ -119,8 +127,8 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       initials: "NG",
       imageSrc: null,
       bio: "Runs the engine room. Translates strategy into campaigns, partnerships, and growth motions across the network’s platforms and creators.",
-    },
-    {
+    }, MALE_MEMBER_PLACEHOLDER),
+    withPlaceholderImage({
       id: "arad-moaf",
       name: "Arad Moaf",
       role: roleLabel,
@@ -128,8 +136,8 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       initials: "AM",
       imageSrc: null,
       bio: "Owns how Sigma enters and grows in new regions. Builds the relationships and execution frameworks that make Sigma operate locally — not just globally.",
-    },
-    {
+    }, MALE_MEMBER_PLACEHOLDER),
+    withPlaceholderImage({
       id: "hosein-rostami",
       name: "Hosein Rostami",
       role: roleLabel,
@@ -137,8 +145,8 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       initials: "HR",
       imageSrc: null,
       bio: "Connects the moving parts. Ensures that what is promised on the strategy side is actually executable on the operations side — across teams, regions, and partners.",
-    },
-    {
+    }, MALE_MEMBER_PLACEHOLDER),
+    withPlaceholderImage({
       id: "mostafa-moradi",
       name: "Mostafa Moradi",
       role: roleLabel,
@@ -146,29 +154,50 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       initials: "MM",
       imageSrc: null,
       bio: "Owns Sigma’s community side. Builds and maintains the human layer that turns campaigns into long-term loyalty and creators into compounding networks.",
-    },
+    }, MALE_MEMBER_PLACEHOLDER),
   ];
 }
 
 function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
   return [
-    { id: "ashkan-nobakht", name: "Ashkan Nobakht", role: roleLabel, group: "innerCircle", initials: "AN", imageSrc: null },
-    { id: "mahdyar-mehmandoost", name: "Mahdyar Mehmandoost", role: roleLabel, group: "innerCircle", initials: "MM", imageSrc: null },
-    { id: "hamed-ghasemi", name: "Hamed Ghasemi", role: roleLabel, group: "innerCircle", initials: "HG", imageSrc: null },
-    { id: "hayyam-modir-rosta", name: "Hayyam Modir Rosta", role: roleLabel, group: "innerCircle", initials: "HM", imageSrc: null },
-    { id: "shahrzad-rostami", name: "Shahrzad Rostami", role: roleLabel, group: "innerCircle", initials: "SR", imageSrc: null },
+    withPlaceholderImage(
+      { id: "ashkan-nobakht", name: "Ashkan Nobakht", role: roleLabel, group: "innerCircle", initials: "AN", imageSrc: null },
+      MALE_MEMBER_PLACEHOLDER,
+    ),
+    withPlaceholderImage(
+      { id: "mahdyar-mehmandoost", name: "Mahdyar Mehmandoost", role: roleLabel, group: "innerCircle", initials: "MM", imageSrc: null },
+      MALE_MEMBER_PLACEHOLDER,
+    ),
+    withPlaceholderImage(
+      { id: "hamed-ghasemi", name: "Hamed Ghasemi", role: roleLabel, group: "innerCircle", initials: "HG", imageSrc: null },
+      MALE_MEMBER_PLACEHOLDER,
+    ),
+    withPlaceholderImage(
+      { id: "hayyam-modir-rosta", name: "Hayyam Modir Rosta", role: roleLabel, group: "innerCircle", initials: "HM", imageSrc: null },
+      MALE_MEMBER_PLACEHOLDER,
+    ),
+    withPlaceholderImage(
+      { id: "shahrzad-rostami", name: "Shahrzad Rostami", role: roleLabel, group: "innerCircle", initials: "SR", imageSrc: null },
+      FEMALE_MEMBER_PLACEHOLDER,
+    ),
   ];
 }
 
 function buildContributorsMembers(roleLabel: string): TeamMember[] {
   return [
-    { id: "babak-ravanbakhsh", name: "Babak Ravanbakhsh", role: roleLabel, group: "contributors", initials: "BR", imageSrc: null },
-    {
-      id: "shahan-behkam-rad",
-      name: "Shahan Behkam Rad",
-      role: "SEO, GEO & Digital Marketing Consultant",
-      group: "contributors",
-    },
+    withPlaceholderImage(
+      { id: "babak-ravanbakhsh", name: "Babak Ravanbakhsh", role: roleLabel, group: "contributors", initials: "BR", imageSrc: null },
+      MALE_MEMBER_PLACEHOLDER,
+    ),
+    withPlaceholderImage(
+      {
+        id: "shahan-behkam-rad",
+        name: "Shahan Behkam Rad",
+        role: "SEO, GEO & Digital Marketing Consultant",
+        group: "contributors",
+      },
+      MALE_MEMBER_PLACEHOLDER,
+    ),
   ];
 }
 

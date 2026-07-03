@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import type { TeamMember } from "@/content/global/marketing/teamContent";
 import { ProfileContentPlaceholder } from "@/components/site/marketing/ProfileContentPlaceholder";
 
@@ -37,6 +40,10 @@ function safeUrl(url?: string | null): string | null {
   return null;
 }
 
+function isPlaceholderImage(src?: string | null): boolean {
+  return Boolean(src && src.includes("/images/team/placeholders/member-placeholder-"));
+}
+
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
   const initials = member.initials ?? initialsFromName(member.name);
   const role = member.role ?? "Team Member";
@@ -56,6 +63,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const hasAchievements = (member.achievements?.length ?? 0) > 0;
   const hasMarkets = (member.markets?.length ?? 0) > 0;
   const hasLanguages = (member.languages?.length ?? 0) > 0;
+  const [hasPortraitError, setHasPortraitError] = useState(false);
+  const hasPortrait = Boolean(portrait && !hasPortraitError);
+  const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16 lg:px-10">
@@ -102,8 +112,15 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
           <div className="mx-auto w-full max-w-[220px]">
             <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/[0.12] bg-[#101523]">
-              {portrait ? (
-                <Image src={portrait} alt={member.name} fill className="object-cover" sizes="220px" />
+              {hasPortrait ? (
+                <Image
+                  src={portrait!}
+                  alt={portraitAlt}
+                  fill
+                  className="object-contain object-center p-2"
+                  sizes="220px"
+                  onError={() => setHasPortraitError(true)}
+                />
               ) : (
                 <span className="flex h-full w-full items-center justify-center font-display text-4xl font-semibold uppercase tracking-[0.08em] text-[#c9d9ff]">
                   {initials}

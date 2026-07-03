@@ -69,6 +69,14 @@ function isPlaceholderImage(src?: string | null): boolean {
   return Boolean(src && src.includes("/images/team/placeholders/member-placeholder-"));
 }
 
+function isMalePlaceholderImage(src?: string | null): boolean {
+  return Boolean(src && src.includes("/images/team/placeholders/member-placeholder-male.jpg"));
+}
+
+function isFemalePlaceholderImage(src?: string | null): boolean {
+  return Boolean(src && src.includes("/images/team/placeholders/member-placeholder-female.jpg"));
+}
+
 function countryCodeToFlag(countryCode: string): string {
   return countryCode
     .toUpperCase()
@@ -141,6 +149,19 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const heroRef = useRef<HTMLElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
+  const isMalePlaceholderPortrait = isMalePlaceholderImage(portrait);
+  const isFemalePlaceholderPortrait = isFemalePlaceholderImage(portrait);
+  const malePlaceholderPortraitFitClassName =
+    "left-[2px] -top-[7px] object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none";
+  const femalePlaceholderPortraitFitClassName =
+    "left-[2px] -top-[7px] object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none";
+  const defaultPortraitFitClassName =
+    "object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none";
+  const portraitFitClassName = isMalePlaceholderPortrait
+    ? malePlaceholderPortraitFitClassName
+    : isFemalePlaceholderPortrait
+      ? femalePlaceholderPortraitFitClassName
+      : defaultPortraitFitClassName;
   const locationLabel = member.location ? `${countryCodeToFlag(member.location.countryCode)} ${[member.location.city, member.location.country].filter(Boolean).join(", ")}` : null;
   const socialIconLinks = socialLinks.map((item) => {
     const iconKey = getSocialIconKey(item.label, item.href);
@@ -386,7 +407,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       src={portrait!}
                       alt={portraitAlt}
                       fill
-                      className="object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none"
+                      className={portraitFitClassName}
                       sizes="(min-width: 1024px) 360px, 80vw"
                       onError={() => setHasPortraitError(true)}
                     />

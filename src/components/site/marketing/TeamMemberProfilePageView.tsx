@@ -1083,27 +1083,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         <div className="mt-10 grid gap-6">
           <SectionFrame sectionId="profile-overview" number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
             {fullOverview ? (
-              <div className="relative overflow-hidden rounded-2xl md:pl-16">
-                <p
-                  aria-hidden="true"
-                  className="pointer-events-none absolute left-0 top-1 font-display text-[clamp(3rem,5vw,6rem)] font-semibold leading-[0.84] text-[#88a8ff]/24"
-                >
-                  01
-                </p>
-                <p className="relative z-10 text-base leading-relaxed text-[#c0cad8]">{fullOverview}</p>
-              </div>
+              <p className="text-base leading-relaxed text-[#c0cad8]">{fullOverview}</p>
             ) : (
-              <div className="relative overflow-hidden rounded-2xl md:pl-16">
-                <p
-                  aria-hidden="true"
-                  className="pointer-events-none absolute left-0 top-1 font-display text-[clamp(3rem,5vw,6rem)] font-semibold leading-[0.84] text-[#88a8ff]/24"
-                >
-                  01
-                </p>
-                <div className="relative z-10">
-                  <ProfileContentPlaceholder label="Profile details pending" lines={4} />
-                </div>
-              </div>
+              <ProfileContentPlaceholder label="Profile details pending" lines={4} />
             )}
           </SectionFrame>
 
@@ -1177,13 +1159,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 {member.achievements!.map((item, index) => (
                   <article
                     key={`${item.title ?? "achievement"}-${index}`}
-                    className={`relative overflow-hidden rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 ${
+                    className={`relative overflow-hidden rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 pr-11 ${
                       index === 0 ? "sm:col-span-2" : ""
                     } motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#93b2f8]/45 ${secondaryGlass}`}
                   >
                     <p
                       aria-hidden="true"
-                      className="pointer-events-none absolute -right-2 top-2 font-display text-[clamp(3rem,4.8vw,5.25rem)] leading-[0.84] text-[#8ab0ff]/[0.08]"
+                      className="pointer-events-none absolute right-3 top-3 rounded-md border border-[#8ab0ff]/25 bg-[#8ab0ff]/10 px-1.5 py-0.5 font-mono text-[12px] leading-none tracking-[0.12em] text-[#8ab0ff]/80 sm:text-[13px]"
                     >
                       {String(index + 1).padStart(2, "0")}
                     </p>

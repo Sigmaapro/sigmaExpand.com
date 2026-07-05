@@ -77,8 +77,6 @@ function SectionFrame({
   subtitle,
   children,
   sectionId,
-  isActiveSection = false,
-  showSectionLight = false,
   depthStrength = "main",
   className = "",
 }: {
@@ -87,8 +85,6 @@ function SectionFrame({
   subtitle?: string;
   children: React.ReactNode;
   sectionId?: string;
-  isActiveSection?: boolean;
-  showSectionLight?: boolean;
   depthStrength?: DepthStrength;
   className?: string;
 }) {
@@ -110,16 +106,6 @@ function SectionFrame({
       }}
     >
       <DepthGlassLayers strength={depthStrength} />
-      {showSectionLight ? (
-        <span
-          aria-hidden="true"
-          className={`pointer-events-none absolute right-3 top-6 h-2 w-2 rounded-full transition-all duration-300 ${
-            isActiveSection
-              ? "bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.16),0_0_12px_rgba(96,165,250,0.55)]"
-              : "bg-[#5b6f96]/45"
-          }`}
-        />
-      ) : null}
       <div className="relative z-10 mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
         <div>
           <p className="font-mono text-[11px] tracking-[0.24em] text-[#93C5FD]">{number}</p>
@@ -596,9 +582,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     const section = document.getElementById(sectionId);
     if (!section) return;
     event.preventDefault();
-    section.scrollIntoView({
+    const headerOffset = 96;
+    const top = section.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({
+      top,
       behavior: prefersReducedMotion ? "auto" : "smooth",
-      block: "start",
     });
   };
 
@@ -611,7 +599,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       </div>
 
       <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
-        <div className="min-[1200px]:grid min-[1200px]:grid-cols-[minmax(0,1fr)_120px] min-[1200px]:gap-8 min-[1440px]:grid-cols-[104px_minmax(0,1fr)_132px]">
+        <div className="min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_96px] min-[1280px]:gap-7 min-[1440px]:grid-cols-[84px_minmax(0,1fr)_96px] min-[1600px]:grid-cols-[104px_minmax(0,1fr)_104px]">
           <aside
             className="hidden min-[1440px]:block"
             aria-label="Other team profiles"
@@ -658,7 +646,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </div>
           </aside>
 
-          <div className="min-w-0 min-[1200px]:max-w-7xl">
+          <div className="min-w-0 min-[1280px]:max-w-7xl">
         <nav className="mb-8 text-xs text-[#9aa4af]" aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
           <li>
@@ -927,14 +915,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </section>
 
         <div className="mt-10 grid gap-6">
-          <SectionFrame
-            sectionId="profile-overview"
-            number="01"
-            title="PROFILE OVERVIEW"
-            subtitle="Editorial Brief"
-            showSectionLight
-            isActiveSection={activeSectionId === "profile-overview"}
-          >
+          <SectionFrame sectionId="profile-overview" number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
             {fullOverview ? (
               <div className="grid gap-5 md:grid-cols-[92px_minmax(0,1fr)] md:items-start">
                 <p className="font-display text-6xl font-semibold leading-none text-[#88a8ff]/30 md:text-7xl">01</p>
@@ -949,14 +930,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </SectionFrame>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <SectionFrame
-              sectionId="skills"
-              number="02"
-              title="SKILLS"
-              subtitle="Core Capabilities"
-              showSectionLight
-              isActiveSection={activeSectionId === "skills"}
-            >
+            <SectionFrame sectionId="skills" number="02" title="SKILLS" subtitle="Core Capabilities">
               {member.skills?.length ? (
                 <div className="grid gap-2.5 sm:grid-cols-2">
                   {member.skills.map((item, index) => (
@@ -978,14 +952,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               )}
             </SectionFrame>
 
-            <SectionFrame
-              sectionId="services"
-              number="03"
-              title="SERVICES"
-              subtitle="Engagement Focus"
-              showSectionLight
-              isActiveSection={activeSectionId === "services"}
-            >
+            <SectionFrame sectionId="services" number="03" title="SERVICES" subtitle="Engagement Focus">
               {member.services?.length ? (
                 <div className="space-y-2.5">
                   {member.services.map((item, index) => (
@@ -1007,14 +974,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </SectionFrame>
           </div>
 
-          <SectionFrame
-            sectionId="career"
-            number="04"
-            title="CAREER TIMELINE"
-            subtitle="Trajectory"
-            showSectionLight
-            isActiveSection={activeSectionId === "career"}
-          >
+          <SectionFrame sectionId="career" number="04" title="CAREER TIMELINE" subtitle="Trajectory">
             {hasTimeline ? (
               <ol className="relative space-y-5 pl-6 before:absolute before:bottom-0 before:left-[9px] before:top-1 before:w-px before:bg-gradient-to-b before:from-[#7da4ff] before:to-white/10">
                 {member.careerHistory!.map((entry, index) => (
@@ -1033,14 +993,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <SectionFrame
-            sectionId="achievements"
-            number="05"
-            title="SELECTED ACHIEVEMENTS"
-            subtitle="Verified Highlights"
-            showSectionLight
-            isActiveSection={activeSectionId === "achievements"}
-          >
+          <SectionFrame sectionId="achievements" number="05" title="SELECTED ACHIEVEMENTS" subtitle="Verified Highlights">
             {hasAchievements ? (
               <div className="grid gap-3 sm:grid-cols-2">
                 {member.achievements!.map((item, index) => (
@@ -1074,14 +1027,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <SectionFrame
-            sectionId="footprint"
-            number="06"
-            title="GLOBAL FOOTPRINT"
-            subtitle="Location / Languages / Markets"
-            showSectionLight
-            isActiveSection={activeSectionId === "footprint"}
-          >
+          <SectionFrame sectionId="footprint" number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
             <div className="grid gap-3 md:grid-cols-3">
               <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Location</p>
@@ -1091,15 +1037,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   <ProfileContentPlaceholder label="Details to be added" lines={1} className="mt-2 p-3" />
                 )}
               </article>
-              <article id="languages" className={`relative rounded-2xl p-4 ${secondaryGlass}`}>
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute right-2 top-4 h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                    activeSectionId === "languages"
-                      ? "bg-[#7DD3FC] shadow-[0_0_0_5px_rgba(125,211,252,0.14),0_0_10px_rgba(96,165,250,0.45)]"
-                      : "bg-[#5b6f96]/45"
-                  }`}
-                />
+              <article id="languages" className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Languages</p>
                 {hasLanguages ? (
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -1141,14 +1079,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           >
             <DepthGlassLayers strength="soft" />
-            <span
-              aria-hidden="true"
-              className={`pointer-events-none absolute right-3 top-6 h-2 w-2 rounded-full transition-all duration-300 ${
-                activeSectionId === "personal-note"
-                  ? "bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.16),0_0_12px_rgba(96,165,250,0.55)]"
-                  : "bg-[#5b6f96]/45"
-              }`}
-            />
             <span className="pointer-events-none absolute left-5 top-2 font-display text-7xl text-[#9bb4ff]/[0.12]">&ldquo;</span>
             <div className="relative">
               <p className="font-mono text-[11px] tracking-[0.22em] text-[#88a8ff]">07</p>
@@ -1204,14 +1134,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           >
             <DepthGlassLayers strength="soft" />
-            <span
-              aria-hidden="true"
-              className={`pointer-events-none absolute right-3 top-6 h-2 w-2 rounded-full transition-all duration-300 ${
-                activeSectionId === "contact"
-                  ? "bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.16),0_0_12px_rgba(96,165,250,0.55)]"
-                  : "bg-[#5b6f96]/45"
-              }`}
-            />
             <div className="relative z-10">
             <p className="font-mono text-[11px] tracking-[0.24em] text-[#8daeff]">09</p>
             <h2 className="font-display mt-1 text-2xl font-semibold text-white">WORK WITH SIGMA</h2>
@@ -1273,12 +1195,12 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </div>
 
           <aside
-            className="hidden min-[1200px]:block"
+            className="hidden min-[1280px]:block"
             aria-label="Profile section progress"
           >
             <nav
               aria-label="Profile sections"
-              className="sticky top-24 ml-auto w-full max-w-[88px] rounded-xl border border-[#8fb4ff]/16 bg-[linear-gradient(165deg,rgba(7,12,24,0.52),rgba(9,17,33,0.46))] px-2.5 py-3 shadow-[0_12px_28px_rgba(3,8,20,0.34),0_0_16px_rgba(66,116,210,0.1)] backdrop-blur-[12px]"
+              className="sticky top-24 ml-auto w-full max-w-[88px] rounded-xl border border-[#8fb4ff]/16 bg-[linear-gradient(165deg,rgba(7,12,24,0.52),rgba(9,17,33,0.46))] px-2.5 py-3 shadow-[0_12px_28px_rgba(3,8,20,0.34),0_0_16px_rgba(66,116,210,0.1)] backdrop-blur-[12px] min-[1600px]:max-w-[104px]"
             >
               <div className="absolute bottom-3 left-2.5 top-3 w-px bg-[#5f7398]/35" aria-hidden="true" />
               <div

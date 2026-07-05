@@ -235,11 +235,12 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [glowVisible, setGlowVisible] = useState(false);
   const [availableSections, setAvailableSections] = useState<ProfileSectionItem[]>([]);
   const [activeSectionId, setActiveSectionId] = useState<string>("profile-overview");
+  const [featuredDeckIndex, setFeaturedDeckIndex] = useState(0);
+  const [profileProgressPercent, setProfileProgressPercent] = useState(0);
+  const [chapterMenuOpen, setChapterMenuOpen] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
   const profileWrapperRef = useRef<HTMLDivElement | null>(null);
-  const leftRailListRef = useRef<HTMLDivElement | null>(null);
-  const rightProgressFillRef = useRef<HTMLDivElement | null>(null);
-  const rightRailNavRef = useRef<HTMLElement | null>(null);
+  const chapterCardRef = useRef<HTMLElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
   const isMalePlaceholderPortrait = isMalePlaceholderImage(portrait);
@@ -266,13 +267,58 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     };
   });
   const otherMembers = allMembers.filter((item) => getTeamMemberSlug(item) !== profileSlug);
-  const activeSectionIndex = Math.max(
-    0,
-    availableSections.findIndex((item) => item.id === activeSectionId),
-  );
-  const trackerStepPx = 34;
-  const trackerBasePx = 17;
-  const beaconTranslateY = trackerBasePx + activeSectionIndex * trackerStepPx;
+  const activeSectionIndex = Math.max(0, availableSections.findIndex((item) => item.id === activeSectionId));
+  const activeSection = availableSections[activeSectionIndex] ?? availableSections[0];
+  const nextSection = activeSectionIndex >= 0 ? availableSections[activeSectionIndex + 1] : undefined;
+  const deckTotal = otherMembers.length;
+  const normalizedDeckIndex = deckTotal > 0 ? ((featuredDeckIndex % deckTotal) + deckTotal) % deckTotal : 0;
+  const deckCenterMember = deckTotal > 0 ? otherMembers[normalizedDeckIndex]! : null;
+  const deckTopMember = deckTotal > 0 ? otherMembers[(normalizedDeckIndex - 1 + deckTotal) % deckTotal]! : null;
+  const deckBottomMember = deckTotal > 0 ? otherMembers[(normalizedDeckIndex + 1) % deckTotal]! : null;
+  const deckVisibleMembers =
+    deckTotal >= 3
+      ? [
+          { member: deckTopMember, tier: "quiet" as const },
+          { member: deckCenterMember, tier: "featured" as const },
+          { member: deckBottomMember, tier: "quiet" as const },
+        ]
+      : deckTotal === 2
+        ? [
+            { member: deckCenterMember, tier: "featured" as const },
+            { member: otherMembers[(normalizedDeckIndex + 1) % deckTotal]!, tier: "quiet" as const },
+          ]
+        : deckTotal === 1
+          ? [{ member: deckCenterMember, tier: "featured" as const }]
+          : [];
+  const deckFeaturedCountLabel = String(normalizedDeckIndex + 1).padStart(2, "0");
+  const deckTotalLabel = String(Math.max(deckTotal, 0)).padStart(2, "0");
+  const wheelCooldownRef = useRef(0);
+  const wheelAccumRef = useRef(0);
+  const deckStep = (direction: 1 | -1) => {
+    if (deckTotal <= 1) return;
+    setFeaturedDeckIndex((current) => {
+      const next = current + direction;
+      return ((next % deckTotal) + deckTotal) % deckTotal;
+    });
+  };
+  const scrollToSectionById = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    const headerOffset = 96;
+    const top = section.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({
+      top,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+  };
+  const scrollToProfileTop = () => {
+    const headerOffset = 96;
+    const top = (profileWrapperRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY - headerOffset;
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+  };
 
   useEffect(() => {
     const element = heroRef.current;
@@ -380,6 +426,15 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   }, [prefersReducedMotion, hasPortrait, portraitCanEnter, portraitReady]);
 
   useEffect(() => {
+    if (deckTotal === 0) {
+      setFeaturedDeckIndex(0);
+      return;
+    }
+    const nextSlugIndex = otherMembers.findIndex((item) => item.slug === nextMember.slug);
+    setFeaturedDeckIndex(nextSlugIndex >= 0 ? nextSlugIndex : 0);
+  }, [profileSlug, deckTotal, nextMember.slug, otherMembers]);
+
+  useEffect(() => {
     const items = PROFILE_SECTION_ITEMS.filter((item) => Boolean(document.getElementById(item.id)));
     setAvailableSections(items);
     if (items.length > 0) {
@@ -424,11 +479,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   }, [profileSlug]);
 
   useEffect(() => {
-    const profileWrapper = profileWrapperRef.current;
-    const leftRail = leftRailListRef.current;
-    const progressFill = rightProgressFillRef.current;
-    const rightRail = rightRailNavRef.current;
-    if (!profileWrapper || (!leftRail && !progressFill && !rightRail)) return;
+    const wrapper = profileWrapperRef.current;
+    if (!wrapper) return;
 
     let rafId = 0;
     const safeTop = 112;
@@ -436,43 +488,21 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     const metrics = {
       wrapperTop: 0,
       wrapperHeight: 0,
-      navHeight: 0,
-      maxTravel: 0,
       scrollableHeight: 1,
     };
-
     const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
     const measure = () => {
-      const wrapperRect = profileWrapper.getBoundingClientRect();
-      metrics.wrapperTop = window.scrollY + wrapperRect.top;
-      metrics.wrapperHeight = wrapperRect.height;
-      metrics.navHeight = rightRail ? rightRail.offsetHeight || 0 : 0;
-      metrics.maxTravel = Math.max(0, metrics.wrapperHeight - metrics.navHeight - safeBottom);
+      const rect = wrapper.getBoundingClientRect();
+      metrics.wrapperTop = window.scrollY + rect.top;
+      metrics.wrapperHeight = rect.height;
       metrics.scrollableHeight = Math.max(1, metrics.wrapperHeight - safeTop - safeBottom);
     };
-
     const update = () => {
-      const localProgress = clamp(
-        (window.scrollY + safeTop - metrics.wrapperTop) / metrics.scrollableHeight,
-        0,
-        1,
-      );
-      if (progressFill) {
-        progressFill.style.transform = `scaleY(${localProgress.toFixed(4)})`;
-      }
-      if (leftRail) {
-        const shift = prefersReducedMotion ? 0 : 20 + localProgress * 40;
-        leftRail.style.transform = `translate3d(0, ${shift.toFixed(2)}px, 0)`;
-      }
-      if (rightRail && window.innerWidth >= 1280) {
-        const targetY = clamp(localProgress * metrics.maxTravel, 0, metrics.maxTravel);
-        rightRail.style.transform = `translate3d(0, ${targetY.toFixed(2)}px, 0)`;
-      } else if (rightRail) {
-        rightRail.style.transform = "translate3d(0, 0px, 0)";
-      }
+      const ratio = clamp((window.scrollY + safeTop - metrics.wrapperTop) / metrics.scrollableHeight, 0, 1);
+      const nextPercent = Math.round(ratio * 100);
+      setProfileProgressPercent((previous) => (previous === nextPercent ? previous : nextPercent));
       rafId = 0;
     };
-
     const requestUpdate = () => {
       if (rafId) return;
       rafId = window.requestAnimationFrame(update);
@@ -480,11 +510,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
     measure();
     requestUpdate();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
     const onResize = () => {
       measure();
       requestUpdate();
     };
+    window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", onResize);
 
     const resizeObserver =
@@ -495,8 +525,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           })
         : null;
     if (resizeObserver) {
-      resizeObserver.observe(profileWrapper);
-      if (rightRail) resizeObserver.observe(rightRail);
+      resizeObserver.observe(wrapper);
     }
 
     return () => {
@@ -505,7 +534,28 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       if (resizeObserver) resizeObserver.disconnect();
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [prefersReducedMotion, profileSlug]);
+  }, [profileSlug]);
+
+  useEffect(() => {
+    if (!chapterMenuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setChapterMenuOpen(false);
+      }
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      const root = chapterCardRef.current;
+      if (!root) return;
+      if (root.contains(event.target as Node)) return;
+      setChapterMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [chapterMenuOpen]);
 
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-glass-depth]"));
@@ -643,18 +693,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     };
   }, []);
 
-  const onSectionNavClick = (sectionId: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
-    const section = document.getElementById(sectionId);
-    if (!section) return;
-    event.preventDefault();
-    const headerOffset = 96;
-    const top = section.getBoundingClientRect().top + window.scrollY - headerOffset;
-    window.scrollTo({
-      top,
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
-  };
-
   return (
     <div className="relative isolate overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
@@ -666,50 +704,110 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
         <div
           ref={profileWrapperRef}
-          className="min-[1280px]:grid min-[1280px]:grid-cols-[64px_minmax(0,1fr)_80px] min-[1280px]:gap-6 min-[1440px]:grid-cols-[72px_minmax(0,1fr)_88px] min-[1600px]:grid-cols-[84px_minmax(0,1fr)_104px]"
+          className="min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_138px] min-[1280px]:gap-6 min-[1440px]:grid-cols-[136px_minmax(0,1fr)_138px] min-[1600px]:grid-cols-[168px_minmax(0,1fr)_152px] min-[1920px]:grid-cols-[176px_minmax(0,1fr)_164px]"
         >
           <aside
-            className="hidden min-[1280px]:block"
+            className="hidden min-[1440px]:block"
             aria-label="Other team profiles"
           >
             <div className="sticky top-24">
               <div
-                ref={leftRailListRef}
-                className="relative flex flex-col items-center gap-3 rounded-2xl border border-[#8fb4ff]/20 bg-[linear-gradient(165deg,rgba(7,12,24,0.62),rgba(9,17,33,0.54))] px-2 py-3 shadow-[0_18px_42px_rgba(3,8,20,0.42),0_0_22px_rgba(66,116,210,0.14)] backdrop-blur-[16px]"
+                className="relative rounded-[22px] border border-[#8fbaff]/22 bg-[linear-gradient(168deg,rgba(7,12,24,0.66),rgba(9,17,33,0.58))] px-2.5 py-3 shadow-[0_16px_38px_rgba(3,8,20,0.4),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(210,228,255,0.1)] backdrop-blur-[14px]"
+                tabIndex={0}
+                onWheel={(event) => {
+                  if (deckTotal <= 1) return;
+                  wheelAccumRef.current += event.deltaY;
+                  if (Math.abs(wheelAccumRef.current) < 38) return;
+                  const now = Date.now();
+                  if (now - wheelCooldownRef.current < 180) {
+                    event.preventDefault();
+                    return;
+                  }
+                  event.preventDefault();
+                  wheelCooldownRef.current = now;
+                  const direction = wheelAccumRef.current > 0 ? 1 : -1;
+                  wheelAccumRef.current = 0;
+                  deckStep(direction);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "ArrowDown") {
+                    event.preventDefault();
+                    deckStep(1);
+                  } else if (event.key === "ArrowUp") {
+                    event.preventDefault();
+                    deckStep(-1);
+                  }
+                }}
+                aria-label="Profile deck. Use mouse wheel or arrow keys to rotate."
               >
-                {otherMembers.map((item, index) => {
-                  const slug = getTeamMemberSlug(item);
-                  const imageSrc = item.portrait ?? item.imageSrc;
-                  const isPlaceholder = isPlaceholderImage(imageSrc);
-                  return (
-                    <Link
-                      key={slug}
-                      href={`/team/${slug}`}
-                      aria-label={`Open profile for ${item.name}`}
-                      className="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-[#8fb4ff]/24 bg-[#0b1324] text-[#b3c6ec] motion-safe:transition-all motion-safe:duration-200 motion-safe:hover:scale-[1.04] motion-safe:hover:border-[#7DD3FC]/60 motion-safe:hover:shadow-[0_0_16px_rgba(125,211,252,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050912]"
-                      style={{ opacity: Math.max(0.48, 1 - index * 0.06) }}
-                    >
-                      <span className="pointer-events-none absolute left-1 top-1 hidden font-mono text-[9px] text-[#9fb3d6] min-[1440px]:block">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      {imageSrc ? (
-                        <Image
-                          src={imageSrc}
-                          alt=""
-                          fill
-                          sizes="48px"
-                          className={isPlaceholder ? "object-contain p-1.5" : "object-cover"}
-                        />
-                      ) : (
-                        <span className="font-display text-sm">{initialsFromName(item.name)}</span>
-                      )}
-                      <span className="sr-only">{item.name}</span>
-                      <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded-md border border-white/[0.16] bg-[rgba(10,15,28,0.94)] px-2 py-1 text-[10px] uppercase tracking-[0.1em] text-[#c3d5f4] opacity-0 transition-opacity min-[1440px]:block min-[1440px]:group-hover:opacity-100 min-[1440px]:group-focus-visible:opacity-100">
-                        {item.name}
-                      </span>
-                    </Link>
-                  );
-                })}
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 top-0 h-10 bg-gradient-to-b from-[#070f1d] to-transparent" />
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 bottom-0 h-10 bg-gradient-to-t from-[#070f1d] to-transparent" />
+                <div className="flex items-center justify-between px-1 pb-2 text-[10px] uppercase tracking-[0.12em] text-[#9cb0d3]">
+                  <span>Deck</span>
+                  <span>{deckFeaturedCountLabel} / {deckTotalLabel}</span>
+                </div>
+                <div className="space-y-2">
+                  {deckVisibleMembers.map((entry, index) => {
+                    const deckMember = entry.member;
+                    if (!deckMember) return null;
+                    const slug = getTeamMemberSlug(deckMember);
+                    const imageSrc = deckMember.portrait ?? deckMember.imageSrc;
+                    const isPlaceholder = isPlaceholderImage(imageSrc);
+                    const rosterIndex = otherMembers.findIndex((item) => getTeamMemberSlug(item) === slug);
+                    const isFeatured = entry.tier === "featured";
+                    return (
+                      <Link
+                        key={`${slug}-${index}`}
+                        href={`/team/${slug}`}
+                        aria-label={`Open profile for ${deckMember.name}`}
+                        className={`group relative block overflow-hidden rounded-2xl border px-2.5 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050912] motion-safe:transition-[transform,border-color,box-shadow,opacity] motion-safe:duration-200 ${
+                          isFeatured
+                            ? "border-[#9cc6ff]/34 bg-[linear-gradient(160deg,rgba(16,31,56,0.72),rgba(10,20,37,0.64))] opacity-100 shadow-[0_10px_24px_rgba(7,18,40,0.42),0_0_18px_rgba(96,165,250,0.14)] motion-safe:hover:-translate-y-[1px]"
+                            : "border-[#84a3d9]/22 bg-[linear-gradient(160deg,rgba(13,23,42,0.52),rgba(9,17,31,0.5))] opacity-70 motion-safe:hover:opacity-90"
+                        }`}
+                      >
+                        <div className={`relative mx-auto overflow-hidden rounded-xl border ${isFeatured ? "h-[72px] w-[72px] border-[#9ec7ff]/34" : "h-[54px] w-[54px] border-[#7f9bcf]/24"}`}>
+                          {imageSrc ? (
+                            <Image
+                              src={imageSrc}
+                              alt=""
+                              fill
+                              sizes={isFeatured ? "72px" : "54px"}
+                              className={isPlaceholder ? "object-contain p-1.5" : "object-cover"}
+                            />
+                          ) : (
+                            <span className="flex h-full w-full items-center justify-center text-xs font-semibold text-[#d2def7]">
+                              {initialsFromName(deckMember.name)}
+                            </span>
+                          )}
+                        </div>
+                        <p className={`mt-2 font-mono uppercase tracking-[0.12em] text-[#95b4ec] ${isFeatured ? "text-[11px]" : "text-[10px]"}`}>
+                          {String(Math.max(0, rosterIndex) + 1).padStart(2, "0")}
+                        </p>
+                        <p className={`mt-1 line-clamp-1 font-medium text-white ${isFeatured ? "text-[12px]" : "text-[11px]"}`}>{deckMember.name}</p>
+                        <p className={`line-clamp-2 text-[#95a7c9] ${isFeatured ? "text-[10px]" : "text-[9px]"}`}>{deckMember.role ?? "Team Member"}</p>
+                      </Link>
+                    );
+                  })}
+                </div>
+                <div className="mt-2 flex items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => deckStep(-1)}
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#84a6de]/26 bg-[#0d172a]/75 text-[#b5c9ec] motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/56 motion-safe:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
+                    aria-label="Show previous profile"
+                  >
+                    ↑
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => deckStep(1)}
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#84a6de]/26 bg-[#0d172a]/75 text-[#b5c9ec] motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/56 motion-safe:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
+                    aria-label="Show next profile"
+                  >
+                    ↓
+                  </button>
+                </div>
               </div>
             </div>
           </aside>
@@ -1287,69 +1385,89 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             className="relative hidden min-[1280px]:block"
             aria-label="Profile section progress"
           >
-            <nav
-              ref={rightRailNavRef}
-              aria-label="Profile sections"
-              className="absolute right-1 top-0 w-[96px] rounded-[20px] border border-[#8fbaff]/24 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-4 shadow-[0_14px_30px_rgba(3,8,20,0.38),0_0_20px_rgba(66,116,210,0.12),inset_0_1px_0_rgba(205,225,255,0.12)] backdrop-blur-[12px] min-[1440px]:w-[112px] min-[1600px]:w-[128px] min-[1920px]:w-[136px]"
+            <section
+              ref={chapterCardRef}
+              className="sticky top-24 ml-auto w-[132px] rounded-[20px] border border-[#8fbaff]/22 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-3.5 shadow-[0_14px_30px_rgba(3,8,20,0.36),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(205,225,255,0.1)] backdrop-blur-[12px] min-[1440px]:w-[140px] min-[1600px]:w-[152px] min-[1728px]:w-[160px] min-[1920px]:w-[168px]"
+              aria-label="Active chapter"
             >
-              <div className="absolute bottom-4 left-3.5 top-4 w-[2px] rounded-full bg-[#6f8abc]/40" aria-hidden="true" />
-              <div
-                ref={rightProgressFillRef}
-                className="pointer-events-none absolute bottom-4 left-3.5 top-4 w-[2px] origin-top scale-y-0 rounded-full bg-gradient-to-b from-[#93E3FF] via-[#60A5FA] to-[#3B82F6] shadow-[0_0_10px_rgba(96,165,250,0.55)]"
-                aria-hidden="true"
-              />
-              <span
-                aria-hidden="true"
-                className={`pointer-events-none absolute left-3.5 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-[#7DD3FC] shadow-[0_0_0_7px_rgba(125,211,252,0.14),0_0_16px_rgba(96,165,250,0.65)] ${
-                  prefersReducedMotion ? "" : "transition-transform duration-[420ms] ease-[cubic-bezier(0.22,0.84,0.23,1)]"
-                }`}
-                style={{ transform: `translate3d(-50%, ${beaconTranslateY}px, 0)` }}
-              />
-              <ol className="relative space-y-3">
-                {availableSections.map((section) => {
-                  const isActive = activeSectionId === section.id;
-                  return (
-                    <li key={section.id}>
-                      <a
-                        href={`#${section.id}`}
-                        onClick={onSectionNavClick(section.id)}
-                        aria-current={isActive ? "location" : undefined}
-                        className={`group relative flex h-[40px] items-center gap-2.5 rounded-xl border pl-6 pr-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
+              <div className="flex items-start justify-between gap-2">
+                <div aria-live="polite">
+                  <p className="font-mono text-[20px] leading-[0.9] text-[#9cdbff] min-[1600px]:text-[22px]">
+                    {activeSection?.number ?? "01"}
+                  </p>
+                  <p className="mt-2 text-[11px] uppercase leading-[1.2] tracking-[0.1em] text-[#d9e8ff] min-[1600px]:text-[12px]">
+                    {(activeSection?.label ?? "Overview").toUpperCase()}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setChapterMenuOpen((open) => !open)}
+                  className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#88aee4]/24 bg-[#111d34]/75 text-[#c8daf9] motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/58 motion-safe:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
+                  aria-expanded={chapterMenuOpen}
+                  aria-label="Open chapter menu"
+                >
+                  ☰
+                </button>
+              </div>
+
+              <div className="mt-3">
+                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.11em] text-[#8ea4c8] min-[1600px]:text-[11px]">
+                  <span>Progress</span>
+                  <span className="font-mono text-[#d7e8ff]">{profileProgressPercent}%</span>
+                </div>
+                <div className="mt-1.5 h-[2px] rounded-full bg-[#6f8abc]/35">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#7DD3FC] via-[#60A5FA] to-[#3B82F6] shadow-[0_0_8px_rgba(96,165,250,0.45)]"
+                    style={{ width: `${profileProgressPercent}%` }}
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (nextSection) {
+                    scrollToSectionById(nextSection.id);
+                  } else {
+                    scrollToProfileTop();
+                  }
+                }}
+                className="mt-3 block w-full rounded-xl border border-[#87abdf]/24 bg-[#101a31]/72 px-2.5 py-2 text-left motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/56 motion-safe:hover:bg-[#172540]/78 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
+              >
+                <p className="text-[10px] uppercase tracking-[0.11em] text-[#91a7cb]">
+                  {nextSection ? "Next" : "Back to Top"}
+                </p>
+                <p className="mt-1 text-[11px] leading-[1.25] text-[#e0edff] min-[1600px]:text-[12px]">
+                  {nextSection ? nextSection.label.toUpperCase() : "HERO"}
+                </p>
+              </button>
+
+              {chapterMenuOpen ? (
+                <div className="mt-2 space-y-1 rounded-xl border border-[#87a9dc]/20 bg-[#101b31]/92 p-1.5 shadow-[0_12px_24px_rgba(3,8,20,0.36)]">
+                  {availableSections.map((section) => {
+                    const isActive = section.id === activeSectionId;
+                    return (
+                      <button
+                        key={section.id}
+                        type="button"
+                        onClick={() => {
+                          scrollToSectionById(section.id);
+                          setChapterMenuOpen(false);
+                        }}
+                        className={`block w-full rounded-lg px-2 py-1.5 text-left text-[10px] uppercase tracking-[0.1em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
                           isActive
-                            ? "border-[#9bc8ff]/28 bg-[linear-gradient(160deg,rgba(23,46,80,0.46),rgba(14,28,50,0.34))] text-[#e8f5ff] shadow-[inset_0_1px_0_rgba(198,224,255,0.16),0_0_0_1px_rgba(122,183,255,0.08)]"
-                            : "border-transparent text-[#8fa1c2] min-[1440px]:bg-white/[0.01] min-[1440px]:hover:bg-[#7ea2e8]/[0.08]"
+                            ? "bg-[#264a81]/48 text-[#dcecff]"
+                            : "text-[#9db1d0] motion-safe:transition-colors motion-safe:hover:bg-[#223a63]/48 motion-safe:hover:text-[#dcecff]"
                         }`}
                       >
-                        <span
-                          aria-hidden="true"
-                          className={`h-[5px] w-[5px] rounded-full transition-all ${
-                            isActive ? "bg-[#7DD3FC] shadow-[0_0_10px_rgba(125,211,252,0.75)] scale-110" : "bg-[#5f769e]"
-                          }`}
-                        />
-                        <span className="min-w-0">
-                          <span
-                            className={`block font-mono text-[11px] leading-[1.2] tracking-[0.12em] ${
-                              isActive ? "text-[#96deff] min-[1600px]:text-[12px] min-[1920px]:text-[13px]" : "text-[#8093b5]"
-                            }`}
-                          >
-                            {section.number}
-                          </span>
-                          <span
-                            className={`mt-0.5 block text-[10px] uppercase leading-[1.2] tracking-[0.08em] transition-opacity ${
-                              isActive
-                                ? "opacity-100 text-[#d6e8ff] min-[1600px]:text-[11px] min-[1920px]:text-[12px]"
-                                : "opacity-0 min-[1440px]:text-[9px] min-[1440px]:opacity-55 min-[1440px]:text-[#8ea4c6] min-[1440px]:group-hover:opacity-80 min-[1440px]:group-focus-visible:opacity-80"
-                            }`}
-                          >
-                            {section.label}
-                          </span>
-                        </span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ol>
-            </nav>
+                        <span className="font-mono">{section.number}</span> {section.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </section>
           </aside>
         </div>
       </div>

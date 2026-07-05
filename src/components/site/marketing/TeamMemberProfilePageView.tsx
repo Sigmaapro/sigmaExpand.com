@@ -425,39 +425,31 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     if (!profileWrapper || (!leftRail && !progressFill && !rightRail)) return;
 
     let rafId = 0;
-    let animId = 0;
-    let currentNavigatorY = 0;
-    let targetNavigatorY = 0;
+    const safeTop = 112;
+    const safeBottom = 140;
+    const metrics = {
+      wrapperTop: 0,
+      wrapperHeight: 0,
+      navHeight: 0,
+      maxTravel: 0,
+      scrollableHeight: 1,
+    };
 
-    const animateNavigator = () => {
-      if (!rightRail) return;
-      if (prefersReducedMotion) {
-        rightRail.style.transform = `translate3d(0, ${targetNavigatorY.toFixed(2)}px, 0)`;
-        animId = 0;
-        return;
-      }
-      currentNavigatorY += (targetNavigatorY - currentNavigatorY) * 0.2;
-      if (Math.abs(targetNavigatorY - currentNavigatorY) < 0.4) {
-        currentNavigatorY = targetNavigatorY;
-      }
-      rightRail.style.transform = `translate3d(0, ${currentNavigatorY.toFixed(2)}px, 0)`;
-      if (Math.abs(targetNavigatorY - currentNavigatorY) >= 0.4) {
-        animId = window.requestAnimationFrame(animateNavigator);
-      } else {
-        animId = 0;
-      }
+    const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+    const measure = () => {
+      const wrapperRect = profileWrapper.getBoundingClientRect();
+      metrics.wrapperTop = window.scrollY + wrapperRect.top;
+      metrics.wrapperHeight = wrapperRect.height;
+      metrics.navHeight = rightRail ? rightRail.offsetHeight || 0 : 0;
+      metrics.maxTravel = Math.max(0, metrics.wrapperHeight - metrics.navHeight - safeBottom);
+      metrics.scrollableHeight = Math.max(1, metrics.wrapperHeight - safeTop - safeBottom);
     };
 
     const update = () => {
-      const wrapperRect = profileWrapper.getBoundingClientRect();
-      const wrapperTop = window.scrollY + wrapperRect.top;
-      const wrapperHeight = wrapperRect.height;
-      const safeTop = 112;
-      const safeBottom = 140;
-      const wrapperScrollable = Math.max(1, wrapperHeight - safeTop - safeBottom);
-      const localProgress = Math.min(
+      const localProgress = clamp(
+        (window.scrollY + safeTop - metrics.wrapperTop) / metrics.scrollableHeight,
+        0,
         1,
-        Math.max(0, (window.scrollY + safeTop - wrapperTop) / wrapperScrollable),
       );
       if (progressFill) {
         progressFill.style.transform = `scaleY(${localProgress.toFixed(4)})`;
@@ -467,23 +459,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         leftRail.style.transform = `translate3d(0, ${shift.toFixed(2)}px, 0)`;
       }
       if (rightRail && window.innerWidth >= 1280) {
-        const navHeight = rightRail.offsetHeight || 0;
-        const maxY = Math.max(0, wrapperHeight - navHeight - safeBottom);
-        const baseY = localProgress * maxY;
-        const activeSection = document.getElementById(activeSectionId);
-        let alignedY = baseY;
-        if (activeSection) {
-          const activeRect = activeSection.getBoundingClientRect();
-          const activeTop = window.scrollY + activeRect.top;
-          alignedY = Math.min(maxY, Math.max(0, activeTop - wrapperTop - safeTop));
-        }
-        targetNavigatorY = baseY * 0.7 + alignedY * 0.3;
-        if (prefersReducedMotion) {
-          rightRail.style.transform = `translate3d(0, ${targetNavigatorY.toFixed(2)}px, 0)`;
-          currentNavigatorY = targetNavigatorY;
-        } else if (!animId) {
-          animId = window.requestAnimationFrame(animateNavigator);
-        }
+        const targetY = clamp(localProgress * metrics.maxTravel, 0, metrics.maxTravel);
+        rightRail.style.transform = `translate3d(0, ${targetY.toFixed(2)}px, 0)`;
+      } else if (rightRail) {
+        rightRail.style.transform = "translate3d(0, 0px, 0)";
       }
       rafId = 0;
     };
@@ -493,17 +472,34 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       rafId = window.requestAnimationFrame(update);
     };
 
+    measure();
     requestUpdate();
     window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    const onResize = () => {
+      measure();
+      requestUpdate();
+    };
+    window.addEventListener("resize", onResize);
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => {
+            measure();
+            requestUpdate();
+          })
+        : null;
+    if (resizeObserver) {
+      resizeObserver.observe(profileWrapper);
+      if (rightRail) resizeObserver.observe(rightRail);
+    }
 
     return () => {
       window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("resize", onResize);
+      if (resizeObserver) resizeObserver.disconnect();
       if (rafId) window.cancelAnimationFrame(rafId);
-      if (animId) window.cancelAnimationFrame(animId);
     };
-  }, [prefersReducedMotion, profileSlug, activeSectionId]);
+  }, [prefersReducedMotion, profileSlug]);
 
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-glass-depth]"));

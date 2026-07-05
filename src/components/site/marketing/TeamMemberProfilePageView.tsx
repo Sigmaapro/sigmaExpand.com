@@ -201,6 +201,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const hasMarkets = (member.markets?.length ?? 0) > 0;
   const hasLanguages = (member.languages?.length ?? 0) > 0;
   const [hasPortraitError, setHasPortraitError] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [heroIntroVisible, setHeroIntroVisible] = useState(false);
+  const [nameRevealVisible, setNameRevealVisible] = useState(false);
+  const [portraitReady, setPortraitReady] = useState(false);
+  const [portraitCanEnter, setPortraitCanEnter] = useState(false);
+  const [portraitVisible, setPortraitVisible] = useState(false);
+  const [orbitVisible, setOrbitVisible] = useState(false);
+  const [glowVisible, setGlowVisible] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
@@ -217,6 +225,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     : isFemalePlaceholderPortrait
       ? femalePlaceholderPortraitFitClassName
       : defaultPortraitFitClassName;
+  const nameWords = member.name.trim().split(/\s+/).filter(Boolean);
   const locationLabel = member.location ? `${countryCodeToFlag(member.location.countryCode)} ${[member.location.city, member.location.country].filter(Boolean).join(", ")}` : null;
   const socialIconLinks = socialLinks.map((item) => {
     const iconKey = getSocialIconKey(item.label, item.href);
@@ -287,6 +296,50 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       element.style.removeProperty("--ry");
     };
   }, []);
+
+  useEffect(() => {
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const isReduced = reducedMotionQuery.matches;
+    setPrefersReducedMotion(isReduced);
+    setHeroIntroVisible(isReduced);
+    setNameRevealVisible(isReduced);
+    setPortraitVisible(isReduced || !hasPortrait);
+    setPortraitCanEnter(isReduced || !hasPortrait);
+    setOrbitVisible(isReduced);
+    setGlowVisible(isReduced);
+    setPortraitReady(!hasPortrait);
+
+    if (isReduced) return;
+
+    let rafId = 0;
+    const timeouts: number[] = [];
+    rafId = window.requestAnimationFrame(() => {
+      setHeroIntroVisible(true);
+    });
+    timeouts.push(window.setTimeout(() => setNameRevealVisible(true), 100));
+    timeouts.push(window.setTimeout(() => setPortraitCanEnter(true), 180));
+    timeouts.push(window.setTimeout(() => setOrbitVisible(true), 320));
+    timeouts.push(window.setTimeout(() => setGlowVisible(true), 450));
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, [profileSlug, hasPortrait]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setPortraitVisible(true);
+      return;
+    }
+    if (!hasPortrait) {
+      setPortraitVisible(true);
+      return;
+    }
+    if (portraitCanEnter && portraitReady) {
+      setPortraitVisible(true);
+    }
+  }, [prefersReducedMotion, hasPortrait, portraitCanEnter, portraitReady]);
 
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-glass-depth]"));
@@ -460,7 +513,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         <section
           ref={heroRef}
           data-glass-depth="hero"
-          className={`group relative overflow-hidden rounded-[30px] p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.26)] motion-safe:hover:shadow-[0_36px_94px_rgba(2,8,20,0.58),0_0_62px_rgba(68,124,224,0.28),0_0_0_1px_rgba(198,226,255,0.1)_inset] sm:p-8 lg:p-10 ${heroGlass}`}
+          className={`group relative overflow-hidden rounded-[30px] p-6 motion-safe:transition-[box-shadow,border-color,transform,opacity,filter] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.26)] motion-safe:hover:shadow-[0_36px_94px_rgba(2,8,20,0.58),0_0_62px_rgba(68,124,224,0.28),0_0_0_1px_rgba(198,226,255,0.1)_inset] sm:p-8 lg:p-10 ${heroGlass} ${
+            heroIntroVisible ? "opacity-100 blur-0" : "opacity-0 blur-[3px]"
+          }`}
           style={{
             transform:
               "perspective(var(--g-perspective,1200px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
@@ -511,7 +566,35 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             <div className="min-w-0">
               <p className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#93C5FD]">SIGMA TEAM</p>
               <h1 className="font-display mt-4 break-words text-4xl font-semibold leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl">
-                {member.name}
+                <span className="sr-only">{member.name}</span>
+                <span aria-hidden="true" className="inline">
+                  {(() => {
+                    let charIndex = 0;
+                    return nameWords.map((word, wordIndex) => (
+                      <span key={`${word}-${wordIndex}`} className="inline-flex whitespace-nowrap">
+                        {word.split("").map((character, letterIndex) => {
+                          const delay = charIndex * 22;
+                          charIndex += 1;
+                          return (
+                            <span
+                              key={`${character}-${wordIndex}-${letterIndex}`}
+                              className="inline-block motion-safe:transition-[opacity,transform,filter] motion-safe:duration-[560ms] motion-safe:ease-[cubic-bezier(0.2,0.82,0.25,1)]"
+                              style={{
+                                transitionDelay: `${delay}ms`,
+                                opacity: nameRevealVisible ? 1 : 0,
+                                transform: nameRevealVisible ? "translateY(0px)" : "translateY(10px)",
+                                filter: nameRevealVisible ? "blur(0px)" : "blur(5px)",
+                              }}
+                            >
+                              {character}
+                            </span>
+                          );
+                        })}
+                        {wordIndex < nameWords.length - 1 ? <span className="inline-block w-[0.35em]" /> : null}
+                      </span>
+                    ));
+                  })()}
+                </span>
               </h1>
               <p className="mt-4 break-words text-sm uppercase tracking-[0.2em] text-[#9db2de]">{role}</p>
               {headline ? <p className="mt-3 max-w-2xl text-lg leading-relaxed text-[#d9e3ff]">{headline}</p> : null}
@@ -588,7 +671,12 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 }}
               >
                 <DepthGlassLayers strength="hero" />
-                <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)]" />
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)] motion-safe:transition-opacity motion-safe:duration-500 ${
+                    glowVisible ? "opacity-100" : "opacity-0"
+                  }`}
+                />
                 <div className="pointer-events-none absolute left-4 top-4 font-mono text-[11px] tracking-[0.24em] text-[#9cb6ff]">
                   {profileIndex} / {totalProfiles}
                 </div>
@@ -596,28 +684,67 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   {member.profileStatus ?? "draft"}
                 </div>
                 <div className="relative mx-auto mt-3 aspect-square w-full max-w-[350px]">
-                  <div aria-hidden="true" className="pointer-events-none absolute -inset-4 rounded-full bg-[radial-gradient(circle,rgba(125,211,252,0.32)_0%,rgba(96,165,250,0.14)_42%,transparent_72%)] blur-xl" />
-                  <div aria-hidden="true" className="pointer-events-none absolute -inset-1 rounded-full border border-[#7DD3FC]/45" />
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-[2%] rounded-full border border-[#60A5FA]/50" />
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute -inset-4 rounded-full bg-[radial-gradient(circle,rgba(125,211,252,0.32)_0%,rgba(96,165,250,0.14)_42%,transparent_72%)] blur-xl motion-safe:transition-[opacity,transform] motion-safe:duration-500 ${
+                      glowVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    }`}
+                  />
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute -inset-1 rounded-full border border-[#7DD3FC]/45 motion-safe:transition-[opacity,transform] motion-safe:duration-500 ${
+                      orbitVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    }`}
+                  />
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-[2%] rounded-full border border-[#60A5FA]/50 motion-safe:transition-[opacity,transform] motion-safe:duration-500 ${
+                      orbitVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    }`}
+                  />
                   <div aria-hidden="true" className="pointer-events-none absolute inset-[8%] rounded-full border border-[#93C5FD]/24 bg-[linear-gradient(165deg,rgba(17,28,48,0.7),rgba(11,18,32,0.74))]" />
-                  <div aria-hidden="true" className="pointer-events-none absolute -left-3 top-[16%] h-8 w-8 rounded-full border border-[#93C5FD]/45" />
-                  <div aria-hidden="true" className="pointer-events-none absolute -right-2 top-[62%] h-5 w-5 rounded-full bg-[#60A5FA]/45 blur-[1px]" />
-                  <div aria-hidden="true" className="pointer-events-none absolute right-[6%] top-[20%] h-24 w-24 rounded-full border border-[#7DD3FC]/20" />
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute -left-3 top-[16%] h-8 w-8 rounded-full border border-[#93C5FD]/45 motion-safe:transition-[opacity,transform] motion-safe:duration-500 ${
+                      orbitVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+                    }`}
+                  />
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute -right-2 top-[62%] h-5 w-5 rounded-full bg-[#60A5FA]/45 blur-[1px] motion-safe:transition-[opacity,transform] motion-safe:duration-500 ${
+                      orbitVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+                    }`}
+                  />
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute right-[6%] top-[20%] h-24 w-24 rounded-full border border-[#7DD3FC]/20 motion-safe:transition-[opacity,transform] motion-safe:duration-500 ${
+                      orbitVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    }`}
+                  />
                   <div className="absolute inset-[13%] overflow-hidden rounded-full border border-[#93C5FD]/20 bg-[#0a1325]">
-                  {hasPortrait ? (
-                    <Image
-                      src={portrait!}
-                      alt={portraitAlt}
-                      fill
-                      className={portraitFitClassName}
-                      sizes="(min-width: 1024px) 360px, 80vw"
-                      onError={() => setHasPortraitError(true)}
-                    />
-                  ) : (
-                    <span className="flex h-full w-full items-center justify-center font-display text-6xl font-semibold uppercase tracking-[0.08em] text-[#c9d9ff]">
-                      {initials}
-                    </span>
-                  )}
+                    <div
+                      className={`absolute inset-0 motion-safe:transition-[opacity,transform,filter] motion-safe:duration-[980ms] motion-safe:ease-[cubic-bezier(0.22,0.84,0.23,1)] ${
+                        portraitVisible
+                          ? "translate-x-0 translate-y-0 scale-100 opacity-100 blur-0"
+                          : "translate-x-6 translate-y-2 scale-95 opacity-0 blur-[8px] sm:translate-x-7 md:translate-x-10 lg:translate-x-14"
+                      }`}
+                    >
+                      {hasPortrait ? (
+                        <Image
+                          src={portrait!}
+                          alt={portraitAlt}
+                          fill
+                          className={portraitFitClassName}
+                          sizes="(min-width: 1024px) 360px, 80vw"
+                          onError={() => setHasPortraitError(true)}
+                          onLoad={() => setPortraitReady(true)}
+                        />
+                      ) : (
+                        <span className="flex h-full w-full items-center justify-center font-display text-6xl font-semibold uppercase tracking-[0.08em] text-[#c9d9ff]">
+                          {initials}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div aria-hidden="true" className="pointer-events-none absolute inset-x-8 bottom-4 h-px bg-gradient-to-r from-transparent via-[#93C5FD]/80 to-transparent" />

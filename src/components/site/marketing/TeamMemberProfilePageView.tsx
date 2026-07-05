@@ -599,9 +599,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       </div>
 
       <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
-        <div className="min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_96px] min-[1280px]:gap-7 min-[1440px]:grid-cols-[84px_minmax(0,1fr)_96px] min-[1600px]:grid-cols-[104px_minmax(0,1fr)_104px]">
+        <div className="min-[1280px]:grid min-[1280px]:grid-cols-[64px_minmax(0,1fr)_80px] min-[1280px]:gap-6 min-[1440px]:grid-cols-[72px_minmax(0,1fr)_88px] min-[1600px]:grid-cols-[84px_minmax(0,1fr)_104px]">
           <aside
-            className="hidden min-[1440px]:block"
+            className="hidden min-[1280px]:block"
             aria-label="Other team profiles"
           >
             <div className="sticky top-24">
@@ -621,7 +621,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       className="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-[#8fb4ff]/24 bg-[#0b1324] text-[#b3c6ec] motion-safe:transition-all motion-safe:duration-200 motion-safe:hover:scale-[1.04] motion-safe:hover:border-[#7DD3FC]/60 motion-safe:hover:shadow-[0_0_16px_rgba(125,211,252,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050912]"
                       style={{ opacity: Math.max(0.48, 1 - index * 0.06) }}
                     >
-                      <span className="pointer-events-none absolute left-1 top-1 font-mono text-[9px] text-[#9fb3d6]">
+                      <span className="pointer-events-none absolute left-1 top-1 hidden font-mono text-[9px] text-[#9fb3d6] min-[1440px]:block">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       {imageSrc ? (
@@ -636,7 +636,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                         <span className="font-display text-sm">{initialsFromName(item.name)}</span>
                       )}
                       <span className="sr-only">{item.name}</span>
-                      <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md border border-white/[0.16] bg-[rgba(10,15,28,0.94)] px-2 py-1 text-[10px] uppercase tracking-[0.1em] text-[#c3d5f4] opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                      <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded-md border border-white/[0.16] bg-[rgba(10,15,28,0.94)] px-2 py-1 text-[10px] uppercase tracking-[0.1em] text-[#c3d5f4] opacity-0 transition-opacity min-[1440px]:block min-[1440px]:group-hover:opacity-100 min-[1440px]:group-focus-visible:opacity-100">
                         {item.name}
                       </span>
                     </Link>

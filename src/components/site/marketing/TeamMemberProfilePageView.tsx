@@ -76,6 +76,7 @@ function SectionFrame({
   title,
   subtitle,
   children,
+  sectionId,
   depthStrength = "main",
   className = "",
 }: {
@@ -83,6 +84,7 @@ function SectionFrame({
   title: string;
   subtitle?: string;
   children: React.ReactNode;
+  sectionId?: string;
   depthStrength?: DepthStrength;
   className?: string;
 }) {
@@ -94,6 +96,8 @@ function SectionFrame({
         : "border border-[rgba(147,197,253,0.16)] bg-[linear-gradient(155deg,rgba(7,11,21,0.4),rgba(12,22,42,0.46))] shadow-[0_24px_64px_rgba(2,8,22,0.48),0_0_36px_rgba(56,96,188,0.16),0_0_0_1px_rgba(170,198,255,0.07)_inset] backdrop-blur-[22px] [backdrop-filter:saturate(1.08)_blur(22px)]";
   return (
     <section
+      id={sectionId}
+      data-profile-section={sectionId}
       data-glass-depth={depthStrength}
       className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.24)] motion-safe:hover:shadow-[0_28px_72px_rgba(2,8,20,0.55),0_0_52px_rgba(64,116,214,0.22),0_0_0_1px_rgba(195,224,255,0.09)_inset] sm:p-8 ${primaryGlass} ${className}`}
       style={{
@@ -166,6 +170,20 @@ const SOCIAL_ICON_MAP: Record<SocialIconKey, React.ComponentType<{ className?: s
   generic: FaLink,
 };
 
+const PROFILE_SECTION_ITEMS = [
+  { id: "profile-overview", label: "Overview", number: "01" },
+  { id: "skills", label: "Skills", number: "02" },
+  { id: "services", label: "Services", number: "03" },
+  { id: "career", label: "Career", number: "04" },
+  { id: "achievements", label: "Achievements", number: "05" },
+  { id: "footprint", label: "Footprint", number: "06" },
+  { id: "languages", label: "Languages", number: "07" },
+  { id: "personal-note", label: "Personal Note", number: "08" },
+  { id: "contact", label: "Contact", number: "09" },
+] as const;
+
+type ProfileSectionItem = (typeof PROFILE_SECTION_ITEMS)[number];
+
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
   const primaryGlass =
     "border border-[#9ab0d8]/20 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
@@ -209,7 +227,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [portraitVisible, setPortraitVisible] = useState(false);
   const [orbitVisible, setOrbitVisible] = useState(false);
   const [glowVisible, setGlowVisible] = useState(false);
+  const [availableSections, setAvailableSections] = useState<ProfileSectionItem[]>([]);
+  const [activeSectionId, setActiveSectionId] = useState<string>("profile-overview");
   const heroRef = useRef<HTMLElement | null>(null);
+  const leftRailListRef = useRef<HTMLDivElement | null>(null);
+  const rightProgressFillRef = useRef<HTMLDivElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
   const isMalePlaceholderPortrait = isMalePlaceholderImage(portrait);
@@ -235,6 +257,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       platformName: getSocialPlatformName(iconKey, item.label),
     };
   });
+  const otherMembers = allMembers.filter((item) => getTeamMemberSlug(item) !== profileSlug);
 
   useEffect(() => {
     const element = heroRef.current;
@@ -340,6 +363,77 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       setPortraitVisible(true);
     }
   }, [prefersReducedMotion, hasPortrait, portraitCanEnter, portraitReady]);
+
+  useEffect(() => {
+    const items = PROFILE_SECTION_ITEMS.filter((item) => Boolean(document.getElementById(item.id)));
+    setAvailableSections(items);
+    if (items.length > 0) {
+      setActiveSectionId(items[0]!.id);
+    }
+    if (items.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length === 0) return;
+        const top = visible[0]?.target as HTMLElement | undefined;
+        if (!top?.id) return;
+        setActiveSectionId((previous) => (previous === top.id ? previous : top.id));
+      },
+      {
+        root: null,
+        threshold: [0.18, 0.35, 0.55, 0.72],
+        rootMargin: "-22% 0px -52% 0px",
+      },
+    );
+
+    items.forEach((item) => {
+      const section = document.getElementById(item.id);
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [profileSlug]);
+
+  useEffect(() => {
+    const leftRail = leftRailListRef.current;
+    const progressFill = rightProgressFillRef.current;
+    if (!leftRail && !progressFill) return;
+
+    let rafId = 0;
+    const update = () => {
+      const doc = document.documentElement;
+      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+      if (progressFill) {
+        progressFill.style.transform = `scaleY(${progress.toFixed(4)})`;
+      }
+      if (leftRail) {
+        const shift = prefersReducedMotion ? 0 : 20 + progress * 40;
+        leftRail.style.transform = `translate3d(0, ${shift.toFixed(2)}px, 0)`;
+      }
+      rafId = 0;
+    };
+
+    const requestUpdate = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    requestUpdate();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, [prefersReducedMotion, profileSlug]);
 
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-glass-depth]"));
@@ -477,6 +571,16 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     };
   }, []);
 
+  const onSectionNavClick = (sectionId: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    event.preventDefault();
+    section.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <div className="relative isolate overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
@@ -485,7 +589,55 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         <div className="absolute left-1/2 top-0 h-[580px] w-[580px] -translate-x-1/2 rounded-full bg-[#1d4adb]/20 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+      <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+        <div className="min-[1200px]:grid min-[1200px]:grid-cols-[minmax(0,1fr)_120px] min-[1200px]:gap-8 min-[1440px]:grid-cols-[104px_minmax(0,1fr)_132px]">
+          <aside
+            className="hidden min-[1440px]:block"
+            aria-label="Other team profiles"
+          >
+            <div className="sticky top-24">
+              <div
+                ref={leftRailListRef}
+                className="relative flex flex-col items-center gap-3 rounded-2xl border border-[#8fb4ff]/20 bg-[linear-gradient(165deg,rgba(7,12,24,0.62),rgba(9,17,33,0.54))] px-2 py-3 shadow-[0_18px_42px_rgba(3,8,20,0.42),0_0_22px_rgba(66,116,210,0.14)] backdrop-blur-[16px]"
+              >
+                {otherMembers.map((item, index) => {
+                  const slug = getTeamMemberSlug(item);
+                  const imageSrc = item.portrait ?? item.imageSrc;
+                  const isPlaceholder = isPlaceholderImage(imageSrc);
+                  return (
+                    <Link
+                      key={slug}
+                      href={`/team/${slug}`}
+                      aria-label={`Open profile for ${item.name}`}
+                      className="group relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-[#8fb4ff]/24 bg-[#0b1324] text-[#b3c6ec] motion-safe:transition-all motion-safe:duration-200 motion-safe:hover:scale-[1.04] motion-safe:hover:border-[#7DD3FC]/60 motion-safe:hover:shadow-[0_0_16px_rgba(125,211,252,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050912]"
+                      style={{ opacity: Math.max(0.48, 1 - index * 0.06) }}
+                    >
+                      <span className="pointer-events-none absolute left-1 top-1 font-mono text-[9px] text-[#9fb3d6]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      {imageSrc ? (
+                        <Image
+                          src={imageSrc}
+                          alt=""
+                          fill
+                          sizes="48px"
+                          className={isPlaceholder ? "object-contain p-1.5" : "object-cover"}
+                        />
+                      ) : (
+                        <span className="font-display text-sm">{initialsFromName(item.name)}</span>
+                      )}
+                      <span className="sr-only">{item.name}</span>
+                      <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-md border border-white/[0.16] bg-[rgba(10,15,28,0.94)] px-2 py-1 text-[10px] uppercase tracking-[0.1em] text-[#c3d5f4] opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                        {item.name}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </aside>
+
+          <div className="min-w-0 min-[1200px]:max-w-7xl">
         <nav className="mb-8 text-xs text-[#9aa4af]" aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
           <li>
@@ -754,7 +906,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </section>
 
         <div className="mt-10 grid gap-6">
-          <SectionFrame number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
+          <SectionFrame sectionId="profile-overview" number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
             {fullOverview ? (
               <div className="grid gap-5 md:grid-cols-[92px_minmax(0,1fr)] md:items-start">
                 <p className="font-display text-6xl font-semibold leading-none text-[#88a8ff]/30 md:text-7xl">01</p>
@@ -769,7 +921,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </SectionFrame>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <SectionFrame number="02" title="SKILLS" subtitle="Core Capabilities">
+            <SectionFrame sectionId="skills" number="02" title="SKILLS" subtitle="Core Capabilities">
               {member.skills?.length ? (
                 <div className="grid gap-2.5 sm:grid-cols-2">
                   {member.skills.map((item, index) => (
@@ -791,7 +943,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               )}
             </SectionFrame>
 
-            <SectionFrame number="03" title="SERVICES" subtitle="Engagement Focus">
+            <SectionFrame sectionId="services" number="03" title="SERVICES" subtitle="Engagement Focus">
               {member.services?.length ? (
                 <div className="space-y-2.5">
                   {member.services.map((item, index) => (
@@ -813,7 +965,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </SectionFrame>
           </div>
 
-          <SectionFrame number="04" title="CAREER TIMELINE" subtitle="Trajectory">
+          <SectionFrame sectionId="career" number="04" title="CAREER TIMELINE" subtitle="Trajectory">
             {hasTimeline ? (
               <ol className="relative space-y-5 pl-6 before:absolute before:bottom-0 before:left-[9px] before:top-1 before:w-px before:bg-gradient-to-b before:from-[#7da4ff] before:to-white/10">
                 {member.careerHistory!.map((entry, index) => (
@@ -832,7 +984,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <SectionFrame number="05" title="SELECTED ACHIEVEMENTS" subtitle="Verified Highlights">
+          <SectionFrame sectionId="achievements" number="05" title="SELECTED ACHIEVEMENTS" subtitle="Verified Highlights">
             {hasAchievements ? (
               <div className="grid gap-3 sm:grid-cols-2">
                 {member.achievements!.map((item, index) => (
@@ -866,7 +1018,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <SectionFrame number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
+          <SectionFrame sectionId="footprint" number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
             <div className="grid gap-3 md:grid-cols-3">
               <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Location</p>
@@ -876,7 +1028,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   <ProfileContentPlaceholder label="Details to be added" lines={1} className="mt-2 p-3" />
                 )}
               </article>
-              <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
+              <article id="languages" className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Languages</p>
                 {hasLanguages ? (
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -908,6 +1060,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </SectionFrame>
 
           <section
+            id="personal-note"
+            data-profile-section="personal-note"
             data-glass-depth="soft"
             className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.22)] motion-safe:hover:shadow-[0_22px_56px_rgba(3,9,20,0.42),0_0_38px_rgba(68,116,208,0.16)] sm:p-8 ${primaryGlass}`}
             style={{
@@ -961,6 +1115,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </SectionFrame>
 
           <section
+            id="contact"
+            data-profile-section="contact"
             data-glass-depth="soft"
             className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.22)] motion-safe:hover:shadow-[0_22px_56px_rgba(3,9,20,0.42),0_0_38px_rgba(68,116,208,0.16)] sm:p-8 ${primaryGlass}`}
             style={{
@@ -1026,6 +1182,61 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               </Link>
             </div>
           </footer>
+          </div>
+          </div>
+
+          <aside
+            className="hidden min-[1200px]:block"
+            aria-label="Profile section progress"
+          >
+            <nav
+              aria-label="Profile sections"
+              className="sticky top-24 ml-auto w-full max-w-[132px] rounded-2xl border border-[#8fb4ff]/20 bg-[linear-gradient(165deg,rgba(7,12,24,0.62),rgba(9,17,33,0.54))] px-3 py-4 shadow-[0_18px_42px_rgba(3,8,20,0.42),0_0_22px_rgba(66,116,210,0.14)] backdrop-blur-[16px]"
+            >
+              <div className="absolute bottom-4 left-3 top-4 w-px bg-[#6f87b4]/30" aria-hidden="true" />
+              <div
+                ref={rightProgressFillRef}
+                className="pointer-events-none absolute bottom-4 left-3 top-4 w-px origin-top scale-y-0 bg-gradient-to-b from-[#7DD3FC] via-[#60A5FA] to-[#3B82F6]"
+                aria-hidden="true"
+              />
+              <ol className="relative space-y-2.5">
+                {availableSections.map((section) => {
+                  const isActive = activeSectionId === section.id;
+                  return (
+                    <li key={section.id}>
+                      <a
+                        href={`#${section.id}`}
+                        onClick={onSectionNavClick(section.id)}
+                        aria-current={isActive ? "location" : undefined}
+                        className={`group flex items-start gap-2 rounded-lg px-2 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
+                          isActive ? "text-[#dff0ff]" : "text-[#93a4c4]"
+                        }`}
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={`mt-1 h-1.5 w-1.5 rounded-full transition-all ${
+                            isActive ? "bg-[#7DD3FC] shadow-[0_0_8px_rgba(125,211,252,0.5)] scale-110" : "bg-[#5f7298]"
+                          }`}
+                        />
+                        <span className="min-w-0">
+                          <span className={`block font-mono text-[10px] tracking-[0.16em] ${isActive ? "text-[#7DD3FC]" : "text-[#7b8cab]"}`}>
+                            {section.number}
+                          </span>
+                          <span
+                            className={`block text-[10px] uppercase tracking-[0.1em] transition-opacity ${
+                              isActive ? "opacity-100" : "opacity-55 min-[1440px]:opacity-0 min-[1440px]:group-hover:opacity-80 min-[1440px]:group-focus-visible:opacity-80"
+                            }`}
+                          >
+                            {section.label}
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
+          </aside>
         </div>
       </div>
     </div>

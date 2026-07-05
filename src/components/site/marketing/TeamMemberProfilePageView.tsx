@@ -107,13 +107,19 @@ function SectionFrame({
     >
       <DepthGlassLayers strength={depthStrength} />
       <div className="relative z-10 mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-5">
-        <div>
-          <p className="font-mono text-[11px] tracking-[0.24em] text-[#93C5FD]">{number}</p>
-          <h2 className="font-display mt-1 text-2xl font-semibold tracking-tight text-white">{title}</h2>
-          {subtitle ? <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#8090a8]">{subtitle}</p> : null}
+        <div className="min-w-0 max-w-full">
+          <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#93C5FD] sm:text-[11px] lg:text-[12px] xl:text-[13px]">{number}</p>
+          <h2 className="font-display mt-1 max-w-full text-[22px] font-semibold leading-[1.06] tracking-tight text-white sm:text-[24px] lg:text-[28px] xl:text-[30px]">
+            {title}
+          </h2>
+          {subtitle ? (
+            <p className="mt-1 text-[10px] uppercase leading-[1.3] tracking-[0.12em] text-[#8090a8] sm:text-[11px] lg:text-[12px]">
+              {subtitle}
+            </p>
+          ) : null}
         </div>
       </div>
-      <div className="relative z-10 pt-1 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{children}</div>
+      <div className="relative z-10 pt-1 text-sm leading-[1.62] text-[#b6bcc4] md:text-[15px]">{children}</div>
     </section>
   );
 }
@@ -982,7 +988,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               <div className="relative overflow-hidden rounded-2xl md:pl-16">
                 <p
                   aria-hidden="true"
-                  className="pointer-events-none absolute left-0 top-1 font-display text-6xl font-semibold leading-none text-[#88a8ff]/24 md:text-7xl"
+                  className="pointer-events-none absolute left-0 top-1 font-display text-[clamp(3rem,5vw,6rem)] font-semibold leading-[0.84] text-[#88a8ff]/24"
                 >
                   01
                 </p>
@@ -992,7 +998,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               <div className="relative overflow-hidden rounded-2xl md:pl-16">
                 <p
                   aria-hidden="true"
-                  className="pointer-events-none absolute left-0 top-1 font-display text-6xl font-semibold leading-none text-[#88a8ff]/24 md:text-7xl"
+                  className="pointer-events-none absolute left-0 top-1 font-display text-[clamp(3rem,5vw,6rem)] font-semibold leading-[0.84] text-[#88a8ff]/24"
                 >
                   01
                 </p>
@@ -1077,7 +1083,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       index === 0 ? "sm:col-span-2" : ""
                     } motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#93b2f8]/45 ${secondaryGlass}`}
                   >
-                    <p className="pointer-events-none absolute -right-3 top-1 font-display text-5xl text-[#8ab0ff]/[0.08]">
+                    <p
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-2 top-2 font-display text-[clamp(3rem,4.8vw,5.25rem)] leading-[0.84] text-[#8ab0ff]/[0.08]"
+                    >
                       {String(index + 1).padStart(2, "0")}
                     </p>
                     {item.year ? <p className="text-[11px] uppercase tracking-[0.14em] text-[#8aa0d1]">{item.year}</p> : null}
@@ -1154,11 +1163,15 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           >
             <DepthGlassLayers strength="soft" />
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
-              <span className="absolute left-5 top-5 font-display text-6xl text-[#9bb4ff]/[0.1]">&ldquo;</span>
+              <span className="absolute left-5 top-5 font-display text-[clamp(3rem,5vw,6rem)] leading-[0.84] text-[#9bb4ff]/[0.1]">
+                &ldquo;
+              </span>
             </div>
-            <div className="relative">
-              <p className="font-mono text-[11px] tracking-[0.22em] text-[#88a8ff]">07</p>
-              <h2 className="font-display mt-1 text-2xl font-semibold text-white">QUOTE / PERSONAL NOTE</h2>
+            <div className="relative z-10 min-w-0 max-w-full">
+              <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#88a8ff] sm:text-[11px] lg:text-[12px] xl:text-[13px]">07</p>
+              <h2 className="font-display mt-1 max-w-full text-[22px] font-semibold leading-[1.06] text-white sm:text-[24px] lg:text-[28px] xl:text-[30px]">
+                QUOTE / PERSONAL NOTE
+              </h2>
               {quote ? (
                 <blockquote className="mt-4 max-w-4xl border-l border-[#7da2ff]/50 pl-5 text-base leading-relaxed text-[#d2dcf0]">
                   &ldquo;{quote}&rdquo;
@@ -1210,10 +1223,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           >
             <DepthGlassLayers strength="soft" />
-            <div className="relative z-10">
-            <p className="font-mono text-[11px] tracking-[0.24em] text-[#8daeff]">09</p>
-            <h2 className="font-display mt-1 text-2xl font-semibold text-white">WORK WITH SIGMA</h2>
-            <p className="mt-2 max-w-2xl text-sm text-[#b3c0d6]">Continue through Sigma’s official channel for partnerships and strategic collaboration.</p>
+            <div className="relative z-10 min-w-0 max-w-full">
+            <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#8daeff] sm:text-[11px] lg:text-[12px] xl:text-[13px]">09</p>
+            <h2 className="font-display mt-1 max-w-full text-[22px] font-semibold leading-[1.06] text-white sm:text-[24px] lg:text-[28px] xl:text-[30px]">WORK WITH SIGMA</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-[1.62] text-[#b3c0d6] md:text-[15px]">Continue through Sigma’s official channel for partnerships and strategic collaboration.</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 href="/contact"
@@ -1250,8 +1263,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     "perspective(var(--g-perspective,1350px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
                 }}
               >
-                <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">← Previous Operator</span>
-                <span className="mt-1 block text-base font-medium text-white">{previousMember.name}</span>
+                <span className="block text-[10px] uppercase leading-[1.3] tracking-[0.12em] text-[#8da3d6] sm:text-[11px]">← Previous Operator</span>
+                <span className="mt-1 block text-[15px] font-medium leading-[1.35] text-white sm:text-base">{previousMember.name}</span>
               </Link>
               <Link
                 href={`/team/${nextMember.slug}`}
@@ -1262,8 +1275,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     "perspective(var(--g-perspective,1350px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
                 }}
               >
-                <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">Next Operator →</span>
-                <span className="mt-1 block text-base font-medium text-white">{nextMember.name}</span>
+                <span className="block text-[10px] uppercase leading-[1.3] tracking-[0.12em] text-[#8da3d6] sm:text-[11px]">Next Operator →</span>
+                <span className="mt-1 block text-[15px] font-medium leading-[1.35] text-white sm:text-base">{nextMember.name}</span>
               </Link>
             </div>
           </footer>

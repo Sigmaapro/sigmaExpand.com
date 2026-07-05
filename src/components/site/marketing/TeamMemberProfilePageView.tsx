@@ -99,21 +99,21 @@ function SectionFrame({
       id={sectionId}
       data-profile-section={sectionId}
       data-glass-depth={depthStrength}
-      className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.24)] motion-safe:hover:shadow-[0_28px_72px_rgba(2,8,20,0.55),0_0_52px_rgba(64,116,214,0.22),0_0_0_1px_rgba(195,224,255,0.09)_inset] sm:p-8 ${primaryGlass} ${className}`}
+      className={`group relative isolate overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.24)] motion-safe:hover:shadow-[0_28px_72px_rgba(2,8,20,0.55),0_0_52px_rgba(64,116,214,0.22),0_0_0_1px_rgba(195,224,255,0.09)_inset] sm:p-8 ${primaryGlass} ${className}`}
       style={{
         transform:
           "perspective(var(--g-perspective,1200px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
       }}
     >
       <DepthGlassLayers strength={depthStrength} />
-      <div className="relative z-10 mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
+      <div className="relative z-10 mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-5">
         <div>
           <p className="font-mono text-[11px] tracking-[0.24em] text-[#93C5FD]">{number}</p>
           <h2 className="font-display mt-1 text-2xl font-semibold tracking-tight text-white">{title}</h2>
           {subtitle ? <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#8090a8]">{subtitle}</p> : null}
         </div>
       </div>
-      <div className="relative z-10 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{children}</div>
+      <div className="relative z-10 pt-1 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{children}</div>
     </section>
   );
 }
@@ -979,14 +979,26 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         <div className="mt-10 grid gap-6">
           <SectionFrame sectionId="profile-overview" number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
             {fullOverview ? (
-              <div className="grid gap-5 md:grid-cols-[92px_minmax(0,1fr)] md:items-start">
-                <p className="font-display text-6xl font-semibold leading-none text-[#88a8ff]/30 md:text-7xl">01</p>
-                <p className="text-base leading-relaxed text-[#c0cad8]">{fullOverview}</p>
+              <div className="relative overflow-hidden rounded-2xl md:pl-16">
+                <p
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-0 top-1 font-display text-6xl font-semibold leading-none text-[#88a8ff]/24 md:text-7xl"
+                >
+                  01
+                </p>
+                <p className="relative z-10 text-base leading-relaxed text-[#c0cad8]">{fullOverview}</p>
               </div>
             ) : (
-              <div className="grid gap-5 md:grid-cols-[92px_minmax(0,1fr)] md:items-start">
-                <p className="font-display text-6xl font-semibold leading-none text-[#88a8ff]/30 md:text-7xl">01</p>
-                <ProfileContentPlaceholder label="Profile details pending" lines={4} />
+              <div className="relative overflow-hidden rounded-2xl md:pl-16">
+                <p
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-0 top-1 font-display text-6xl font-semibold leading-none text-[#88a8ff]/24 md:text-7xl"
+                >
+                  01
+                </p>
+                <div className="relative z-10">
+                  <ProfileContentPlaceholder label="Profile details pending" lines={4} />
+                </div>
               </div>
             )}
           </SectionFrame>
@@ -1141,7 +1153,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           >
             <DepthGlassLayers strength="soft" />
-            <span className="pointer-events-none absolute left-5 top-2 font-display text-7xl text-[#9bb4ff]/[0.12]">&ldquo;</span>
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
+              <span className="absolute left-5 top-5 font-display text-6xl text-[#9bb4ff]/[0.1]">&ldquo;</span>
+            </div>
             <div className="relative">
               <p className="font-mono text-[11px] tracking-[0.22em] text-[#88a8ff]">07</p>
               <h2 className="font-display mt-1 text-2xl font-semibold text-white">QUOTE / PERSONAL NOTE</h2>

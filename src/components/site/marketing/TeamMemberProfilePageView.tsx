@@ -1290,22 +1290,22 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             <nav
               ref={rightRailNavRef}
               aria-label="Profile sections"
-              className="absolute top-0 ml-auto w-full max-w-[88px] rounded-xl border border-[#8fb4ff]/16 bg-[linear-gradient(165deg,rgba(7,12,24,0.52),rgba(9,17,33,0.46))] px-2.5 py-3 shadow-[0_12px_28px_rgba(3,8,20,0.34),0_0_16px_rgba(66,116,210,0.1)] backdrop-blur-[12px] min-[1600px]:max-w-[104px]"
+              className="absolute right-1 top-0 w-[96px] rounded-[20px] border border-[#8fbaff]/24 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-4 shadow-[0_14px_30px_rgba(3,8,20,0.38),0_0_20px_rgba(66,116,210,0.12),inset_0_1px_0_rgba(205,225,255,0.12)] backdrop-blur-[12px] min-[1440px]:w-[112px] min-[1600px]:w-[128px] min-[1920px]:w-[136px]"
             >
-              <div className="absolute bottom-3 left-2.5 top-3 w-px bg-[#5f7398]/35" aria-hidden="true" />
+              <div className="absolute bottom-4 left-3.5 top-4 w-[2px] rounded-full bg-[#6f8abc]/40" aria-hidden="true" />
               <div
                 ref={rightProgressFillRef}
-                className="pointer-events-none absolute bottom-3 left-2.5 top-3 w-px origin-top scale-y-0 bg-gradient-to-b from-[#7DD3FC] via-[#60A5FA] to-[#3B82F6]"
+                className="pointer-events-none absolute bottom-4 left-3.5 top-4 w-[2px] origin-top scale-y-0 rounded-full bg-gradient-to-b from-[#93E3FF] via-[#60A5FA] to-[#3B82F6] shadow-[0_0_10px_rgba(96,165,250,0.55)]"
                 aria-hidden="true"
               />
               <span
                 aria-hidden="true"
-                className={`pointer-events-none absolute left-2.5 h-2 w-2 -translate-x-1/2 rounded-full bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.12),0_0_14px_rgba(96,165,250,0.6)] ${
+                className={`pointer-events-none absolute left-3.5 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-[#7DD3FC] shadow-[0_0_0_7px_rgba(125,211,252,0.14),0_0_16px_rgba(96,165,250,0.65)] ${
                   prefersReducedMotion ? "" : "transition-transform duration-[420ms] ease-[cubic-bezier(0.22,0.84,0.23,1)]"
                 }`}
                 style={{ transform: `translate3d(-50%, ${beaconTranslateY}px, 0)` }}
               />
-              <ol className="relative space-y-2.5">
+              <ol className="relative space-y-3">
                 {availableSections.map((section) => {
                   const isActive = activeSectionId === section.id;
                   return (
@@ -1314,25 +1314,31 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                         href={`#${section.id}`}
                         onClick={onSectionNavClick(section.id)}
                         aria-current={isActive ? "location" : undefined}
-                        className={`group flex h-[34px] items-center gap-2 rounded-lg pl-3 pr-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
-                          isActive ? "text-[#dff0ff]" : "text-[#8fa1c2]"
+                        className={`group relative flex h-[40px] items-center gap-2.5 rounded-xl border pl-6 pr-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
+                          isActive
+                            ? "border-[#9bc8ff]/28 bg-[linear-gradient(160deg,rgba(23,46,80,0.46),rgba(14,28,50,0.34))] text-[#e8f5ff] shadow-[inset_0_1px_0_rgba(198,224,255,0.16),0_0_0_1px_rgba(122,183,255,0.08)]"
+                            : "border-transparent text-[#8fa1c2] min-[1440px]:bg-white/[0.01] min-[1440px]:hover:bg-[#7ea2e8]/[0.08]"
                         }`}
                       >
                         <span
                           aria-hidden="true"
-                          className={`h-1 w-1 rounded-full transition-all ${
-                            isActive ? "bg-[#7DD3FC] shadow-[0_0_6px_rgba(125,211,252,0.5)] scale-110" : "bg-[#53698f]"
+                          className={`h-[5px] w-[5px] rounded-full transition-all ${
+                            isActive ? "bg-[#7DD3FC] shadow-[0_0_10px_rgba(125,211,252,0.75)] scale-110" : "bg-[#5f769e]"
                           }`}
                         />
                         <span className="min-w-0">
-                          <span className={`block font-mono text-[9px] tracking-[0.14em] ${isActive ? "text-[#7DD3FC]" : "text-[#7689ab]"}`}>
+                          <span
+                            className={`block font-mono text-[11px] leading-[1.2] tracking-[0.12em] ${
+                              isActive ? "text-[#96deff] min-[1600px]:text-[12px] min-[1920px]:text-[13px]" : "text-[#8093b5]"
+                            }`}
+                          >
                             {section.number}
                           </span>
                           <span
-                            className={`block text-[9px] uppercase tracking-[0.09em] transition-opacity ${
+                            className={`mt-0.5 block text-[10px] uppercase leading-[1.2] tracking-[0.08em] transition-opacity ${
                               isActive
-                                ? "opacity-100"
-                                : "opacity-0 min-[1440px]:group-hover:opacity-60 min-[1440px]:group-focus-visible:opacity-60"
+                                ? "opacity-100 text-[#d6e8ff] min-[1600px]:text-[11px] min-[1920px]:text-[12px]"
+                                : "opacity-0 min-[1440px]:text-[9px] min-[1440px]:opacity-55 min-[1440px]:text-[#8ea4c6] min-[1440px]:group-hover:opacity-80 min-[1440px]:group-focus-visible:opacity-80"
                             }`}
                           >
                             {section.label}

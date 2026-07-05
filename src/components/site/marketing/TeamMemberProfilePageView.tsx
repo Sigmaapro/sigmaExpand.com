@@ -230,8 +230,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [availableSections, setAvailableSections] = useState<ProfileSectionItem[]>([]);
   const [activeSectionId, setActiveSectionId] = useState<string>("profile-overview");
   const heroRef = useRef<HTMLElement | null>(null);
+  const profileWrapperRef = useRef<HTMLDivElement | null>(null);
   const leftRailListRef = useRef<HTMLDivElement | null>(null);
   const rightProgressFillRef = useRef<HTMLDivElement | null>(null);
+  const rightRailNavRef = useRef<HTMLElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
   const isMalePlaceholderPortrait = isMalePlaceholderImage(portrait);
@@ -378,50 +380,110 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       setActiveSectionId(items[0]!.id);
     }
     if (items.length === 0) return;
+    const observedSections = items
+      .map((item) => document.getElementById(item.id))
+      .filter((section): section is HTMLElement => Boolean(section));
+    if (observedSections.length === 0) return;
+
+    const headerOffset = 104;
+    const pickActiveSection = () => {
+      const readingLine = window.scrollY + headerOffset + Math.min(180, window.innerHeight * 0.25);
+      let candidate = observedSections[0]!;
+      for (const section of observedSections) {
+        const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+        if (sectionTop <= readingLine) {
+          candidate = section;
+        } else {
+          break;
+        }
+      }
+      setActiveSectionId((previous) => (previous === candidate.id ? previous : candidate.id));
+    };
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible.length === 0) return;
-        const top = visible[0]?.target as HTMLElement | undefined;
-        if (!top?.id) return;
-        setActiveSectionId((previous) => (previous === top.id ? previous : top.id));
+      () => {
+        pickActiveSection();
       },
       {
         root: null,
-        threshold: [0.18, 0.35, 0.55, 0.72],
-        rootMargin: "-22% 0px -52% 0px",
+        threshold: [0, 0.15, 0.4, 0.65],
+        rootMargin: `-${headerOffset + 10}px 0px -48% 0px`,
       },
     );
 
-    items.forEach((item) => {
-      const section = document.getElementById(item.id);
-      if (section) observer.observe(section);
-    });
+    observedSections.forEach((section) => observer.observe(section));
+    pickActiveSection();
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [profileSlug]);
 
   useEffect(() => {
+    const profileWrapper = profileWrapperRef.current;
     const leftRail = leftRailListRef.current;
     const progressFill = rightProgressFillRef.current;
-    if (!leftRail && !progressFill) return;
+    const rightRail = rightRailNavRef.current;
+    if (!profileWrapper || (!leftRail && !progressFill && !rightRail)) return;
 
     let rafId = 0;
+    let animId = 0;
+    let currentNavigatorY = 0;
+    let targetNavigatorY = 0;
+
+    const animateNavigator = () => {
+      if (!rightRail) return;
+      if (prefersReducedMotion) {
+        rightRail.style.transform = `translate3d(0, ${targetNavigatorY.toFixed(2)}px, 0)`;
+        animId = 0;
+        return;
+      }
+      currentNavigatorY += (targetNavigatorY - currentNavigatorY) * 0.2;
+      if (Math.abs(targetNavigatorY - currentNavigatorY) < 0.4) {
+        currentNavigatorY = targetNavigatorY;
+      }
+      rightRail.style.transform = `translate3d(0, ${currentNavigatorY.toFixed(2)}px, 0)`;
+      if (Math.abs(targetNavigatorY - currentNavigatorY) >= 0.4) {
+        animId = window.requestAnimationFrame(animateNavigator);
+      } else {
+        animId = 0;
+      }
+    };
+
     const update = () => {
-      const doc = document.documentElement;
-      const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+      const wrapperRect = profileWrapper.getBoundingClientRect();
+      const wrapperTop = window.scrollY + wrapperRect.top;
+      const wrapperHeight = wrapperRect.height;
+      const safeTop = 112;
+      const safeBottom = 140;
+      const wrapperScrollable = Math.max(1, wrapperHeight - safeTop - safeBottom);
+      const localProgress = Math.min(
+        1,
+        Math.max(0, (window.scrollY + safeTop - wrapperTop) / wrapperScrollable),
+      );
       if (progressFill) {
-        progressFill.style.transform = `scaleY(${progress.toFixed(4)})`;
+        progressFill.style.transform = `scaleY(${localProgress.toFixed(4)})`;
       }
       if (leftRail) {
-        const shift = prefersReducedMotion ? 0 : 20 + progress * 40;
+        const shift = prefersReducedMotion ? 0 : 20 + localProgress * 40;
         leftRail.style.transform = `translate3d(0, ${shift.toFixed(2)}px, 0)`;
+      }
+      if (rightRail && window.innerWidth >= 1280) {
+        const navHeight = rightRail.offsetHeight || 0;
+        const maxY = Math.max(0, wrapperHeight - navHeight - safeBottom);
+        const baseY = localProgress * maxY;
+        const activeSection = document.getElementById(activeSectionId);
+        let alignedY = baseY;
+        if (activeSection) {
+          const activeRect = activeSection.getBoundingClientRect();
+          const activeTop = window.scrollY + activeRect.top;
+          alignedY = Math.min(maxY, Math.max(0, activeTop - wrapperTop - safeTop));
+        }
+        targetNavigatorY = baseY * 0.7 + alignedY * 0.3;
+        if (prefersReducedMotion) {
+          rightRail.style.transform = `translate3d(0, ${targetNavigatorY.toFixed(2)}px, 0)`;
+          currentNavigatorY = targetNavigatorY;
+        } else if (!animId) {
+          animId = window.requestAnimationFrame(animateNavigator);
+        }
       }
       rafId = 0;
     };
@@ -439,8 +501,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
       if (rafId) window.cancelAnimationFrame(rafId);
+      if (animId) window.cancelAnimationFrame(animId);
     };
-  }, [prefersReducedMotion, profileSlug]);
+  }, [prefersReducedMotion, profileSlug, activeSectionId]);
 
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-glass-depth]"));
@@ -599,7 +662,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       </div>
 
       <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
-        <div className="min-[1280px]:grid min-[1280px]:grid-cols-[64px_minmax(0,1fr)_80px] min-[1280px]:gap-6 min-[1440px]:grid-cols-[72px_minmax(0,1fr)_88px] min-[1600px]:grid-cols-[84px_minmax(0,1fr)_104px]">
+        <div
+          ref={profileWrapperRef}
+          className="min-[1280px]:grid min-[1280px]:grid-cols-[64px_minmax(0,1fr)_80px] min-[1280px]:gap-6 min-[1440px]:grid-cols-[72px_minmax(0,1fr)_88px] min-[1600px]:grid-cols-[84px_minmax(0,1fr)_104px]"
+        >
           <aside
             className="hidden min-[1280px]:block"
             aria-label="Other team profiles"
@@ -1195,12 +1261,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </div>
 
           <aside
-            className="hidden min-[1280px]:block"
+            className="relative hidden min-[1280px]:block"
             aria-label="Profile section progress"
           >
             <nav
+              ref={rightRailNavRef}
               aria-label="Profile sections"
-              className="sticky top-24 ml-auto w-full max-w-[88px] rounded-xl border border-[#8fb4ff]/16 bg-[linear-gradient(165deg,rgba(7,12,24,0.52),rgba(9,17,33,0.46))] px-2.5 py-3 shadow-[0_12px_28px_rgba(3,8,20,0.34),0_0_16px_rgba(66,116,210,0.1)] backdrop-blur-[12px] min-[1600px]:max-w-[104px]"
+              className="absolute top-0 ml-auto w-full max-w-[88px] rounded-xl border border-[#8fb4ff]/16 bg-[linear-gradient(165deg,rgba(7,12,24,0.52),rgba(9,17,33,0.46))] px-2.5 py-3 shadow-[0_12px_28px_rgba(3,8,20,0.34),0_0_16px_rgba(66,116,210,0.1)] backdrop-blur-[12px] min-[1600px]:max-w-[104px]"
             >
               <div className="absolute bottom-3 left-2.5 top-3 w-px bg-[#5f7398]/35" aria-hidden="true" />
               <div

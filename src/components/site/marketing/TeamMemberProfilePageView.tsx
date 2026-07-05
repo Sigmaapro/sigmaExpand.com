@@ -26,35 +26,90 @@ function getGroupLabel(group: TeamMember["group"]): string {
   return "Contributors";
 }
 
+type DepthStrength = "hero" | "main" | "soft";
+
+function DepthGlassLayers({ strength }: { strength: DepthStrength }) {
+  const staticSheenClass =
+    strength === "hero"
+      ? "bg-[linear-gradient(150deg,rgba(255,255,255,0.06)_0%,rgba(147,197,253,0.1)_24%,transparent_56%)]"
+      : strength === "main"
+        ? "bg-[linear-gradient(150deg,rgba(255,255,255,0.045)_0%,rgba(147,197,253,0.075)_26%,transparent_58%)]"
+        : "bg-[linear-gradient(150deg,rgba(255,255,255,0.035)_0%,rgba(147,197,253,0.06)_24%,transparent_56%)]";
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 rounded-[inherit] ${staticSheenClass}`}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-[var(--g-ref,0.06)]"
+        style={{
+          background:
+            "radial-gradient(560px circle at var(--g-rx,50%) var(--g-ry,50%), rgba(241,248,255,0.12) 0%, rgba(147,197,253,0.08) 34%, transparent 72%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-[var(--g-edge,0.1)]"
+        style={{
+          background:
+            "radial-gradient(480px circle at var(--g-rx,50%) var(--g-ry,50%), rgba(147,197,253,0.18) 0%, rgba(147,197,253,0.07) 40%, transparent 78%)",
+          maskImage:
+            "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)",
+          maskComposite: "intersect",
+          WebkitMaskComposite: "source-in",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-[inherit] bg-gradient-to-r from-transparent via-[#93C5FD]/70 to-transparent"
+      />
+    </>
+  );
+}
+
 function SectionFrame({
   number,
   title,
   subtitle,
   children,
+  depthStrength = "main",
   className = "",
 }: {
   number: string;
   title: string;
   subtitle?: string;
   children: React.ReactNode;
+  depthStrength?: DepthStrength;
   className?: string;
 }) {
   const primaryGlass =
-    "border border-[#9ec5ff]/22 bg-[linear-gradient(155deg,rgba(10,18,33,0.62),rgba(8,14,25,0.58))] shadow-[0_24px_65px_rgba(0,0,0,0.34),0_0_0_1px_rgba(162,189,255,0.08)_inset,0_0_36px_rgba(56,96,190,0.14)] backdrop-blur-[20px]";
+    depthStrength === "hero"
+      ? "border border-[rgba(147,197,253,0.22)] bg-[linear-gradient(155deg,rgba(6,10,20,0.36),rgba(12,22,42,0.48))] shadow-[0_30px_80px_rgba(2,6,18,0.56),0_0_46px_rgba(56,98,196,0.22),0_0_0_1px_rgba(176,210,255,0.08)_inset] backdrop-blur-[28px] [backdrop-filter:saturate(1.1)_blur(28px)]"
+      : depthStrength === "soft"
+        ? "border border-[rgba(147,197,253,0.14)] bg-[linear-gradient(155deg,rgba(8,12,22,0.44),rgba(12,20,38,0.42))] shadow-[0_18px_48px_rgba(2,8,20,0.4),0_0_28px_rgba(54,92,176,0.12),0_0_0_1px_rgba(170,198,255,0.06)_inset] backdrop-blur-[18px] [backdrop-filter:saturate(1.05)_blur(18px)]"
+        : "border border-[rgba(147,197,253,0.16)] bg-[linear-gradient(155deg,rgba(7,11,21,0.4),rgba(12,22,42,0.46))] shadow-[0_24px_64px_rgba(2,8,22,0.48),0_0_36px_rgba(56,96,188,0.16),0_0_0_1px_rgba(170,198,255,0.07)_inset] backdrop-blur-[22px] [backdrop-filter:saturate(1.08)_blur(22px)]";
   return (
     <section
-      className={`relative overflow-hidden rounded-3xl p-6 sm:p-8 ${primaryGlass} ${className}`}
+      data-glass-depth={depthStrength}
+      className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.24)] motion-safe:hover:shadow-[0_28px_72px_rgba(2,8,20,0.55),0_0_52px_rgba(64,116,214,0.22),0_0_0_1px_rgba(195,224,255,0.09)_inset] sm:p-8 ${primaryGlass} ${className}`}
+      style={{
+        transform:
+          "perspective(var(--g-perspective,1200px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
+      }}
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(160deg,rgba(198,214,255,0.06),transparent_35%,transparent_100%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#93C5FD]/75 to-transparent" />
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
+      <DepthGlassLayers strength={depthStrength} />
+      <div className="relative z-10 mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
         <div>
           <p className="font-mono text-[11px] tracking-[0.24em] text-[#93C5FD]">{number}</p>
           <h2 className="font-display mt-1 text-2xl font-semibold tracking-tight text-white">{title}</h2>
           {subtitle ? <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#8090a8]">{subtitle}</p> : null}
         </div>
       </div>
-      <div className="text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{children}</div>
+      <div className="relative z-10 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{children}</div>
     </section>
   );
 }
@@ -233,6 +288,142 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     };
   }, []);
 
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-glass-depth]"));
+    if (cards.length === 0) return;
+
+    const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+    const applyStaticState = () => {
+      cards.forEach((card) => {
+        const depth = card.dataset.glassDepth;
+        const perspective = depth === "hero" ? "1200px" : depth === "soft" ? "1350px" : "1280px";
+        card.style.setProperty("--g-perspective", perspective);
+        card.style.setProperty("--g-tilt-x", "0deg");
+        card.style.setProperty("--g-tilt-y", "0deg");
+        card.style.setProperty("--g-lift", "0px");
+        card.style.setProperty("--g-scale", "1");
+        card.style.setProperty("--g-rx", "50%");
+        card.style.setProperty("--g-ry", "50%");
+        card.style.setProperty("--g-ref", depth === "hero" ? "0.08" : depth === "soft" ? "0.05" : "0.065");
+        card.style.setProperty("--g-edge", depth === "hero" ? "0.12" : depth === "soft" ? "0.08" : "0.1");
+      });
+    };
+
+    const interactiveEnabled =
+      !reduceMotionQuery.matches && desktopQuery.matches && finePointerQuery.matches;
+    if (!interactiveEnabled) {
+      applyStaticState();
+      return;
+    }
+
+    type DepthState = {
+      element: HTMLElement;
+      targetX: number;
+      targetY: number;
+      currentX: number;
+      currentY: number;
+      targetA: number;
+      currentA: number;
+      depth: DepthStrength;
+      maxTilt: number;
+      maxLift: number;
+      maxScale: number;
+      baseRef: number;
+      baseEdge: number;
+    };
+
+    const states: DepthState[] = cards.map((card) => {
+      const depth = (card.dataset.glassDepth as DepthStrength | undefined) ?? "main";
+      const maxTilt = depth === "hero" ? 1.2 : depth === "soft" ? 0.45 : 0.85;
+      const maxLift = depth === "hero" ? 2 : depth === "soft" ? 0.7 : 1.3;
+      const maxScale = depth === "hero" ? 1.003 : depth === "soft" ? 1.001 : 1.002;
+      const baseRef = depth === "hero" ? 0.08 : depth === "soft" ? 0.05 : 0.065;
+      const baseEdge = depth === "hero" ? 0.12 : depth === "soft" ? 0.08 : 0.1;
+      const perspective = depth === "hero" ? "1200px" : depth === "soft" ? "1350px" : "1280px";
+      card.style.setProperty("--g-perspective", perspective);
+      card.style.setProperty("--g-rx", "50%");
+      card.style.setProperty("--g-ry", "50%");
+      card.style.setProperty("--g-ref", String(baseRef));
+      card.style.setProperty("--g-edge", String(baseEdge));
+      return {
+        element: card,
+        targetX: 0,
+        targetY: 0,
+        currentX: 0,
+        currentY: 0,
+        targetA: baseRef,
+        currentA: baseRef,
+        depth,
+        maxTilt,
+        maxLift,
+        maxScale,
+        baseRef,
+        baseEdge,
+      };
+    });
+
+    const stateByElement = new Map<HTMLElement, DepthState>(states.map((item) => [item.element, item]));
+    let rafId = 0;
+    const animate = () => {
+      states.forEach((state) => {
+        state.currentX += (state.targetX - state.currentX) * 0.1;
+        state.currentY += (state.targetY - state.currentY) * 0.1;
+        state.currentA += (state.targetA - state.currentA) * 0.12;
+        const lift = (Math.abs(state.currentX) + Math.abs(state.currentY)) * 0.5 * state.maxLift;
+        const scale = 1 + (Math.abs(state.currentX) + Math.abs(state.currentY)) * 0.5 * (state.maxScale - 1);
+        state.element.style.setProperty("--g-tilt-x", `${(state.currentX * state.maxTilt).toFixed(3)}deg`);
+        state.element.style.setProperty("--g-tilt-y", `${(-state.currentY * state.maxTilt).toFixed(3)}deg`);
+        state.element.style.setProperty("--g-lift", `${lift.toFixed(3)}px`);
+        state.element.style.setProperty("--g-scale", scale.toFixed(4));
+        state.element.style.setProperty("--g-ref", state.currentA.toFixed(3));
+        state.element.style.setProperty("--g-edge", (state.baseEdge + (state.currentA - state.baseRef) * 0.7).toFixed(3));
+      });
+      rafId = window.requestAnimationFrame(animate);
+    };
+
+    const handlers = cards.map((card) => {
+      const onPointerMove = (event: PointerEvent) => {
+        const state = stateByElement.get(card);
+        if (!state) return;
+        const rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        const normalizedX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+        const normalizedY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+        state.targetX = Math.max(-1, Math.min(1, normalizedX));
+        state.targetY = Math.max(-1, Math.min(1, normalizedY));
+        state.targetA = Math.min(0.14, state.baseRef + 0.05);
+        state.element.style.setProperty("--g-rx", `${((event.clientX - rect.left) / rect.width * 100).toFixed(2)}%`);
+        state.element.style.setProperty("--g-ry", `${((event.clientY - rect.top) / rect.height * 100).toFixed(2)}%`);
+      };
+      const onPointerLeave = () => {
+        const state = stateByElement.get(card);
+        if (!state) return;
+        state.targetX = 0;
+        state.targetY = 0;
+        state.targetA = state.baseRef;
+        state.element.style.setProperty("--g-rx", "50%");
+        state.element.style.setProperty("--g-ry", "50%");
+      };
+      card.addEventListener("pointermove", onPointerMove);
+      card.addEventListener("pointerleave", onPointerLeave);
+      return { card, onPointerMove, onPointerLeave };
+    });
+
+    rafId = window.requestAnimationFrame(animate);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      handlers.forEach(({ card, onPointerMove, onPointerLeave }) => {
+        card.removeEventListener("pointermove", onPointerMove);
+        card.removeEventListener("pointerleave", onPointerLeave);
+      });
+      applyStaticState();
+    };
+  }, []);
+
   return (
     <div className="relative isolate overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
@@ -266,7 +457,16 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </ol>
         </nav>
 
-        <section ref={heroRef} className={`relative overflow-hidden rounded-[30px] p-6 sm:p-8 lg:p-10 ${heroGlass}`}>
+        <section
+          ref={heroRef}
+          data-glass-depth="hero"
+          className={`group relative overflow-hidden rounded-[30px] p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.26)] motion-safe:hover:shadow-[0_36px_94px_rgba(2,8,20,0.58),0_0_62px_rgba(68,124,224,0.28),0_0_0_1px_rgba(198,226,255,0.1)_inset] sm:p-8 lg:p-10 ${heroGlass}`}
+          style={{
+            transform:
+              "perspective(var(--g-perspective,1200px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
+          }}
+        >
+          <DepthGlassLayers strength="hero" />
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[var(--ra,0.08)]"
@@ -380,12 +580,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 style={{ transform: "translate3d(calc(var(--mx, 0) * -0.85px), calc(var(--my, 0) * -0.85px), 0)" }}
               />
               <div
-                className={`relative overflow-hidden rounded-[30px] px-4 pb-5 pt-16 ${heroPanelGlass} motion-safe:transition-transform motion-safe:duration-300`}
+                data-glass-depth="hero"
+                className={`relative overflow-hidden rounded-[30px] px-4 pb-5 pt-16 motion-safe:transition-transform motion-safe:duration-300 ${heroPanelGlass}`}
                 style={{
                   transform:
-                    "translate3d(calc(var(--mx, 0) * 0.55px), calc(var(--my, 0) * 0.55px), 0) rotateX(calc(var(--my, 0) * -0.03deg)) rotateY(calc(var(--mx, 0) * 0.03deg))",
+                    "perspective(var(--g-perspective,1200px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(calc(var(--g-lift,0px) + calc(var(--my, 0) * 0.55px))) scale(var(--g-scale,1)) translate3d(calc(var(--mx, 0) * 0.55px), calc(var(--my, 0) * 0.55px), 0)",
                 }}
               >
+                <DepthGlassLayers strength="hero" />
                 <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(127,169,255,0.22),transparent_48%)]" />
                 <div className="pointer-events-none absolute left-4 top-4 font-mono text-[11px] tracking-[0.24em] text-[#9cb6ff]">
                   {profileIndex} / {totalProfiles}
@@ -578,7 +780,15 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </div>
           </SectionFrame>
 
-          <section className={`relative overflow-hidden rounded-3xl p-6 sm:p-8 ${primaryGlass}`}>
+          <section
+            data-glass-depth="soft"
+            className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.22)] motion-safe:hover:shadow-[0_22px_56px_rgba(3,9,20,0.42),0_0_38px_rgba(68,116,208,0.16)] sm:p-8 ${primaryGlass}`}
+            style={{
+              transform:
+                "perspective(var(--g-perspective,1350px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
+            }}
+          >
+            <DepthGlassLayers strength="soft" />
             <span className="pointer-events-none absolute left-5 top-2 font-display text-7xl text-[#9bb4ff]/[0.12]">&ldquo;</span>
             <div className="relative">
               <p className="font-mono text-[11px] tracking-[0.22em] text-[#88a8ff]">07</p>
@@ -623,7 +833,16 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <section className={`rounded-3xl p-6 sm:p-8 ${primaryGlass}`}>
+          <section
+            data-glass-depth="soft"
+            className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.22)] motion-safe:hover:shadow-[0_22px_56px_rgba(3,9,20,0.42),0_0_38px_rgba(68,116,208,0.16)] sm:p-8 ${primaryGlass}`}
+            style={{
+              transform:
+                "perspective(var(--g-perspective,1350px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
+            }}
+          >
+            <DepthGlassLayers strength="soft" />
+            <div className="relative z-10">
             <p className="font-mono text-[11px] tracking-[0.24em] text-[#8daeff]">09</p>
             <h2 className="font-display mt-1 text-2xl font-semibold text-white">WORK WITH SIGMA</h2>
             <p className="mt-2 max-w-2xl text-sm text-[#b3c0d6]">Continue through Sigma’s official channel for partnerships and strategic collaboration.</p>
@@ -641,20 +860,39 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 Back to Team
               </Link>
             </div>
+            </div>
           </section>
 
-          <footer className={`rounded-3xl p-6 sm:p-8 ${primaryGlass}`}>
-            <div className="grid gap-3 sm:grid-cols-2">
+          <footer
+            data-glass-depth="soft"
+            className={`group relative overflow-hidden rounded-3xl p-6 motion-safe:transition-[box-shadow,border-color,transform] motion-safe:duration-300 motion-safe:hover:border-[rgba(147,197,253,0.22)] motion-safe:hover:shadow-[0_22px_56px_rgba(3,9,20,0.42),0_0_38px_rgba(68,116,208,0.16)] sm:p-8 ${primaryGlass}`}
+            style={{
+              transform:
+                "perspective(var(--g-perspective,1350px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
+            }}
+          >
+            <DepthGlassLayers strength="soft" />
+            <div className="relative z-10 grid gap-3 sm:grid-cols-2">
               <Link
                 href={`/team/${previousMember.slug}`}
+                data-glass-depth="soft"
                 className={`group rounded-2xl px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c] ${secondaryGlass}`}
+                style={{
+                  transform:
+                    "perspective(var(--g-perspective,1350px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
+                }}
               >
                 <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">← Previous Operator</span>
                 <span className="mt-1 block text-base font-medium text-white">{previousMember.name}</span>
               </Link>
               <Link
                 href={`/team/${nextMember.slug}`}
+                data-glass-depth="soft"
                 className={`group rounded-2xl px-4 py-4 text-left motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#87aaff]/45 motion-safe:hover:bg-[#87aaff]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c111c] sm:text-right ${secondaryGlass}`}
+                style={{
+                  transform:
+                    "perspective(var(--g-perspective,1350px)) rotateX(var(--g-tilt-y,0deg)) rotateY(var(--g-tilt-x,0deg)) translateY(var(--g-lift,0px)) scale(var(--g-scale,1))",
+                }}
               >
                 <span className="block text-[11px] uppercase tracking-[0.14em] text-[#8da3d6]">Next Operator →</span>
                 <span className="mt-1 block text-base font-medium text-white">{nextMember.name}</span>

@@ -77,6 +77,8 @@ function SectionFrame({
   subtitle,
   children,
   sectionId,
+  isActiveSection = false,
+  showSectionLight = false,
   depthStrength = "main",
   className = "",
 }: {
@@ -85,6 +87,8 @@ function SectionFrame({
   subtitle?: string;
   children: React.ReactNode;
   sectionId?: string;
+  isActiveSection?: boolean;
+  showSectionLight?: boolean;
   depthStrength?: DepthStrength;
   className?: string;
 }) {
@@ -106,6 +110,16 @@ function SectionFrame({
       }}
     >
       <DepthGlassLayers strength={depthStrength} />
+      {showSectionLight ? (
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none absolute right-3 top-6 h-2 w-2 rounded-full transition-all duration-300 ${
+            isActiveSection
+              ? "bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.16),0_0_12px_rgba(96,165,250,0.55)]"
+              : "bg-[#5b6f96]/45"
+          }`}
+        />
+      ) : null}
       <div className="relative z-10 mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-4">
         <div>
           <p className="font-mono text-[11px] tracking-[0.24em] text-[#93C5FD]">{number}</p>
@@ -258,6 +272,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     };
   });
   const otherMembers = allMembers.filter((item) => getTeamMemberSlug(item) !== profileSlug);
+  const activeSectionIndex = Math.max(
+    0,
+    availableSections.findIndex((item) => item.id === activeSectionId),
+  );
+  const trackerStepPx = 34;
+  const trackerBasePx = 17;
+  const beaconTranslateY = trackerBasePx + activeSectionIndex * trackerStepPx;
 
   useEffect(() => {
     const element = heroRef.current;
@@ -906,7 +927,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </section>
 
         <div className="mt-10 grid gap-6">
-          <SectionFrame sectionId="profile-overview" number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
+          <SectionFrame
+            sectionId="profile-overview"
+            number="01"
+            title="PROFILE OVERVIEW"
+            subtitle="Editorial Brief"
+            showSectionLight
+            isActiveSection={activeSectionId === "profile-overview"}
+          >
             {fullOverview ? (
               <div className="grid gap-5 md:grid-cols-[92px_minmax(0,1fr)] md:items-start">
                 <p className="font-display text-6xl font-semibold leading-none text-[#88a8ff]/30 md:text-7xl">01</p>
@@ -921,7 +949,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </SectionFrame>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <SectionFrame sectionId="skills" number="02" title="SKILLS" subtitle="Core Capabilities">
+            <SectionFrame
+              sectionId="skills"
+              number="02"
+              title="SKILLS"
+              subtitle="Core Capabilities"
+              showSectionLight
+              isActiveSection={activeSectionId === "skills"}
+            >
               {member.skills?.length ? (
                 <div className="grid gap-2.5 sm:grid-cols-2">
                   {member.skills.map((item, index) => (
@@ -943,7 +978,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               )}
             </SectionFrame>
 
-            <SectionFrame sectionId="services" number="03" title="SERVICES" subtitle="Engagement Focus">
+            <SectionFrame
+              sectionId="services"
+              number="03"
+              title="SERVICES"
+              subtitle="Engagement Focus"
+              showSectionLight
+              isActiveSection={activeSectionId === "services"}
+            >
               {member.services?.length ? (
                 <div className="space-y-2.5">
                   {member.services.map((item, index) => (
@@ -965,7 +1007,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </SectionFrame>
           </div>
 
-          <SectionFrame sectionId="career" number="04" title="CAREER TIMELINE" subtitle="Trajectory">
+          <SectionFrame
+            sectionId="career"
+            number="04"
+            title="CAREER TIMELINE"
+            subtitle="Trajectory"
+            showSectionLight
+            isActiveSection={activeSectionId === "career"}
+          >
             {hasTimeline ? (
               <ol className="relative space-y-5 pl-6 before:absolute before:bottom-0 before:left-[9px] before:top-1 before:w-px before:bg-gradient-to-b before:from-[#7da4ff] before:to-white/10">
                 {member.careerHistory!.map((entry, index) => (
@@ -984,7 +1033,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <SectionFrame sectionId="achievements" number="05" title="SELECTED ACHIEVEMENTS" subtitle="Verified Highlights">
+          <SectionFrame
+            sectionId="achievements"
+            number="05"
+            title="SELECTED ACHIEVEMENTS"
+            subtitle="Verified Highlights"
+            showSectionLight
+            isActiveSection={activeSectionId === "achievements"}
+          >
             {hasAchievements ? (
               <div className="grid gap-3 sm:grid-cols-2">
                 {member.achievements!.map((item, index) => (
@@ -1018,7 +1074,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <SectionFrame sectionId="footprint" number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
+          <SectionFrame
+            sectionId="footprint"
+            number="06"
+            title="GLOBAL FOOTPRINT"
+            subtitle="Location / Languages / Markets"
+            showSectionLight
+            isActiveSection={activeSectionId === "footprint"}
+          >
             <div className="grid gap-3 md:grid-cols-3">
               <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Location</p>
@@ -1028,7 +1091,15 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   <ProfileContentPlaceholder label="Details to be added" lines={1} className="mt-2 p-3" />
                 )}
               </article>
-              <article id="languages" className={`rounded-2xl p-4 ${secondaryGlass}`}>
+              <article id="languages" className={`relative rounded-2xl p-4 ${secondaryGlass}`}>
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute right-2 top-4 h-1.5 w-1.5 rounded-full transition-all duration-300 ${
+                    activeSectionId === "languages"
+                      ? "bg-[#7DD3FC] shadow-[0_0_0_5px_rgba(125,211,252,0.14),0_0_10px_rgba(96,165,250,0.45)]"
+                      : "bg-[#5b6f96]/45"
+                  }`}
+                />
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Languages</p>
                 {hasLanguages ? (
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -1070,6 +1141,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           >
             <DepthGlassLayers strength="soft" />
+            <span
+              aria-hidden="true"
+              className={`pointer-events-none absolute right-3 top-6 h-2 w-2 rounded-full transition-all duration-300 ${
+                activeSectionId === "personal-note"
+                  ? "bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.16),0_0_12px_rgba(96,165,250,0.55)]"
+                  : "bg-[#5b6f96]/45"
+              }`}
+            />
             <span className="pointer-events-none absolute left-5 top-2 font-display text-7xl text-[#9bb4ff]/[0.12]">&ldquo;</span>
             <div className="relative">
               <p className="font-mono text-[11px] tracking-[0.22em] text-[#88a8ff]">07</p>
@@ -1125,6 +1204,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             }}
           >
             <DepthGlassLayers strength="soft" />
+            <span
+              aria-hidden="true"
+              className={`pointer-events-none absolute right-3 top-6 h-2 w-2 rounded-full transition-all duration-300 ${
+                activeSectionId === "contact"
+                  ? "bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.16),0_0_12px_rgba(96,165,250,0.55)]"
+                  : "bg-[#5b6f96]/45"
+              }`}
+            />
             <div className="relative z-10">
             <p className="font-mono text-[11px] tracking-[0.24em] text-[#8daeff]">09</p>
             <h2 className="font-display mt-1 text-2xl font-semibold text-white">WORK WITH SIGMA</h2>
@@ -1191,13 +1278,20 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           >
             <nav
               aria-label="Profile sections"
-              className="sticky top-24 ml-auto w-full max-w-[132px] rounded-2xl border border-[#8fb4ff]/20 bg-[linear-gradient(165deg,rgba(7,12,24,0.62),rgba(9,17,33,0.54))] px-3 py-4 shadow-[0_18px_42px_rgba(3,8,20,0.42),0_0_22px_rgba(66,116,210,0.14)] backdrop-blur-[16px]"
+              className="sticky top-24 ml-auto w-full max-w-[88px] rounded-xl border border-[#8fb4ff]/16 bg-[linear-gradient(165deg,rgba(7,12,24,0.52),rgba(9,17,33,0.46))] px-2.5 py-3 shadow-[0_12px_28px_rgba(3,8,20,0.34),0_0_16px_rgba(66,116,210,0.1)] backdrop-blur-[12px]"
             >
-              <div className="absolute bottom-4 left-3 top-4 w-px bg-[#6f87b4]/30" aria-hidden="true" />
+              <div className="absolute bottom-3 left-2.5 top-3 w-px bg-[#5f7398]/35" aria-hidden="true" />
               <div
                 ref={rightProgressFillRef}
-                className="pointer-events-none absolute bottom-4 left-3 top-4 w-px origin-top scale-y-0 bg-gradient-to-b from-[#7DD3FC] via-[#60A5FA] to-[#3B82F6]"
+                className="pointer-events-none absolute bottom-3 left-2.5 top-3 w-px origin-top scale-y-0 bg-gradient-to-b from-[#7DD3FC] via-[#60A5FA] to-[#3B82F6]"
                 aria-hidden="true"
+              />
+              <span
+                aria-hidden="true"
+                className={`pointer-events-none absolute left-2.5 h-2 w-2 -translate-x-1/2 rounded-full bg-[#7DD3FC] shadow-[0_0_0_6px_rgba(125,211,252,0.12),0_0_14px_rgba(96,165,250,0.6)] ${
+                  prefersReducedMotion ? "" : "transition-transform duration-[420ms] ease-[cubic-bezier(0.22,0.84,0.23,1)]"
+                }`}
+                style={{ transform: `translate3d(-50%, ${beaconTranslateY}px, 0)` }}
               />
               <ol className="relative space-y-2.5">
                 {availableSections.map((section) => {
@@ -1208,23 +1302,25 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                         href={`#${section.id}`}
                         onClick={onSectionNavClick(section.id)}
                         aria-current={isActive ? "location" : undefined}
-                        className={`group flex items-start gap-2 rounded-lg px-2 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
-                          isActive ? "text-[#dff0ff]" : "text-[#93a4c4]"
+                        className={`group flex h-[34px] items-center gap-2 rounded-lg pl-3 pr-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
+                          isActive ? "text-[#dff0ff]" : "text-[#8fa1c2]"
                         }`}
                       >
                         <span
                           aria-hidden="true"
-                          className={`mt-1 h-1.5 w-1.5 rounded-full transition-all ${
-                            isActive ? "bg-[#7DD3FC] shadow-[0_0_8px_rgba(125,211,252,0.5)] scale-110" : "bg-[#5f7298]"
+                          className={`h-1 w-1 rounded-full transition-all ${
+                            isActive ? "bg-[#7DD3FC] shadow-[0_0_6px_rgba(125,211,252,0.5)] scale-110" : "bg-[#53698f]"
                           }`}
                         />
                         <span className="min-w-0">
-                          <span className={`block font-mono text-[10px] tracking-[0.16em] ${isActive ? "text-[#7DD3FC]" : "text-[#7b8cab]"}`}>
+                          <span className={`block font-mono text-[9px] tracking-[0.14em] ${isActive ? "text-[#7DD3FC]" : "text-[#7689ab]"}`}>
                             {section.number}
                           </span>
                           <span
-                            className={`block text-[10px] uppercase tracking-[0.1em] transition-opacity ${
-                              isActive ? "opacity-100" : "opacity-55 min-[1440px]:opacity-0 min-[1440px]:group-hover:opacity-80 min-[1440px]:group-focus-visible:opacity-80"
+                            className={`block text-[9px] uppercase tracking-[0.09em] transition-opacity ${
+                              isActive
+                                ? "opacity-100"
+                                : "opacity-0 min-[1440px]:group-hover:opacity-60 min-[1440px]:group-focus-visible:opacity-60"
                             }`}
                           >
                             {section.label}

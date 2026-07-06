@@ -235,7 +235,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [glowVisible, setGlowVisible] = useState(false);
   const [availableSections, setAvailableSections] = useState<ProfileSectionItem[]>([]);
   const [activeSectionId, setActiveSectionId] = useState<string>("profile-overview");
-  const [featuredDeckIndex, setFeaturedDeckIndex] = useState(0);
   const [profileProgressPercent, setProfileProgressPercent] = useState(0);
   const [chapterMenuOpen, setChapterMenuOpen] = useState(false);
   const [chapterCardY, setChapterCardY] = useState(0);
@@ -267,41 +266,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       platformName: getSocialPlatformName(iconKey, item.label),
     };
   });
-  const otherMembers = allMembers.filter((item) => getTeamMemberSlug(item) !== profileSlug);
   const activeSectionIndex = Math.max(0, availableSections.findIndex((item) => item.id === activeSectionId));
   const activeSection = availableSections[activeSectionIndex] ?? availableSections[0];
   const nextSection = activeSectionIndex >= 0 ? availableSections[activeSectionIndex + 1] : undefined;
-  const deckTotal = otherMembers.length;
-  const normalizedDeckIndex = deckTotal > 0 ? ((featuredDeckIndex % deckTotal) + deckTotal) % deckTotal : 0;
-  const deckCenterMember = deckTotal > 0 ? otherMembers[normalizedDeckIndex]! : null;
-  const deckTopMember = deckTotal > 0 ? otherMembers[(normalizedDeckIndex - 1 + deckTotal) % deckTotal]! : null;
-  const deckBottomMember = deckTotal > 0 ? otherMembers[(normalizedDeckIndex + 1) % deckTotal]! : null;
-  const deckVisibleMembers =
-    deckTotal >= 3
-      ? [
-          { member: deckTopMember, tier: "quiet" as const },
-          { member: deckCenterMember, tier: "featured" as const },
-          { member: deckBottomMember, tier: "quiet" as const },
-        ]
-      : deckTotal === 2
-        ? [
-            { member: deckCenterMember, tier: "featured" as const },
-            { member: otherMembers[(normalizedDeckIndex + 1) % deckTotal]!, tier: "quiet" as const },
-          ]
-        : deckTotal === 1
-          ? [{ member: deckCenterMember, tier: "featured" as const }]
-          : [];
-  const deckFeaturedCountLabel = String(normalizedDeckIndex + 1).padStart(2, "0");
-  const deckTotalLabel = String(Math.max(deckTotal, 0)).padStart(2, "0");
-  const wheelCooldownRef = useRef(0);
-  const wheelAccumRef = useRef(0);
-  const deckStep = (direction: 1 | -1) => {
-    if (deckTotal <= 1) return;
-    setFeaturedDeckIndex((current) => {
-      const next = current + direction;
-      return ((next % deckTotal) + deckTotal) % deckTotal;
-    });
-  };
   const scrollToSectionById = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -425,15 +392,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       setPortraitVisible(true);
     }
   }, [prefersReducedMotion, hasPortrait, portraitCanEnter, portraitReady]);
-
-  useEffect(() => {
-    if (deckTotal === 0) {
-      setFeaturedDeckIndex(0);
-      return;
-    }
-    const nextSlugIndex = otherMembers.findIndex((item) => item.slug === nextMember.slug);
-    setFeaturedDeckIndex(nextSlugIndex >= 0 ? nextSlugIndex : 0);
-  }, [profileSlug, deckTotal, nextMember.slug, otherMembers]);
 
   useEffect(() => {
     const items = PROFILE_SECTION_ITEMS.filter((item) => Boolean(document.getElementById(item.id)));
@@ -772,114 +730,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
         <div
           ref={profileWrapperRef}
-          className="min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_138px] min-[1280px]:gap-6 min-[1440px]:grid-cols-[136px_minmax(0,1fr)_138px] min-[1600px]:grid-cols-[168px_minmax(0,1fr)_152px] min-[1920px]:grid-cols-[176px_minmax(0,1fr)_164px]"
+          className="min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_132px] min-[1280px]:gap-5 min-[1440px]:grid-cols-[minmax(0,1fr)_140px] min-[1600px]:grid-cols-[minmax(0,1fr)_152px] min-[1920px]:grid-cols-[minmax(0,1fr)_160px]"
         >
-          <aside
-            className="hidden min-[1440px]:block"
-            aria-label="Other team profiles"
-          >
-            <div className="sticky top-24">
-              <div
-                className="relative rounded-[22px] border border-[#8fbaff]/22 bg-[linear-gradient(168deg,rgba(7,12,24,0.66),rgba(9,17,33,0.58))] px-2.5 py-3 shadow-[0_16px_38px_rgba(3,8,20,0.4),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(210,228,255,0.1)] backdrop-blur-[14px]"
-                tabIndex={0}
-                onWheel={(event) => {
-                  if (deckTotal <= 1) return;
-                  wheelAccumRef.current += event.deltaY;
-                  if (Math.abs(wheelAccumRef.current) < 38) return;
-                  const now = Date.now();
-                  if (now - wheelCooldownRef.current < 180) {
-                    event.preventDefault();
-                    return;
-                  }
-                  event.preventDefault();
-                  wheelCooldownRef.current = now;
-                  const direction = wheelAccumRef.current > 0 ? 1 : -1;
-                  wheelAccumRef.current = 0;
-                  deckStep(direction);
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === "ArrowDown") {
-                    event.preventDefault();
-                    deckStep(1);
-                  } else if (event.key === "ArrowUp") {
-                    event.preventDefault();
-                    deckStep(-1);
-                  }
-                }}
-                aria-label="Profile deck. Use mouse wheel or arrow keys to rotate."
-              >
-                <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 top-0 h-10 bg-gradient-to-b from-[#070f1d] to-transparent" />
-                <div aria-hidden="true" className="pointer-events-none absolute inset-x-2 bottom-0 h-10 bg-gradient-to-t from-[#070f1d] to-transparent" />
-                <div className="flex items-center justify-between px-1 pb-2 text-[10px] uppercase tracking-[0.12em] text-[#9cb0d3]">
-                  <span>Deck</span>
-                  <span>{deckFeaturedCountLabel} / {deckTotalLabel}</span>
-                </div>
-                <div className="space-y-2">
-                  {deckVisibleMembers.map((entry, index) => {
-                    const deckMember = entry.member;
-                    if (!deckMember) return null;
-                    const slug = getTeamMemberSlug(deckMember);
-                    const imageSrc = deckMember.portrait ?? deckMember.imageSrc;
-                    const isPlaceholder = isPlaceholderImage(imageSrc);
-                    const rosterIndex = otherMembers.findIndex((item) => getTeamMemberSlug(item) === slug);
-                    const isFeatured = entry.tier === "featured";
-                    return (
-                      <Link
-                        key={`${slug}-${index}`}
-                        href={`/team/${slug}`}
-                        aria-label={`Open profile for ${deckMember.name}`}
-                        className={`group relative block overflow-hidden rounded-2xl border px-2.5 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050912] motion-safe:transition-[transform,border-color,box-shadow,opacity] motion-safe:duration-200 ${
-                          isFeatured
-                            ? "border-[#9cc6ff]/34 bg-[linear-gradient(160deg,rgba(16,31,56,0.72),rgba(10,20,37,0.64))] opacity-100 shadow-[0_10px_24px_rgba(7,18,40,0.42),0_0_18px_rgba(96,165,250,0.14)] motion-safe:hover:-translate-y-[1px]"
-                            : "border-[#84a3d9]/22 bg-[linear-gradient(160deg,rgba(13,23,42,0.52),rgba(9,17,31,0.5))] opacity-70 motion-safe:hover:opacity-90"
-                        }`}
-                      >
-                        <div className={`relative mx-auto overflow-hidden rounded-xl border ${isFeatured ? "h-[72px] w-[72px] border-[#9ec7ff]/34" : "h-[54px] w-[54px] border-[#7f9bcf]/24"}`}>
-                          {imageSrc ? (
-                            <Image
-                              src={imageSrc}
-                              alt=""
-                              fill
-                              sizes={isFeatured ? "72px" : "54px"}
-                              className={isPlaceholder ? "object-contain p-1.5" : "object-cover"}
-                            />
-                          ) : (
-                            <span className="flex h-full w-full items-center justify-center text-xs font-semibold text-[#d2def7]">
-                              {initialsFromName(deckMember.name)}
-                            </span>
-                          )}
-                        </div>
-                        <p className={`mt-2 font-mono uppercase tracking-[0.12em] text-[#95b4ec] ${isFeatured ? "text-[11px]" : "text-[10px]"}`}>
-                          {String(Math.max(0, rosterIndex) + 1).padStart(2, "0")}
-                        </p>
-                        <p className={`mt-1 line-clamp-1 font-medium text-white ${isFeatured ? "text-[12px]" : "text-[11px]"}`}>{deckMember.name}</p>
-                        <p className={`line-clamp-2 text-[#95a7c9] ${isFeatured ? "text-[10px]" : "text-[9px]"}`}>{deckMember.role ?? "Team Member"}</p>
-                      </Link>
-                    );
-                  })}
-                </div>
-                <div className="mt-2 flex items-center justify-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => deckStep(-1)}
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#84a6de]/26 bg-[#0d172a]/75 text-[#b5c9ec] motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/56 motion-safe:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
-                    aria-label="Show previous profile"
-                  >
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => deckStep(1)}
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#84a6de]/26 bg-[#0d172a]/75 text-[#b5c9ec] motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/56 motion-safe:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
-                    aria-label="Show next profile"
-                  >
-                    ↓
-                  </button>
-                </div>
-              </div>
-            </div>
-          </aside>
-
           <div className="min-w-0 min-[1280px]:max-w-7xl">
         <nav className="mb-8 text-xs text-[#9aa4af]" aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
@@ -1498,7 +1350,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               </button>
 
               {chapterMenuOpen ? (
-                <div className="mt-2 space-y-1 rounded-xl border border-[#87a9dc]/20 bg-[#101b31]/92 p-1.5 shadow-[0_12px_24px_rgba(3,8,20,0.36)]">
+                <div className="mt-2 rounded-xl border border-[#87a9dc]/20 bg-[#101b31]/92 p-1.5 shadow-[0_12px_24px_rgba(3,8,20,0.36)]">
+                  <div className="max-h-[220px] space-y-1 overflow-y-auto pr-0.5">
                   {availableSections.map((section) => {
                     const isActive = section.id === activeSectionId;
                     return (
@@ -1520,6 +1373,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       </button>
                     );
                   })}
+                  </div>
                 </div>
               ) : null}
             </section>

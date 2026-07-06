@@ -333,6 +333,11 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
           ],
           linkedin: "https://www.linkedin.com/in/babak-ravanbakhsh-16535a327/",
           website: "https://madbak.art",
+          socialLinks: [
+            { label: "Instagram", href: "https://www.instagram.com/madbak98/" },
+            { label: "X", href: "https://x.com/Lilosama98" },
+            { label: "GitHub", href: "https://github.com/madbak98" },
+          ],
         },
         MALE_MEMBER_PLACEHOLDER,
       ),

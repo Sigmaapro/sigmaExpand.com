@@ -236,11 +236,10 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [availableSections, setAvailableSections] = useState<ProfileSectionItem[]>([]);
   const [activeSectionId, setActiveSectionId] = useState<string>("profile-overview");
   const [profileProgressPercent, setProfileProgressPercent] = useState(0);
-  const [chapterMenuOpen, setChapterMenuOpen] = useState(false);
-  const [chapterCardY, setChapterCardY] = useState(0);
+  const [leftNavigatorY, setLeftNavigatorY] = useState(0);
   const heroRef = useRef<HTMLElement | null>(null);
   const profileWrapperRef = useRef<HTMLDivElement | null>(null);
-  const chapterCardRef = useRef<HTMLElement | null>(null);
+  const leftNavigatorRef = useRef<HTMLElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
   const isMalePlaceholderPortrait = isMalePlaceholderImage(portrait);
@@ -272,6 +271,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const scrollToSectionById = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (!section) return;
+    setActiveSectionId(sectionId);
     const headerOffset = 96;
     const top = section.getBoundingClientRect().top + window.scrollY - headerOffset;
     window.scrollTo({
@@ -496,92 +496,69 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   }, [profileSlug]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth < 1280) return;
-
     const wrapper = profileWrapperRef.current;
-    const chapterCard = chapterCardRef.current;
-    if (!wrapper || !chapterCard) return;
-
-    const activeId = activeSectionId || availableSections[0]?.id;
-    const activeSection = activeId ? document.getElementById(activeId) : null;
-    const firstSection = availableSections[0] ? document.getElementById(availableSections[0].id) : null;
-    if (!activeSection || !firstSection) return;
-
-    const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-    const wrapperRect = wrapper.getBoundingClientRect();
-    const activeRect = activeSection.getBoundingClientRect();
-    const firstRect = firstSection.getBoundingClientRect();
-    const activeTop = activeRect.top - wrapperRect.top;
-    const firstTop = firstRect.top - wrapperRect.top;
-    const cardHeight = chapterCard.offsetHeight || 0;
-    const safeBottom = 120;
-    const minY = Math.max(0, firstTop - 16);
-    const maxY = Math.max(minY, wrapperRect.height - cardHeight - safeBottom);
-    const calculatedY = activeTop - 16;
-    const nextY = clamp(calculatedY, minY, maxY);
-    setChapterCardY((current) => (Math.abs(current - nextY) < 0.5 ? current : nextY));
-  }, [activeSectionId, availableSections, profileSlug]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+    const navigator = leftNavigatorRef.current;
+    if (!wrapper || !navigator || availableSections.length === 0) return;
 
     let rafId = 0;
-    const onResize = () => {
-      if (window.innerWidth < 1280) return;
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(() => {
-        rafId = 0;
-        const wrapper = profileWrapperRef.current;
-        const chapterCard = chapterCardRef.current;
-        if (!wrapper || !chapterCard) return;
-        const activeId = activeSectionId || availableSections[0]?.id;
-        const activeSection = activeId ? document.getElementById(activeId) : null;
-        const firstSection = availableSections[0] ? document.getElementById(availableSections[0].id) : null;
-        if (!activeSection || !firstSection) return;
+    const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+    const isCapabilitiesSection = (id: string) => id === "skills" || id === "services";
+    const isFootprintRowSection = (id: string) => id === "languages";
 
-        const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-        const wrapperRect = wrapper.getBoundingClientRect();
-        const activeRect = activeSection.getBoundingClientRect();
-        const firstRect = firstSection.getBoundingClientRect();
-        const activeTop = activeRect.top - wrapperRect.top;
-        const firstTop = firstRect.top - wrapperRect.top;
-        const cardHeight = chapterCard.offsetHeight || 0;
-        const safeBottom = 120;
-        const minY = Math.max(0, firstTop - 16);
-        const maxY = Math.max(minY, wrapperRect.height - cardHeight - safeBottom);
-        const calculatedY = activeTop - 16;
-        const nextY = clamp(calculatedY, minY, maxY);
-        setChapterCardY((current) => (Math.abs(current - nextY) < 0.5 ? current : nextY));
-      });
+    const resolveTarget = () => {
+      const preferredId = document.getElementById(activeSectionId) ? activeSectionId : availableSections[0]?.id;
+      if (!preferredId) return null;
+      const sectionElement = document.getElementById(preferredId);
+      if (!sectionElement) return null;
+      if (isCapabilitiesSection(preferredId)) {
+        return (sectionElement.closest('[data-chapter-row="capabilities"]') as HTMLElement | null) ?? sectionElement;
+      }
+      if (isFootprintRowSection(preferredId)) {
+        return (sectionElement.closest('[data-chapter-row="footprint-languages"]') as HTMLElement | null) ?? sectionElement;
+      }
+      return sectionElement;
     };
 
-    window.addEventListener("resize", onResize);
+    const updateNavigatorY = () => {
+      const target = resolveTarget();
+      if (!target) return;
+      const wrapperTop = wrapper.getBoundingClientRect().top + window.scrollY;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY;
+      const rawY = targetTop - wrapperTop;
+      const wrapperHeight = Math.max(wrapper.scrollHeight, wrapper.getBoundingClientRect().height);
+      const navigatorHeight = navigator.offsetHeight || 0;
+      const minY = 0;
+      const maxY = Math.max(minY, wrapperHeight - navigatorHeight);
+      const nextY = clamp(rawY, minY, maxY);
+      setLeftNavigatorY((previous) => (Math.abs(previous - nextY) < 1 ? previous : nextY));
+      rafId = 0;
+    };
+
+    const requestUpdate = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(updateNavigatorY);
+    };
+
+    requestUpdate();
+    window.addEventListener("resize", requestUpdate);
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => {
+            requestUpdate();
+          })
+        : null;
+    if (resizeObserver) {
+      resizeObserver.observe(wrapper);
+      resizeObserver.observe(navigator);
+    }
+
     return () => {
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", requestUpdate);
+      if (resizeObserver) resizeObserver.disconnect();
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [activeSectionId, availableSections]);
-
-  useEffect(() => {
-    if (!chapterMenuOpen) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setChapterMenuOpen(false);
-      }
-    };
-    const onPointerDown = (event: PointerEvent) => {
-      const root = chapterCardRef.current;
-      if (!root) return;
-      if (root.contains(event.target as Node)) return;
-      setChapterMenuOpen(false);
-    };
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [chapterMenuOpen]);
+  }, [activeSectionId, availableSections, profileSlug]);
 
   useEffect(() => {
     const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-glass-depth]"));
@@ -730,9 +707,98 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
         <div
           ref={profileWrapperRef}
-          className="min-[1280px]:grid min-[1280px]:grid-cols-[minmax(0,1fr)_132px] min-[1280px]:gap-5 min-[1440px]:grid-cols-[minmax(0,1fr)_140px] min-[1600px]:grid-cols-[minmax(0,1fr)_152px] min-[1920px]:grid-cols-[minmax(0,1fr)_160px]"
+          className="relative min-[1280px]:grid min-[1280px]:grid-cols-[172px_minmax(0,1fr)] min-[1280px]:gap-6 min-[1440px]:grid-cols-[194px_minmax(0,1120px)_minmax(86px,1fr)] min-[1440px]:gap-8 min-[1600px]:grid-cols-[220px_minmax(0,1140px)_minmax(118px,1fr)] min-[1920px]:grid-cols-[232px_minmax(0,1160px)_minmax(148px,1fr)]"
         >
-          <div className="min-w-0 min-[1280px]:max-w-7xl">
+          <aside className="relative hidden min-[1280px]:block" aria-label="Profile section index">
+            <nav
+              ref={leftNavigatorRef}
+              className="absolute left-1/2 top-0 w-[156px] rounded-[18px] border border-[#7daee9]/26 bg-[linear-gradient(170deg,rgba(8,14,28,0.72),rgba(10,18,35,0.65))] px-3 py-3.5 shadow-[0_14px_28px_rgba(3,8,20,0.34),0_0_18px_rgba(66,116,210,0.12),inset_0_1px_0_rgba(205,225,255,0.09)] backdrop-blur-[10px] min-[1440px]:w-[178px] min-[1440px]:px-3.5 min-[1440px]:py-4 min-[1600px]:w-[198px] min-[1920px]:w-[208px]"
+              style={{
+                transform: `translate3d(-50%, ${leftNavigatorY.toFixed(2)}px, 0)`,
+                transition: prefersReducedMotion ? undefined : "transform 360ms cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+              aria-label="Profile section navigator"
+            >
+              <div aria-live="polite" aria-label={`Current section ${activeSection?.label ?? "Overview"}`}>
+                <p className="font-mono text-[22px] leading-[0.9] text-[#9cdbff] min-[1440px]:text-[24px] min-[1600px]:text-[26px]">
+                  {activeSection?.number ?? "01"}
+                </p>
+                <p className="mt-1.5 text-[11px] uppercase leading-[1.25] tracking-[0.08em] text-[#d9e8ff] min-[1440px]:text-[12px]">
+                  {(activeSection?.label ?? "Overview").toUpperCase()}
+                </p>
+              </div>
+
+              <div className="mt-3.5 min-[1440px]:mt-4.5">
+                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.1em] text-[#8ea4c8] min-[1440px]:text-[11px]">
+                  <span>Progress</span>
+                  <span className="font-mono text-[#d7e8ff]">{profileProgressPercent}%</span>
+                </div>
+                <div className="mt-2 h-[2.5px] rounded-full bg-[#6f8abc]/35">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#7DD3FC] via-[#60A5FA] to-[#3B82F6]"
+                    style={{ width: `${profileProgressPercent}%` }}
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (nextSection) {
+                    scrollToSectionById(nextSection.id);
+                  } else {
+                    scrollToProfileTop();
+                  }
+                }}
+                className="mt-3.5 block w-full rounded-lg border border-[#87abdf]/24 bg-[#101a31]/72 px-2.5 py-2.5 text-left motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/56 motion-safe:hover:bg-[#172540]/78 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] min-[1440px]:mt-4.5 min-[1440px]:px-3"
+              >
+                <p className="text-[10px] uppercase tracking-[0.1em] text-[#91a7cb] min-[1440px]:text-[11px]">
+                  {nextSection ? "Next" : "Top"}
+                </p>
+                <p className="mt-1 text-[11px] leading-[1.28] text-[#e0edff] min-[1440px]:text-[12px]">
+                  {nextSection ? nextSection.label.toUpperCase() : "BACK TO TOP"}
+                </p>
+              </button>
+
+              <div className="mt-3 max-h-[332px] overflow-y-auto rounded-lg border border-[#87a9dc]/20 bg-[#101b31]/86 p-2 min-[1440px]:mt-3.5 min-[1440px]:max-h-[378px]">
+                <div className="space-y-2">
+                  {availableSections.map((section) => {
+                    const isActive = section.id === activeSectionId;
+                    const isLongLabel = section.id === "achievements" || section.id === "personal-note";
+                    return (
+                      <button
+                        key={section.id}
+                        type="button"
+                        aria-current={isActive ? "true" : undefined}
+                        onClick={() => {
+                          scrollToSectionById(section.id);
+                        }}
+                        className={`block w-full rounded-md px-2 py-2 text-left text-[11px] uppercase tracking-[0.045em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] min-[1440px]:text-[12px] ${
+                          isActive
+                            ? "border border-[#7eb7ff]/45 bg-[#2a4f89]/54 text-[#e6f2ff] shadow-[0_0_0_1px_rgba(125,211,252,0.12)_inset]"
+                            : "text-[#8fa5c5] motion-safe:transition-colors motion-safe:hover:bg-[#223a63]/48 motion-safe:hover:text-[#dcecff]"
+                        }`}
+                      >
+                        <span className="grid grid-cols-[22px_minmax(0,1fr)] items-start gap-1.5 min-[1440px]:grid-cols-[24px_minmax(0,1fr)]">
+                          <span className={`font-mono text-[11px] leading-[1.25] min-[1440px]:text-[12px] ${isActive ? "text-[#96deff]" : "text-[#8da7cf]"}`}>{section.number}</span>
+                          <span
+                            className={`min-w-0 leading-[1.24] break-words ${
+                              isLongLabel ? "text-[10px] min-[1440px]:text-[11px]" : "min-[1440px]:whitespace-nowrap"
+                            } ${isActive ? "text-[#e6f2ff]" : "text-[#afc3df]"}`}
+                          >
+                            {section.label}
+                          </span>
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </nav>
+          </aside>
+
+          <div className="min-w-0 min-[1280px]:col-start-2 min-[1280px]:mx-auto min-[1280px]:w-full min-[1280px]:max-w-[1120px] min-[1600px]:max-w-[1140px] min-[1920px]:max-w-[1160px]">
         <nav className="mb-8 text-xs text-[#9aa4af]" aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-2">
           <li>
@@ -1009,7 +1075,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div data-chapter-row="capabilities" className="grid gap-6 lg:grid-cols-2">
             <SectionFrame sectionId="skills" number="02" title="SKILLS" subtitle="Core Capabilities">
               {member.skills?.length ? (
                 <div className="grid gap-2.5 sm:grid-cols-2">
@@ -1111,7 +1177,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </SectionFrame>
 
           <SectionFrame sectionId="footprint" number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
-            <div className="grid gap-3 md:grid-cols-3">
+            <div data-chapter-row="footprint-languages" className="grid gap-3 md:grid-cols-3">
               <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Location</p>
                 {locationLabel ? (
@@ -1283,101 +1349,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           </div>
           </div>
 
-          <aside
-            className="relative hidden min-[1280px]:block"
-            aria-label="Profile section progress"
-          >
-            <section
-              ref={chapterCardRef}
-              className="absolute right-0 top-0 ml-auto w-[132px] rounded-[20px] border border-[#8fbaff]/22 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-3.5 shadow-[0_14px_30px_rgba(3,8,20,0.36),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(205,225,255,0.1)] backdrop-blur-[12px] min-[1440px]:w-[140px] min-[1600px]:w-[152px] min-[1728px]:w-[160px] min-[1920px]:w-[168px]"
-              style={{
-                transform: `translate3d(0, ${chapterCardY.toFixed(2)}px, 0)`,
-                transition: prefersReducedMotion ? undefined : "transform 400ms cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-              aria-label="Profile section navigator"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div aria-live="polite" aria-label={`Current section ${activeSection?.label ?? "Overview"}`}>
-                  <p className="font-mono text-[20px] leading-[0.9] text-[#9cdbff] min-[1600px]:text-[22px]">
-                    {activeSection?.number ?? "01"}
-                  </p>
-                  <p className="mt-2 text-[11px] uppercase leading-[1.2] tracking-[0.1em] text-[#d9e8ff] min-[1600px]:text-[12px]">
-                    {(activeSection?.label ?? "Overview").toUpperCase()}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setChapterMenuOpen((open) => !open)}
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#88aee4]/24 bg-[#111d34]/75 text-[#c8daf9] motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/58 motion-safe:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
-                  aria-expanded={chapterMenuOpen}
-                  aria-label="Open chapter menu"
-                >
-                  ☰
-                </button>
-              </div>
-
-              <div className="mt-3">
-                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.11em] text-[#8ea4c8] min-[1600px]:text-[11px]">
-                  <span>Progress</span>
-                  <span className="font-mono text-[#d7e8ff]">{profileProgressPercent}%</span>
-                </div>
-                <div className="mt-1.5 h-[2px] rounded-full bg-[#6f8abc]/35">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#7DD3FC] via-[#60A5FA] to-[#3B82F6] shadow-[0_0_8px_rgba(96,165,250,0.45)]"
-                    style={{ width: `${profileProgressPercent}%` }}
-                    aria-hidden="true"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  if (nextSection) {
-                    scrollToSectionById(nextSection.id);
-                  } else {
-                    scrollToProfileTop();
-                  }
-                }}
-                className="mt-3 block w-full rounded-xl border border-[#87abdf]/24 bg-[#101a31]/72 px-2.5 py-2 text-left motion-safe:transition-colors motion-safe:hover:border-[#7DD3FC]/56 motion-safe:hover:bg-[#172540]/78 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC]"
-              >
-                <p className="text-[10px] uppercase tracking-[0.11em] text-[#91a7cb]">
-                  {nextSection ? "Next" : "Back to Top"}
-                </p>
-                <p className="mt-1 text-[11px] leading-[1.25] text-[#e0edff] min-[1600px]:text-[12px]">
-                  {nextSection ? nextSection.label.toUpperCase() : "HERO"}
-                </p>
-              </button>
-
-              {chapterMenuOpen ? (
-                <div className="mt-2 rounded-xl border border-[#87a9dc]/20 bg-[#101b31]/92 p-1.5 shadow-[0_12px_24px_rgba(3,8,20,0.36)]">
-                  <div className="max-h-[220px] space-y-1 overflow-y-auto pr-0.5">
-                  {availableSections.map((section) => {
-                    const isActive = section.id === activeSectionId;
-                    return (
-                      <button
-                        key={section.id}
-                        type="button"
-                        aria-current={isActive ? "true" : undefined}
-                        onClick={() => {
-                          scrollToSectionById(section.id);
-                          setChapterMenuOpen(false);
-                        }}
-                        className={`block w-full rounded-lg px-2 py-1.5 text-left text-[10px] uppercase tracking-[0.1em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] ${
-                          isActive
-                            ? "bg-[#264a81]/48 text-[#dcecff]"
-                            : "text-[#9db1d0] motion-safe:transition-colors motion-safe:hover:bg-[#223a63]/48 motion-safe:hover:text-[#dcecff]"
-                        }`}
-                      >
-                        <span className="font-mono">{section.number}</span> {section.label}
-                      </button>
-                    );
-                  })}
-                  </div>
-                </div>
-              ) : null}
-            </section>
-          </aside>
+          <div aria-hidden="true" className="hidden min-[1440px]:block" />
         </div>
       </div>
     </div>

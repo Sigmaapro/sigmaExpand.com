@@ -948,18 +948,18 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     const Icon = SOCIAL_ICON_MAP[item.iconKey];
                     return (
                     <li key={`${item.label}-${item.href}`}>
-                      <div className="group relative">
+                      <div className="group/social relative">
                         <a
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Open ${member.name} on ${item.platformName}`}
-                          title={item.platformName}
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-[#d0dcff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 motion-safe:hover:shadow-[0_0_18px_rgba(92,136,255,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111f] ${microSurface}`}
                         >
                           <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                          <span className="sr-only">{item.platformName}</span>
                         </a>
-                        <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 rounded-md border border-white/[0.14] bg-[rgba(9,13,22,0.92)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[#b8c6df] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+                        <span className="pointer-events-none absolute -top-7 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/[0.14] bg-[rgba(9,13,22,0.92)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[#b8c6df] opacity-0 transition-opacity group-hover/social:opacity-100 group-focus-within/social:opacity-100">
                           {item.platformName}
                         </span>
                       </div>
@@ -1255,18 +1255,18 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   const Icon = SOCIAL_ICON_MAP[item.iconKey];
                   return (
                   <li key={`${item.label}-${item.href}`}>
-                    <div className="group relative">
+                    <div className="group/social relative">
                       <a
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Open ${member.name} on ${item.platformName}`}
-                        title={item.platformName}
                         className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/70 motion-safe:hover:bg-[#60A5FA]/14 motion-safe:hover:shadow-[0_0_20px_rgba(125,211,252,0.22)] motion-safe:hover:text-[#e5f3ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${microSurface}`}
                       >
                         <Icon className="h-4 w-4" aria-hidden="true" />
+                        <span className="sr-only">{item.platformName}</span>
                       </a>
-                      <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 rounded-md border border-white/[0.14] bg-[rgba(9,13,22,0.92)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[#b8c6df] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+                      <span className="pointer-events-none absolute -top-7 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/[0.14] bg-[rgba(9,13,22,0.92)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[#b8c6df] opacity-0 transition-opacity group-hover/social:opacity-100 group-focus-within/social:opacity-100">
                         {item.platformName}
                       </span>
                     </div>

@@ -342,8 +342,107 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
         {
           id: "shahan-behkam-rad",
           name: "Shahan Behkam Rad",
-          role: "SEO, GEO & Digital Marketing Consultant",
+          role: "SEO Specialist & Digital Marketing Strategist",
           group: "contributors",
+          imageSrc: "/images/team/shahan-behkamrad.jpg",
+          headline:
+            "Entrepreneur & Founder of Shahan | SEO Specialist & Digital Marketing Strategist | Business Growth Consultant",
+          shortBio:
+            "Shahan Behkamrad is an entrepreneur, SEO specialist, and digital growth consultant. He builds the kind of systems that market leaders quietly rely on. Over more than a decade in fiercely competitive markets, he has designed SEO and AI-powered growth systems for brands on an international scale. His systems never chase traffic. They engineer demand.",
+          fullBio:
+            "Shahan Behkamrad is an entrepreneur, SEO specialist, and digital marketing strategist, the founder of Shahan, and an officially certified digital marketing instructor working with brands across international markets.\n\nFor more than ten years, he has operated inside high-pressure, high-competition industries, designing growth systems built on advanced SEO, data-driven content architecture, performance advertising, and artificial intelligence. His systems are not built only to collect visits. They shape how a market perceives a brand, capture the moment a customer starts searching, and turn that intent into revenue that compounds over time.\n\nShahan does not treat digital marketing as a task to execute. In his view, it is business infrastructure: the layer where positioning, psychology, data, and strategy meet. This philosophy defines how he consults and teaches. Working closely with founders, executives, and teams, he helps businesses move away from isolated campaigns and toward intelligent marketing systems that keep working long after any single campaign ends.\n\nHis reputation is built on measurable evidence: organic traffic growth, first-page rankings across competitive keywords, visibility inside AI-generated search results, and natural authority earned without shortcuts or purchased links.\n\nSince 2017, he has collaborated directly with more than 65 international companies on cross-border SEO and digital marketing projects across the Middle East, Eastern Europe, Central Asia, and the United Kingdom. As a certified instructor, he has trained hundreds of professionals and entrepreneurs. He is also an official member of the Istanbul Chamber of Commerce.",
+          skills: [
+            "Search Authority Systems",
+            "Advanced SEO",
+            "Technical SEO",
+            "AI Search Visibility",
+            "Strategic Marketing",
+            "Data-Driven Content Architecture",
+            "Performance Advertising",
+            "Email Marketing",
+            "Business Growth Consulting",
+            "Digital Marketing Training",
+          ],
+          services: [
+            "SEO Strategy & Search Growth Systems",
+            "Technical SEO Audits & Optimization",
+            "AI Search Visibility Strategy",
+            "Data-Driven Content Architecture",
+            "Digital Marketing Strategy",
+            "Performance Advertising Systems",
+            "Email Marketing Automation",
+            "Brand Positioning & Growth Consulting",
+            "International Market Expansion Strategy",
+            "Digital Marketing Training & Mentorship",
+          ],
+          careerHistory: [
+            {
+              dateRange: "2017 to Present",
+              role: "Entrepreneur & Founder",
+              organization: "Shahan",
+              description:
+                "Built a digital growth practice from the ground up and scaled it into a multi-country operation. Collaborated with more than 65 international companies on SEO and digital marketing projects across Iran, Turkiye, Northern Cyprus, Russia, Uzbekistan, Tajikistan, and London.",
+            },
+            {
+              dateRange: "2023 to Present",
+              role: "SEO & Digital Strategy Lead",
+              organization: "International Financial Markets",
+              description:
+                "Leads data-driven search strategies for a global financial brand, covering technical SEO, content optimization, keyword intelligence, performance analytics, and email marketing systems.",
+            },
+            {
+              dateRange: "2022 to Present",
+              role: "Founder",
+              organization: "International Education Consulting",
+              description:
+                "Established a consulting practice representing more than 72 private universities in Turkiye, guiding international students through admission and academic pathway consulting.",
+            },
+            {
+              dateRange: "2022 to Present",
+              role: "Officially Certified Trainer & Instructor",
+              description:
+                "Trains professionals, entrepreneurs, and business teams in SEO, SEM, branding, advertising, and business consulting.",
+            },
+            {
+              dateRange: "2022 to 2023",
+              role: "Marketing & Advertising Lead",
+              organization: "International Real Estate",
+              description:
+                "Designed and executed large-scale advertising campaigns for an international property sales project in Cyprus.",
+            },
+            {
+              dateRange: "2023",
+              role: "Digital Marketing Consultant",
+              organization: "Industrial Exports",
+              description:
+                "Built website and digital marketing infrastructure for a petrochemical export project, supported by market research for Middle Eastern export markets.",
+            },
+          ],
+          achievements: [
+            { title: "Took organic traffic from near invisibility to tens of thousands of daily users within a single year." },
+            { title: "Achieved first-position Google rankings across thousands of competitive commercial keywords." },
+            { title: "Secured consistent visibility inside Google's AI-generated search results." },
+            { title: "Earned hundreds of natural referring domains without link buying or shortcuts." },
+            { title: "Grew his company from a startup into a multi-country operation in under two years." },
+            { title: "Collaborated with more than 65 international companies on SEO and digital marketing projects." },
+            { title: "Trained hundreds of professionals and entrepreneurs as a certified instructor." },
+            { title: "Became an official member of the Istanbul Chamber of Commerce." },
+            { title: "Built SEO and digital growth systems across international markets." },
+            { title: "Developed performance-focused content, advertising, and email marketing systems for competitive industries." },
+          ],
+          linkedin: "https://www.linkedin.com/in/shahanbehkamrad",
+          website: "https://shahandigital.com",
+          socialLinks: [
+            { label: "Links Hub", href: "https://linktr.ee/shahanbehkamrad" },
+            { label: "Instagram", href: "https://www.instagram.com/shahan_behkamrad" },
+            { label: "Team Page", href: "https://shahandigital.com/teams/shahan-behkamrad/" },
+            { label: "Crunchbase", href: "https://www.crunchbase.com/person/shahan-behkamrad" },
+            { label: "YouTube", href: "https://www.youtube.com/@ShahanBehkamrad" },
+            { label: "INTCH", href: "https://intch.org/p/shahanbehkamrad" },
+          ],
+          seoTitle: "Shahan Behkamrad | Entrepreneur, SEO Specialist & Digital Growth Consultant",
+          metaDescription:
+            "Shahan Behkamrad is an entrepreneur, SEO specialist, and digital growth consultant with 10+ years of experience and 65+ international projects. He builds SEO and AI-powered growth systems that engineer demand and compound revenue.",
         },
         MALE_MEMBER_PLACEHOLDER,
       ),

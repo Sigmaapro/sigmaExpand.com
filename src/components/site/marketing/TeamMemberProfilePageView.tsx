@@ -238,7 +238,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [featuredDeckIndex, setFeaturedDeckIndex] = useState(0);
   const [profileProgressPercent, setProfileProgressPercent] = useState(0);
   const [chapterMenuOpen, setChapterMenuOpen] = useState(false);
-  const [chapterCardY, setChapterCardY] = useState(0);
   const heroRef = useRef<HTMLElement | null>(null);
   const profileWrapperRef = useRef<HTMLDivElement | null>(null);
   const chapterCardRef = useRef<HTMLElement | null>(null);
@@ -536,67 +535,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       if (rafId) window.cancelAnimationFrame(rafId);
     };
   }, [profileSlug]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.innerWidth < 1280) return;
-
-    const wrapper = profileWrapperRef.current;
-    const chapterCard = chapterCardRef.current;
-    if (!wrapper || !chapterCard) return;
-
-    let rafId = 0;
-    const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-
-    const measure = () => {
-      const activeId = activeSectionId || availableSections[0]?.id;
-      const activeSection = activeId ? document.getElementById(activeId) : null;
-      const firstSection = availableSections[0] ? document.getElementById(availableSections[0].id) : null;
-      if (!activeSection || !firstSection) return;
-
-      const wrapperRect = wrapper.getBoundingClientRect();
-      const activeRect = activeSection.getBoundingClientRect();
-      const firstRect = firstSection.getBoundingClientRect();
-      const activeTop = activeRect.top - wrapperRect.top;
-      const firstTop = firstRect.top - wrapperRect.top;
-      const cardHeight = chapterCard.offsetHeight || 0;
-      const safeBottom = 120;
-      const minY = Math.max(0, firstTop - 18);
-      const maxY = Math.max(minY, wrapperRect.height - cardHeight - safeBottom);
-      const calculatedY = activeTop - 18;
-      const nextY = clamp(calculatedY, minY, maxY);
-      setChapterCardY((current) => (Math.abs(current - nextY) < 0.5 ? current : nextY));
-    };
-
-    const requestMeasure = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(() => {
-        rafId = 0;
-        measure();
-      });
-    };
-
-    requestMeasure();
-
-    const onResize = () => requestMeasure();
-    window.addEventListener("resize", onResize);
-    const resizeObserver =
-      typeof ResizeObserver !== "undefined"
-        ? new ResizeObserver(() => {
-            requestMeasure();
-          })
-        : null;
-    if (resizeObserver) {
-      resizeObserver.observe(wrapper);
-      resizeObserver.observe(chapterCard);
-    }
-
-    return () => {
-      window.removeEventListener("resize", onResize);
-      if (resizeObserver) resizeObserver.disconnect();
-      if (rafId) window.cancelAnimationFrame(rafId);
-    };
-  }, [activeSectionId, availableSections, profileSlug]);
 
   useEffect(() => {
     if (!chapterMenuOpen) return;
@@ -1431,15 +1369,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           >
             <section
               ref={chapterCardRef}
-              className="absolute right-0 top-0 ml-auto w-[132px] rounded-[20px] border border-[#8fbaff]/22 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-3.5 shadow-[0_14px_30px_rgba(3,8,20,0.36),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(205,225,255,0.1)] backdrop-blur-[12px] min-[1440px]:w-[140px] min-[1600px]:w-[152px] min-[1728px]:w-[160px] min-[1920px]:w-[168px]"
-              style={{
-                transform: `translate3d(0, ${chapterCardY.toFixed(2)}px, 0)`,
-                transition: prefersReducedMotion ? undefined : "transform 440ms cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-              aria-label="Active chapter"
+              className="sticky top-24 ml-auto w-[132px] rounded-[20px] border border-[#8fbaff]/22 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-3.5 shadow-[0_14px_30px_rgba(3,8,20,0.36),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(205,225,255,0.1)] backdrop-blur-[12px] min-[1440px]:w-[140px] min-[1600px]:w-[152px] min-[1728px]:w-[160px] min-[1920px]:w-[168px]"
+              aria-label="Profile section navigator"
             >
               <div className="flex items-start justify-between gap-2">
-                <div aria-live="polite">
+                <div aria-live="polite" aria-label={`Current section ${activeSection?.label ?? "Overview"}`}>
                   <p className="font-mono text-[20px] leading-[0.9] text-[#9cdbff] min-[1600px]:text-[22px]">
                     {activeSection?.number ?? "01"}
                   </p>
@@ -1499,6 +1433,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       <button
                         key={section.id}
                         type="button"
+                        aria-current={isActive ? "true" : undefined}
                         onClick={() => {
                           scrollToSectionById(section.id);
                           setChapterMenuOpen(false);

@@ -341,7 +341,7 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
       withPlaceholderImage(
         {
           id: "shahan-behkam-rad",
-          name: "Shahan Behkam Rad",
+          name: "Shahan BehkamRad",
           role: "SEO Specialist & Digital Marketing Strategist",
           group: "contributors",
           imageSrc: "/images/team/shahan-behkamrad.jpg",

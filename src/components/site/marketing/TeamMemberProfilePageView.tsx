@@ -238,6 +238,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const [featuredDeckIndex, setFeaturedDeckIndex] = useState(0);
   const [profileProgressPercent, setProfileProgressPercent] = useState(0);
   const [chapterMenuOpen, setChapterMenuOpen] = useState(false);
+  const [chapterCardY, setChapterCardY] = useState(0);
   const heroRef = useRef<HTMLElement | null>(null);
   const profileWrapperRef = useRef<HTMLDivElement | null>(null);
   const chapterCardRef = useRef<HTMLElement | null>(null);
@@ -535,6 +536,73 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       if (rafId) window.cancelAnimationFrame(rafId);
     };
   }, [profileSlug]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth < 1280) return;
+
+    const wrapper = profileWrapperRef.current;
+    const chapterCard = chapterCardRef.current;
+    if (!wrapper || !chapterCard) return;
+
+    const activeId = activeSectionId || availableSections[0]?.id;
+    const activeSection = activeId ? document.getElementById(activeId) : null;
+    const firstSection = availableSections[0] ? document.getElementById(availableSections[0].id) : null;
+    if (!activeSection || !firstSection) return;
+
+    const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const activeRect = activeSection.getBoundingClientRect();
+    const firstRect = firstSection.getBoundingClientRect();
+    const activeTop = activeRect.top - wrapperRect.top;
+    const firstTop = firstRect.top - wrapperRect.top;
+    const cardHeight = chapterCard.offsetHeight || 0;
+    const safeBottom = 120;
+    const minY = Math.max(0, firstTop - 16);
+    const maxY = Math.max(minY, wrapperRect.height - cardHeight - safeBottom);
+    const calculatedY = activeTop - 16;
+    const nextY = clamp(calculatedY, minY, maxY);
+    setChapterCardY((current) => (Math.abs(current - nextY) < 0.5 ? current : nextY));
+  }, [activeSectionId, availableSections, profileSlug]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let rafId = 0;
+    const onResize = () => {
+      if (window.innerWidth < 1280) return;
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0;
+        const wrapper = profileWrapperRef.current;
+        const chapterCard = chapterCardRef.current;
+        if (!wrapper || !chapterCard) return;
+        const activeId = activeSectionId || availableSections[0]?.id;
+        const activeSection = activeId ? document.getElementById(activeId) : null;
+        const firstSection = availableSections[0] ? document.getElementById(availableSections[0].id) : null;
+        if (!activeSection || !firstSection) return;
+
+        const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const activeRect = activeSection.getBoundingClientRect();
+        const firstRect = firstSection.getBoundingClientRect();
+        const activeTop = activeRect.top - wrapperRect.top;
+        const firstTop = firstRect.top - wrapperRect.top;
+        const cardHeight = chapterCard.offsetHeight || 0;
+        const safeBottom = 120;
+        const minY = Math.max(0, firstTop - 16);
+        const maxY = Math.max(minY, wrapperRect.height - cardHeight - safeBottom);
+        const calculatedY = activeTop - 16;
+        const nextY = clamp(calculatedY, minY, maxY);
+        setChapterCardY((current) => (Math.abs(current - nextY) < 0.5 ? current : nextY));
+      });
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, [activeSectionId, availableSections]);
 
   useEffect(() => {
     if (!chapterMenuOpen) return;
@@ -1369,7 +1437,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           >
             <section
               ref={chapterCardRef}
-              className="sticky top-24 ml-auto w-[132px] rounded-[20px] border border-[#8fbaff]/22 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-3.5 shadow-[0_14px_30px_rgba(3,8,20,0.36),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(205,225,255,0.1)] backdrop-blur-[12px] min-[1440px]:w-[140px] min-[1600px]:w-[152px] min-[1728px]:w-[160px] min-[1920px]:w-[168px]"
+              className="absolute right-0 top-0 ml-auto w-[132px] rounded-[20px] border border-[#8fbaff]/22 bg-[linear-gradient(165deg,rgba(7,12,24,0.66),rgba(10,18,34,0.6))] px-3 py-3.5 shadow-[0_14px_30px_rgba(3,8,20,0.36),0_0_18px_rgba(66,116,210,0.1),inset_0_1px_0_rgba(205,225,255,0.1)] backdrop-blur-[12px] min-[1440px]:w-[140px] min-[1600px]:w-[152px] min-[1728px]:w-[160px] min-[1920px]:w-[168px]"
+              style={{
+                transform: `translate3d(0, ${chapterCardY.toFixed(2)}px, 0)`,
+                transition: prefersReducedMotion ? undefined : "transform 400ms cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
               aria-label="Profile section navigator"
             >
               <div className="flex items-start justify-between gap-2">

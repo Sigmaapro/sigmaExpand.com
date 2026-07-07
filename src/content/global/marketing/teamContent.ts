@@ -211,40 +211,65 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
 
 function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
   return [
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        {
-          id: "ashkan-nobakht",
-          name: "Ashkan Nobakht",
-          role: roleLabel,
-          group: "innerCircle",
-          initials: "AN",
-          imageSrc: null,
-          headline: "Growth Marketing Strategist at Sigma",
-          shortBio:
-            "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
-          fullBio:
-            "Ashkan started as a curious Web3 researcher seven years ago and gradually moved into marketing management. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
-          skills: [
-            "Marketing Management",
-            "Strategic Foresight",
-            "Growth Marketing Strategy",
-            "Performance Marketing",
-          ],
-          careerHistory: [
-            { dateRange: "Current", role: "Business Development", organization: "LBank" },
-            { dateRange: "Current", role: "Business Development", organization: "Cryptic" },
-            { dateRange: "Former", role: "Head of Partnerships", organization: "walllet.com" },
-          ],
-          socialLinks: [
-            { label: "X", href: "https://x.com/0naxes?s=11" },
-            { label: "Instagram", href: "https://www.instagram.com/nobakhthastam?utm_source=qr" },
-          ],
-          metaDescription: "Profile of Ashkan Nobakht, Growth Marketing Strategist and Inner Circle Partner at Sigma.",
-        },
-        MALE_MEMBER_PLACEHOLDER,
+    {
+      ...withMemberProfileDefaults(
+        withPlaceholderImage(
+          {
+            id: "ashkan-nobakht",
+            name: "Ashkan Nobakht",
+            role: "Growth Marketing Strategist",
+            group: "innerCircle",
+            initials: "AN",
+            imageSrc: "/images/team/ashkan-nobakht.jpg",
+            headline:
+              "Growth Marketing Strategist and Crypto Business Development operator combining Web2 marketing systems, global growth patterns, and Web3 adoption strategy.",
+            shortBio:
+              "Ashkan Nobakht, known professionally as NAXES, started as a curious Web3 researcher seven years ago and gradually moved into marketing management and crypto business development. He combines Web2 marketing systems, growth patterns, and global strategy with the Web3 business landscape to help accelerate adoption.",
+            fullBio:
+              "Ashkan Nobakht, known professionally as NAXES, began his career by teaching mathematics, physics, and English after graduating from high school. He later worked as an accountant in a traditional institution, but quickly realized that the role did not align with his ambitions or long-term interests. This pushed him to explore new opportunities and eventually led him into cryptocurrency trading.\n\nAs he developed a deeper understanding of blockchain technology and the vision behind Web3, Ashkan became interested in contributing to the industry's growth rather than simply participating as a trader. With a long-standing passion for business development, expansion strategies, and marketing, he found a natural connection between growth strategy and the fast-moving crypto ecosystem.\n\nThat direction shaped his career and led him to work with local cryptocurrency exchanges, crypto media companies, and global organizations such as LBANK. Today, Ashkan focuses on bringing proven Web2 growth and marketing strategies into the Web3 industry, helping projects connect traditional marketing principles with the unique dynamics of decentralized markets.\n\nHis work sits at the intersection of marketing management, brand strategy, business development, negotiation, B2B growth, and performance marketing. At Sigma, he contributes to growth strategy, crypto business development, and market expansion initiatives.",
+            skills: [
+              "Marketing Management",
+              "Strategic Foresight",
+              "Growth Marketing Strategy",
+              "Performance Marketing",
+              "Brand Management",
+              "Storytelling",
+              "Branding Strategy",
+              "Business Development",
+              "Negotiation",
+              "B2B Marketing",
+            ],
+            services: [
+              "Crypto Growth Marketing Strategy",
+              "Web3 Business Development",
+              "B2B Marketing Strategy",
+              "Brand Growth Strategy",
+              "Performance Marketing Planning",
+              "Partnership Development",
+              "Market Expansion Strategy",
+              "Web3 Adoption Strategy",
+            ],
+            careerHistory: [
+              { dateRange: "Current", role: "Business Development", organization: "LBANK" },
+              { dateRange: "Current", role: "Business Development", organization: "Cryptic" },
+              { dateRange: "Former", role: "Head of Partnerships", organization: "walllet.com" },
+            ],
+            socialLinks: [
+              { label: "X", href: "https://x.com/0naxes?s=11" },
+              { label: "Instagram", href: "https://www.instagram.com/nobakhthastam?utm_source=qr" },
+              { label: "Telegram", href: "https://t.me/Nobakht_ashkan" },
+            ],
+            metaDescription: "Profile of Ashkan Nobakht, Growth Marketing Strategist and Inner Circle Partner at Sigma.",
+          },
+          MALE_MEMBER_PLACEHOLDER,
+        ),
       ),
-    ),
+      location: {
+        city: "Dubai",
+        country: "United Arab Emirates",
+        countryCode: "AE",
+      },
+    },
     withMemberProfileDefaults(
       withPlaceholderImage(
         { id: "mahdyar-mehmandoost", name: "Mahdyar Mehmandoost", role: roleLabel, group: "innerCircle", initials: "MM", imageSrc: null },

@@ -249,7 +249,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const femalePlaceholderPortraitFitClassName =
     "left-[2px] -top-[7px] object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none";
   const defaultPortraitFitClassName =
-    "object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none";
+    "object-cover object-[center_32%] p-0 scale-100 motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none";
   const portraitFitClassName = isMalePlaceholderPortrait
     ? malePlaceholderPortraitFitClassName
     : isFemalePlaceholderPortrait

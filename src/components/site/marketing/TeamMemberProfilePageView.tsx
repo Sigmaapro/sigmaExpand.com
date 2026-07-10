@@ -248,6 +248,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
   const isMalePlaceholderPortrait = isMalePlaceholderImage(portrait);
   const isFemalePlaceholderPortrait = isFemalePlaceholderImage(portrait);
+  const isPlaceholderPortrait = isMalePlaceholderPortrait || isFemalePlaceholderPortrait;
   const malePlaceholderPortraitFitClassName =
     "left-[2px] -top-[7px] object-contain object-center p-3 sm:p-2 scale-[1.14] translate-y-[4%] md:scale-[1.23] md:translate-y-[3%] motion-safe:transition-transform motion-safe:duration-300 motion-reduce:transform-none";
   const femalePlaceholderPortraitFitClassName =
@@ -259,6 +260,24 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     : isFemalePlaceholderPortrait
       ? femalePlaceholderPortraitFitClassName
       : defaultPortraitFitClassName;
+  const hasCustomPortraitObjectPosition =
+    !isPlaceholderPortrait && typeof member.portraitObjectPosition === "string" && member.portraitObjectPosition.trim().length > 0;
+  const customPortraitScale =
+    !isPlaceholderPortrait && typeof member.portraitScale === "number" && Number.isFinite(member.portraitScale)
+      ? Math.min(1.35, Math.max(0.9, member.portraitScale))
+      : null;
+  const portraitImageStyle =
+    hasCustomPortraitObjectPosition || customPortraitScale !== null
+      ? {
+          ...(hasCustomPortraitObjectPosition ? { objectPosition: member.portraitObjectPosition!.trim() } : {}),
+          ...(customPortraitScale !== null
+            ? {
+                transform: `scale(${customPortraitScale})`,
+                transformOrigin: "center",
+              }
+            : {}),
+        }
+      : undefined;
   const nameWords = member.name.trim().split(/\s+/).filter(Boolean);
   const locationLabel = member.location ? `${countryCodeToFlag(member.location.countryCode)} ${[member.location.city, member.location.country].filter(Boolean).join(", ")}` : null;
   const socialIconLinks = socialLinks.map((item) => {
@@ -1060,6 +1079,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                           priority
                           fetchPriority="high"
                           className={portraitFitClassName}
+                          style={portraitImageStyle}
                           sizes="(min-width: 1024px) 360px, 80vw"
                           onError={() => {
                             if (portraitRetryNonce === 0) {

@@ -19,6 +19,8 @@ export type TeamMember = {
   portrait?: string | null;
   coverImage?: string | null;
   imageSrc?: string | null;
+  portraitObjectPosition?: string;
+  portraitScale?: number;
   shortBio?: string;
   fullBio?: string;
   skills?: string[];
@@ -270,12 +272,138 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
         countryCode: "AE",
       },
     },
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        { id: "mahdyar-mehmandoost", name: "Mahdyar Mehmandoost", role: roleLabel, group: "innerCircle", initials: "MM", imageSrc: null },
-        MALE_MEMBER_PLACEHOLDER,
+    {
+      ...withMemberProfileDefaults(
+        withPlaceholderImage(
+          {
+            id: "mahdyar-mehmandoost",
+            name: "Mahdiyar Mehmandoust",
+            role: "Crypto & Web3 Product Manager",
+            group: "innerCircle",
+            initials: "MM",
+            imageSrc: "/images/team/mahdiyar-mehmandoust.jpg",
+            portraitObjectPosition: "center 72%",
+            portraitScale: 1.12,
+            headline:
+              "Crypto & Web3 product manager, NFT and market strategist, and community builder leading West Asia KOL community operations at LBank.",
+            shortBio:
+              "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder. With an MBA from the University of Tehran and an engineering background, he has built crypto departments, led product development, advised blockchain ventures, and helped grow Web3 communities across multiple regions. Today, he leads West Asia KOL community management at LBank exchange.",
+            fullBio:
+              "Mahdiyar Mehmandoust works at the intersection of business strategy, product development, and emerging technology.\n\nHis path began early with multiple awards in high school robotics competitions and a top rank in the national university entrance exam. Instead of following the conventional academic path immediately, he entered the job market to learn by building.\n\nHis crypto career started in 2019 as a fundamental researcher at Ethlance, where he studied crypto projects from the inside out. He later joined ALPHA Currency Exchange and founded its crypto department from scratch, growing it into a full team and leading OTC trading and sales operations.\n\nAt Max Digital, he worked as a Crypto Market Research Analyst, specializing in tokenomics, project growth, and user sentiment. In parallel, at Max Holding, he served as a Blockchain Strategy & Data Analyst, advising startups and venture-focused businesses on Web3 and blockchain strategy.\n\nMahdiyar combines an MBA in Business and Managerial Economics from the University of Tehran with a background in Biomedical Engineering. His work has included investment strategy, product leadership, quality assurance, NFT adoption, crypto payment gateways, and real estate tokenization.\n\nAs Product Delivery & QA Lead at Xiroco, he managed projects from planning to launch and oversaw both manual and automated quality assurance. At Khooneh Metri, he led a tokenized home-buying product from idea to public showcase at the Tehran International Exhibition in 2024.\n\nToday, Mahdiyar is the West Asia Community Manager Leader at LBank exchange, where he manages and supports KOL communities across multiple regions, executes public and private campaigns, onboards new KOLs, and builds operational tools for community verification and access management.\n\nHis profile combines product thinking, market strategy, community execution, and a builder mindset focused on turning complex Web3 ideas into working systems.",
+            skills: [
+              "Crypto & Web3 Product Management",
+              "Community Marketing",
+              "Community Relations Management",
+              "Customer Relationship Management",
+              "NFT Strategy",
+              "Market Strategy",
+              "Fundamental Analysis",
+              "Tokenomics",
+              "KOL Management",
+              "Campaign Management",
+              "Product Delivery",
+              "Quality Assurance",
+              "Blockchain Strategy",
+              "Real Estate Tokenization",
+              "Web3 Startup Advisory",
+            ],
+            services: [
+              "Web3 Product Strategy",
+              "Crypto Community Management",
+              "KOL Community Operations",
+              "NFT Market Strategy",
+              "Tokenomics Research",
+              "Blockchain Startup Advisory",
+              "Product Delivery & QA",
+              "Real Estate Tokenization Strategy",
+              "Campaign Operations",
+              "CRM and Partner Management",
+            ],
+            careerHistory: [
+              {
+                dateRange: "November 2024 - Present",
+                role: "West Asia Community Manager Leader",
+                organization: "LBank",
+                description:
+                  "Manages and supports diverse KOL communities across multiple regions; executes public and private campaigns to drive engagement and trading volume; onboards, interviews, and maintains relationships with new and existing KOLs; coordinates upfront payment requests for BD and KOL partners; developed a Telegram bot for user ID verification, KOL community membership checks, and minimum balance validation.",
+              },
+              {
+                dateRange: "February 2024 - November 2024",
+                role: "Product Development Manager",
+                organization: "Khooneh Metri",
+                description:
+                  "Led product development from idea to launch for a real estate platform; helped launch a tokenized home-buying project with a market-leading construction company; showcased the platform at the Tehran International Exhibition 2024; managed tight deadlines and limited resources while aligning cross-functional teams.",
+              },
+              {
+                dateRange: "May 2022 - February 2024",
+                role: "Product Delivery & QA Lead",
+                organization: "Xiroco",
+                description:
+                  "Dubai. Oversaw quality assurance through manual and automated testing; managed projects from planning to launch; aligned development, design, and business teams; improved workflows across product delivery.",
+              },
+              {
+                dateRange: "November 2021 - August 2023",
+                role: "Crypto Market Research Analyst",
+                organization: "Max Digital",
+                description:
+                  "Conducted fundamental analysis on cryptocurrencies with focus on tokenomics, project growth, and user sentiment; evaluated crypto assets using blockchain research and market analysis.",
+              },
+              {
+                dateRange: "November 2021 - August 2023",
+                role: "Blockchain Strategy & Data Analyst",
+                organization: "Max Holding",
+                description:
+                  "Guided startups in using Web3 and blockchain technologies; supported venture-focused decision-making and strategic planning for blockchain initiatives.",
+              },
+              {
+                dateRange: "August 2020 - October 2021",
+                role: "OTC Trading & Sales Lead",
+                organization: "ALPHA Currency Exchange",
+                description:
+                  "Founded the exchange's crypto department from the ground up, grew it into a full team, and led OTC trading and sales operations.",
+              },
+              {
+                dateRange: "July 2019 - July 2020",
+                role: "Fundamental Researcher, Crypto Market",
+                organization: "Ethlance",
+              },
+              {
+                dateRange: "October 2018 - July 2020",
+                role: "Teaching Assistant",
+                organization: "IAU, Tehran Medical Branch",
+                description:
+                  "Conducted weekly Introduction to Programming classes, supported students during office hours, tracked progress, graded assignments, and collaborated with course professors.",
+              },
+            ],
+            achievements: [
+              { title: "Won multiple awards in robotics competitions during high school" },
+              { title: "Earned a top rank in the national university entrance exam" },
+              { title: "Founded and scaled the crypto department of ALPHA Currency Exchange" },
+              { title: "Raised investor funding for product ventures" },
+              { title: "Launched a tokenized real estate investment project with a market-leading construction company" },
+              { title: "Led a real estate platform from idea to showcase at Tehran International Exhibition 2024" },
+              { title: "Built a custom Telegram bot for user and KOL community verification at LBank" },
+              { title: "Managed KOL communities across multiple regions" },
+              { title: "Provided strategic guidance to blockchain startups and venture-focused businesses" },
+              { title: "Donated project source code to charities" },
+              { title: "Helped charitable organizations adopt NFTs and crypto payment gateways" },
+              { title: "Combined an MBA from the University of Tehran with a Biomedical Engineering background" },
+            ],
+            linkedin: "https://www.linkedin.com/in/mahdiyarmehmandoust",
+            socialLinks: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/mahdiyarmehmandoust" }],
+            seoTitle: "Mahdiyar Mehmandoust | Crypto & Web3 Product Manager & Community Builder",
+            metaDescription:
+              "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder with an MBA from the University of Tehran. From founding a crypto department at a currency exchange to launching a tokenized real estate project, he builds products and communities side by side — today leading West Asia KOL communities at LBank.",
+          },
+          MALE_MEMBER_PLACEHOLDER,
+        ),
       ),
-    ),
+      location: {
+        country: "Indonesia",
+        countryCode: "ID",
+      },
+      languages: ["English"],
+    },
     withMemberProfileDefaults(
       withPlaceholderImage(
         { id: "hamed-ghasemi", name: "Hamed Ghasemi", role: roleLabel, group: "innerCircle", initials: "HG", imageSrc: null },

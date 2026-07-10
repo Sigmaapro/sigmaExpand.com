@@ -225,6 +225,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const hasMarkets = (member.markets?.length ?? 0) > 0;
   const hasLanguages = (member.languages?.length ?? 0) > 0;
   const [hasPortraitError, setHasPortraitError] = useState(false);
+  const [portraitRetryNonce, setPortraitRetryNonce] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [heroIntroVisible, setHeroIntroVisible] = useState(false);
   const [nameRevealVisible, setNameRevealVisible] = useState(false);
@@ -241,6 +242,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const profileWrapperRef = useRef<HTMLDivElement | null>(null);
   const leftNavigatorRef = useRef<HTMLElement | null>(null);
   const hasPortrait = Boolean(portrait && !hasPortraitError);
+  const portraitSrc = portrait
+    ? `${portrait}${portraitRetryNonce > 0 ? `${portrait.includes("?") ? "&" : "?"}retry=${portraitRetryNonce}` : ""}`
+    : null;
   const portraitAlt = portrait && isPlaceholderImage(portrait) ? "" : member.name;
   const isMalePlaceholderPortrait = isMalePlaceholderImage(portrait);
   const isFemalePlaceholderPortrait = isFemalePlaceholderImage(portrait);
@@ -348,6 +352,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
       element.style.removeProperty("--ry");
     };
   }, []);
+
+  useEffect(() => {
+    setHasPortraitError(false);
+    setPortraitRetryNonce(0);
+  }, [profileSlug, portrait]);
 
   useEffect(() => {
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -1044,13 +1053,25 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     >
                       {hasPortrait ? (
                         <Image
-                          src={portrait!}
+                          key={portraitSrc ?? portrait ?? "portrait"}
+                          src={portraitSrc!}
                           alt={portraitAlt}
                           fill
+                          priority
+                          fetchPriority="high"
                           className={portraitFitClassName}
                           sizes="(min-width: 1024px) 360px, 80vw"
-                          onError={() => setHasPortraitError(true)}
-                          onLoad={() => setPortraitReady(true)}
+                          onError={() => {
+                            if (portraitRetryNonce === 0) {
+                              setPortraitRetryNonce(1);
+                              return;
+                            }
+                            setHasPortraitError(true);
+                          }}
+                          onLoad={() => {
+                            setHasPortraitError(false);
+                            setPortraitReady(true);
+                          }}
                         />
                       ) : (
                         <span className="flex h-full w-full items-center justify-center font-display text-6xl font-semibold uppercase tracking-[0.08em] text-[#c9d9ff]">

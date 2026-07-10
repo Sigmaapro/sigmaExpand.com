@@ -33,13 +33,6 @@ export function TermsPageView() {
               <p className={`mt-3 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px] ${localeBody(language)}`}>
                 {s.body}
               </p>
-              {s.items ? (
-                <ul className={`mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px] ${localeBody(language)}`}>
-                  {s.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              ) : null}
             </section>
           ))}
         </div>

@@ -75,9 +75,9 @@ function asTemplateSafeTitle(title: string): Metadata["title"] {
 export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   home: {
     path: "/",
-    title: "Sigma | Finance & Web3 Growth Partner",
+    title: "Sigma | Crypto, Forex & Web3 Growth Network (40+ Markets)",
     description:
-      "Sigma is a global financial growth infrastructure network — user acquisition, KOL marketing, IB programs, and liquidity for crypto exchanges, forex brokers, and Web3 platforms.",
+      "Sigma is a global growth network for crypto exchanges, forex brokers, Web3 protocols, KOLs, and IBs. Built by operators. Active across 40+ markets.",
     keywords: [
       "finance and web3 growth partner",
       "financial growth infrastructure",
@@ -378,23 +378,24 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   },
   riskDisclosure: {
     path: "/risk-disclosure",
-    title: "Risk & Transparency Disclosure | Sigma",
+    title: "Risk Disclosure",
     description:
-      "Crypto risk disclosure and transparency statement covering Sigma’s role, regulatory boundaries, and non-custodial, non-advisory positioning.",
+      "Sigma is a growth network — not a broker, exchange, or fund. Read what we do, what we don't, and what risks come with crypto, forex, and leveraged markets.",
     keywords: [
-      "crypto risk disclosure",
-      "financial risk disclosure",
-      "crypto regulation",
-      "KYC AML",
-      "MiCA compliance",
-      "regulatory crypto marketing",
+      "Sigma risk disclosure",
+      "crypto trading risk",
+      "forex trading risk",
+      "Sigma not financial advice",
+      "Web3 investment risk",
+      "leveraged trading risk",
+      "crypto loss disclaimer",
     ],
-    ogTitle: "Risk & Transparency Disclosure | Sigma",
+    ogTitle: "Risk Disclosure | Sigma Growth Network Transparency",
     ogDescription:
-      "What Sigma is and what Sigma is not — including non-broker, non-custodial, and non-advisory boundaries.",
-    twitterTitle: "Risk & Transparency Disclosure | Sigma",
+      "Sigma is a growth network — not a broker, exchange, or fund. Read what we do, what we don't, and what risks come with crypto, forex, and leveraged markets.",
+    twitterTitle: "Risk Disclosure | Sigma Growth Network Transparency",
     twitterDescription:
-      "What Sigma is and what Sigma is not — including non-broker, non-custodial, and non-advisory boundaries.",
+      "Sigma is a growth network — not a broker, exchange, or fund. Read what we do, what we don't, and what risks come with crypto, forex, and leveraged markets.",
   },
   contact: {
     path: "/contact",
@@ -431,16 +432,16 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   },
   privacy: {
     path: "/privacy",
-    title: "Privacy",
+    title: "Privacy Policy",
     description:
-      "Sigma privacy notice: how we handle personal data, communications, and regional considerations for Web3 marketing engagements.",
-    keywords: ["Sigma privacy", "data protection", "privacy notice"],
-    ogTitle: "Privacy Notice | Sigma",
+      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR, KVKK, and UAE PDPL compliant.",
+    keywords: ["Sigma privacy policy", "Sigma data handling", "Sigma GDPR"],
+    ogTitle: "Privacy Policy | Sigma Growth Network",
     ogDescription:
-      "How Sigma handles personal data and communications in connection with Web3 marketing services.",
-    twitterTitle: "Privacy Notice | Sigma",
+      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR, KVKK, and UAE PDPL compliant.",
+    twitterTitle: "Privacy Policy | Sigma Growth Network",
     twitterDescription:
-      "Privacy practices for Sigma marketing and communications.",
+      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR, KVKK, and UAE PDPL compliant.",
   },
   team: {
     path: "/team",
@@ -469,14 +470,14 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     path: "/terms",
     title: "Terms of Use",
     description:
-      "Terms governing use of Sigma’s website and marketing materials—please read before engaging.",
-    keywords: ["Sigma terms", "terms of use", "website terms"],
-    ogTitle: "Terms of Use | Sigma",
+      "Terms governing use of the Sigma website, content, and services. Not a substitute for engagement contracts, which govern partner relationships.",
+    keywords: ["Sigma terms of use", "Sigma terms and conditions", "Sigma legal terms"],
+    ogTitle: "Terms of Use | Sigma Growth Network",
     ogDescription:
-      "Terms governing use of Sigma’s website and related marketing materials.",
-    twitterTitle: "Terms of Use | Sigma",
+      "Terms governing use of the Sigma website, content, and services. Not a substitute for engagement contracts, which govern partner relationships.",
+    twitterTitle: "Terms of Use | Sigma Growth Network",
     twitterDescription:
-      "Website and marketing terms for Sigma.",
+      "Terms governing use of the Sigma website, content, and services. Not a substitute for engagement contracts, which govern partner relationships.",
   },
   insights: {
     path: "/insights",

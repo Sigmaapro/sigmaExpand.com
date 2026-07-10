@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { MarketingPageShell } from "@/components/site/marketing/MarketingPageShell";
+import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
 import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import { productsContentByLang } from "@/content/global/marketing/productsContent";
 import { pickLang } from "@/content/global/marketing/helpers";
@@ -13,18 +14,18 @@ export function ProductsPageView() {
   const c = pickLang(productsContentByLang, language);
 
   return (
-    <MarketingSubpageScaffold>
-      <article className="mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-16">
-        <header className="mx-auto max-w-3xl text-center">
-          <p className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}>
-            {c.kicker}
-          </p>
-          <h1 className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}>
-            {c.title}
-          </h1>
-          <p className={`mx-auto mt-5 text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}>{c.intro}</p>
+    <MarketingPageShell contentClassName="mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+      <article className="mx-auto max-w-4xl">
+        <PageIntroGlassCard
+          eyebrow={c.kicker}
+          title={c.title}
+          description={c.intro}
+          eyebrowClassName={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#93C5FD] ${localeEyebrow(language)}`}
+          titleClassName={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          descriptionClassName={`mx-auto mt-5 text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}
+        >
           <p className={`mx-auto mt-4 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px] ${localeBody(language)}`}>{c.positioning}</p>
-        </header>
+        </PageIntroGlassCard>
 
         <ul className="mt-12 space-y-4">
           {c.sections.map((section) => (
@@ -50,6 +51,6 @@ export function ProductsPageView() {
           </PartnerIntentTriggerButton>
         </div>
       </article>
-    </MarketingSubpageScaffold>
+    </MarketingPageShell>
   );
 }

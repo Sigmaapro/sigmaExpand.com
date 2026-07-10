@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { MarketingPageShell } from "@/components/site/marketing/MarketingPageShell";
+import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
 import { ROUTES } from "@/content/global/routes";
 import { getServiceDetailContent, type ServiceDetailKey } from "@/content/global/marketing/serviceDetailContent";
 import { servicesPageContentByLang } from "@/content/global/marketing/servicesContent";
@@ -37,19 +38,16 @@ export function ServicesPageView() {
   };
 
   return (
-    <MarketingSubpageScaffold>
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-        <header className="mx-auto max-w-3xl text-center">
-          <p className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}>
-            {c.kicker}
-          </p>
-          <h1 className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}>
-            {c.headline}
-          </h1>
-          <p className={`mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}>
-            {c.intro}
-          </p>
-        </header>
+    <MarketingPageShell contentClassName="mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+      <div className="mx-auto max-w-5xl">
+        <PageIntroGlassCard
+          eyebrow={c.kicker}
+          title={c.headline}
+          description={c.intro}
+          eyebrowClassName={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#93C5FD] ${localeEyebrow(language)}`}
+          titleClassName={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          descriptionClassName={`mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}
+        />
 
         <section className="mt-8 rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8">
           <p className={`font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1c39bb] ${localeEyebrow(language)}`}>
@@ -99,6 +97,6 @@ export function ServicesPageView() {
           ))}
         </div>
       </div>
-    </MarketingSubpageScaffold>
+    </MarketingPageShell>
   );
 }

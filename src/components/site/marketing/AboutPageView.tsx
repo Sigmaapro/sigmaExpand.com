@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { MarketingPageShell } from "@/components/site/marketing/MarketingPageShell";
+import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
 import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import { aboutPageContentByLang } from "@/content/global/marketing/aboutContent";
 import { pickLang } from "@/content/global/marketing/helpers";
@@ -13,22 +14,16 @@ export function AboutPageView() {
   const c = pickLang(aboutPageContentByLang, language);
 
   return (
-    <MarketingSubpageScaffold>
-      <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 md:py-16">
-        <header className="text-center">
-          <p
-            className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}
-          >
-            {c.kicker}
-          </p>
-          <h1
-            className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
-          >
-            {c.headline}
-          </h1>
-          <p className={`mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}>
-            {c.subhead}
-          </p>
+    <MarketingPageShell contentClassName="mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+      <article className="mx-auto max-w-3xl">
+        <PageIntroGlassCard
+          eyebrow={c.kicker}
+          title={c.headline}
+          description={c.subhead}
+          eyebrowClassName={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#93C5FD] ${localeEyebrow(language)}`}
+          titleClassName={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          descriptionClassName={`mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}
+        >
           <p className={`mx-auto mt-4 max-w-2xl text-xs leading-relaxed text-[#8f98a3] md:text-sm ${localeMeta(language)}`}>
             {c.bodyLine}
           </p>
@@ -42,7 +37,7 @@ export function AboutPageView() {
               </span>
             ))}
           </div>
-        </header>
+        </PageIntroGlassCard>
 
         <section className="mt-14 rounded-2xl border border-white/[0.08] bg-[#07090f]/55 p-6 backdrop-blur-md sm:p-8">
           <p className={`font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1c39bb] ${localeEyebrow(language)}`}>
@@ -218,6 +213,6 @@ export function AboutPageView() {
           </div>
         </section>
       </article>
-    </MarketingSubpageScaffold>
+    </MarketingPageShell>
   );
 }

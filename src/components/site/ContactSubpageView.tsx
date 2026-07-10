@@ -14,7 +14,8 @@ import type { ComponentType } from "react";
 import { useCallback, useState, type FormEvent } from "react";
 import { CalendarPlus } from "lucide-react";
 import { BookCallModal } from "@/components/sigma/BookCallModal";
-import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
+import { MarketingPageShell } from "@/components/site/marketing/MarketingPageShell";
+import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
 import {
   contactSubpageContentByLang,
 } from "@/content/global/marketing/contactSubpageContent";
@@ -157,7 +158,7 @@ export function ContactSubpageView() {
   );
 
   return (
-    <MarketingSubpageScaffold>
+    <MarketingPageShell contentClassName="relative z-10 mx-auto w-full min-w-0 max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
       <BookCallModal
         open={bookOpen}
         onClose={() => setBookOpen(false)}
@@ -165,25 +166,15 @@ export function ContactSubpageView() {
         lang={language}
       />
 
-      <div
-        dir={isRtl ? "rtl" : "ltr"}
-        className="relative z-10 mx-auto w-full min-w-0 max-w-5xl px-4 py-12 sm:px-6 md:py-16 lg:px-8"
-      >
-        <header className="mx-auto max-w-2xl text-center">
-          <p
-            className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}
-          >
-            {copy.kicker}
-          </p>
-          <h1
-            className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
-          >
-            {copy.headline}
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#b6bcc4] md:text-base">
-            {copy.intro}
-          </p>
-        </header>
+      <div dir={isRtl ? "rtl" : "ltr"} className="min-w-0">
+        <PageIntroGlassCard
+          eyebrow={copy.kicker}
+          title={copy.headline}
+          description={copy.intro}
+          eyebrowClassName={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#93C5FD] ${localeEyebrow(language)}`}
+          titleClassName={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          descriptionClassName="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#b6bcc4] md:text-base"
+        />
 
         <div className="mx-auto mt-12 grid min-w-0 max-w-5xl gap-10 lg:grid-cols-2 lg:gap-12">
           <section className="rounded-2xl border border-white/[0.08] bg-[#07090f]/70 p-6 shadow-[0_20px_48px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8">
@@ -386,6 +377,6 @@ export function ContactSubpageView() {
           </div>
         </section>
       </div>
-    </MarketingSubpageScaffold>
+    </MarketingPageShell>
   );
 }

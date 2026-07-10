@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
 import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
+import { MarketingPageShell } from "@/components/site/marketing/MarketingPageShell";
+import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
 import { getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
 import { teamPageContentByLang } from "@/content/global/marketing/teamContent";
 import { pickLang } from "@/content/global/marketing/helpers";
@@ -54,7 +55,7 @@ function MemberTile({
             : "rounded-2xl border border-white/[0.1] bg-white/[0.03] p-4 hover:bg-white/[0.05]"
         }`}
       >
-        <div className="flex items-center gap-3.5">
+        <div className="flex items-start gap-3.5 sm:gap-4">
           <div
             className={`relative shrink-0 overflow-hidden rounded-2xl border ${
               tone === "core" ? "border-[#1c39bb]/40 bg-[#121b32]" : "border-white/[0.12] bg-[#121621]"
@@ -80,8 +81,8 @@ function MemberTile({
               </span>
             )}
           </div>
-          <div className="min-w-0">
-            <h3 className={`truncate font-display font-semibold text-white ${titleSize} ${localeHeading(language)}`}>{member.name}</h3>
+          <div className="min-w-0 flex-1">
+            <h3 className={`font-display font-semibold leading-snug text-white ${titleSize} ${localeHeading(language)}`}>{member.name}</h3>
             {member.role ? (
               <p className={`mt-1 uppercase tracking-[0.12em] text-[#9aa5b3] ${roleSize} ${localeMeta(language)}`}>{member.role}</p>
             ) : null}
@@ -97,17 +98,15 @@ export function TeamPageView() {
   const c = pickLang(teamPageContentByLang, language);
 
   return (
-    <MarketingSubpageScaffold>
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-10">
-        <header className="mx-auto max-w-2xl text-center">
-          <p className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}>
-            {c.kicker}
-          </p>
-          <h1 className={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}>
-            {language === "EN" ? "Sigma Team" : c.headline}
-          </h1>
-          <p className={`mx-auto mt-5 text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}>{c.intro}</p>
-        </header>
+    <MarketingPageShell>
+        <PageIntroGlassCard
+          eyebrow={c.kicker}
+          title={language === "EN" ? "Sigma Team" : c.headline}
+          description={c.intro}
+          eyebrowClassName={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#93C5FD] ${localeEyebrow(language)}`}
+          titleClassName={`font-display mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl ${localeHeading(language)}`}
+          descriptionClassName={`mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}
+        />
 
         <section className="mt-12 rounded-3xl border border-white/[0.08] bg-[#07090f]/70 p-6 shadow-[0_20px_65px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8 lg:p-10">
           <header className="mb-6 border-b border-white/[0.06] pb-5">
@@ -123,7 +122,7 @@ export function TeamPageView() {
           <div className="space-y-6">
             <div className="rounded-2xl border border-[#1c39bb]/25 bg-[#0b0f18]/80 p-5 sm:p-6">
               <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9bb4ff] ${localeMeta(language)}`}>{c.coreLabel}</p>
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-2">
                 {c.coreMembers.map((member) => (
                   <MemberTile key={member.id} member={member} language={language} tone="core" />
                 ))}
@@ -132,7 +131,7 @@ export function TeamPageView() {
 
             <div className="rounded-2xl border border-white/[0.08] bg-[#0a0d15]/75 p-5 sm:p-6">
               <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#b8c0cb] ${localeMeta(language)}`}>{c.innerCircleLabel}</p>
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-3">
                 {c.innerCircleMembers.map((member) => (
                   <MemberTile key={member.id} member={member} language={language} tone="secondary" />
                 ))}
@@ -141,7 +140,7 @@ export function TeamPageView() {
 
             <div className="rounded-2xl border border-white/[0.08] bg-[#090c13]/75 p-5 sm:p-6">
               <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#acb7c6] ${localeMeta(language)}`}>{c.contributorsLabel}</p>
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-2">
                 {c.contributorsMembers.map((member) => (
                   <MemberTile key={member.id} member={member} language={language} tone="secondary" />
                 ))}
@@ -162,7 +161,6 @@ export function TeamPageView() {
             </PartnerIntentTriggerButton>
           </div>
         </section>
-      </div>
-    </MarketingSubpageScaffold>
+    </MarketingPageShell>
   );
 }

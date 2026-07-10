@@ -1,22 +1,7 @@
-import type { Metadata } from "next";
-import { getAllInsightsPosts, getCategories } from "@/content/insights";
-import { InsightsPageContent } from "@/components/insights/InsightsPageContent";
-import { buildInsightsIndexMetadata } from "@/content/seo";
-import { siteTranslations } from "@/content/siteTranslations";
+import { permanentRedirect } from "next/navigation";
 
-/** SEO title (kept under 60 characters); visible H1 still uses `t.insights.pageTitle`. */
-const insightsIndexMetadataTitle =
-  "Sigma Insights — Web3 Growth & Crypto Marketing Briefs";
-const insightsDescription = siteTranslations.EN.insights.pageSubtitle;
-
-export const metadata: Metadata = buildInsightsIndexMetadata(
-  insightsIndexMetadataTitle,
-  insightsDescription,
-);
+const INSIGHTS_BLOG_URL = "https://blog.sigmaa.pro";
 
 export default function InsightsPage() {
-  const posts = getAllInsightsPosts();
-  const categories = getCategories();
-
-  return <InsightsPageContent posts={posts} categories={categories} />;
+  permanentRedirect(INSIGHTS_BLOG_URL);
 }

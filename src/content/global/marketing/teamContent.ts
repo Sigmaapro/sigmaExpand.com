@@ -389,8 +389,7 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
               { title: "Helped charitable organizations adopt NFTs and crypto payment gateways" },
               { title: "Combined an MBA from the University of Tehran with a Biomedical Engineering background" },
             ],
-            linkedin: "https://www.linkedin.com/in/mahdiyarmehmandoust",
-            socialLinks: [{ label: "LinkedIn", href: "https://www.linkedin.com/in/mahdiyarmehmandoust" }],
+            linkedin: "https://www.linkedin.com/in/mahdiyar-mehmandoust",
             seoTitle: "Mahdiyar Mehmandoust | Crypto & Web3 Product Manager & Community Builder",
             metaDescription:
               "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder with an MBA from the University of Tehran. From founding a crypto department at a currency exchange to launching a tokenized real estate project, he builds products and communities side by side — today leading West Asia KOL communities at LBank.",

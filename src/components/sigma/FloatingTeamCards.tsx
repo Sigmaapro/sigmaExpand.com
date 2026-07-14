@@ -8,13 +8,18 @@ import { useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import {
   getTeamMemberSlug,
-  teamPageContentByLang,
+  getTeamMembersByLang,
   type TeamMember,
 } from "@/content/global/marketing/teamContent";
-import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
 import { useIsMobile } from "@/hooks/useMedia";
 import { localeHeading, localeMeta } from "@/lib/localeTypography";
+
+/** Flank presets (not center) for a second contributor pass so Babak/Shahan stay visible in the loop. */
+const CONTRIBUTOR_EXTRA_SLOTS: Readonly<Record<number, string>> = {
+  1: "babak-ravanbakhsh",
+  16: "shahan-behkam-rad",
+};
 
 /**
  * Bubble-field presets (hydration-safe — no Math.random in render).
@@ -201,14 +206,18 @@ export function FloatingTeamCards() {
   const { language } = useLanguage();
   const reduceMotion = useReducedMotion() ?? false;
   const isMobile = useIsMobile(768);
-  const content = pickLang(teamPageContentByLang, language);
-  const members = [...content.coreMembers, ...content.innerCircleMembers];
+  /** Core + Inner Circle + Contributors (Babak, Shahan) — same pool as team profiles. */
+  const members = getTeamMembersByLang(language);
+  const membersById = new Map(members.map((member) => [member.id, member]));
 
   if (members.length === 0) return null;
 
   /** Reuse real members across presets for a denser field (decorative duplicates). */
   const floatInstances = FLOAT_PRESETS.map((preset, index) => {
-    const member = members[index % members.length]!;
+    const pinnedId = CONTRIBUTOR_EXTRA_SLOTS[index];
+    const member =
+      (pinnedId ? membersById.get(pinnedId) : undefined) ??
+      members[index % members.length]!;
     return {
       preset,
       member,

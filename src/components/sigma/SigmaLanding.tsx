@@ -9,10 +9,19 @@ import { MidConversionCta, FinalConversionCta } from "@/components/sigma/Convers
 import { BookCallModal } from "@/components/sigma/BookCallModal";
 import { PartnerIntentModalHost, openPartnerIntentFlow } from "@/components/partner/PartnerIntentModal";
 import { getConversion } from "@/content/conversion";
-import { HeroGlassCarousel } from "@/components/sigma/HeroGlassCarousel";
+import { HeroAtmosphere } from "@/components/sigma/HeroAtmosphere";
+import { HeroEyebrowShard } from "@/components/sigma/HeroEyebrowShards";
+import { FloatingTeamCards } from "@/components/sigma/FloatingTeamCards";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
+import { CryptoWordCloudVisual } from "@/components/sigma/CryptoWordCloudVisual";
 import { SeoHiddenImages } from "@/components/seo/SeoHiddenImages";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
 import * as THREE from "three";
 import {
   Shield,
@@ -151,7 +160,7 @@ const GlobalStyles = () => (
      */
     .sigma-landing-root {
       min-height: 100vh;
-      background-color: ${theme.colors.erie};
+      background-color: #020817;
       color: ${theme.colors.cadet};
       overflow-x: clip;
     }
@@ -254,9 +263,6 @@ const WebGLScene = ({
     let material: THREE.MeshPhysicalMaterial | null = null;
     let wireMaterial: THREE.LineBasicMaterial | null = null;
     const shards: THREE.Mesh[] = [];
-    let particlesGeo: THREE.BufferGeometry | null = null;
-    let particlesMat: THREE.PointsMaterial | null = null;
-    let particlesMesh: THREE.Points | null = null;
     let pointLight: THREE.PointLight | null = null;
     let animationFrameId = 0;
     let resizeFrameId = 0;
@@ -330,16 +336,13 @@ const WebGLScene = ({
       sigmaShardGeometries.forEach((g) => g.dispose());
       if (material) material.dispose();
       if (wireMaterial) wireMaterial.dispose();
-      if (particlesGeo) particlesGeo.dispose();
-      if (particlesMat) particlesMat.dispose();
       if (renderer) renderer.dispose();
       timer.dispose();
     };
 
     const animate = (timestamp: number) => {
-      if (!running || !group || !pointLight || !camera || !renderer || !particlesMesh) return;
+      if (!running || !group || !pointLight || !camera || !renderer) return;
       timer.update(timestamp);
-      const time = timer.getElapsed();
       const scrollProgress = Math.min(scrollY.current / maxScroll, 1.0);
 
       pointLight.position.x +=
@@ -372,8 +375,6 @@ const WebGLScene = ({
         shard.rotation.z += ud.rotSpeed.z;
       });
 
-      particlesMesh.rotation.y = time * 0.042;
-
       camera.position.z = 15 - scrollProgress * 4;
       camera.position.y = -(scrollProgress * 4);
 
@@ -392,7 +393,7 @@ const WebGLScene = ({
 
     try {
       scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(theme.colors.erie, isTablet ? 0.024 : 0.021);
+      scene.fog = new THREE.FogExp2(0x030b1d, isTablet ? 0.024 : 0.021);
 
       camera = new THREE.PerspectiveCamera(
         72,
@@ -432,8 +433,8 @@ const WebGLScene = ({
 
       material = new THREE.MeshPhysicalMaterial({
         color: theme.colors.persian,
-        emissive: theme.colors.erie,
-        emissiveIntensity: 0.12,
+        emissive: 0x07142f,
+        emissiveIntensity: 0.14,
         metalness: 0.82,
         roughness: 0.22,
         wireframe: false,
@@ -533,22 +534,6 @@ const WebGLScene = ({
         shards.push(mesh);
       }
 
-      particlesGeo = new THREE.BufferGeometry();
-      const particlesCount = lowPower ? 140 : isTablet ? 220 : 480;
-      const posArray = new Float32Array(particlesCount * 3);
-      for (let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 40;
-      }
-      particlesGeo.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
-      particlesMat = new THREE.PointsMaterial({
-        size: isTablet ? 0.04 : 0.045,
-        color: theme.colors.cadet,
-        transparent: true,
-        opacity: isTablet ? 0.22 : 0.3,
-      });
-      particlesMesh = new THREE.Points(particlesGeo, particlesMat);
-      scene.add(particlesMesh);
-
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.36);
       scene.add(ambientLight);
 
@@ -587,7 +572,7 @@ const WebGLScene = ({
 };
 
 const WebGLBackground = () => {
-  /** Canvas from lg-up saves tablet GPU / battery; film grain still shows below */
+  /** Canvas from lg-up saves tablet GPU / battery; soft navy film still shows below */
   const showCanvas = useMinWidth(1024);
   const reduceMotion = useReducedMotion() ?? false;
   const [lowPowerDevice, setLowPowerDevice] = useState(false);
@@ -607,7 +592,10 @@ const WebGLBackground = () => {
 
   return (
     <div className="pointer-events-none fixed left-0 top-0 z-0 h-full w-full overflow-x-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#080a0f] via-[#151a22] to-[#0c111a]" />
+      {/* Deep navy base — matches marketing subpage night shell (/team, /about) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#020817] via-[#030b1d] to-[#07142f]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-8%,rgba(28,57,187,0.16),transparent_68%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_48%_42%_at_88%_18%,rgba(189,224,254,0.05),transparent_58%)]" />
       {shouldRenderCanvas ? (
         <WebGLScene
           lowPower={lowPowerDevice}
@@ -615,7 +603,7 @@ const WebGLBackground = () => {
         />
       ) : null}
       <div
-        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.35]"}`}
+        className={`pointer-events-none absolute inset-0 sigma-webgl-film ${shouldRenderCanvas ? "opacity-100" : "opacity-[0.4]"}`}
         aria-hidden
       />
     </div>
@@ -686,102 +674,6 @@ const AnimatedText = ({
         ))}
       </span>
     </Wrapper>
-  );
-};
-
-const HeroVisual = ({ t }: { t: SiteTranslations }) => {
-  const reduceMotion = useReducedMotion();
-  const isNarrow = useIsMobile(768);
-  const isTiny = useIsMobile(480);
-  const parallaxX = useMotionValue(0);
-  const parallaxY = useMotionValue(0);
-  const smoothParallaxX = useSpring(parallaxX, { stiffness: 70, damping: 24, mass: 0.9 });
-  const smoothParallaxY = useSpring(parallaxY, { stiffness: 70, damping: 24, mass: 0.9 });
-  const sparkleCount = isTiny ? 4 : isNarrow ? 6 : 22;
-  const parallaxMul = isNarrow ? 3.5 : 10;
-  const parallaxMulY = isNarrow ? 2.5 : 8;
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (reduceMotion || isNarrow) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const nx = ((e.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
-    const ny = ((e.clientY - rect.top) / Math.max(rect.height, 1)) * 2 - 1;
-    parallaxX.set(nx);
-    parallaxY.set(ny);
-  };
-
-  const handleMouseLeave = () => {
-    parallaxX.set(0);
-    parallaxY.set(0);
-  };
-
-  return (
-    <div
-      className="relative flex min-h-[min(220px,34svh)] w-full max-w-full -translate-y-1 items-center justify-center overflow-x-clip overflow-y-visible sm:min-h-[min(300px,42vh)] sm:overflow-x-visible sm:-translate-y-6 md:-translate-y-8 md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)] lg:-translate-y-[52px] xl:-translate-y-[60px]"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        aria-hidden
-      >
-        <div className="absolute -inset-[14%] bg-[radial-gradient(ellipse_92%_78%_at_50%_38%,rgba(28,57,187,0.06),transparent_74%)] opacity-80 md:opacity-100 md:bg-[radial-gradient(ellipse_92%_78%_at_50%_38%,rgba(28,57,187,0.048),transparent_74%)]" />
-        <div className="absolute left-1/2 top-[36%] h-[min(70vw,30rem)] w-[min(82vw,36rem)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_62%_52%_at_48%_46%,rgba(28,57,187,0.03)_0%,rgba(28,57,187,0.012)_48%,transparent_76%)] opacity-80 md:opacity-100 md:bg-[radial-gradient(ellipse_62%_52%_at_48%_46%,rgba(28,57,187,0.072)_0%,rgba(28,57,187,0.028)_48%,transparent_76%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_56%_44%_at_68%_52%,rgba(189,224,254,0.008),transparent_62%)] md:bg-[radial-gradient(ellipse_56%_44%_at_68%_52%,rgba(189,224,254,0.022),transparent_62%)]" />
-      </div>
-      <motion.div
-        className="relative z-10 flex w-full min-w-0 items-center justify-center px-1 sm:px-0 ltr:lg:justify-end rtl:lg:justify-start"
-        style={{
-          x: reduceMotion || isNarrow ? 0 : smoothParallaxX,
-          y: reduceMotion || isNarrow ? 0 : smoothParallaxY,
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 1, y: 8 }}
-          animate={
-            reduceMotion
-              ? { opacity: 1, y: 0 }
-              : { opacity: 1, y: [0, -6, 0] }
-          }
-          transition={
-            reduceMotion
-              ? { duration: 0 }
-              : { duration: 8.5, repeat: Infinity, ease: "easeInOut" }
-          }
-          className="group relative block w-full max-w-full overflow-hidden rounded-2xl border border-[#bde0fe]/[0.15] bg-[#0a0f18]/[0.44] p-4 shadow-[0_18px_70px_rgba(0,0,0,0.45),0_0_56px_rgba(28,57,187,0.16)] backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-[#bde0fe]/30 hover:shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_64px_rgba(28,57,187,0.2)] md:max-w-[min(35rem,88%)] lg:max-w-[min(39rem,92%)] lg:p-5"
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.035)_38%,transparent_74%)]" />
-          <HeroGlassCarousel t={t} />
-        </motion.div>
-      </motion.div>
-      <div className="pointer-events-none absolute inset-0 z-[15]" aria-hidden>
-        {Array.from({ length: sparkleCount }, (_, i) => (
-          <motion.span
-            key={i}
-            className="absolute h-[2px] w-[2px] rounded-full bg-[#bde0fe]/18 sm:h-[3px] sm:w-[3px] sm:bg-[#bde0fe]/22"
-            style={{
-              left: `${10 + (i * 41) % 78}%`,
-              top: `${8 + (i * 47) % 82}%`,
-            }}
-            animate={
-              reduceMotion || isNarrow
-                ? { opacity: 0.22, scale: 1 }
-                : { opacity: [0.12, 0.5, 0.12], scale: [0.88, 1.15, 0.88] }
-            }
-            transition={
-              reduceMotion || isNarrow
-                ? { duration: 0 }
-                : {
-                    duration: 5 + (i % 4),
-                    repeat: Infinity,
-                    delay: i * 0.15,
-                    ease: "easeInOut",
-                  }
-            }
-          />
-        ))}
-      </div>
-    </div>
   );
 };
 
@@ -860,91 +752,172 @@ const HeroSection = ({
   isRtl: boolean;
 }) => {
   const { lang } = useLanguage();
+  const reduceMotion = useReducedMotion() ?? false;
+  const isCoarsePointer = useIsMobile(1024);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const glowRef = useRef<HTMLDivElement | null>(null);
+  const glowRafRef = useRef(0);
+  const glowPointRef = useRef({ x: 0, y: 0 });
+  const glowEnabled = !reduceMotion && !isCoarsePointer;
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const paintGlow = useCallback(() => {
+    glowRafRef.current = 0;
+    const el = glowRef.current;
+    if (!el) return;
+    const { x, y } = glowPointRef.current;
+    el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+  }, []);
+
+  const handlePointerMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const relX = e.clientX - rect.left;
+    const relY = e.clientY - rect.top;
+    if (!reduceMotion && !isCoarsePointer) {
+      pointerX.set((relX / Math.max(rect.width, 1)) * 2 - 1);
+      pointerY.set((relY / Math.max(rect.height, 1)) * 2 - 1);
+    }
+    if (!glowEnabled) return;
+    glowPointRef.current.x = relX;
+    glowPointRef.current.y = relY;
+    if (glowRafRef.current) return;
+    glowRafRef.current = requestAnimationFrame(paintGlow);
+  };
+
+  const handlePointerLeave = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+    if (!sectionRef.current || !glowRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    glowPointRef.current.x = rect.width * 0.5;
+    glowPointRef.current.y = rect.height * 0.42;
+    if (glowRafRef.current) cancelAnimationFrame(glowRafRef.current);
+    glowRafRef.current = requestAnimationFrame(paintGlow);
+  };
+
+  useEffect(() => {
+    if (!glowEnabled || !sectionRef.current || !glowRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    glowPointRef.current.x = rect.width * 0.5;
+    glowPointRef.current.y = rect.height * 0.42;
+    paintGlow();
+    return () => {
+      if (glowRafRef.current) cancelAnimationFrame(glowRafRef.current);
+    };
+  }, [glowEnabled, paintGlow]);
+
   return (
   <section
+    ref={sectionRef}
     id="hero"
-    className="relative flex min-h-[min(100svh,920px)] scroll-mt-24 items-center overflow-x-clip px-5 pb-10 pt-[max(5.25rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:pb-14 sm:pt-28 md:min-h-screen md:px-16 md:pt-32 lg:px-24"
+    onMouseMove={handlePointerMove}
+    onMouseLeave={handlePointerLeave}
+    className="relative flex min-h-[min(100svh,860px)] scroll-mt-24 items-center justify-center overflow-x-clip px-5 pb-16 pt-[max(5.25rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:pb-20 sm:pt-28 md:min-h-screen md:px-16 md:pb-24 md:pt-32 lg:px-24"
   >
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-      <div className="absolute inset-0 bg-sigma-mesh opacity-[0.1] sm:opacity-[0.16] md:opacity-[0.2]" />
-      <div className="absolute inset-0 bg-sigma-radial opacity-[0.14] sm:opacity-[0.2] md:opacity-[0.26]" />
-      <div className="absolute inset-0 sigma-hero-vignette opacity-[0.35] sm:opacity-[0.45] md:opacity-[0.55]" />
+      {/* Soft navy mesh + radial glow — team/about family, not flat charcoal */}
+      <div className="sigma-hero-mesh absolute inset-0 opacity-[0.22] sm:opacity-[0.28] md:opacity-[0.34]" />
+      <div className="absolute inset-0 bg-sigma-radial opacity-[0.18] sm:opacity-[0.24] md:opacity-[0.3]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_48%_at_50%_42%,rgba(189,224,254,0.04),transparent_62%)]" />
+      <div
+        ref={glowRef}
+        className={`sigma-hero-cursor-glow ${glowEnabled ? "is-active" : ""}`}
+      />
+      <HeroAtmosphere />
     </div>
-    <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-x-16 lg:gap-y-10 xl:gap-x-24">
-      <div className="relative z-20 order-1 flex w-full min-w-0 max-w-full flex-col justify-center md:max-w-xl lg:order-none lg:max-w-none lg:pe-4">
-        <div
-          className={`absolute -top-2 hidden h-[calc(100%+1rem)] w-px bg-gradient-to-b from-[#1c39bb]/50 via-[#1c39bb]/15 to-transparent lg:block ${isRtl ? "-right-3" : "-left-3"}`}
-          aria-hidden
-        />
-        <motion.div
-          initial={{ opacity: 1, y: 18 }}
+    <div className="relative z-10 mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center text-center">
+      <div className="flex w-full min-w-0 max-w-5xl flex-col items-center">
+        <div className="mb-10 flex w-full min-w-0 items-center justify-center gap-2 sm:mb-12 sm:gap-3 md:mb-14 md:gap-3.5">
+          <HeroEyebrowShard
+            side="left"
+            scrollProgress={scrollYProgress}
+            pointerX={pointerX}
+            pointerY={pointerY}
+          />
+          <div
+            className="h-px w-7 shrink-0 bg-gradient-to-r from-transparent via-[#7daaff]/45 to-transparent sm:w-10 md:w-12"
+            aria-hidden
+          />
+          <span className="sigma-hero-eyebrow min-w-0 max-w-[min(100%,34rem)] break-words text-center text-[11px] font-semibold uppercase leading-snug text-[#e2e7ec] sm:text-xs md:text-[13px]">
+            {t.hero.eyebrow}
+          </span>
+          <div
+            className="h-px w-7 shrink-0 bg-gradient-to-l from-transparent via-[#7daaff]/45 to-transparent sm:w-10 md:w-12"
+            aria-hidden
+          />
+          <HeroEyebrowShard
+            side="right"
+            scrollProgress={scrollYProgress}
+            pointerX={pointerX}
+            pointerY={pointerY}
+          />
+        </div>
+
+        <motion.h1
+          initial={reduceMotion ? false : { opacity: 0.92, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className={`sigma-hero-title mb-5 w-full max-w-5xl break-words text-center text-[clamp(1.65rem,8vw,2.75rem)] font-semibold uppercase leading-[1.1] text-balance [overflow-wrap:anywhere] sm:mb-6 sm:text-6xl sm:leading-none md:mb-7 md:text-8xl lg:text-[5.75rem] xl:text-[6.25rem] ${
+            isRtl ? "text-white glow-text" : "sigma-hero-wordmark"
+          }`}
         >
-          {/* Eyebrow + accent: explicit order per direction so RTL aligns with the hero text block edge (no flex-row-reverse drift). */}
-          <div className="mb-5 flex w-full min-w-0 items-center gap-4 sm:mb-6">
-            {!isRtl ? (
-              <>
-                <div className="h-px w-10 shrink-0 bg-gradient-to-r from-transparent via-[#adb5bd]/80 to-transparent sigma-line-glow sm:w-14" />
-                <span className="sigma-hero-eyebrow min-w-0 break-words text-[10px] font-semibold uppercase leading-snug text-[#d8dde2] sm:text-[11px]">
-                  {t.hero.eyebrow}
-                </span>
-              </>
-            ) : (
-              <>
-                <span className="sigma-hero-eyebrow min-w-0 shrink break-words text-[10px] font-semibold uppercase leading-snug text-[#d8dde2] sm:text-[11px]">
-                  {t.hero.eyebrow}
-                </span>
-                <div className="h-px w-10 shrink-0 bg-gradient-to-l from-transparent via-[#adb5bd]/80 to-transparent sigma-line-glow sm:w-14" />
-              </>
-            )}
-          </div>
+          {t.hero.title}
+        </motion.h1>
 
-          <h1
-            className={`sigma-hero-title mb-5 max-w-full break-words text-[clamp(1.45rem,7.2vw,2.35rem)] font-semibold uppercase leading-[1.14] tracking-normal text-balance [overflow-wrap:anywhere] sm:mb-6 sm:text-6xl sm:leading-none sm:tracking-tight md:text-8xl lg:mb-6 lg:text-[5.25rem] xl:text-[5.75rem] ${
-              isRtl ? "text-white glow-text" : "sigma-hero-wordmark"
-            }`}
+        <motion.p
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
+          className={`mb-5 max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:mb-5 sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
+        >
+          {t.hero.subtitle}
+        </motion.p>
+
+        <motion.p
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className={`sigma-body-measure mx-auto mb-8 max-w-2xl px-1 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:px-0 sm:text-[15px] md:text-[#aeb5bd] ${localeHeroSupporting(lang)}`}
+        >
+          {t.hero.supporting}
+        </motion.p>
+
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="flex w-full min-w-0 max-w-xl flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-3.5"
+        >
+          <MagneticButton
+            primary
+            isRtl={isRtl}
+            onClick={openPartnerIntentFlow}
+            fullWidthMobile
           >
-            {t.hero.title}
-          </h1>
-
-          <p
-            className={`mb-4 max-w-xl font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
+            {t.hero.primaryCta}
+          </MagneticButton>
+          <MagneticButton
+            isRtl={isRtl}
+            href={t.hero.secondaryHref}
+            fullWidthMobile
           >
-            {t.hero.subtitle}
-          </p>
-
-          <p
-            className={`sigma-body-measure mb-8 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:text-[15px] md:text-[#aeb5bd] ${localeHeroSupporting(lang)}`}
-          >
-            {t.hero.supporting}
-          </p>
-
-          <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-3.5">
-            <MagneticButton
-              primary
-              isRtl={isRtl}
-              onClick={openPartnerIntentFlow}
-              fullWidthMobile
-            >
-              {t.hero.primaryCta}
-            </MagneticButton>
-            <MagneticButton
-              isRtl={isRtl}
-              href={t.hero.secondaryHref}
-              fullWidthMobile
-            >
-              {t.hero.secondaryCta}
-            </MagneticButton>
-          </div>
+            {t.hero.secondaryCta}
+          </MagneticButton>
         </motion.div>
       </div>
+    </div>
 
-      <div className="relative z-10 order-2 min-h-0 w-full min-w-0 max-w-full justify-self-stretch md:max-w-[min(100%,28rem)] md:justify-self-center lg:order-none lg:max-w-none lg:justify-self-stretch lg:ps-4 xl:ps-5 lg:pe-7 xl:pe-9">
-        <div className="relative min-h-[min(180px,30svh)] w-full sm:min-h-[min(260px,38vh)] md:min-h-[min(400px,50vh)] lg:min-h-[min(520px,62vh)]">
-          <HeroVisual t={t} />
-        </div>
-      </div>
+    <div
+      className="pointer-events-none absolute inset-x-0 bottom-5 z-10 hidden justify-center sm:bottom-7 sm:flex md:bottom-9"
+      aria-hidden
+    >
+      <span className="sigma-hero-scroll-cue" />
     </div>
   </section>
   );
@@ -962,19 +935,28 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
     >
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
       <div className="relative z-10 mx-auto max-w-[90rem]">
-        <p
-          className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
-        >
-          {t.whatIsSigma.label}
-        </p>
-        <h2
-          className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-4xl ${localeHeading(language)}`}
-        >
-          {t.whatIsSigma.headline}
-        </h2>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
-          {t.whatIsSigma.description}
-        </p>
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,400px)] lg:gap-10 xl:gap-14">
+          <div className="min-w-0">
+            <p
+              className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
+            >
+              {t.whatIsSigma.label}
+            </p>
+            <h2
+              className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-3xl ${localeHeading(language)}`}
+            >
+              {t.whatIsSigma.headline}
+            </h2>
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
+              {t.whatIsSigma.description}
+            </p>
+          </div>
+
+          {/* Decorative ticker cloud — lg+ only */}
+          <div className="relative hidden min-h-[420px] w-full max-w-[440px] items-center justify-center self-center justify-self-end lg:flex">
+            <CryptoWordCloudVisual />
+          </div>
+        </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {pillars.map((pillar, idx) => (
@@ -1012,32 +994,51 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="about"
-      className="relative z-10 flex min-h-0 scroll-mt-24 items-center justify-center px-5 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
+      className="relative z-10 flex min-h-0 scroll-mt-24 flex-col items-center justify-center overflow-hidden px-5 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
     >
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" />
-      <div className="relative z-10 mx-auto min-w-0 max-w-4xl px-1 text-center sm:px-0">
-        <p
-          className={`sigma-hero-eyebrow mb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-8 sm:text-[11px] ${localeEyebrow(language)}`}
-        >
-          {t.about.kicker}
-        </p>
-        <AnimatedText
-          text={t.about.title}
-          as="h3"
-          className={`justify-center font-display text-[clamp(1.05rem,3.8vw,1.35rem)] font-semibold uppercase leading-[1.2] tracking-normal text-white max-md:leading-[1.2] sm:text-3xl sm:leading-[1.1] sm:tracking-tight md:text-5xl lg:text-6xl ${localeHeading(language)}`}
+      {/* z-0 — background */}
+      <div className="pointer-events-none absolute inset-0 z-0 grid-bg opacity-30" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_18%,rgba(28,57,187,0.1),transparent_65%)]" />
+
+      {/* z-30 — intro glass readability panel (above floating cards) */}
+      <div className="relative z-30 mx-auto w-full min-w-0 max-w-[52.5rem] px-1 sm:px-0">
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 rounded-[2rem] bg-[radial-gradient(ellipse_70%_65%_at_50%_45%,rgba(28,57,187,0.18)_0%,rgba(28,57,187,0.06)_42%,transparent_72%)]"
+          aria-hidden
         />
-        <motion.p
-          initial={{ opacity: 1 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.15, duration: 0.6 }}
-          className="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-[#cfd6de] sm:mt-10 sm:text-base md:text-lg md:text-[#b6bcc4]"
-        >
-          {t.about.description}
-        </motion.p>
-        <div className="mt-8 flex justify-center sm:mt-10">
-          <SectionDeepLink href={H.about.href} label={H.about.label} openInNewTab />
+        <div className="relative overflow-hidden rounded-[1.5rem] border border-[rgba(125,170,255,0.14)] bg-[linear-gradient(160deg,rgba(7,12,24,0.52)_0%,rgba(10,18,36,0.44)_48%,rgba(6,10,20,0.5)_100%)] px-5 py-6 text-center shadow-[0_18px_50px_rgba(2,8,22,0.28),inset_0_1px_0_rgba(210,228,255,0.08)] backdrop-blur-xl sm:rounded-[1.75rem] sm:px-10 sm:py-8 md:rounded-[28px]">
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_70%_at_50%_0%,rgba(189,224,254,0.06),transparent_58%)]"
+            aria-hidden
+          />
+          <div className="relative">
+            <p
+              className={`sigma-hero-eyebrow mb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-8 sm:text-[11px] ${localeEyebrow(language)}`}
+            >
+              {t.about.kicker}
+            </p>
+            <AnimatedText
+              text={t.about.title}
+              as="h3"
+              className={`justify-center font-display text-[clamp(1.05rem,3.8vw,1.35rem)] font-semibold uppercase leading-[1.2] tracking-normal text-white max-md:leading-[1.2] sm:text-3xl sm:leading-[1.1] sm:tracking-tight md:text-5xl lg:text-6xl ${localeHeading(language)}`}
+            />
+            <motion.p
+              initial={{ opacity: 1 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-[#cfd6de] sm:mt-10 sm:text-base md:text-lg md:text-[#b6bcc4]"
+            >
+              {t.about.description}
+            </motion.p>
+            <div className="mt-8 flex justify-center sm:mt-10">
+              <SectionDeepLink href={H.about.href} label={H.about.label} openInNewTab />
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Desktop float = absolute layer. Mobile/reduced = static row under intro. */}
+      <FloatingTeamCards />
     </section>
   );
 };

@@ -52,28 +52,136 @@ button:focus-visible,
 
 .sigma-hero-title {
   font-family: var(--font-display), "Helvetica Neue", Helvetica, Arial, sans-serif;
-  letter-spacing: -0.045em;
+  letter-spacing: 0.02em;
   line-height: 0.9;
+}
+
+@media (min-width: 640px) {
+  .sigma-hero-title {
+    letter-spacing: 0.05em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sigma-hero-title {
+    letter-spacing: 0.065em;
+  }
 }
 
 /* Solid fallback when background-clip:text is unsupported (avoids invisible text). */
 .sigma-hero-wordmark {
   color: #f1f3f5;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #f1f3f5 42%,
+  background-image: linear-gradient(
+    105deg,
+    #9aa3ad 0%,
+    #e8edf2 18%,
+    #ffffff 32%,
+    #bde0fe 48%,
+    #ffffff 58%,
+    #d8dee6 74%,
     #adb5bd 100%
   );
+  background-size: 240% 100%;
+  background-position: 100% 50%;
   -webkit-background-clip: text;
   background-clip: text;
   filter: drop-shadow(0 2px 28px rgba(28, 57, 187, 0.22));
+  animation: sigma-hero-shimmer 8.5s ease-in-out infinite;
 }
 
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
   .sigma-hero-wordmark {
     color: transparent;
   }
+}
+
+@keyframes sigma-hero-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.sigma-hero-cursor-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: min(28rem, 70vw);
+  height: min(28rem, 70vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(28, 57, 187, 0.14) 0%,
+    rgba(189, 224, 254, 0.045) 32%,
+    transparent 68%
+  );
+  opacity: 0;
+  transform: translate3d(0, 0, 0) translate(-50%, -50%);
+  will-change: transform;
+  pointer-events: none;
+  contain: layout style;
+}
+
+.sigma-hero-cursor-glow.is-active {
+  opacity: 0.9;
+}
+
+.sigma-hero-scroll-cue {
+  display: block;
+  width: 1px;
+  height: 2.25rem;
+  background: linear-gradient(
+    180deg,
+    rgba(189, 224, 254, 0.05),
+    rgba(189, 224, 254, 0.55),
+    rgba(189, 224, 254, 0.05)
+  );
+  transform-origin: center top;
+  animation: sigma-hero-scroll-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes sigma-hero-scroll-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.72);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scaleY(1);
+  }
+}
+
+.sigma-cta-primary-ring {
+  pointer-events: none;
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  border-radius: 2px;
+  opacity: 0;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    rgba(189, 224, 254, 0.55),
+    rgba(28, 57, 187, 0.15),
+    rgba(189, 224, 254, 0.4)
+  );
+  transition: opacity 0.35s ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.group:hover .sigma-cta-primary-ring,
+.group:focus-visible .sigma-cta-primary-ring {
+  opacity: 0.9;
 }
 
 /* CTA block: same issue as wordmark when gradient + transparent without clip */
@@ -94,13 +202,93 @@ button:focus-visible,
   background-image: linear-gradient(90deg, #ffffff 0%, #bde0fe 100%);
 }
 
+/* Homepage People / Team — full-section bubble rise (behind intro glass).
+   Soft edge mask only; no mid-section cut so cards reach the top. */
+.sigma-team-float-stage {
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+}
+
+.sigma-team-float-item {
+  top: 120%;
+  animation-name: sigma-team-float-rise;
+  animation-duration: var(--team-float-duration, 34s);
+  animation-delay: var(--team-float-delay, 0s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.sigma-team-float-far {
+  filter: blur(0.35px);
+}
+
+.sigma-team-float-mid,
+.sigma-team-float-near {
+  filter: none;
+}
+
+.sigma-team-float-item:hover,
+.sigma-team-float-item:focus-within {
+  animation-play-state: paused;
+  z-index: 5;
+  filter: none;
+}
+
+@keyframes sigma-team-float-rise {
+  0% {
+    top: 120%;
+    transform: translate3d(-50%, 0, 0)
+      rotate(calc(var(--team-float-rotate, 0deg) * -1))
+      scale(calc(var(--team-float-scale, 1) * 0.96));
+    opacity: 0;
+  }
+  6% {
+    opacity: var(--team-float-opacity, 0.9);
+  }
+  35% {
+    top: 58%;
+    transform: translate3d(calc(-50% + var(--team-float-drift, 0px)), 0, 0)
+      rotate(var(--team-float-rotate, 0deg)) scale(var(--team-float-scale, 1));
+    opacity: var(--team-float-opacity, 0.9);
+  }
+  65% {
+    top: 28%;
+    transform: translate3d(calc(-50% + (var(--team-float-drift, 0px) * 0.45)), 0, 0)
+      rotate(calc(var(--team-float-rotate, 0deg) * 0.85))
+      scale(var(--team-float-scale, 1));
+    opacity: var(--team-float-opacity, 0.9);
+  }
+  88% {
+    opacity: calc(var(--team-float-opacity, 0.9) * 0.55);
+  }
+  100% {
+    top: var(--team-float-end-top, -12%);
+    transform: translate3d(calc(-50% + (var(--team-float-drift, 0px) * -0.35)), 0, 0)
+      rotate(calc(var(--team-float-rotate, 0deg) * 1.1))
+      scale(calc(var(--team-float-scale, 1) * 0.98));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-team-float-item {
+    animation: none !important;
+  }
+}
+
 .sigma-hero-eyebrow {
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
 }
 
 @media (min-width: 768px) {
   .sigma-hero-eyebrow {
-    letter-spacing: 0.28em;
+    letter-spacing: 0.2em;
   }
 }
 
@@ -190,30 +378,99 @@ html[lang="zh-CN"] .sigma-contact-root h1 {
 }
 
 .sigma-hero-vignette {
-  background: radial-gradient(
-      ellipse 85% 70% at 18% 38%,
-      rgba(28, 57, 187, 0.14) 0%,
+  background:
+    radial-gradient(
+      ellipse 78% 62% at 50% 36%,
+      rgba(28, 57, 187, 0.2) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 52% 42% at 86% 28%,
+      rgba(189, 224, 254, 0.07) 0%,
       transparent 55%
     ),
     radial-gradient(
-      ellipse 70% 55% at 92% 72%,
-      rgba(189, 224, 254, 0.05) 0%,
-      transparent 50%
+      ellipse 70% 55% at 18% 72%,
+      rgba(7, 20, 47, 0.35) 0%,
+      transparent 60%
     );
 }
 
-.sigma-webgl-film {
-  background: linear-gradient(
-    165deg,
-    rgba(8, 10, 16, 0.55) 0%,
-    transparent 42%,
-    rgba(13, 18, 28, 0.35) 100%
+.sigma-hero-mesh {
+  background:
+    linear-gradient(
+      145deg,
+      #020817 0%,
+      #030b1d 38%,
+      #07142f 72%,
+      rgba(28, 57, 187, 0.28) 100%
+    );
+}
+
+.sigma-hero-terminal-grid {
+  background-size: 48px 48px;
+  background-image:
+    linear-gradient(to right, rgba(125, 170, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(125, 170, 255, 0.035) 1px, transparent 1px);
+  mask-image: linear-gradient(
+    180deg,
+    transparent 0%,
+    black 22%,
+    black 78%,
+    transparent 100%
   );
+}
+
+.sigma-hero-corner-crush {
+  opacity: 0.45;
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(2, 8, 23, 0.72) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(2, 8, 23, 0.65) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 0% 100%, rgba(3, 11, 29, 0.7) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(3, 11, 29, 0.68) 0%, transparent 70%);
+}
+
+.sigma-webgl-film {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(2, 8, 23, 0.58) 0%,
+      rgba(3, 11, 29, 0.14) 18%,
+      transparent 36%,
+      transparent 64%,
+      rgba(3, 11, 29, 0.14) 82%,
+      rgba(2, 8, 23, 0.55) 100%
+    ),
+    linear-gradient(
+      165deg,
+      rgba(7, 20, 47, 0.38) 0%,
+      transparent 42%,
+      rgba(3, 11, 29, 0.32) 100%
+    );
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sigma-hero-wordmark {
     filter: none;
+    animation: none;
+    background-image: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f1f3f5 42%,
+      #adb5bd 100%
+    );
+    background-size: 100% 100%;
+    background-position: center;
+  }
+
+  .sigma-hero-scroll-cue {
+    animation: none;
+    opacity: 0.55;
+    transform: none;
+  }
+
+  .sigma-cta-primary-ring {
+    transition: none;
   }
 }
 
@@ -221,7 +478,7 @@ html[lang="zh-CN"] .sigma-contact-root h1 {
 @media (max-width: 767px) {
   .sigma-hero-title {
     line-height: 1.14;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.01em;
   }
 
   .sigma-hero-wordmark {

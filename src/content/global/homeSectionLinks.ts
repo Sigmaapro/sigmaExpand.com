@@ -67,7 +67,7 @@ export function getHomeSectionLinks(lang: LangCode): HomeSectionLinksResolved {
   const learnMore = siteRestByLang[lang].ui.learnMore;
   const insightsHref = siteSettings.insightsUrl;
   return {
-    about: { label: learnMore, href: ROUTES.about },
+    about: { label: learnMore, href: ROUTES.team },
     whatIsSigma: { label: learnMore, href: ROUTES.about },
     capabilities: { label: learnMore, href: ROUTES.services },
     proof: { label: learnMore, href: ROUTES.services },

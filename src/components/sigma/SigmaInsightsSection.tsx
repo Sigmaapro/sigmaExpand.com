@@ -14,6 +14,7 @@ import { HeroEyebrowShard } from "@/components/sigma/HeroEyebrowShards";
 import { FloatingTeamCards } from "@/components/sigma/FloatingTeamCards";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
 import { CryptoWordCloudVisual } from "@/components/sigma/CryptoWordCloudVisual";
+import { SectionTitleTypewriter } from "@/components/sigma/SectionTitleTypewriter";
 import { SeoHiddenImages } from "@/components/seo/SeoHiddenImages";
 import {
   motion,
@@ -28,6 +29,8 @@ import {
   Cpu,
   Activity,
   ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Mail,
   Info,
@@ -99,6 +102,219 @@ const SECTION_COPY = {
 } as const;
 
 const MARQUEE_DURATION_SEC = 96;
+/** Approx card + gap; refined from first card on mount/resize. */
+const INSIGHT_CARD_STEP_FALLBACK = 380;
+
+function measureInsightCardStep(root: HTMLElement | null): number {
+  if (!root) return INSIGHT_CARD_STEP_FALLBACK;
+  const card = root.querySelector("article");
+  if (!(card instanceof HTMLElement)) return INSIGHT_CARD_STEP_FALLBACK;
+  const row = card.parentElement;
+  const styles = getComputedStyle(row ?? root);
+  const gap = parseFloat(styles.columnGap || styles.gap || "16") || 16;
+  return Math.round(card.getBoundingClientRect().width + gap);
+}
+
+function InsightsNavButton({
+  direction,
+  onClick,
+  disabled,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+  disabled?: boolean;
+}) {
+  const isPrev = direction === "prev";
+  const Icon = isPrev ? ChevronLeft : ChevronRight;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={isPrev ? "Previous insight" : "Next insight"}
+      className={`pointer-events-auto absolute top-1/2 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-[rgba(189,224,254,0.16)] bg-[linear-gradient(155deg,rgba(8,20,55,0.72),rgba(5,12,30,0.48))] text-[#c9d7f0] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_10px_32px_rgba(8,24,64,0.28)] backdrop-blur-xl transition-[border-color,box-shadow,color,background-color,transform] duration-300 hover:border-[rgba(189,224,254,0.32)] hover:bg-[linear-gradient(155deg,rgba(12,28,68,0.82),rgba(6,16,40,0.55))] hover:text-white hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_12px_36px_rgba(28,57,187,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030b1d] active:scale-[0.97] disabled:pointer-events-none disabled:opacity-35 sm:size-12 ${
+        isPrev ? "left-2 sm:left-3 md:left-4 lg:left-5" : "right-2 sm:right-3 md:right-4 lg:right-5"
+      }`}
+    >
+      <Icon className="size-5 sm:size-[1.35rem]" strokeWidth={1.75} aria-hidden />
+    </button>
+  );
+}
+
+function InsightsStaticScroller({
+  cards,
+  language,
+}: {
+  cards: HomeInsightCard[];
+  language: ReturnType<typeof useLanguage>["language"];
+}) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion() ?? false;
+
+  const scrollByCard = useCallback(
+    (dir: -1 | 1) => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      const step = measureInsightCardStep(el) || INSIGHT_CARD_STEP_FALLBACK;
+      el.scrollBy({
+        left: dir * step,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    },
+    [reduceMotion],
+  );
+
+  return (
+    <div className="group/insights-static relative w-full max-w-[100vw]">
+      <InsightsNavButton direction="prev" onClick={() => scrollByCard(-1)} />
+      <InsightsNavButton direction="next" onClick={() => scrollByCard(1)} />
+      <div
+        ref={scrollerRef}
+        className="-mx-0 flex gap-4 overflow-x-auto px-12 pb-3 [scrollbar-width:thin] snap-x snap-mandatory sm:gap-5 sm:px-14 md:grid md:max-w-6xl md:snap-none md:grid-cols-2 md:gap-5 md:overflow-visible md:px-6 md:pb-0 lg:mx-auto lg:grid-cols-3"
+        role="list"
+      >
+        {cards.map((card) => (
+          <div
+            key={card.id}
+            className="min-w-0 snap-center max-md:flex max-md:justify-center"
+            role="listitem"
+          >
+            <div className="h-full max-md:w-[min(20.5rem,82vw)] md:w-full [&_article]:w-full [&_article]:max-w-none">
+              <InsightFeedCard card={card} language={language} />
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Hide side controls once md+ grid shows all cards */}
+      <style>{`
+        @media (min-width: 768px) {
+          .group\\/insights-static > button {
+            display: none;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function InsightsMarqueeScroller({
+  cards,
+  language,
+}: {
+  cards: HomeInsightCard[];
+  language: ReturnType<typeof useLanguage>["language"];
+}) {
+  const trackInnerRef = useRef<HTMLDivElement>(null);
+  const [manualOffset, setManualOffset] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const hoveringRef = useRef(false);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const reduceMotion = useReducedMotion() ?? false;
+
+  const clearPauseTimer = useCallback(() => {
+    if (pauseTimerRef.current) {
+      clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = null;
+    }
+  }, []);
+
+  const holdPause = useCallback(
+    (ms = 1400) => {
+      setPaused(true);
+      clearPauseTimer();
+      pauseTimerRef.current = setTimeout(() => {
+        pauseTimerRef.current = null;
+        if (!hoveringRef.current) setPaused(false);
+      }, ms);
+    },
+    [clearPauseTimer],
+  );
+
+  useEffect(() => () => clearPauseTimer(), [clearPauseTimer]);
+
+  const nudge = useCallback(
+    (dir: -1 | 1) => {
+      const step = measureInsightCardStep(trackInnerRef.current);
+      holdPause(1600);
+      setManualOffset((prev) => {
+        const next = prev + dir * step;
+        const loop = Math.max(step * Math.max(cards.length, 1), step);
+        if (next > loop) return next - loop;
+        if (next < -loop) return next + loop;
+        return next;
+      });
+    },
+    [cards.length, holdPause],
+  );
+
+  return (
+    <div
+      className="group/insights-marquee relative w-full max-w-[100vw] overflow-hidden"
+      onMouseEnter={() => {
+        hoveringRef.current = true;
+        setPaused(true);
+      }}
+      onMouseLeave={() => {
+        hoveringRef.current = false;
+        if (!pauseTimerRef.current) setPaused(false);
+      }}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          if (!pauseTimerRef.current && !hoveringRef.current) setPaused(false);
+        }
+      }}
+    >
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#06122f]/70 via-[#06122f]/35 to-transparent sm:w-20 md:w-28"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#06122f]/70 via-[#06122f]/35 to-transparent sm:w-20 md:w-28"
+        aria-hidden
+      />
+
+      <InsightsNavButton direction="prev" onClick={() => nudge(1)} />
+      <InsightsNavButton direction="next" onClick={() => nudge(-1)} />
+
+      <div
+        className="flex w-max py-1 will-change-transform"
+        style={{
+          transform: `translate3d(${manualOffset}px, 0, 0)`,
+          transition: reduceMotion
+            ? undefined
+            : "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
+      >
+        <div
+          ref={trackInnerRef}
+          className="sigma-insights-marquee-track flex w-max"
+          style={
+            {
+              animation: `sigma-insights-marquee-ltr ${MARQUEE_DURATION_SEC}s linear infinite`,
+              animationPlayState: paused ? "paused" : "running",
+            } as CSSProperties
+          }
+        >
+          <InsightCardTrack cards={cards} language={language} />
+          <InsightCardTrack cards={cards} language={language} ariaHidden />
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes sigma-insights-marquee-ltr {
+          from { transform: translate3d(-50%, 0, 0); }
+          to { transform: translate3d(0, 0, 0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sigma-insights-marquee-track {
+            animation: none !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 function InsightImageFallback({ title }: { title: string }) {
   return (
@@ -261,29 +477,30 @@ export function SigmaInsightsSection({ insights }: { insights: InsightsPayload }
   return (
     <section
       id="insights"
-      className="relative z-10 scroll-mt-24 overflow-hidden px-0 pb-20 pt-16 sm:pb-24 sm:pt-20 md:scroll-mt-28 md:pb-28 md:pt-24"
+      className="sigma-landing-section-shell relative z-10 scroll-mt-24 overflow-hidden px-0 pb-20 pt-16 sm:pb-24 sm:pt-20 md:scroll-mt-28 md:pb-28 md:pt-24"
       aria-labelledby="sigma-insights-heading"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(28,57,187,0.14),transparent_60%)]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(125,170,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(125,170,255,0.03)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_10%,transparent_75%)]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_40%_at_50%_12%,rgba(28,57,187,0.1),transparent_62%)]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.14] [background-image:linear-gradient(rgba(125,170,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(125,170,255,0.03)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(90deg,transparent_0%,#000_12%,#000_88%,transparent_100%)]" aria-hidden />
 
-      <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-6">
-        <p
-          className={`sigma-hero-eyebrow mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-6 sm:text-[11px] ${localeEyebrow(language)}`}
-        >
-          {SECTION_COPY.eyebrow}
-        </p>
-        <h2
-          id="sigma-insights-heading"
-          className={`mx-auto font-display text-[clamp(1.25rem,4.2vw,2.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:tracking-tight ${localeHeading(language)}`}
-        >
-          {SECTION_COPY.title}
-        </h2>
-        <p
-          className={`mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] sm:mt-6 sm:text-base md:text-[#b6bcc4] ${localeBody(language)}`}
-        >
-          {SECTION_COPY.intro}
-        </p>
+      <div className="relative mx-auto max-w-[52rem] px-5 text-center sm:px-6">
+        <div className="sigma-section-header-glass mx-auto px-5 py-5 text-center sm:px-7 sm:py-6 md:px-8 md:py-7">
+          <p
+            className={`sigma-hero-eyebrow mb-5 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-6 sm:text-[11px] ${localeEyebrow(language)}`}
+          >
+            {SECTION_COPY.eyebrow}
+          </p>
+          <SectionTitleTypewriter
+            text={SECTION_COPY.title}
+            id="sigma-insights-heading"
+            className={`mx-auto text-center font-display text-[clamp(1.25rem,4.2vw,2.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:tracking-tight ${localeHeading(language)}`}
+          />
+          <p
+            className={`mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed text-[#cfd6de] sm:mt-6 sm:text-base md:text-[#b6bcc4] ${localeBody(language)}`}
+          >
+            {SECTION_COPY.intro}
+          </p>
+        </div>
       </div>
 
       <div className="relative mt-10 sm:mt-14 md:mt-16">
@@ -291,46 +508,9 @@ export function SigmaInsightsSection({ insights }: { insights: InsightsPayload }
 
         {cards.length > 0 ? (
           useStatic ? (
-            <div
-              className="-mx-0 flex gap-4 overflow-x-auto px-5 pb-3 [scrollbar-width:thin] snap-x snap-mandatory sm:gap-5 sm:px-6 md:grid md:max-w-6xl md:snap-none md:grid-cols-2 md:gap-5 md:overflow-visible md:px-6 md:pb-0 lg:mx-auto lg:grid-cols-3"
-              role="list"
-            >
-              {cards.map((card) => (
-                <div
-                  key={card.id}
-                  className="min-w-0 snap-center max-md:flex max-md:justify-center"
-                  role="listitem"
-                >
-                  <div className="h-full max-md:w-[min(20.5rem,82vw)] md:w-full [&_article]:w-full [&_article]:max-w-none">
-                    <InsightFeedCard card={card} language={language} />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <InsightsStaticScroller cards={cards} language={language} />
           ) : (
-            <div className="group/insights-marquee relative w-full max-w-[100vw] overflow-hidden">
-              <div
-                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#080a0f] via-[#080a0f]/85 to-transparent sm:w-20 md:w-28"
-                aria-hidden
-              />
-              <div
-                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#080a0f] via-[#080a0f]/85 to-transparent sm:w-20 md:w-28"
-                aria-hidden
-              />
-              <div className="flex w-max py-1">
-                <div
-                  className="sigma-insights-marquee-track flex w-max"
-                  style={
-                    {
-                      animation: `sigma-insights-marquee-ltr ${MARQUEE_DURATION_SEC}s linear infinite`,
-                    } as CSSProperties
-                  }
-                >
-                  <InsightCardTrack cards={cards} language={language} />
-                  <InsightCardTrack cards={cards} language={language} ariaHidden />
-                </div>
-              </div>
-            </div>
+            <InsightsMarqueeScroller cards={cards} language={language} />
           )
         ) : null}
       </div>
@@ -347,21 +527,6 @@ export function SigmaInsightsSection({ insights }: { insights: InsightsPayload }
           {SECTION_COPY.cta}
         </MagneticButton>
       </div>
-
-      <style>{`
-        @keyframes sigma-insights-marquee-ltr {
-          from { transform: translate3d(-50%, 0, 0); }
-          to { transform: translate3d(0, 0, 0); }
-        }
-        .group\\/insights-marquee:hover .sigma-insights-marquee-track {
-          animation-play-state: paused;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .sigma-insights-marquee-track {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
@@ -520,7 +685,14 @@ const GlobalStyles = () => (
       background-image:
         linear-gradient(to right, rgba(173, 181, 189, 0.05) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(173, 181, 189, 0.05) 1px, transparent 1px);
-      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+      /* Horizontal-only fade — radial masks stacked into dark bands between sections */
+      mask-image: linear-gradient(
+        90deg,
+        transparent 0%,
+        black 14%,
+        black 86%,
+        transparent 100%
+      );
     }
 
     .glow-text {
@@ -1125,10 +1297,10 @@ const HeroSection = ({
     className="relative flex min-h-[min(100svh,860px)] scroll-mt-24 items-center justify-center overflow-x-clip px-5 pb-16 pt-[max(5.25rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:pb-20 sm:pt-28 md:min-h-screen md:px-16 md:pb-24 md:pt-32 lg:px-24"
   >
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-      {/* Soft navy mesh + radial glow — team/about family, not flat charcoal */}
-      <div className="sigma-hero-mesh absolute inset-0 opacity-[0.22] sm:opacity-[0.28] md:opacity-[0.34]" />
-      <div className="absolute inset-0 bg-sigma-radial opacity-[0.18] sm:opacity-[0.24] md:opacity-[0.3]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_48%_at_50%_42%,rgba(189,224,254,0.04),transparent_62%)]" />
+      {/* Soft navy mesh + radial glow — fades out before Regions junction */}
+      <div className="sigma-hero-mesh absolute inset-0 opacity-[0.16] sm:opacity-[0.2] md:opacity-[0.24]" />
+      <div className="absolute inset-0 bg-sigma-radial opacity-[0.14] sm:opacity-[0.18] md:opacity-[0.22] [mask-image:linear-gradient(180deg,#000_0%,#000_72%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_48%_at_50%_42%,rgba(189,224,254,0.04),transparent_62%)] [mask-image:linear-gradient(180deg,#000_0%,#000_75%,transparent_100%)]" />
       <div
         ref={glowRef}
         className={`sigma-hero-cursor-glow ${glowEnabled ? "is-active" : ""}`}
@@ -1235,12 +1407,12 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="what-is-sigma"
-      className="relative z-10 scroll-mt-24 border-t border-white/[0.04] bg-[#0a0c12]/90 px-5 py-16 backdrop-blur-sm sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
+      className="sigma-landing-section-shell relative z-10 scroll-mt-24 px-5 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
     >
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-20" />
+      <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.08]" />
       <div className="relative z-10 mx-auto max-w-[90rem]">
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,400px)] lg:gap-10 xl:gap-14">
-          <div className="min-w-0">
+          <div className="sigma-section-header-glass min-w-0 max-w-3xl px-5 py-5 sm:px-6 sm:py-6">
             <p
               className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
             >
@@ -1298,11 +1470,11 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="about"
-      className="relative z-10 flex min-h-0 scroll-mt-24 flex-col items-center justify-center overflow-hidden px-5 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
+      className="sigma-landing-section-shell relative z-10 flex min-h-0 scroll-mt-24 flex-col items-center justify-center overflow-hidden px-5 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
     >
-      {/* z-0 — background */}
-      <div className="pointer-events-none absolute inset-0 z-0 grid-bg opacity-30" />
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_18%,rgba(28,57,187,0.1),transparent_65%)]" />
+      {/* z-0 — soft grid (continues landing navy atmosphere) */}
+      <div className="pointer-events-none absolute inset-0 z-0 grid-bg opacity-[0.1]" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_65%_42%_at_50%_20%,rgba(28,57,187,0.09),transparent_68%)]" />
 
       {/* z-30 — intro glass panel; title is a plain centered block (not AnimatedText word-flex) */}
       <div className="relative z-30 mx-auto flex w-full min-w-0 max-w-[54rem] justify-center px-0">
@@ -1374,20 +1546,21 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="capabilities"
-      className="relative z-10 min-h-0 scroll-mt-24 bg-[#212529]/50 px-5 py-16 backdrop-blur-sm sm:px-6 sm:py-24 md:scroll-mt-28 md:px-16 md:py-28 lg:px-24"
+      className="sigma-landing-section-shell relative z-10 min-h-0 scroll-mt-24 px-5 py-16 sm:px-6 sm:py-24 md:scroll-mt-28 md:px-16 md:py-28 lg:px-24"
     >
-      <div className="mx-auto min-w-0 max-w-7xl">
-        <div className="mb-10 min-w-0 max-w-full md:mb-16">
-          <p
-            className={`mb-2 text-xs font-bold tracking-[0.18em] text-[#1c39bb] sm:text-sm md:tracking-widest ${localeEyebrow(language)}`}
-          >
-            {t.services.sectionLabel}
-          </p>
-          <AnimatedText
-            text={t.services.headline}
-            as="h2"
-            className={`font-display w-full min-w-0 max-w-full text-[clamp(1.3rem,5.8vw,1.85rem)] font-semibold uppercase leading-snug tracking-normal text-balance sm:text-4xl md:text-5xl md:tracking-tight ${localeHeading(language)}`}
-          />
+      <div className="relative z-10 mx-auto min-w-0 max-w-7xl">
+        <div className="mx-auto mb-10 max-w-[52rem] md:mb-14">
+          <div className="sigma-section-header-glass mx-auto px-5 py-5 text-center sm:px-7 sm:py-6 md:px-8 md:py-7">
+            <p
+              className={`mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-4 sm:text-[11px] ${localeEyebrow(language)}`}
+            >
+              {t.services.sectionLabel}
+            </p>
+            <SectionTitleTypewriter
+              text={t.services.headline}
+              className={`mx-auto text-center font-display text-[clamp(1.3rem,5.8vw,1.85rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-4xl md:text-5xl md:tracking-tight ${localeHeading(language)}`}
+            />
+          </div>
         </div>
 
         <div
@@ -1422,7 +1595,7 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="sigmapro"
-      className="relative z-10 scroll-mt-24 px-5 py-12 sm:px-6 sm:py-16 md:scroll-mt-28 md:px-16 md:py-24"
+      className="sigma-landing-section-shell relative z-10 scroll-mt-24 px-5 py-12 sm:px-6 sm:py-16 md:scroll-mt-28 md:px-16 md:py-24"
     >
       <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px max-w-4xl -translate-y-1/2 bg-gradient-to-r from-transparent via-[#1c39bb]/35 to-transparent opacity-60" />
       <div className="relative mx-auto min-w-0 max-w-5xl">
@@ -1845,7 +2018,6 @@ export function SigmaLandingClient({
           <HeroSection t={t} isRtl={isRtl} />
         </div>
 
-        <SigmaInsightsSection insights={insights} />
         <CryptoMarketingSection />
 
         <WhatIsSigmaSection t={t} />
@@ -1854,6 +2026,7 @@ export function SigmaLandingClient({
         <ProofLayer />
         <MidConversionCta isRtl={isRtl} lang={currentLang} />
         <SigmaProSection t={t} />
+        <SigmaInsightsSection insights={insights} />
         <div id="connect" className="h-0" aria-hidden />
         <div id="contact" className="h-0" aria-hidden />
         <FinalConversionCta

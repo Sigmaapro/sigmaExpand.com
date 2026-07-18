@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { RegionalMarketMap } from "@/components/sigma/RegionalMarketMap";
 import {
@@ -12,6 +12,7 @@ import {
   RegionMarqueeBand,
   offsetPlaceTokens,
 } from "@/components/sigma/RegionMarqueeBand";
+import { SectionTitleTypewriter } from "@/components/sigma/SectionTitleTypewriter";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   getCryptoAgency,
@@ -23,72 +24,6 @@ import {
   localeHeading,
 } from "@/lib/localeTypography";
 
-/** Premium once-per-viewport title typewriter. Copy unchanged. */
-function useSectionTitleTypewriter(
-  fullText: string,
-  enabled: boolean,
-  sectionRef: RefObject<HTMLElement | null>,
-) {
-  const [typed, setTyped] = useState(enabled ? "" : fullText);
-  const [done, setDone] = useState(!enabled);
-  const [started, setStarted] = useState(!enabled);
-  const runIdRef = useRef(0);
-
-  useEffect(() => {
-    if (!enabled) {
-      setTyped(fullText);
-      setDone(true);
-      setStarted(true);
-      return;
-    }
-
-    setTyped("");
-    setDone(false);
-    setStarted(false);
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setStarted(true);
-          obs.disconnect();
-        }
-      },
-      { root: null, threshold: 0.28, rootMargin: "0px 0px -8% 0px" },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [enabled, fullText, sectionRef]);
-
-  useEffect(() => {
-    if (!enabled || !started) return;
-
-    const id = ++runIdRef.current;
-    let i = 0;
-    setTyped("");
-    setDone(false);
-
-    const stepMs = Math.min(
-      42,
-      Math.max(22, Math.floor(1800 / Math.max(fullText.length, 1))),
-    );
-    const timer = window.setInterval(() => {
-      if (runIdRef.current !== id) return;
-      i += 1;
-      setTyped(fullText.slice(0, i));
-      if (i >= fullText.length) {
-        window.clearInterval(timer);
-        setDone(true);
-      }
-    }, stepMs);
-
-    return () => window.clearInterval(timer);
-  }, [enabled, started, fullText]);
-
-  return { typed, done, showCursor: enabled && started && !done };
-}
-
 export function CryptoMarketingSection() {
   const { lang, isRtl } = useLanguage();
   const c = getCryptoAgency(lang);
@@ -98,12 +33,6 @@ export function CryptoMarketingSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const tabs = c.tabs;
   const tab = tabs[active] ?? tabs[0]!;
-
-  const { typed, done, showCursor } = useSectionTitleTypewriter(
-    c.title,
-    !reduceMotion,
-    sectionRef,
-  );
 
   const countryTokens = useMemo(() => {
     const blob = [
@@ -137,50 +66,40 @@ export function CryptoMarketingSection() {
     <section
       ref={sectionRef}
       id="crypto-agency-marketing"
-      className="relative z-10 scroll-mt-24 overflow-hidden border-t border-white/[0.04] border-b border-white/[0.06] bg-[#080a0f]/95 backdrop-blur-sm md:scroll-mt-28"
+      className="relative z-10 scroll-mt-24 overflow-hidden md:scroll-mt-28"
       aria-labelledby="crypto-agency-marketing-heading"
     >
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.14]" aria-hidden />
+      {/* Soft blue glow only — no edge vignette / bottom dark strip */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_8%,rgba(32,73,180,0.12),transparent_46%),radial-gradient(circle_at_88%_18%,rgba(86,130,255,0.08),transparent_42%)]" />
+        <div className="absolute left-1/2 top-0 h-[min(520px,65vw)] w-[min(520px,85vw)] -translate-x-1/2 rounded-full bg-[#1d4adb]/10 blur-3xl" />
+      </div>
 
       <div className="relative z-10 mx-auto min-w-0 max-w-[90rem] px-5 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-12 md:px-16 md:pb-12 md:pt-14 lg:px-24">
-        {/* Section intro — page background, not inside glass */}
-        <div className="min-w-0">
-          <p
-            className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
-          >
-            {c.eyebrow}
-          </p>
-          <h2
-            id="crypto-agency-marketing-heading"
-            className={`relative max-w-full font-display text-[clamp(1.125rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl ${localeHeading(lang)}`}
-          >
-            <span className="invisible select-none" aria-hidden>
-              {c.title}
-            </span>
-            <span
-              className="absolute inset-0"
-              aria-hidden={!done && !reduceMotion}
+        {/* Section intro — centered glass header plate */}
+        <div className="mx-auto min-w-0 max-w-[52rem]">
+          <div className="sigma-section-header-glass mx-auto px-5 py-5 text-center sm:px-7 sm:py-6 md:px-8 md:py-7">
+            <p
+              className={`sigma-hero-eyebrow mb-4 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
             >
-              {reduceMotion || done ? c.title : typed}
-              {showCursor ? (
-                <span
-                  className="ms-0.5 inline-block h-[0.92em] w-[0.08em] translate-y-[0.08em] bg-[#38bdf8] align-baseline opacity-90 animate-pulse"
-                  aria-hidden
-                />
-              ) : null}
-            </span>
-            {!reduceMotion && !done ? (
-              <span className="sr-only">{c.title}</span>
-            ) : null}
-          </h2>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
-            {c.description}
-          </p>
+              {c.eyebrow}
+            </p>
+            <SectionTitleTypewriter
+              text={c.title}
+              id="crypto-agency-marketing-heading"
+              observeRef={sectionRef}
+              className={`mx-auto max-w-full text-center font-display text-[clamp(1.125rem,4.2vw,1.75rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight md:text-4xl ${localeHeading(lang)}`}
+            />
+            <p className="mx-auto mt-5 max-w-2xl text-center text-sm leading-relaxed text-[#cfd6de] md:text-base md:text-[#b6bcc4]">
+              {c.description}
+            </p>
+          </div>
         </div>
 
         {/* Glass card — map + detail only */}
-        <div className="relative mt-8 overflow-hidden rounded-2xl border border-[#bde0fe]/[0.12] bg-[#0a0f18]/[0.55] shadow-[0_18px_56px_rgba(0,0,0,0.42),0_0_40px_rgba(28,57,187,0.12)] backdrop-blur-xl sm:mt-9 md:mt-10">
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.05)_0%,rgba(28,57,187,0.04)_42%,transparent_72%)]" />
+        <div className="relative mt-8 overflow-hidden rounded-2xl border border-[#bde0fe]/[0.14] bg-[#0a1224]/[0.72] shadow-[0_18px_56px_rgba(2,8,22,0.5),0_0_48px_rgba(28,57,187,0.16)] backdrop-blur-xl sm:mt-9 md:mt-10">
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.06)_42%,transparent_72%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_15%_0%,rgba(86,130,255,0.1),transparent_55%)]" />
 
           <div className="relative z-10 grid min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
             <div className="min-w-0 border-b border-white/[0.06] px-4 py-6 sm:px-6 sm:py-8 lg:border-b-0 lg:border-e lg:border-white/[0.06] lg:px-8 lg:py-10">
@@ -285,11 +204,6 @@ export function CryptoMarketingSection() {
           </RegionMarqueeBand>
         </div>
       ) : null}
-
-      <div
-        className="relative z-10 h-6 bg-gradient-to-b from-[#080a0f]/70 to-transparent sm:h-8 md:h-10"
-        aria-hidden
-      />
 
       <style>{`
         @media (prefers-reduced-motion: reduce) {

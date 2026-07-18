@@ -32,18 +32,98 @@ body {
   overflow-x: clip;
 }
 
-/* Fallback focus ring for controls without component-level focus-visible styles */
-a:focus-visible,
-button:focus-visible,
-[role="combobox"]:focus-visible {
-  outline: 2px solid rgba(189, 224, 254, 0.55);
-  outline-offset: 2px;
+/* Homepage: continuous navy shell instead of flat erie/black page fill */
+html:has(.sigma-landing-root),
+body:has(.sigma-landing-root) {
+  background-color: #030b1d;
+}
+
+body:has(.sigma-landing-root) {
+  background-image: none;
+}
+
+.sigma-landing-root {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  /* Single continuous navy field — no mid-page dark slabs */
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -6%, rgba(28, 57, 187, 0.12), transparent 58%),
+    radial-gradient(ellipse 48% 36% at 94% 40%, rgba(86, 130, 255, 0.05), transparent 55%),
+    radial-gradient(ellipse 42% 32% at 6% 72%, rgba(28, 57, 187, 0.06), transparent 52%),
+    linear-gradient(180deg, #030b1d 0%, #041028 40%, #05122f 70%, #030b1d 100%);
+}
+
+/*
+ * Section shells stay fully transparent.
+ * No ::before top/bottom radials — those stacked into repeated dark bands
+ * at every Hero / Regions / About / Proof / Pro / Insights / CTA junction.
+ */
+.sigma-landing-section-shell {
+  position: relative;
+  background-color: transparent;
+}
+
+/*
+ * Minimal editorial glass plate for homepage section headers
+ * (eyebrow + title + intro only). Supports titles — does not
+ * replace section cards or restore separator bands.
+ */
+.sigma-section-header-glass {
+  position: relative;
+  isolation: isolate;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(189, 224, 254, 0.1);
+  background: linear-gradient(
+    155deg,
+    rgba(8, 20, 55, 0.48) 0%,
+    rgba(6, 18, 47, 0.3) 52%,
+    rgba(5, 12, 30, 0.22) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 56px rgba(20, 72, 180, 0.08);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.sigma-section-header-glass::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse 80% 55% at 50% 0%,
+    rgba(189, 224, 254, 0.07),
+    transparent 58%
+  );
+}
+
+.sigma-section-header-glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .sigma-section-header-glass {
+    border-radius: 1.5rem;
+  }
 }
 
 @media (max-width: 767px) {
   body:has(.sigma-landing-root) {
     overflow-x: clip;
   }
+}
+
+/* Fallback focus ring for controls without component-level focus-visible styles */
+a:focus-visible,
+button:focus-visible,
+[role="combobox"]:focus-visible {
+  outline: 2px solid rgba(189, 224, 254, 0.55);
+  outline-offset: 2px;
 }
 
 .font-display {
@@ -202,14 +282,13 @@ button:focus-visible,
   background-image: linear-gradient(90deg, #ffffff 0%, #bde0fe 100%);
 }
 
-/* Homepage People / Team — full-section bubble rise (behind intro glass).
-   Soft edge mask only; no mid-section cut so cards reach the top. */
+/* Homepage People / Team — soft vertical fade only; avoid hard band cuts */
 .sigma-team-float-stage {
   mask-image: linear-gradient(
     180deg,
     transparent 0%,
-    #000 6%,
-    #000 94%,
+    #000 10%,
+    #000 90%,
     transparent 100%
   );
 }
@@ -400,11 +479,13 @@ html[lang="zh-CN"] .sigma-contact-root h1 {
   background:
     linear-gradient(
       145deg,
-      #020817 0%,
-      #030b1d 38%,
-      #07142f 72%,
-      rgba(28, 57, 187, 0.28) 100%
+      rgba(3, 11, 29, 0.55) 0%,
+      rgba(4, 16, 40, 0.35) 38%,
+      rgba(7, 20, 47, 0.28) 72%,
+      rgba(28, 57, 187, 0.18) 100%
     );
+  /* Fade out before Regions so hero does not end in a dark slab */
+  mask-image: linear-gradient(180deg, #000 0%, #000 68%, transparent 100%);
 }
 
 .sigma-hero-terminal-grid {
@@ -421,31 +502,29 @@ html[lang="zh-CN"] .sigma-contact-root h1 {
   );
 }
 
+/* Corners only — no bottom-edge crush that reads as a horizontal band */
 .sigma-hero-corner-crush {
-  opacity: 0.45;
+  opacity: 0.18;
   background:
-    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(2, 8, 23, 0.72) 0%, transparent 70%),
-    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(2, 8, 23, 0.65) 0%, transparent 70%),
-    radial-gradient(ellipse 80% 60% at 0% 100%, rgba(3, 11, 29, 0.7) 0%, transparent 70%),
-    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(3, 11, 29, 0.68) 0%, transparent 70%);
+    radial-gradient(ellipse 70% 48% at 0% 0%, rgba(6, 18, 47, 0.35) 0%, transparent 72%),
+    radial-gradient(ellipse 70% 48% at 100% 0%, rgba(6, 18, 47, 0.3) 0%, transparent 72%);
 }
 
+/* Even soft navy film — no top/bottom dark bars on the fixed WebGL layer */
 .sigma-webgl-film {
   background:
     linear-gradient(
       180deg,
-      rgba(2, 8, 23, 0.58) 0%,
-      rgba(3, 11, 29, 0.14) 18%,
-      transparent 36%,
-      transparent 64%,
-      rgba(3, 11, 29, 0.14) 82%,
-      rgba(2, 8, 23, 0.55) 100%
+      rgba(4, 16, 40, 0.12) 0%,
+      rgba(4, 16, 40, 0.06) 35%,
+      rgba(4, 16, 40, 0.06) 65%,
+      rgba(4, 16, 40, 0.1) 100%
     ),
     linear-gradient(
       165deg,
-      rgba(7, 20, 47, 0.38) 0%,
-      transparent 42%,
-      rgba(3, 11, 29, 0.32) 100%
+      rgba(28, 57, 187, 0.08) 0%,
+      transparent 45%,
+      rgba(7, 20, 47, 0.06) 100%
     );
 }
 
@@ -554,9 +633,12 @@ html[lang="zh-CN"] .sigma-contact-root h1 {
     linear-gradient(rgba(173, 181, 189, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(173, 181, 189, 0.06) 1px, transparent 1px);
   background-size: 64px 64px;
-  mask-image: radial-gradient(
-    ellipse 85% 75% at 50% 45%,
-    black 20%,
+  /* Side fade only — radial masks were darkening section top/bottom junctions */
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
     transparent 100%
   );
 }

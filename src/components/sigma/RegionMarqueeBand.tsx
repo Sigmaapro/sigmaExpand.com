@@ -1,6 +1,5 @@
 "use client";
 
-import { MapPin } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -39,17 +38,17 @@ export function RegionMarqueeBand({
     <div
       className={`group/marquee relative w-full max-w-[100vw] overflow-hidden backdrop-blur-md ${
         framed
-          ? "border-y border-white/[0.07] bg-[#070a10]/85"
+          ? "border-y border-white/[0.03] bg-transparent"
           : "border-0 bg-transparent"
       } ${className}`}
       aria-hidden={ariaHidden || undefined}
     >
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#080a0f] via-[#080a0f]/90 to-transparent sm:w-16"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#06122f]/65 via-[#06122f]/30 to-transparent sm:w-16"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#080a0f] via-[#080a0f]/90 to-transparent sm:w-16"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#06122f]/65 via-[#06122f]/30 to-transparent sm:w-16"
         aria-hidden
       />
 
@@ -279,26 +278,63 @@ type CountryPillsProps = {
   countries: string[];
 };
 
-/** Minimal location ticker items — pin + name, no pill boxes. */
+/** Place token → ISO flag code (circle-flags). Bali uses Indonesia. */
+const PLACE_FLAG_CODE: Record<string, string> = {
+  Oman: "om",
+  Germany: "de",
+  Spain: "es",
+  Italy: "it",
+  Poland: "pl",
+  Turkey: "tr",
+  Bali: "id",
+  UAE: "ae",
+  KSA: "sa",
+  Qatar: "qa",
+  Kuwait: "kw",
+  Bahrain: "bh",
+};
+
+function CircleFlag({ code }: { code: string }) {
+  return (
+    <span
+      className="relative inline-flex size-[1.125rem] shrink-0 overflow-hidden rounded-full ring-1 ring-[rgba(147,197,253,0.28)] shadow-[0_0_10px_rgba(28,57,187,0.18)] sm:size-5"
+      aria-hidden
+    >
+      {/* Local circle-flag SVGs — decorative beside visible country name. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`/images/flags/circle/${code}.svg`}
+        alt=""
+        width={18}
+        height={18}
+        className="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+        draggable={false}
+      />
+    </span>
+  );
+}
+
+/** Minimal location ticker items — circular flag + name, no pill boxes. */
 export function RegionCountryPills({ countries }: CountryPillsProps) {
   if (countries.length === 0) return null;
   return (
     <>
-      {countries.map((name) => (
-        <span
-          key={name}
-          className="inline-flex shrink-0 items-center gap-2 px-2.5 sm:gap-2.5 sm:px-3.5"
-        >
-          <MapPin
-            className="size-[0.95rem] shrink-0 text-[#7eb6f0] sm:size-4"
-            strokeWidth={2.25}
-            aria-hidden
-          />
-          <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#e2e8f0] sm:text-[14px]">
-            {name}
+      {countries.map((name) => {
+        const flagCode = PLACE_FLAG_CODE[name];
+        return (
+          <span
+            key={name}
+            className="inline-flex shrink-0 items-center gap-2 px-2.5 sm:gap-2.5 sm:px-3.5"
+          >
+            {flagCode ? <CircleFlag code={flagCode} /> : null}
+            <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#e2e8f0] sm:text-[14px]">
+              {name}
+            </span>
           </span>
-        </span>
-      ))}
+        );
+      })}
     </>
   );
 }

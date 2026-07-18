@@ -20,7 +20,7 @@ export function MidConversionCta({
   return (
     <section
       id="conversion-mid"
-      className="relative z-10 scroll-mt-28 border-t border-white/[0.06] px-5 py-12 sm:px-6 sm:py-14 md:px-16 md:py-16 lg:px-24"
+      className="sigma-landing-section-shell relative z-10 scroll-mt-28 px-5 py-12 sm:px-6 sm:py-14 md:px-16 md:py-16 lg:px-24"
     >
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1c39bb]/[0.07] via-transparent to-transparent" />
       <motion.div
@@ -69,9 +69,10 @@ export function FinalConversionCta({
   return (
     <section
       id="conversion-final"
-      className="relative z-10 scroll-mt-24 border-t border-white/[0.08] bg-gradient-to-b from-[#0d1018] via-[#0a0c12] to-[#080a0f] px-5 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
+      className="sigma-landing-section-shell relative z-10 scroll-mt-24 px-5 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-40 max-w-3xl bg-[#1c39bb]/[0.12] blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-48 max-w-3xl bg-[#1c39bb]/[0.14] blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_100%,rgba(28,57,187,0.08),transparent_60%)]" aria-hidden />
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 16 }}
         whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}

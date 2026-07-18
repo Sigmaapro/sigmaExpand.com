@@ -11,6 +11,7 @@ import {
   type ProofTestimonial,
 } from "@/content/proof";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
+import { SectionTitleTypewriter } from "@/components/sigma/SectionTitleTypewriter";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
@@ -149,8 +150,8 @@ export function ProofLayer() {
   const H = getHomeSectionLinks(lang);
 
   return (
-    <div className="relative z-10 border-t border-white/[0.04] bg-[#080a0f]/50">
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.12]" aria-hidden />
+    <div className="sigma-landing-section-shell relative z-10">
+      <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.1]" aria-hidden />
 
       {/* Trusted by */}
       <section
@@ -179,22 +180,25 @@ export function ProofLayer() {
       {/* Proof in numbers — `id="network"` preserves navbar scroll target */}
       <section
         id="network"
-        className="relative scroll-mt-28 border-t border-white/[0.05] px-5 py-14 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
+        className="relative scroll-mt-28 px-5 py-14 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem]">
-          <p
-            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
-          >
-            {proof.proofInNumbers.sectionLabel}
-          </p>
-          <h2
-            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
-          >
-            {proof.proofInNumbers.headline}
-          </h2>
+          <div className="mx-auto mb-10 max-w-[52rem] sm:mb-12">
+            <div className="sigma-section-header-glass mx-auto px-5 py-5 text-center sm:px-7 sm:py-6 md:px-8 md:py-7">
+              <p
+                className={`sigma-hero-eyebrow mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
+              >
+                {proof.proofInNumbers.sectionLabel}
+              </p>
+              <SectionTitleTypewriter
+                text={proof.proofInNumbers.headline}
+                className={`mx-auto text-center font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
+              />
+            </div>
+          </div>
           <div
             id="metrics"
-            className="mt-10 grid min-w-0 grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
+            className="grid min-w-0 grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
           >
             {proof.metrics.map((m, i) => (
               <MetricCard key={m.id} metric={m} index={i} lang={lang} reduceMotion={reduceMotion} />
@@ -209,20 +213,24 @@ export function ProofLayer() {
       {/* Partner feedback */}
       <section
         id="testimonials"
-        className="relative scroll-mt-28 border-t border-white/[0.05] px-5 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
+        className="relative scroll-mt-28 px-5 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem]">
-          <p
-            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
-          >
-            {proof.partnerFeedback.sectionLabel}
-          </p>
-          <h3
-            className={`max-w-full font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-3xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
-          >
-            {proof.partnerFeedback.headline}
-          </h3>
-          <div className="mt-10 grid min-w-0 grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+          <div className="mx-auto mb-10 max-w-[52rem] sm:mb-12">
+            <div className="sigma-section-header-glass mx-auto px-5 py-5 text-center sm:px-7 sm:py-6 md:px-8 md:py-7">
+              <p
+                className={`sigma-hero-eyebrow mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
+              >
+                {proof.partnerFeedback.sectionLabel}
+              </p>
+              <SectionTitleTypewriter
+                text={proof.partnerFeedback.headline}
+                as="h3"
+                className={`mx-auto text-center font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
+              />
+            </div>
+          </div>
+          <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-7">
             {proof.testimonials.map((item, idx) => (
               <TestimonialCard
                 key={item.id}

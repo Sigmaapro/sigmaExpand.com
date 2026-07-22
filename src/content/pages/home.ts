@@ -2,7 +2,7 @@
 
 import { heroByLang } from "../hero";
 import { heroCarouselByLang } from "../heroCarousel";
-import { servicesByLang } from "../services";
+import { servicesByLang } from "../homepageServices";
 import { siteRestByLang } from "../site";
 import { localizeFromLangRecord } from "../_contentLocales";
 

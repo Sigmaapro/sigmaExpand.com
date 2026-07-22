@@ -10,7 +10,7 @@ export type TermsPageContent = {
   headline: string;
   updatedLabel: string;
   updatedDate: string;
-  sections: { title: string; body: string }[];
+  sections: { title: string; body: string; items?: string[] }[];
 };
 
 export const termsPageMetaByLang: Record<LangCode, TermsPageMeta> = {
@@ -46,30 +46,73 @@ export const termsPageMetaByLang: Record<LangCode, TermsPageMeta> = {
 
 export const termsPageContentByLang: Record<LangCode, TermsPageContent> = {
   EN: {
-    kicker: "Legal",
-    headline: "Terms of use",
+    kicker: "Terms of Use",
+    headline: "Terms of Use",
     updatedLabel: "Last updated",
-    updatedDate: "May 2026",
+    updatedDate: "2026-01-XX",
     sections: [
       {
-        title: "Agreement",
-        body: "By accessing this website you agree to these terms. If you do not agree, do not use the site.",
+        title: "About these terms",
+        body: "These terms govern your use of the Sigma website at sigmaa.pro, our content, our communications, and our publicly accessible services. Engagement contracts between Sigma and active partners govern those specific relationships and override these general terms where they apply. By using the site, you agree to these terms. If you don't agree, don't use the site.",
       },
       {
-        title: "No investment advice",
-        body: "Content is informational and does not constitute financial, legal, or investment advice. Past performance does not guarantee future results.",
+        title: "Who Sigma is",
+        body: "Sigma is a global growth network operating across multiple jurisdictions. We provide growth, marketing, BD, KOL infrastructure, IB program design, and related services to partners in crypto, forex, and Web3 industries. We are not a broker, exchange, fund, or licensed financial advisor. The full picture sits at /risk-disclosure.",
       },
       {
-        title: "Contact & submissions",
-        body: "Information you submit through forms may be used to respond and improve our services, consistent with our privacy notice.",
+        title: "What you can do",
+        body: "Read our site, share our content with attribution, link to our pages, apply for services, send us inquiries, and use any tools or resources we publish.",
       },
       {
-        title: "Limitation of liability",
-        body: "To the fullest extent permitted by law, Sigma disclaims liability for indirect or consequential damages arising from use of this site.",
+        title: "What you can't do",
+        body: "The following uses are prohibited:",
+        items: [
+          "Scrape the site or its content for resale or training",
+          "Republish substantial portions of our content without permission",
+          "Misrepresent yourself or your project in applications or communications",
+          "Use Sigma's name, logo, or testimonials without written consent",
+          "Engage in reverse engineering, credential stuffing, or anything that disrupts site operation",
+          "Use the site to send unsolicited commercial messages to people associated with Sigma",
+          "Attempt to imply association with Sigma where none exists",
+        ],
+      },
+      {
+        title: "Content on this site",
+        body: "Content on the Sigma site — articles, guides, market commentary, and educational materials — is for informational purposes only. It is not investment advice, legal advice, tax advice, or a recommendation to engage in any specific transaction. Always consult licensed professionals in your jurisdiction for personalized advice. Forward-looking statements are estimates and good-faith projections, not guarantees.",
+      },
+      {
+        title: "Intellectual property",
+        body: "Sigma's name, logo, content, dashboards, tools, frameworks, and proprietary methodologies are owned by Sigma or licensed to Sigma. You can read, share with attribution, and reference — but you can't copy, modify, sell, or build derivative products from our intellectual property without written permission. Content you submit to Sigma (applications, briefs, communications) remains yours; you grant us a limited license to use it for the purpose of evaluating fit, running the engagement, and delivering services.",
+      },
+      {
+        title: "Engagements override",
+        body: "Where you become an active Sigma partner under a signed engagement contract, that contract governs the specific commercial and legal relationship. These site terms continue to apply to your use of the website, content, and any non-contractual interactions.",
+      },
+      {
+        title: "Limitations and disclaimers",
+        body: "To the maximum extent permitted by applicable law:",
+        items: [
+          'The site and its content are provided "as is" without warranties of any kind',
+          "Sigma is not liable for losses arising from your use of the site, reliance on its content, or trading decisions made based on anything published",
+          "Sigma is not responsible for the security, solvency, or performance of third-party platforms mentioned or linked",
+          "Sigma's total liability for any claim related to the site (separate from engagement contracts) is limited to what you've paid us, if anything, in the 12 months preceding the claim",
+        ],
+      },
+      {
+        title: "Governing law",
+        body: "These terms are governed by the laws of the jurisdiction where Sigma's principal operating entity is registered. Specific engagement contracts specify their own governing law.",
+      },
+      {
+        title: "Disputes",
+        body: "Most disputes get resolved by talking. Where a formal process is needed, engagement contracts specify arbitration or court jurisdiction. For site-related disputes outside an engagement, the governing law above applies.",
       },
       {
         title: "Changes",
-        body: "We may update these terms; continued use after changes constitutes acceptance. Material updates will be reflected on this page.",
+        body: "We can update these terms. The effective date above reflects the current version. Substantive changes get notified to active partners.",
+      },
+      {
+        title: "Contact",
+        body: "Questions about these terms: legal@sigmaa.pro.",
       },
     ],
   },

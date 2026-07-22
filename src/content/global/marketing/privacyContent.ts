@@ -1,7 +1,7 @@
 import type { LangCode } from "@/content/types";
 import type { PageMeta } from "@/content/pages/meta";
 
-export type PrivacySection = { title: string; body: string };
+export type PrivacySection = { title: string; body: string; items?: string[] };
 
 export type PrivacyMarketingBody = {
   kicker: string;
@@ -44,34 +44,127 @@ export const privacyPageMetaByLang: Record<LangCode, PageMeta> = {
 
 export const privacyPageContentByLang: Record<LangCode, PrivacyMarketingBody> = {
   EN: {
-    kicker: "Legal",
-    headline: "Privacy notice",
+    kicker: "Privacy Policy",
+    headline: "Privacy Policy",
     updatedLabel: "Last updated",
-    updatedDate: "May 2026",
+    updatedDate: "2026-01-XX",
     sections: [
       {
-        title: "Overview",
-        body: "This notice describes how Sigma collects and uses information submitted through this website (including contact and lead forms). It is intended for a general audience and does not replace jurisdiction-specific disclosures your counsel may require.",
+        title: "Who we are",
+        body: 'Sigma ("we," "us," "our") is a global growth infrastructure network operating across multiple jurisdictions. This policy explains how we handle information about partners, KOLs, IBs, traders, prospects, and website visitors. Contact for privacy questions: privacy@sigmaa.pro.',
       },
       {
-        title: "Information we collect",
-        body: "When you submit forms or book a call, we may collect your name, email address, message content, and technical metadata such as browser type and approximate region derived from standard server logs. Analytics tools, if enabled, may process usage data as described in their respective policies.",
+        title: "What we collect",
+        body: "Information you provide directly:",
+        items: [
+          "Name, email, phone, messaging handles (Telegram, WhatsApp)",
+          "Country, language, time zone",
+          "Company, role, trading or platform background",
+          "Social profiles where shared",
+          "Application content (KOL applications, IB applications, partner briefs)",
+          "Information shared during discovery calls, diagnostics, and active engagements",
+        ],
       },
       {
-        title: "How we use information",
-        body: "We use submissions to respond to inquiries, operate our services, improve the site, and—where permitted—send relevant follow-up about Sigma offerings. We do not sell personal information.",
+        title: "What we collect automatically",
+        body: "Information collected automatically when you visit our site:",
+        items: [
+          "IP address, approximate location, browser, device type",
+          "Pages visited, time on site, referral source",
+          "Analytics events (clicks, scrolls, form interactions)",
+        ],
       },
       {
-        title: "Retention & security",
-        body: "We retain contact records only as long as needed for the purposes above or as required by law. We apply reasonable technical and organizational safeguards; no method of transmission over the Internet is completely secure.",
+        title: "Information from third parties",
+        body: "Where partners or KOLs provide references, those references' contact information may be shared. We may also use public information from social platforms (follower counts, engagement metrics) where relevant to applications.",
       },
       {
-        title: "Your choices",
-        body: "You may request access, correction, or deletion of personal information where applicable law provides those rights. Contact us using the email or form on this site. We may need to verify your identity before fulfilling a request.",
+        title: "Sensitive information we do not collect",
+        body: "We do not collect KYC documents, banking credentials, wallet seeds, private keys, exchange account passwords, or any custody-grade information. If you've sent us any of those, ask us to delete and we will.",
       },
       {
-        title: "Changes",
-        body: "We may update this notice from time to time. Material changes will be reflected on this page with an updated date.",
+        title: "Why we collect it",
+        body: "We collect information for the following purposes:",
+        items: [
+          "To respond to inquiries and applications",
+          "To run discovery calls and diagnostics",
+          "To deliver services under engagement contracts",
+          "To manage CRM, partner relationships, and ongoing communication",
+          "To improve our website, content, and services",
+          "To comply with legal, regulatory, and contractual obligations",
+          "To protect against fraud, abuse, and unauthorized access",
+        ],
+      },
+      {
+        title: "Data sales and marketing sharing",
+        body: "We don't sell partner or visitor data. We don't share it with third parties for marketing purposes.",
+      },
+      {
+        title: "Legal basis (GDPR / KVKK / UAE PDPL)",
+        body: "Where you're in the EU/EEA, UK, Turkey, or the UAE, our processing relies on one of:",
+        items: [
+          "Your consent (which you can withdraw)",
+          "Performance of a contract (engagement, partnership)",
+          "Legitimate interest (running the business, security, fraud prevention)",
+          "Legal obligation (regulatory, tax, sanctions screening)",
+        ],
+      },
+      {
+        title: "Sharing",
+        body: "We share information internally across the Sigma team on a need-to-know basis. With external parties, only where:",
+        items: [
+          "Required for delivering services you've engaged us for (e.g., introductions to network partners you've asked for)",
+          "Required by law, regulator, or court order",
+          "Necessary for fraud prevention or security",
+          "Authorized by you in writing",
+        ],
+      },
+      {
+        title: "Infrastructure providers",
+        body: "Our infrastructure providers (cloud hosting, CRM, analytics, email) process data on our behalf under data processing agreements that meet GDPR/PDPL standards.",
+      },
+      {
+        title: "Where data lives",
+        body: "Sigma's infrastructure is hosted across multiple jurisdictions including the EU and UAE. Where data leaves your region, we rely on Standard Contractual Clauses or equivalent transfer mechanisms.",
+      },
+      {
+        title: "How long we keep it",
+        body: "Retention periods:",
+        items: [
+          "Active partner data: for the duration of the partnership plus 7 years (typical industry standard for finance-adjacent records).",
+          "Prospect / inquiry data: 24 months from last contact, unless you ask for deletion sooner.",
+          "Visitor analytics: 14 months.",
+          "Marketing communications consent: until you withdraw it.",
+        ],
+      },
+      {
+        title: "Your rights",
+        body: "Under GDPR, KVKK, UAE PDPL, and equivalent frameworks, you have the right to:",
+        items: [
+          "Access the data we hold about you",
+          "Correct inaccurate data",
+          "Request deletion (subject to legal retention obligations)",
+          "Restrict or object to processing",
+          "Receive your data in a portable format",
+          "Withdraw consent at any time",
+          "Lodge a complaint with your local supervisory authority",
+        ],
+      },
+      {
+        title: "Rights requests",
+        body: "To exercise any of these rights, email privacy@sigmaa.pro. We respond within 30 days, typically faster.",
+      },
+      {
+        title: "Cookies",
+        body: "See /cookies for the full cookie policy.",
+      },
+      {
+        title: "Children's data",
+        body: "Our services aren't for anyone under 18. We don't knowingly collect data from minors. If we discover we have, we delete it.",
+      },
+      {
+        title: "Updates",
+        body: "We update this policy as our operations and regulations evolve. The effective date above changes when we do. Significant changes are notified to active partners; visitors are notified via the website.",
       },
     ],
   },

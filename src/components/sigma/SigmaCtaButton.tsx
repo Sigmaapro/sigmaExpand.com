@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { LangCode } from "@/content/types";
@@ -44,22 +44,25 @@ export const MagneticButton = ({
 }) => {
   const { lang } = useLanguage();
   const isNarrow = useIsMobile(1024);
+  const reduceMotion = useReducedMotion() ?? false;
   const motionX = useMotionValue(0);
   const motionY = useMotionValue(0);
   const smoothX = useSpring(motionX, { stiffness: 180, damping: 18, mass: 0.12 });
   const smoothY = useSpring(motionY, { stiffness: 180, damping: 18, mass: 0.12 });
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const anchorRef = useRef<HTMLAnchorElement | null>(null);
+  const allowMagnetic = !isNarrow && !reduceMotion;
 
   const handleMouseMove = (
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
   ) => {
+    if (!allowMagnetic) return;
     const el = href ? anchorRef.current : buttonRef.current;
     if (!el) return;
     const { clientX, clientY } = e;
     const { left, top, width, height } = el.getBoundingClientRect();
-    const x = (clientX - (left + width / 2)) * 0.22;
-    const y = (clientY - (top + height / 2)) * 0.22;
+    const x = (clientX - (left + width / 2)) * 0.16;
+    const y = (clientY - (top + height / 2)) * 0.16;
     motionX.set(x);
     motionY.set(y);
   };
@@ -72,7 +75,7 @@ export const MagneticButton = ({
   const motionShared = {
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
-    style: { x: isNarrow ? 0 : smoothX, y: isNarrow ? 0 : smoothY },
+    style: { x: allowMagnetic ? smoothX : 0, y: allowMagnetic ? smoothY : 0 },
     className: `${magneticButtonClass(lang, primary, fullWidthMobile)} ${localeCta(lang)}`,
   };
 
@@ -89,6 +92,7 @@ export const MagneticButton = ({
       </span>
       {primary ? (
         <>
+          <div className="sigma-cta-primary-ring" aria-hidden />
           <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-40" />
           <div className="absolute inset-0 z-0 bg-[#bde0fe] opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-[0.12]" />
         </>

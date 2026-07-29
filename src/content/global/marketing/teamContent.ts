@@ -36,6 +36,13 @@ export type TeamMember = {
     description?: string;
     year?: string;
     link?: string;
+    linkLabel?: string;
+  }>;
+  /** Named people represented by a combined profile (e.g. Goli Brothers). */
+  relatedPersons?: Array<{
+    name: string;
+    jobTitle?: string;
+    linkedin?: string;
   }>;
   markets?: string[];
   location?: {
@@ -54,6 +61,11 @@ export type TeamMember = {
   profileStatus?: "draft" | "active" | "archived";
   bio?: string;
 };
+
+/** Only `active` profiles are publicly indexable (sitemap + robots index). */
+export function isTeamMemberPubliclyIndexable(member: TeamMember): boolean {
+  return member.profileStatus === "active";
+}
 
 function withPlaceholderImage(member: TeamMember, placeholderSrc: string): TeamMember {
   if (member.portrait || member.imageSrc) return member;
@@ -138,34 +150,93 @@ export const teamPageMetaByLang: Record<LangCode, PageMeta> = {
 
 function buildCoreMembers(roleLabel: string): TeamMember[] {
   return [
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        {
-          id: "omid-modaber",
-          name: "Omid Modaber",
-          role: roleLabel,
-          group: "core",
-          initials: "OM",
-          imageSrc: null,
-          bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
-        },
-        MALE_MEMBER_PLACEHOLDER,
+    withMemberProfileDefaults({
+      id: "omid-modaber",
+      name: "Omid Modaber",
+      role: roleLabel,
+      group: "core",
+      initials: "OM",
+      imageSrc: "/images/team/omid-modaber.jpg",
+      portrait: "/images/team/omid-modaber.jpg",
+      portraitObjectPosition: "center 18%",
+      bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
+    }),
+    {
+      ...withMemberProfileDefaults(
+        withPlaceholderImage(
+          {
+            id: "novin-ghasemi",
+            slug: "novin-ghasemi-nik",
+            name: "Novin Ghasemi Nik",
+            role: "Business Development Manager | Growth Strategist | Web3 Partnerships",
+            group: "core",
+            initials: "NG",
+            imageSrc: null,
+            profileStatus: "active",
+            headline:
+              "Business Development Manager, Growth Strategist, and Web3 Partnerships lead focused on exchange growth, affiliate networks, and cross-border market expansion.",
+            shortBio:
+              "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across Finance and Web3, Novin helps exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.",
+            bio: "Business Development Manager and Growth Strategist specializing in Web3 partnerships, exchange growth, and cross-border market expansion.",
+            fullBio:
+              "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across the Finance and Web3 industries, I specialize in helping exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.\n\nThroughout my career, I have developed strategic partnerships with exchanges, brokers, KOLs, IB networks, institutional clients, and fintech companies across the Middle East, Europe, LATAM, Africa, and Asia.\n\nCurrently, I serve as a Business Development Manager at LBank Exchange, where I focus on global partnership development, affiliate growth, institutional collaboration, and market expansion.\n\nBeyond corporate business development, I have successfully launched and managed multiple entrepreneurial ventures within the crypto and fintech ecosystem, giving me a practical understanding of both startup execution and enterprise growth.\n\nI believe sustainable growth comes from building long-term relationships, understanding local markets, and creating partnership ecosystems that generate value for every stakeholder involved.",
+            skills: [
+              "Business Development",
+              "Strategic Partnerships",
+              "Crypto Exchanges",
+              "Web3 Ecosystem",
+              "Forex & CFD Industry",
+              "Institutional Relations",
+              "KOL Marketing",
+              "Affiliate Programs",
+              "IB Networks",
+              "Market Expansion",
+              "B2B Sales",
+              "Growth Strategy",
+              "Partnership Management",
+              "Revenue Growth",
+              "Cross-border Business",
+              "Go-to-Market Strategy",
+              "Community Growth",
+              "Partnership Negotiation",
+            ],
+            services: [
+              "Global Partnership Development",
+              "Affiliate & IB Network Growth",
+              "Institutional Collaboration",
+              "Exchange Market Expansion",
+              "Web3 Go-to-Market Strategy",
+              "Cross-border Business Development",
+            ],
+            careerHistory: [
+              {
+                dateRange: "Current",
+                role: "Business Development Manager",
+                organization: "LBank Exchange",
+                description:
+                  "Global partnership development, affiliate growth, institutional collaboration, and market expansion.",
+              },
+            ],
+            achievements: [
+              {
+                title: "Investment Fundamentals",
+                year: "02 February 2024",
+                description:
+                  "Recipient: Novin Ghasemi Nik · Certificate ID: 18958-170-687-8508",
+                link: "/team/certificates/novin-investment-fundamentals.pdf",
+                linkLabel: "View certificate (PDF)",
+              },
+            ],
+            seoTitle: "Novin Ghasemi Nik | Business Development Manager & Web3 Growth Strategist",
+            metaDescription:
+              "Novin Ghasemi Nik is a Business Development Manager and Growth Strategist specializing in Web3 partnerships, crypto exchange growth, affiliate networks, and cross-border market expansion across MENA, Europe, LATAM, Africa, CIS, and Asia.",
+          },
+          MALE_MEMBER_PLACEHOLDER,
+        ),
       ),
-    ),
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        {
-          id: "novin-ghasemi",
-          name: "Novin Ghasemi",
-          role: roleLabel,
-          group: "core",
-          initials: "NG",
-          imageSrc: null,
-          bio: "Runs the engine room. Translates strategy into campaigns, partnerships, and growth motions across the network’s platforms and creators.",
-        },
-        MALE_MEMBER_PLACEHOLDER,
-      ),
-    ),
+      languages: ["Persian — Native", "English — Professional", "Turkish — Conversational"],
+      markets: ["Middle East (MENA)", "Europe", "LATAM", "Africa", "CIS", "Asia"],
+    },
     withMemberProfileDefaults(
       withPlaceholderImage(
         {
@@ -271,6 +342,82 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
         country: "United Arab Emirates",
         countryCode: "AE",
       },
+    },
+    {
+      ...withMemberProfileDefaults({
+        id: "goli-brothers",
+        slug: "goli-brothers",
+        name: "Goli Brothers",
+        role: "Co-Founders | Chainura & Delaxio",
+        group: "innerCircle",
+        initials: "GB",
+        imageSrc: "/team/goli-brothers.webp",
+        portrait: "/team/goli-brothers.webp",
+        ogImage: "/team/goli-brothers.webp",
+        portraitObjectPosition: "center 42%",
+        profileStatus: "active",
+        relatedPersons: [
+          { name: "Shahriyar Goli", jobTitle: "Co-Founder" },
+          { name: "Maziar Goli", jobTitle: "Co-Founder" },
+        ],
+        headline:
+          "Co-Founders of Chainura and Delaxio — crypto growth specialists focused on business development, KOL ecosystems, community expansion, and exchange growth.",
+        shortBio:
+          "Goli Brothers (Shahriyar & Maziar) are crypto growth specialists focused on business development, KOL ecosystems, community expansion, and exchange growth across the MENA region.",
+        bio: "Co-Founders of Chainura and Delaxio. Crypto growth specialists in business development, KOL ecosystems, and exchange expansion.",
+        fullBio:
+          "Goli Brothers (Shahriyar & Maziar) are crypto growth specialists focused on business development, KOL ecosystems, community expansion, and exchange growth. Over the past few years, they have worked with leading cryptocurrency exchanges across the MENA region, helping scale trading volume, user acquisition, affiliate networks, and strategic partnerships. Their work combines operational execution with long-term growth strategy for exchanges and Web3 projects.\n\nTheir experience includes managing large KOL networks, designing affiliate infrastructures, leading regional marketing initiatives, and supporting exchange expansion through data-driven community growth. In parallel, they founded Chainura, a growth infrastructure company for crypto exchanges, and are currently developing Delaxio, an AI-powered cryptocurrency exchange focused on intelligent trading tools and next-generation user experience.",
+        skills: [
+          "Business Development",
+          "Exchange Growth Strategy",
+          "KOL & Affiliate Management",
+          "Community Building",
+          "Strategic Partnerships",
+          "Go-to-Market Strategy",
+          "Trading Campaigns",
+          "Product Consulting",
+        ],
+        services: [
+          "Chainura — Growth infrastructure for cryptocurrency exchanges, providing KOL management, affiliate programs, community operations, and business development services.",
+          "Delaxio — An AI-powered cryptocurrency exchange integrating intelligent trading assistance, copy trading, portfolio analytics, and community-driven features.",
+        ],
+        careerHistory: [
+          {
+            role: "Co-Founders",
+            organization: "Chainura",
+            description:
+              "Growth infrastructure for cryptocurrency exchanges, providing KOL management, affiliate programs, community operations, and business development services.",
+          },
+          {
+            role: "Co-Founders",
+            organization: "Delaxio",
+            description:
+              "An AI-powered cryptocurrency exchange integrating intelligent trading assistance, copy trading, portfolio analytics, and community-driven features.",
+          },
+          {
+            role: "Business Development & KOL Growth",
+            organization: "LBank",
+          },
+          {
+            role: "Business Development Management",
+            organization: "Toobit",
+          },
+          {
+            role: "Partnership Development",
+            organization: "Ourbit",
+          },
+        ],
+        // LinkedIn URLs pending — empty hrefs are not rendered by the profile UI.
+        socialLinks: [
+          { label: "Shahriyar Goli — LinkedIn", href: "" },
+          { label: "Maziar Goli — LinkedIn", href: "" },
+        ],
+        seoTitle: "Goli Brothers | Co-Founders of Chainura & Delaxio",
+        metaDescription:
+          "Goli Brothers (Shahriyar Goli & Maziar Goli) are crypto growth specialists and Co-Founders of Chainura and Delaxio, with experience in business development, KOL ecosystems, affiliate networks, and exchange growth across MENA.",
+      }),
+      markets: ["Middle East (MENA)", "Asia", "Europe"],
+      languages: ["English"],
     },
     {
       ...withMemberProfileDefaults(
@@ -426,74 +573,71 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
 
 function buildContributorsMembers(roleLabel: string): TeamMember[] {
   return [
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        {
-          id: "babak-ravanbakhsh",
-          name: "Babak Ravanbakhsh",
-          role: "Creative Designer & Web Developer",
-          group: "contributors",
-          initials: "BR",
-          imageSrc: null,
-          headline:
-            "Creative Designer & Web Developer building distinctive digital experiences, interactive websites, visual systems, and user-focused products.",
-          shortBio:
-            "Babak Ravanbakhsh, professionally known as Madbak, is a creative designer and web developer focused on building distinctive digital experiences, interactive websites, visual systems, and user-focused products. His work combines creative direction, modern web technologies, and strong visual storytelling.",
-          fullBio:
-            "Babak Ravanbakhsh, professionally known as Madbak, is a multidisciplinary creative designer and web developer specialising in digital products, interactive websites, user interfaces, visual identities, and creative web experiences.\n\nHis work combines graphic design, UI/UX design, brand identity, front-end development, visual content creation, and modern digital production. He focuses on designing and building real-world digital products that are visually distinctive, functional, responsive, and aligned with business goals.\n\nBabak works across the full creative and development process, from concept development, visual direction, wireframing, and interface design to front-end implementation, interaction design, responsive optimisation, and deployment.\n\nHe works with technologies and tools including React, Next.js, TypeScript, Tailwind CSS, Framer Motion, GSAP, Three.js, Figma, Cursor, GitHub, Claude, Gemini, and Vercel.\n\nHis design approach is bold, minimal, brutalist, cinematic, interactive, and typography-focused. He is particularly interested in non-generic digital experiences, scroll-based interactions, motion design, three-dimensional elements, strong visual systems, and high-end creative direction.\n\nBabak has worked on commercial websites, multilingual digital platforms, brand systems, visual projects, and interactive web experiences. His goal is to create digital products that combine strong creative identity with usability, performance, scalability, and clear business value.",
-          skills: [
-            "Creative Direction",
-            "Web Design",
-            "Front-End Development",
-            "UI/UX Design",
-            "Brand Identity Design",
-            "Graphic Design",
-            "Motion Design",
-            "Creative Coding",
-            "Prompt Engineering",
-            "AI-Assisted Design & Development",
-          ],
-          services: [
-            "Interactive Website Design & Development",
-            "Responsive Website Design",
-            "Multilingual Website Design",
-            "UI/UX Design Systems",
-            "Scroll-Based Web Experiences",
-            "Three-Dimensional Web Experiences",
-            "Brand Identity & Visual Systems",
-            "Visual Content Production",
-            "Video Editing & Motion Content",
-            "Digital Product Concept Development",
-          ],
-          careerHistory: [
-            { role: "Freelance Creative Designer & Web Developer", organization: "Freelance" },
-            { role: "Creative Designer & Web Developer", organization: "Shahan Digital" },
-            { role: "Creative Designer & Web Developer", organization: "Shahan Behkamrad" },
-            { role: "Creative Designer & Web Developer", organization: "Sigma Website Project" },
-          ],
-          achievements: [
-            { title: "Designed and developed a multilingual website supporting seven languages" },
-            { title: "Created responsive interfaces for both left-to-right and right-to-left languages" },
-            { title: "Designed and developed interactive websites using Next.js, Framer Motion, GSAP, and Three.js" },
-            { title: "Built digital projects from initial concept and visual direction through development and deployment" },
-            { title: "Developed multilingual, responsive, and SEO-ready website structures" },
-            { title: "Created bold, minimal, brutalist, and cinematic visual experiences" },
-            { title: "Designed user interfaces and visual systems for commercial digital projects" },
-            { title: "Integrated creative design with modern front-end technologies" },
-            { title: "Worked on real-world websites and digital products for businesses and professional teams" },
-            { title: "Established the Madbak creative identity across web design, visual design, and digital production" },
-          ],
-          linkedin: "https://www.linkedin.com/in/babak-ravanbakhsh-16535a327/",
-          website: "https://madbak.art",
-          socialLinks: [
-            { label: "Instagram", href: "https://www.instagram.com/madbak98/" },
-            { label: "X", href: "https://x.com/Lilosama98" },
-            { label: "GitHub", href: "https://github.com/madbak98" },
-          ],
-        },
-        MALE_MEMBER_PLACEHOLDER,
-      ),
-    ),
+    withMemberProfileDefaults({
+      id: "babak-ravanbakhsh",
+      name: "Babak Ravanbakhsh",
+      role: "Creative Designer & Web Developer",
+      group: "contributors",
+      initials: "BR",
+      imageSrc: "/images/team/babak-ravanbakhsh.jpg",
+      portrait: "/images/team/babak-ravanbakhsh.jpg",
+      portraitObjectPosition: "center 22%",
+      headline:
+        "Creative Designer & Web Developer building distinctive digital experiences, interactive websites, visual systems, and user-focused products.",
+      shortBio:
+        "Babak Ravanbakhsh, professionally known as Madbak, is a creative designer and web developer focused on building distinctive digital experiences, interactive websites, visual systems, and user-focused products. His work combines creative direction, modern web technologies, and strong visual storytelling.",
+      fullBio:
+        "Babak Ravanbakhsh, professionally known as Madbak, is a multidisciplinary creative designer and web developer specialising in digital products, interactive websites, user interfaces, visual identities, and creative web experiences.\n\nHis work combines graphic design, UI/UX design, brand identity, front-end development, visual content creation, and modern digital production. He focuses on designing and building real-world digital products that are visually distinctive, functional, responsive, and aligned with business goals.\n\nBabak works across the full creative and development process, from concept development, visual direction, wireframing, and interface design to front-end implementation, interaction design, responsive optimisation, and deployment.\n\nHe works with technologies and tools including React, Next.js, TypeScript, Tailwind CSS, Framer Motion, GSAP, Three.js, Figma, Cursor, GitHub, Claude, Gemini, and Vercel.\n\nHis design approach is bold, minimal, brutalist, cinematic, interactive, and typography-focused. He is particularly interested in non-generic digital experiences, scroll-based interactions, motion design, three-dimensional elements, strong visual systems, and high-end creative direction.\n\nBabak has worked on commercial websites, multilingual digital platforms, brand systems, visual projects, and interactive web experiences. His goal is to create digital products that combine strong creative identity with usability, performance, scalability, and clear business value.",
+      skills: [
+        "Creative Direction",
+        "Web Design",
+        "Front-End Development",
+        "UI/UX Design",
+        "Brand Identity Design",
+        "Graphic Design",
+        "Motion Design",
+        "Creative Coding",
+        "Prompt Engineering",
+        "AI-Assisted Design & Development",
+      ],
+      services: [
+        "Interactive Website Design & Development",
+        "Responsive Website Design",
+        "Multilingual Website Design",
+        "UI/UX Design Systems",
+        "Scroll-Based Web Experiences",
+        "Three-Dimensional Web Experiences",
+        "Brand Identity & Visual Systems",
+        "Visual Content Production",
+        "Video Editing & Motion Content",
+        "Digital Product Concept Development",
+      ],
+      careerHistory: [
+        { role: "Freelance Creative Designer & Web Developer", organization: "Freelance" },
+        { role: "Creative Designer & Web Developer", organization: "Shahan Digital" },
+        { role: "Creative Designer & Web Developer", organization: "Shahan Behkamrad" },
+        { role: "Creative Designer & Web Developer", organization: "Sigma Website Project" },
+      ],
+      achievements: [
+        { title: "Designed and developed a multilingual website supporting seven languages" },
+        { title: "Created responsive interfaces for both left-to-right and right-to-left languages" },
+        { title: "Designed and developed interactive websites using Next.js, Framer Motion, GSAP, and Three.js" },
+        { title: "Built digital projects from initial concept and visual direction through development and deployment" },
+        { title: "Developed multilingual, responsive, and SEO-ready website structures" },
+        { title: "Created bold, minimal, brutalist, and cinematic visual experiences" },
+        { title: "Designed user interfaces and visual systems for commercial digital projects" },
+        { title: "Integrated creative design with modern front-end technologies" },
+        { title: "Worked on real-world websites and digital products for businesses and professional teams" },
+        { title: "Established the Madbak creative identity across web design, visual design, and digital production" },
+      ],
+      linkedin: "https://www.linkedin.com/in/babak-ravanbakhsh-16535a327/",
+      website: "https://madbak.art",
+      socialLinks: [
+        { label: "Instagram", href: "https://www.instagram.com/madbak98/" },
+        { label: "X", href: "https://x.com/Lilosama98" },
+        { label: "GitHub", href: "https://github.com/madbak98" },
+      ],
+    }),
     withMemberProfileDefaults(
       withPlaceholderImage(
         {

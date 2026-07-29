@@ -12,6 +12,7 @@ const SERVICE_SLUGS = [
   "kol-infrastructure",
   "market-maker-introductions",
   "regional-market-expansion",
+  "token-launch-listing",
   "web3-growth-agency",
 ] as const satisfies readonly ServiceSlug[];
 
@@ -499,6 +500,29 @@ export const SERVICES_CATALOG: ServiceCatalog = [
       "web3 distribution",
     ],
     relatedSlugs: ["crypto-marketing-agency", "regional-market-expansion", "kol-infrastructure"],
+  }),
+  stubService({
+    slug: "token-launch-listing",
+    key: "tokenLaunchListing",
+    order: 8,
+    icon: "code2",
+    visualType: "liquidity",
+    title: "Token Launch & Listing",
+    shortLabel: "Token Launch & Listing",
+    eyebrow: "Launch operations",
+    lead:
+      "Launch strategy, exchange positioning, listing support, distribution planning, and post-launch market activation.",
+    intro:
+      "Coordinate the operating system around a token launch: distribution, listing readiness, partner alignment, and post-launch activation with clear ownership and non-guarantee framing.",
+    keywords: [
+      "token launch marketing",
+      "token listing support",
+      "crypto launch strategy",
+      "post-launch activation",
+    ],
+    relatedSlugs: ["crypto-exchange-marketing", "market-maker-introductions", "web3-growth-agency"],
+    riskDisclosure:
+      "Sigma may provide launch strategy, coordination, and introductions. Sigma does not guarantee listings, liquidity, market performance, trading outcomes, or exchange agreements. All counterparties remain independent.",
   }),
 ];
 

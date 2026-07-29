@@ -726,12 +726,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
   return (
     <div className="relative isolate overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_5%,rgba(32,73,180,0.18),transparent_40%),radial-gradient(circle_at_90%_15%,rgba(86,130,255,0.14),transparent_35%),linear-gradient(180deg,#05070e_0%,#070b14_45%,#05070e_100%)]" />
-        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(171,189,237,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(171,189,237,0.3)_1px,transparent_1px)] [background-size:44px_44px]" />
-        <div className="absolute left-1/2 top-0 h-[580px] w-[580px] -translate-x-1/2 rounded-full bg-[#1d4adb]/20 blur-3xl" />
-      </div>
-
       <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
         <div
           ref={profileWrapperRef}
@@ -1199,14 +1193,21 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     {item.year ? <p className="text-[11px] uppercase tracking-[0.14em] text-[#8aa0d1]">{item.year}</p> : null}
                     {item.title ? <h3 className="mt-1 text-base font-semibold text-white">{item.title}</h3> : null}
                     {item.description ? <p className="mt-2 text-sm text-[#b6c1d3]">{item.description}</p> : null}
-                    {item.link ? (
+                    {item.link && (/^https?:\/\//.test(item.link) || item.link.startsWith("/")) ? (
                       <a
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={
+                          item.linkLabel?.trim() ||
+                          (item.link.toLowerCase().endsWith(".pdf")
+                            ? `View certificate PDF for ${item.title ?? "achievement"}`
+                            : `View detail for ${item.title ?? "achievement"}`)
+                        }
                         className="mt-3 inline-flex rounded-full border border-white/[0.18] px-3 py-1 text-xs text-[#b8cbf5] motion-safe:transition-colors motion-safe:hover:border-[#8dadf4]/55 motion-safe:hover:bg-[#8dadf4]/10"
                       >
-                        View detail
+                        {item.linkLabel?.trim() ||
+                          (item.link.toLowerCase().endsWith(".pdf") ? "View certificate (PDF)" : "View detail")}
                       </a>
                     ) : null}
                   </article>

@@ -1,5 +1,11 @@
 import type { MetadataRoute } from "next";
 import { getAllInsightsPosts } from "@/content/insights";
+import { primaryServicesByLang } from "@/content/global/marketing/servicesContent";
+import {
+  getAllTeamMembers,
+  getTeamMemberSlug,
+  isTeamMemberPubliclyIndexable,
+} from "@/content/global/marketing/teamContent";
 import { getSiteUrl } from "@/lib/site-url";
 
 const MARKET_REGIONS = ["wana", "cis", "apac", "europe", "latam"] as const;
@@ -21,6 +27,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.55,
   }));
+
+  const services: MetadataRoute.Sitemap = primaryServicesByLang.EN.map((service) => ({
+    url: `${base}${service.href}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.72,
+  }));
+
+  const seenTeamSlugs = new Set<string>();
+  const teamProfiles: MetadataRoute.Sitemap = [];
+  for (const member of getAllTeamMembers()) {
+    if (!isTeamMemberPubliclyIndexable(member)) continue;
+    const slug = getTeamMemberSlug(member);
+    if (seenTeamSlugs.has(slug)) continue;
+    seenTeamSlugs.add(slug);
+    teamProfiles.push({
+      url: `${base}/team/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    });
+  }
 
   return [
     {
@@ -114,6 +142,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.35,
     },
     ...markets,
+    ...services,
+    ...teamProfiles,
     ...articles,
   ];
 }

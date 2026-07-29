@@ -1,0 +1,351 @@
+.logoloop {
+  position: relative;
+  overflow-x: hidden;
+
+  --logoloop-gap: 32px;
+  --logoloop-logoHeight: 28px;
+  --logoloop-fadeColorAuto: #ffffff;
+}
+
+.logoloop--vertical {
+  overflow: hidden;
+  height: 100%;
+  display: inline-block;
+}
+
+.logoloop--scale-hover {
+  padding-top: calc(var(--logoloop-logoHeight) * 0.1);
+  padding-bottom: calc(var(--logoloop-logoHeight) * 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .logoloop {
+    --logoloop-fadeColorAuto: #0b0b0b;
+  }
+}
+
+.logoloop__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  user-select: none;
+  position: relative;
+  z-index: 0;
+}
+
+.logoloop--vertical .logoloop__track {
+  flex-direction: column;
+  height: max-content;
+  width: 100%;
+}
+
+.logoloop__list {
+  display: flex;
+  align-items: center;
+}
+
+.logoloop--vertical .logoloop__list {
+  flex-direction: column;
+}
+
+.logoloop__item {
+  flex: 0 0 auto;
+  margin-right: var(--logoloop-gap);
+  font-size: var(--logoloop-logoHeight);
+  line-height: 1;
+}
+
+.logoloop--vertical .logoloop__item {
+  margin-right: 0;
+  margin-bottom: var(--logoloop-gap);
+}
+
+.logoloop__item:last-child {
+  margin-right: var(--logoloop-gap);
+}
+
+.logoloop--vertical .logoloop__item:last-child {
+  margin-right: 0;
+  margin-bottom: var(--logoloop-gap);
+}
+
+.logoloop__node {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logoloop__item img {
+  height: var(--logoloop-logoHeight);
+  width: auto;
+  display: block;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  -webkit-user-drag: none;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logoloop--scale-hover .logoloop__item {
+  overflow: visible;
+}
+
+.logoloop--scale-hover .logoloop__item:hover img,
+.logoloop--scale-hover .logoloop__item:hover .logoloop__node {
+  transform: scale(1.2);
+  transform-origin: center center;
+}
+
+.logoloop--scale-hover .logoloop__node {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logoloop__link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.logoloop__link:hover {
+  opacity: 0.8;
+}
+
+.logoloop__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.logoloop--fade::before,
+.logoloop--fade::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(24px, 8%, 120px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.logoloop--fade::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.logoloop--fade::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.logoloop--vertical.logoloop--fade::before,
+.logoloop--vertical.logoloop--fade::after {
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: clamp(24px, 8%, 120px);
+}
+
+.logoloop--vertical.logoloop--fade::before {
+  top: 0;
+  bottom: auto;
+  background: linear-gradient(
+    to bottom,
+    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.logoloop--vertical.logoloop--fade::after {
+  bottom: 0;
+  top: auto;
+  background: linear-gradient(
+    to top,
+    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logoloop__track {
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  .logoloop__item img,
+  .logoloop__node {
+    transition: none !important;
+  }
+}
+
+/* Sigma trusted-by — liquid-glass capsules (~2× section scale) */
+.sigma-logo-loop.logoloop {
+  --logoloop-fadeColorAuto: #070b16;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.sigma-logo-loop .logoloop__node {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.sigma-logo-loop__capsule {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 4.75rem;
+  padding: 1.05rem 2.15rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  border: 1px solid rgba(29, 137, 187, 0.2);
+  background:
+    linear-gradient(
+      155deg,
+      rgba(10, 16, 32, 0.7) 0%,
+      rgba(7, 11, 22, 0.52) 48%,
+      rgba(8, 14, 30, 0.62) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(189, 224, 254, 0.11),
+    inset 0 -1px 0 rgba(79, 29, 187, 0.05),
+    0 10px 28px rgba(2, 8, 22, 0.24);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  backdrop-filter: blur(10px) saturate(1.15);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+  touch-action: manipulation;
+}
+
+.sigma-logo-loop__sheen {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      125deg,
+      rgba(189, 224, 254, 0.07) 0%,
+      transparent 42%,
+      transparent 58%,
+      rgba(29, 58, 187, 0.05) 100%
+    );
+  opacity: 0.55;
+  transition: opacity 0.4s ease, transform 0.55s ease;
+}
+
+.sigma-logo-loop__refract {
+  pointer-events: none;
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 28% 22%,
+      rgba(29, 137, 187, 0.1),
+      transparent 70%
+    );
+  opacity: 0.35;
+  mix-blend-mode: soft-light;
+  transition: opacity 0.4s ease, transform 0.55s ease;
+}
+
+.sigma-logo-loop__mark {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-size: clamp(1.15rem, 3.6vw, 1.5rem);
+  letter-spacing: 0.22em;
+  color: #d5dde6;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__capsule,
+.sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__capsule,
+.sigma-logo-loop--static li:hover .sigma-logo-loop__capsule {
+  border-color: rgba(29, 137, 187, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(189, 224, 254, 0.15),
+    inset 0 -1px 0 rgba(79, 29, 187, 0.06),
+    0 12px 32px rgba(2, 8, 22, 0.28),
+    0 0 0 1px rgba(29, 137, 187, 0.05);
+}
+
+.sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__sheen,
+.sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__sheen,
+.sigma-logo-loop--static li:hover .sigma-logo-loop__sheen {
+  opacity: 0.88;
+  transform: translate3d(1.2%, -0.8%, 0) scale(1.02);
+}
+
+.sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__refract,
+.sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__refract,
+.sigma-logo-loop--static li:hover .sigma-logo-loop__refract {
+  opacity: 0.85;
+  transform: translate3d(1.5%, 1%, 0);
+}
+
+.sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__mark,
+.sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__mark,
+.sigma-logo-loop--static li:hover .sigma-logo-loop__mark {
+  color: #f0f4f8;
+}
+
+@media (max-width: 640px) {
+  .sigma-logo-loop__capsule {
+    min-height: 3.75rem;
+    padding: 0.85rem 1.55rem;
+    -webkit-backdrop-filter: blur(8px) saturate(1.1);
+    backdrop-filter: blur(8px) saturate(1.1);
+  }
+
+  .sigma-logo-loop__mark {
+    font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+  }
+
+  .sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__sheen,
+  .sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__sheen,
+  .sigma-logo-loop--static li:hover .sigma-logo-loop__sheen,
+  .sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__refract,
+  .sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__refract,
+  .sigma-logo-loop--static li:hover .sigma-logo-loop__refract {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-logo-loop__capsule,
+  .sigma-logo-loop__sheen,
+  .sigma-logo-loop__refract,
+  .sigma-logo-loop__mark {
+    transition: none;
+  }
+
+  .sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__sheen,
+  .sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__sheen,
+  .sigma-logo-loop--static li:hover .sigma-logo-loop__sheen,
+  .sigma-logo-loop .logoloop__item:hover .sigma-logo-loop__refract,
+  .sigma-logo-loop .logoloop__link:hover .sigma-logo-loop__refract,
+  .sigma-logo-loop--static li:hover .sigma-logo-loop__refract {
+    transform: none;
+  }
+
+  .sigma-logo-loop--static .sigma-logo-loop__refract {
+    opacity: 0.28;
+  }
+}

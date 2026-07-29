@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { TeamMemberBreadcrumbStructuredData, TeamMemberPersonStructuredData } from "@/components/seo/TeamMemberStructuredData";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { TeamMemberProfilePageView } from "@/components/site/marketing/TeamMemberProfilePageView";
-import { getAllTeamMembers, getTeamMemberBySlug, getTeamMemberSlug } from "@/content/global/marketing/teamContent";
+import { getAllTeamMembers, getTeamMemberBySlug, getTeamMemberSlug, isTeamMemberPubliclyIndexable } from "@/content/global/marketing/teamContent";
 import { absoluteOgImage, getCanonicalUrl } from "@/content/seo";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -44,9 +44,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!member) notFound();
 
   const canonicalPath = `/team/${getTeamMemberSlug(member)}`;
-  const title = `${member.name} | Sigma Team`;
+  const title = member.seoTitle ?? `${member.name} | Sigma Team`;
   const description = member.metaDescription ?? buildDescription(member.name, member.role);
   const image = resolveMemberImage(member.ogImage ?? member.portrait ?? member.imageSrc);
+  const indexable = isTeamMemberPubliclyIndexable(member);
 
   return {
     title: { absolute: title },
@@ -55,11 +56,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: canonicalPath,
     },
     robots: {
-      index: false,
-      follow: false,
+      index: indexable,
+      follow: indexable,
       googleBot: {
-        index: false,
-        follow: false,
+        index: indexable,
+        follow: indexable,
       },
     },
     openGraph: {

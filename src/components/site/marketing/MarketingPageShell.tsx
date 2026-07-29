@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { MarketingPageBackground } from "@/components/site/marketing/MarketingPageBackground";
 
 type MarketingPageShellProps = {
   children: ReactNode;
@@ -14,7 +13,6 @@ export function MarketingPageShell({
 }: MarketingPageShellProps) {
   return (
     <div className={`relative isolate min-h-0 flex-1 overflow-hidden ${className}`.trim()}>
-      <MarketingPageBackground />
       <div className={`relative z-10 ${contentClassName}`.trim()}>{children}</div>
     </div>
   );

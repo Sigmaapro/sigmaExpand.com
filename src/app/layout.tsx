@@ -5,6 +5,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { ProductionAnalytics } from "@/components/ProductionAnalytics";
 import { GlobalStructuredData } from "@/components/seo/GlobalStructuredData";
+import { GlobalSigmaPageBackground } from "@/components/site/marketing/GlobalSigmaPageBackground";
 import { SEO_PAGES } from "@/content/seo";
 import type { LangCode } from "@/content/types";
 import { buildLanguageAlternates, HTML_LANG_BY_CODE, isRtlLang, langFromUnknown } from "@/lib/i18n";
@@ -82,7 +83,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0c12",
+  themeColor: "#05070e",
   width: "device-width",
   initialScale: 1,
 };
@@ -102,7 +103,7 @@ export default async function RootLayout({
       lang={htmlLang}
       dir={htmlDir}
       suppressHydrationWarning
-      className={`min-h-screen bg-erie ${spaceGrotesk.variable} ${inter.variable} ${notoSansArabic.variable}`}
+      className={`min-h-screen bg-[#05070e] ${spaceGrotesk.variable} ${inter.variable} ${notoSansArabic.variable}`}
     >
       <head>
         <script
@@ -115,8 +116,11 @@ export default async function RootLayout({
         <meta property="article:publisher" content={PUBLISHER_SITE_URL} />
         <meta name="author" content="Sigma" />
       </head>
-      <body className="min-h-screen bg-erie font-body text-cadet antialiased">
-        <Providers initialLang={initialLang}>{children}</Providers>
+      <body className="relative min-h-screen bg-[#05070e] font-body text-cadet antialiased">
+        <GlobalSigmaPageBackground />
+        <div className="relative z-10">
+          <Providers initialLang={initialLang}>{children}</Providers>
+        </div>
         <ProductionAnalytics />
       </body>
     </html>

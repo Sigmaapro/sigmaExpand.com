@@ -7,6 +7,7 @@ import type { LangCode } from "@/content/types";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
 import { openPartnerIntentFlow } from "@/components/partner/PartnerIntentModal";
 import { localeEyebrow, localeHeading, localeMutedTrack } from "@/lib/localeTypography";
+import { SigmaBorderGlow } from "@/components/sigma/SigmaBorderGlow";
 
 export function MidConversionCta({
   isRtl,
@@ -23,34 +24,36 @@ export function MidConversionCta({
       className="sigma-landing-section-shell relative z-10 scroll-mt-28 px-5 py-12 sm:px-6 sm:py-14 md:px-16 md:py-16 lg:px-24"
     >
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1c39bb]/[0.07] via-transparent to-transparent" />
-      <motion.div
-        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto min-w-0 max-w-3xl rounded-xl border border-white/[0.08] bg-[#0c0f16]/95 px-4 py-8 text-center shadow-[0_0_60px_rgba(28,57,187,0.12)] sm:px-10 sm:py-12"
-      >
-        <p
-          className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
+      <SigmaBorderGlow borderRadius={12}>
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={reduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="sigma-liquid-card relative mx-auto min-w-0 max-w-3xl rounded-xl border border-white/[0.08] bg-[#0c0f16]/95 px-4 py-8 text-center shadow-[0_0_60px_rgba(28,57,187,0.12)] sm:px-10 sm:py-12"
         >
-          {c.label}
-        </p>
-        <p
-          className={`max-w-full font-display text-[clamp(1.1rem,4vw,1.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-[2rem] ${localeHeading(lang)}`}
-        >
-          {c.headline}
-        </p>
-        <p
-          className={`mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#adb5bd] sm:text-[15px] sm:leading-relaxed ${localeMutedTrack(lang)}`}
-        >
-          {c.supporting}
-        </p>
-        <div className="mt-8 flex w-full justify-center px-1 sm:px-0">
-          <MagneticButton primary onClick={openPartnerIntentFlow} isRtl={isRtl} fullWidthMobile>
-            {c.primaryLabel}
-          </MagneticButton>
-        </div>
-      </motion.div>
+          <p
+            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
+          >
+            {c.label}
+          </p>
+          <p
+            className={`max-w-full font-display text-[clamp(1.1rem,4vw,1.65rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-[2rem] ${localeHeading(lang)}`}
+          >
+            {c.headline}
+          </p>
+          <p
+            className={`mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#adb5bd] sm:text-[15px] sm:leading-relaxed ${localeMutedTrack(lang)}`}
+          >
+            {c.supporting}
+          </p>
+          <div className="mt-8 flex w-full justify-center px-1 sm:px-0">
+            <MagneticButton primary onClick={openPartnerIntentFlow} isRtl={isRtl} fullWidthMobile>
+              {c.primaryLabel}
+            </MagneticButton>
+          </div>
+        </motion.div>
+      </SigmaBorderGlow>
     </section>
   );
 }

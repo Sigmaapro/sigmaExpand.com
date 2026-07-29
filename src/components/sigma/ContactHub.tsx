@@ -153,7 +153,7 @@ export function ContactHub() {
 
   return (
     <div
-      className="relative min-h-screen overflow-hidden bg-erie bg-sigma-mesh"
+      className="relative min-h-screen overflow-hidden bg-transparent"
       style={{ backgroundColor: "#212529" }}
     >
       <style>{contactShellCss}</style>

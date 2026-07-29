@@ -10,6 +10,7 @@ export type ServiceSlug =
   | "kol-infrastructure"
   | "market-maker-introductions"
   | "regional-market-expansion"
+  | "token-launch-listing"
   | "web3-growth-agency";
 
 export type ServiceKey =
@@ -19,6 +20,7 @@ export type ServiceKey =
   | "kolInfrastructure"
   | "marketMakerIntroductions"
   | "regionalMarketExpansion"
+  | "tokenLaunchListing"
   | "web3GrowthAgency";
 
 export type ServiceIconName =

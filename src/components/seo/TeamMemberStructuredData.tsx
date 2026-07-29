@@ -33,6 +33,57 @@ export function TeamMemberBreadcrumbStructuredData({ member }: Props) {
   );
 }
 
+function buildPersonNode(
+  member: TeamMember,
+  options: {
+    name: string;
+    jobTitle?: string;
+    profileUrl: string;
+    base: string;
+    image?: string;
+    sameAs?: string[];
+    description?: string;
+    knowsAbout?: string[];
+  },
+) {
+  const data: Record<string, unknown> = {
+    "@type": "Person",
+    name: options.name,
+    jobTitle: options.jobTitle ?? member.role ?? "Team Member",
+    url: options.profileUrl,
+    worksFor: {
+      "@type": "Organization",
+      "@id": `${options.base}/#organization`,
+      name: "Sigma",
+    },
+  };
+
+  if (options.image) {
+    data.image = options.image;
+  }
+
+  if (options.sameAs && options.sameAs.length > 0) {
+    data.sameAs = options.sameAs;
+  }
+
+  if (options.description) {
+    data.description = options.description;
+  }
+
+  if (options.knowsAbout && options.knowsAbout.length > 0) {
+    data.knowsAbout = options.knowsAbout;
+  }
+
+  if (member.location) {
+    data.homeLocation = {
+      "@type": "Place",
+      name: [member.location.city, member.location.country].filter(Boolean).join(", "),
+    };
+  }
+
+  return data;
+}
+
 export function TeamMemberPersonStructuredData({ member }: Props) {
   const base = getSiteUrl().replace(/\/$/, "");
   const slug = getTeamMemberSlug(member);
@@ -44,42 +95,70 @@ export function TeamMemberPersonStructuredData({ member }: Props) {
   ].filter((value) => /^https?:\/\//.test(value));
   const description = member.fullBio ?? member.shortBio ?? member.bio;
   const knowsAbout = member.skills?.filter((item) => item.trim().length > 0) ?? [];
+  const image =
+    member.portrait ?? member.imageSrc
+      ? toAbsoluteUrl((member.portrait ?? member.imageSrc) as string, base)
+      : undefined;
 
-  const data: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: member.name,
-    jobTitle: member.role ?? "Team Member",
-    url: profileUrl,
-    worksFor: {
-      "@type": "Organization",
-      "@id": `${base}/#organization`,
-      name: "Sigma",
-    },
-  };
+  const related = member.relatedPersons?.filter((person) => person.name.trim().length > 0) ?? [];
 
-  if (member.portrait ?? member.imageSrc) {
-    data.image = toAbsoluteUrl((member.portrait ?? member.imageSrc) as string, base);
-  }
+  if (related.length > 0) {
+    const personNodes = related.map((person, index) => {
+      const personSameAs = person.linkedin && /^https?:\/\//.test(person.linkedin) ? [person.linkedin] : [];
+      return {
+        ...buildPersonNode(member, {
+          name: person.name,
+          jobTitle: person.jobTitle ?? member.role,
+          profileUrl,
+          base,
+          image,
+          sameAs: personSameAs,
+          description: index === 0 ? description : undefined,
+          knowsAbout: index === 0 ? knowsAbout : undefined,
+        }),
+        "@id": `${profileUrl}#person-${index + 1}`,
+      };
+    });
 
-  if (sameAs.length > 0) {
-    data.sameAs = sameAs;
-  }
-
-  if (description) {
-    data.description = description;
-  }
-
-  if (knowsAbout.length > 0) {
-    data.knowsAbout = knowsAbout;
-  }
-
-  if (member.location) {
-    data.homeLocation = {
-      "@type": "Place",
-      name: [member.location.city, member.location.country].filter(Boolean).join(", "),
+    const data = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": `${profileUrl}#profile`,
+          url: profileUrl,
+          name: member.name,
+          description,
+          mainEntity: {
+            "@type": "ItemList",
+            name: member.name,
+            itemListElement: personNodes.map((person, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              item: { "@id": person["@id"] },
+            })),
+          },
+        },
+        ...personNodes,
+      ],
     };
+
+    return (
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+    );
   }
+
+  const data = buildPersonNode(member, {
+    name: member.name,
+    jobTitle: member.role,
+    profileUrl,
+    base,
+    image,
+    sameAs,
+    description,
+    knowsAbout,
+  });
+  data["@context"] = "https://schema.org";
 
   return (
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />

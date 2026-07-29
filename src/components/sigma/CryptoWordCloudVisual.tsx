@@ -46,8 +46,13 @@ const WORDS: CloudWord[] = [
   { label: "ATOM", fontSize: 12, x: 58, y: 88, rotate: 0, weight: 500, opacity: 0.44, delay: 0.5, duration: 12.6 },
 ];
 
-export function CryptoWordCloudVisual() {
+export function CryptoWordCloudVisual({
+  tone = "dark",
+}: {
+  tone?: "dark" | "light";
+}) {
   const reduceMotion = useReducedMotion() ?? false;
+  const isLight = tone === "light";
 
   return (
     <div
@@ -61,17 +66,21 @@ export function CryptoWordCloudVisual() {
           style={{ left: `${word.x}%`, top: `${word.y}%` }}
         >
           <motion.span
-            className="inline-block whitespace-nowrap font-display uppercase leading-none tracking-[0.03em] text-[#f3f5f7]"
+            className={`inline-block whitespace-nowrap font-display uppercase leading-none tracking-[0.03em] ${
+              isLight ? "text-[#1f2937]" : "text-[#f3f5f7]"
+            }`}
             style={{
               fontSize: `${word.fontSize}px`,
               fontWeight: word.weight,
-              opacity: word.opacity,
-              textShadow: "0 0 14px rgba(255,255,255,0.05)",
+              opacity: isLight ? Math.min(1, word.opacity * 0.92) : word.opacity,
+              textShadow: isLight
+                ? "0 1px 0 rgba(255,255,255,0.65)"
+                : "0 0 14px rgba(255,255,255,0.05)",
             }}
             initial={{ rotate: word.rotate }}
             animate={
               reduceMotion
-                ? { rotate: word.rotate, opacity: word.opacity, x: 0, y: 0 }
+                ? { rotate: word.rotate, opacity: isLight ? Math.min(1, word.opacity * 0.92) : word.opacity, x: 0, y: 0 }
                 : {
                     y: [0, -2, 1, 0],
                     x: [0, 0.8, -0.6, 0],
@@ -82,10 +91,10 @@ export function CryptoWordCloudVisual() {
                       word.rotate,
                     ],
                     opacity: [
-                      word.opacity,
-                      Math.min(1, word.opacity + 0.05),
-                      Math.max(0.3, word.opacity - 0.03),
-                      word.opacity,
+                      isLight ? Math.min(1, word.opacity * 0.92) : word.opacity,
+                      Math.min(1, (isLight ? word.opacity * 0.92 : word.opacity) + 0.05),
+                      Math.max(0.3, (isLight ? word.opacity * 0.92 : word.opacity) - 0.03),
+                      isLight ? Math.min(1, word.opacity * 0.92) : word.opacity,
                     ],
                   }
             }

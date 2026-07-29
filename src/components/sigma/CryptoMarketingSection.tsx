@@ -23,6 +23,7 @@ import {
   localeEyebrow,
   localeHeading,
 } from "@/lib/localeTypography";
+import { SigmaBorderGlow } from "@/components/sigma/SigmaBorderGlow";
 
 export function CryptoMarketingSection() {
   const { lang, isRtl } = useLanguage();
@@ -97,7 +98,8 @@ export function CryptoMarketingSection() {
         </div>
 
         {/* Glass card — map + detail only */}
-        <div className="relative mt-8 overflow-hidden rounded-2xl border border-[#bde0fe]/[0.14] bg-[#0a1224]/[0.72] shadow-[0_18px_56px_rgba(2,8,22,0.5),0_0_48px_rgba(28,57,187,0.16)] backdrop-blur-xl sm:mt-9 md:mt-10">
+        <SigmaBorderGlow borderRadius={16}>
+        <div className="sigma-liquid-card relative mt-8 overflow-hidden rounded-2xl border border-[#bde0fe]/[0.14] bg-[#0a1224]/[0.72] shadow-[0_18px_56px_rgba(2,8,22,0.5),0_0_48px_rgba(28,57,187,0.16)] backdrop-blur-xl sm:mt-9 md:mt-10">
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(189,224,254,0.06)_0%,rgba(28,57,187,0.06)_42%,transparent_72%)]" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_15%_0%,rgba(86,130,255,0.1),transparent_55%)]" />
 
@@ -174,6 +176,7 @@ export function CryptoMarketingSection() {
             </div>
           </div>
         </div>
+        </SigmaBorderGlow>
       </div>
 
       {countryTokens.length > 0 ? (

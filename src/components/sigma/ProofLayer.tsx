@@ -1,75 +1,41 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { useMemo } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   clientLogos,
   proofByLang,
-  type ProofClientLogo,
   type ProofMetric,
   type ProofTestimonial,
 } from "@/content/proof";
+import LogoLoop, { type LogoItem } from "@/components/react-bits/LogoLoop";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { SectionTitleTypewriter } from "@/components/sigma/SectionTitleTypewriter";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import type { LangCode } from "@/content/types";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeEyebrow, localeHeading, localeNav } from "@/lib/localeTypography";
+import { SigmaBorderGlow } from "@/components/sigma/SigmaBorderGlow";
 
-function LogoCell({ logo, lang }: { logo: ProofClientLogo; lang: LangCode }) {
-  const inner = (
-    <div className="flex min-h-[3.25rem] min-w-[7.5rem] max-w-[11rem] items-center justify-center px-5 py-3 sm:min-h-[3.5rem] sm:min-w-[8.5rem]">
-      {logo.imageSrc ? (
-        <Image
-          src={logo.imageSrc}
-          alt={logo.alt}
-          width={140}
-          height={40}
-          className="h-7 w-auto max-w-full object-contain opacity-[0.78] grayscale transition-[opacity,filter] duration-300 group-hover:opacity-100 group-hover:grayscale-0 sm:h-8"
-        />
-      ) : (
-        <span
-          className={`font-display text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9aa3ad] transition-colors duration-300 group-hover:text-[#e9ecef] sm:text-xs ${localeNav(lang)}`}
-        >
-          {logo.wordmark}
-        </span>
-      )}
-    </div>
-  );
-
-  const shell = (
-    <div className="group rounded-md border border-white/[0.07] bg-[#0c0f16]/90 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[#1c39bb]/28 hover:bg-[#10141d]/95 hover:shadow-[0_0_36px_rgba(28,57,187,0.08)]">
-      {inner}
-    </div>
-  );
-
-  if (logo.href) {
-    const external = /^https?:\/\//i.test(logo.href);
-    if (external) {
-      return (
-        <a
-          href={logo.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="min-w-0 shrink-0"
-          aria-label={logo.alt}
-        >
-          {shell}
-        </a>
-      );
-    }
-    return (
-      <Link href={logo.href} className="min-w-0 shrink-0" aria-label={logo.alt}>
-        {shell}
-      </Link>
-    );
-  }
-
+function LogoLoopCapsule({
+  wordmark,
+  lang,
+}: {
+  wordmark: string;
+  lang: LangCode;
+}) {
   return (
-    <div className="min-w-0 shrink-0" role="img" aria-label={logo.alt}>
-      {shell}
-    </div>
+    <SigmaBorderGlow borderRadius={999} compact>
+      <span className="sigma-logo-loop__capsule">
+        <span className="sigma-logo-loop__sheen" aria-hidden />
+        <span className="sigma-logo-loop__refract" aria-hidden />
+        <span
+          className={`sigma-logo-loop__mark font-display font-semibold uppercase tracking-[0.22em] ${localeNav(lang)}`}
+        >
+          {wordmark}
+        </span>
+      </span>
+    </SigmaBorderGlow>
   );
 }
 
@@ -84,27 +50,49 @@ function MetricCard({
   lang: LangCode;
   reduceMotion: boolean;
 }) {
-  return (
+  const isSampleCard = metric.id === "markets";
+
+  const card = (
     <motion.article
       initial={reduceMotion ? false : { opacity: 1, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={reduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-lg border border-white/[0.07] bg-gradient-to-b from-[#10141c]/95 to-[#0a0c12]/95 px-5 py-6 transition-[border-color,box-shadow] duration-300 hover:border-[#1c39bb]/25 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:px-6 sm:py-7"
+      className={`sigma-liquid-card group relative flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-lg border px-5 py-6 transition-[border-color,box-shadow,transform] duration-300 sm:px-6 sm:py-7 ${
+        isSampleCard
+          ? "min-h-[10.5rem] overflow-hidden rounded-[10px] border-[rgba(189,224,254,0.25)] bg-[linear-gradient(116deg,rgba(25,34,52,0.48),rgba(9,14,24,0.26)_62%,rgba(8,21,43,0.42))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_16px_42px_rgba(2,8,22,0.34),0_0_24px_rgba(28,57,187,0.16)] backdrop-blur-xl backdrop-saturate-150 hover:border-[rgba(189,224,254,0.5)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_20px_50px_rgba(2,8,22,0.44),0_0_32px_rgba(28,57,187,0.26)]"
+          : "border-white/[0.07] bg-gradient-to-b from-[#10141c]/95 to-[#0a0c12]/95 hover:border-[#1c39bb]/25 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+      }`}
     >
-      <p className="font-display text-2xl font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
+      {isSampleCard ? (
+        <>
+          <span
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(189,224,254,0.08)_0%,transparent_30%,rgba(147,197,253,0.055)_52%,transparent_72%)]"
+            aria-hidden
+          />
+        </>
+      ) : null}
+      <p className="relative z-10 font-display text-2xl font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
         {metric.value}
       </p>
       <p
-        className={`mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e] ${localeNav(lang)}`}
+        className={`relative z-10 mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e] ${localeNav(lang)}`}
       >
         {metric.label}
       </p>
       {metric.note ? (
-        <p className="mt-2 text-xs leading-relaxed text-[#9aa2ac] sm:text-[13px] md:text-[#6c757d]">
+        <p className="relative z-10 mt-2 text-xs leading-relaxed text-[#9aa2ac] sm:text-[13px] md:text-[#6c757d]">
           {metric.note}
         </p>
       ) : null}
     </motion.article>
+  );
+
+  if (isSampleCard) return card;
+
+  return (
+    <SigmaBorderGlow borderRadius={8}>
+      {card}
+    </SigmaBorderGlow>
   );
 }
 
@@ -121,25 +109,27 @@ function TestimonialCard({
 }) {
   const attribution = item.company ? `${item.role}, ${item.company}` : item.role;
   return (
-    <motion.article
-      initial={reduceMotion ? false : { opacity: 1, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={reduceMotion ? { duration: 0 } : { duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-xl border border-white/[0.07] bg-[#0c0f14]/90 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:p-7"
-    >
-      <blockquote className="min-w-0 flex-1 border-s-2 border-[#1c39bb]/45 ps-4 text-sm leading-relaxed text-[#e8eaed] sm:ps-5 sm:text-[15px] sm:leading-[1.68]">
-        <span className="text-[#8a939e] md:text-[#6c757d]">“</span>
-        {item.quote}
-        <span className="text-[#8a939e] md:text-[#6c757d]">”</span>
-      </blockquote>
-      <div className="mt-8 border-t border-white/[0.06] pt-6">
-        <p
-          className={`text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96] ${localeNav(lang)}`}
-        >
-          {attribution}
-        </p>
-      </div>
-    </motion.article>
+    <SigmaBorderGlow borderRadius={12}>
+      <motion.article
+        initial={reduceMotion ? false : { opacity: 1, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+        className="sigma-liquid-card flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-xl border border-white/[0.07] bg-[#0c0f14]/90 p-6 shadow-[0_16px_48px_rgba(0,0,0,0.28)] sm:p-7"
+      >
+        <blockquote className="min-w-0 flex-1 border-s-2 border-[#1c39bb]/45 ps-4 text-sm leading-relaxed text-[#e8eaed] sm:ps-5 sm:text-[15px] sm:leading-[1.68]">
+          <span className="text-[#8a939e] md:text-[#6c757d]">“</span>
+          {item.quote}
+          <span className="text-[#8a939e] md:text-[#6c757d]">”</span>
+        </blockquote>
+        <div className="mt-8 border-t border-white/[0.06] pt-6">
+          <p
+            className={`text-[11px] uppercase leading-snug tracking-[0.12em] text-[#a8b0b8] sm:text-xs md:text-[#868e96] ${localeNav(lang)}`}
+          >
+            {attribution}
+          </p>
+        </div>
+      </motion.article>
+    </SigmaBorderGlow>
   );
 }
 
@@ -149,30 +139,64 @@ export function ProofLayer() {
   const proof = proofByLang[lang] ?? proofByLang.EN;
   const H = getHomeSectionLinks(lang);
 
+  const trustedLoopLogos = useMemo<LogoItem[]>(
+    () =>
+      clientLogos.map((logo) => ({
+        node: <LogoLoopCapsule wordmark={logo.wordmark} lang={lang} />,
+        title: logo.wordmark,
+        ariaLabel: logo.alt,
+        ...(logo.href ? { href: logo.href } : {}),
+      })),
+    [lang],
+  );
+
   return (
     <div className="sigma-landing-section-shell relative z-10">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.1]" aria-hidden />
 
-      {/* Trusted by */}
+      {/* Trusted by — scaled ~2× composition */}
       <section
         id="trusted-by"
-        className="relative scroll-mt-28 px-5 py-14 sm:px-6 sm:py-16 md:px-16 md:py-20 lg:px-24"
+        className="sigma-trusted-by relative scroll-mt-28 overflow-x-clip px-5 py-28 sm:px-6 sm:py-32 md:px-16 md:py-40 lg:px-24"
       >
         <div className="relative mx-auto min-w-0 max-w-[90rem] text-center">
           <p
-            className={`sigma-hero-eyebrow mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(lang)}`}
+            className={`sigma-hero-eyebrow sigma-trusted-by__eyebrow mb-6 text-[1.125rem] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-7 sm:text-[1.25rem] ${localeEyebrow(lang)}`}
           >
             {proof.trustedBy.sectionLabel}
           </p>
           <h3
-            className={`mx-auto max-w-full px-0 font-display text-[clamp(1.05rem,3.8vw,1.45rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-2xl sm:text-2xl sm:tracking-tight sm:leading-tight md:text-3xl ${localeHeading(lang)}`}
+            className={`sigma-trusted-by__heading mx-auto max-w-full px-0 font-display text-[clamp(1.85rem,6.5vw,2.85rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:max-w-4xl sm:text-4xl sm:tracking-tight sm:leading-tight md:text-5xl lg:text-6xl ${localeHeading(lang)}`}
           >
             {proof.trustedBy.headline}
           </h3>
-          <div className="mx-auto mt-10 flex max-w-5xl flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4 md:gap-5">
-            {clientLogos.map((logo) => (
-              <LogoCell key={logo.id} logo={logo} lang={lang} />
-            ))}
+          <div className="mx-auto mt-20 min-w-0 w-full max-w-6xl sm:mt-24 md:max-w-7xl">
+            {reduceMotion ? (
+              <ul
+                className="sigma-logo-loop sigma-logo-loop--static flex flex-wrap items-center justify-center gap-5 sm:gap-7 md:gap-8"
+                role="list"
+                aria-label={proof.trustedBy.headline}
+              >
+                {clientLogos.map((logo) => (
+                  <li key={logo.id} className="min-w-0">
+                    <LogoLoopCapsule wordmark={logo.wordmark} lang={lang} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <LogoLoop
+                className="sigma-logo-loop"
+                logos={trustedLoopLogos}
+                speed={38}
+                direction="left"
+                gap={100}
+                logoHeight={28}
+                pauseOnHover
+                fadeOut
+                fadeOutColor="#070b16"
+                ariaLabel={proof.trustedBy.headline}
+              />
+            )}
           </div>
         </div>
       </section>

@@ -1,7 +1,6 @@
 "use client";
 
 import type { InsightPost } from "@/content/insights";
-import { MarketingPageBackground } from "@/components/site/marketing/MarketingPageBackground";
 import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeBody, localeEyebrow, localeHeading } from "@/lib/localeTypography";
@@ -18,7 +17,6 @@ export function InsightsPageContent({
 
   return (
     <div className="relative isolate min-h-0 flex-1 overflow-hidden">
-      <MarketingPageBackground />
       <div className="relative z-10">
         <section className="px-3 pb-10 pt-8 sm:px-6 sm:pb-16 sm:pt-14 lg:px-10">
           <PageIntroGlassCard

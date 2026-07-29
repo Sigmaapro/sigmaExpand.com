@@ -9,29 +9,29 @@ import { MidConversionCta, FinalConversionCta } from "@/components/sigma/Convers
 import { BookCallModal } from "@/components/sigma/BookCallModal";
 import { PartnerIntentModalHost, openPartnerIntentFlow } from "@/components/partner/PartnerIntentModal";
 import { getConversion } from "@/content/conversion";
-import { HeroAtmosphere } from "@/components/sigma/HeroAtmosphere";
-import { HeroEyebrowShard } from "@/components/sigma/HeroEyebrowShards";
-import { FloatingTeamCards } from "@/components/sigma/FloatingTeamCards";
+import { TeamDomeGallery } from "@/components/sigma/TeamDomeGallery";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
 import { CryptoWordCloudVisual } from "@/components/sigma/CryptoWordCloudVisual";
 import { SectionTitleTypewriter } from "@/components/sigma/SectionTitleTypewriter";
 import { SeoHiddenImages } from "@/components/seo/SeoHiddenImages";
+import { GooeyNavIndicator } from "@/components/sigma/GooeyNavIndicator";
+import { FluidGlassNavShell } from "@/components/sigma/FluidGlassNavShell";
+import GlassSurface from "@/components/react-bits/GlassSurface";
+import { SigmaBorderGlow } from "@/components/sigma/SigmaBorderGlow";
+import { SigmaHeroCurvedLoop, SigmaHeroCurvedLoopSpacer } from "@/components/sigma/SigmaHeroCurvedLoop";
+import { SigmaHeroTitleMark } from "@/components/sigma/SigmaHeroTitleMark";
+import { AnimatedContent } from "@/components/react-bits/AnimatedContent";
 import {
   motion,
   useMotionValue,
   useReducedMotion,
-  useScroll,
   useSpring,
 } from "framer-motion";
 import * as THREE from "three";
 import {
-  Shield,
-  Cpu,
-  Activity,
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  Code2,
   Mail,
   Info,
   Network,
@@ -41,6 +41,10 @@ import {
   Sparkles,
   Check,
   Newspaper,
+  Activity,
+  Shield,
+  Cpu,
+  Code2,
   type LucideIcon,
 } from "lucide-react";
 import type { ServiceIconId, SiteTranslations } from "@/content/types";
@@ -336,7 +340,8 @@ function InsightFeedCard({
   language: ReturnType<typeof useLanguage>["language"];
 }) {
   return (
-    <article className="group relative flex h-full w-[min(20.5rem,82vw)] shrink-0 flex-col overflow-hidden rounded-2xl border border-[rgba(147,197,253,0.16)] bg-[linear-gradient(165deg,rgba(7,12,24,0.88)_0%,rgba(10,18,34,0.82)_50%,rgba(6,10,18,0.9)_100%)] shadow-[0_20px_56px_rgba(2,8,22,0.45),inset_0_1px_0_rgba(210,228,255,0.1)] backdrop-blur-xl transition-[border-color,box-shadow,transform] duration-300 hover:border-[rgba(189,224,254,0.32)] hover:shadow-[0_24px_64px_rgba(2,8,22,0.55),0_0_40px_rgba(28,57,187,0.18)] sm:w-[22rem] lg:w-[23.5rem]">
+    <SigmaBorderGlow borderRadius={16}>
+      <article className="sigma-liquid-card group relative flex h-full w-[min(20.5rem,82vw)] shrink-0 flex-col overflow-hidden rounded-2xl border border-[rgba(147,197,253,0.16)] bg-[linear-gradient(165deg,rgba(7,12,24,0.88)_0%,rgba(10,18,34,0.82)_50%,rgba(6,10,18,0.9)_100%)] shadow-[0_20px_56px_rgba(2,8,22,0.45),inset_0_1px_0_rgba(210,228,255,0.1)] backdrop-blur-xl transition-[border-color,box-shadow,transform] duration-300 hover:border-[rgba(189,224,254,0.32)] hover:shadow-[0_24px_64px_rgba(2,8,22,0.55),0_0_40px_rgba(28,57,187,0.18)] sm:w-[22rem] lg:w-[23.5rem]">
       <a
         href={card.href}
         target="_blank"
@@ -414,6 +419,7 @@ function InsightFeedCard({
         </a>
       </div>
     </article>
+    </SigmaBorderGlow>
   );
 }
 
@@ -629,7 +635,7 @@ const GlobalStyles = () => (
      */
     .sigma-landing-root {
       min-height: 100vh;
-      background-color: #020817;
+      background-color: transparent;
       color: ${theme.colors.cadet};
       overflow-x: clip;
     }
@@ -1068,10 +1074,10 @@ const WebGLBackground = () => {
 
   return (
     <div className="pointer-events-none fixed left-0 top-0 z-0 h-full w-full overflow-x-hidden">
-      {/* Deep navy base — matches marketing subpage night shell (/team, /about) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#020817] via-[#030b1d] to-[#07142f]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-8%,rgba(28,57,187,0.16),transparent_68%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_48%_42%_at_88%_18%,rgba(189,224,254,0.05),transparent_58%)]" />
+      {/* Soft navy film over Gradient Blinds — keeps WebGL readable without hiding ambient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#020817]/55 via-[#030b1d]/40 to-[#07142f]/50" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-8%,rgba(28,57,187,0.12),transparent_68%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_48%_42%_at_88%_18%,rgba(189,224,254,0.04),transparent_58%)]" />
       {shouldRenderCanvas ? (
         <WebGLScene
           lowPower={lowPowerDevice}
@@ -1153,73 +1159,6 @@ const AnimatedText = ({
   );
 };
 
-const TiltCard = ({
-  title,
-  icon: Icon,
-  desc,
-}: {
-  title: string;
-  icon: React.ComponentType<{ className?: string }>;
-  desc: string;
-}) => {
-  const { lang } = useLanguage();
-  const cardRef = useRef<HTMLDivElement | null>(null);
-  const isNarrow = useIsMobile(1024);
-  const reduceMotion = useReducedMotion() ?? false;
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const smoothRotateX = useSpring(rotateX, { stiffness: 260, damping: 24, mass: 0.2 });
-  const smoothRotateY = useSpring(rotateY, { stiffness: 260, damping: 24, mass: 0.2 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isNarrow || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const nextRotateX = ((y - centerY) / centerY) * -10;
-    const nextRotateY = ((x - centerX) / centerX) * 10;
-    rotateX.set(nextRotateX);
-    rotateY.set(nextRotateY);
-  };
-
-  const handleMouseLeave = () => {
-    rotateX.set(0);
-    rotateY.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX: isNarrow || reduceMotion ? 0 : smoothRotateX,
-        rotateY: isNarrow || reduceMotion ? 0 : smoothRotateY,
-        transformStyle: isNarrow || reduceMotion ? "flat" : "preserve-3d",
-      }}
-      className="group relative flex h-full min-h-[16.75rem] w-full min-w-0 max-w-full flex-col overflow-hidden sharp-edge border border-[#adb5bd]/20 bg-[#212529]/80 p-6 backdrop-blur-md sm:p-8"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1c39bb]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      <div
-        className="relative z-10 flex h-full flex-col"
-        style={{ transform: "translateZ(30px)" }}
-      >
-        <Icon className="mb-6 h-10 w-10 text-[#adb5bd] transition-colors duration-300 group-hover:text-[#bde0fe]" />
-        <h3
-          className={`mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl ${localeCardTitle(lang)}`}
-        >
-          {title}
-        </h3>
-        <p className="text-sm leading-relaxed text-[#c5ccd4] md:text-[#adb5bd]">{desc}</p>
-      </div>
-      <div className="absolute left-0 top-0 h-2 w-2 border-l border-t border-[#bde0fe] opacity-0 transition-opacity group-hover:opacity-100" />
-      <div className="absolute bottom-0 right-0 h-2 w-2 border-b border-r border-[#bde0fe] opacity-0 transition-opacity group-hover:opacity-100" />
-    </motion.div>
-  );
-};
-
 const HeroSection = ({
   t,
   isRtl,
@@ -1229,173 +1168,91 @@ const HeroSection = ({
 }) => {
   const { lang } = useLanguage();
   const reduceMotion = useReducedMotion() ?? false;
-  const isCoarsePointer = useIsMobile(1024);
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const glowRef = useRef<HTMLDivElement | null>(null);
-  const glowRafRef = useRef(0);
-  const glowPointRef = useRef({ x: 0, y: 0 });
-  const glowEnabled = !reduceMotion && !isCoarsePointer;
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const paintGlow = useCallback(() => {
-    glowRafRef.current = 0;
-    const el = glowRef.current;
-    if (!el) return;
-    const { x, y } = glowPointRef.current;
-    el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-  }, []);
-
-  const handlePointerMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    const relX = e.clientX - rect.left;
-    const relY = e.clientY - rect.top;
-    if (!reduceMotion && !isCoarsePointer) {
-      pointerX.set((relX / Math.max(rect.width, 1)) * 2 - 1);
-      pointerY.set((relY / Math.max(rect.height, 1)) * 2 - 1);
-    }
-    if (!glowEnabled) return;
-    glowPointRef.current.x = relX;
-    glowPointRef.current.y = relY;
-    if (glowRafRef.current) return;
-    glowRafRef.current = requestAnimationFrame(paintGlow);
-  };
-
-  const handlePointerLeave = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-    if (!sectionRef.current || !glowRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    glowPointRef.current.x = rect.width * 0.5;
-    glowPointRef.current.y = rect.height * 0.42;
-    if (glowRafRef.current) cancelAnimationFrame(glowRafRef.current);
-    glowRafRef.current = requestAnimationFrame(paintGlow);
-  };
-
-  useEffect(() => {
-    if (!glowEnabled || !sectionRef.current || !glowRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    glowPointRef.current.x = rect.width * 0.5;
-    glowPointRef.current.y = rect.height * 0.42;
-    paintGlow();
-    return () => {
-      if (glowRafRef.current) cancelAnimationFrame(glowRafRef.current);
-    };
-  }, [glowEnabled, paintGlow]);
 
   return (
-  <section
-    ref={sectionRef}
-    id="hero"
-    onMouseMove={handlePointerMove}
-    onMouseLeave={handlePointerLeave}
-    className="relative flex min-h-[min(100svh,860px)] scroll-mt-24 items-center justify-center overflow-x-clip px-5 pb-16 pt-[max(5.25rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:pb-20 sm:pt-28 md:min-h-screen md:px-16 md:pb-24 md:pt-32 lg:px-24"
-  >
-    <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-      {/* Soft navy mesh + radial glow — fades out before Regions junction */}
-      <div className="sigma-hero-mesh absolute inset-0 opacity-[0.16] sm:opacity-[0.2] md:opacity-[0.24]" />
-      <div className="absolute inset-0 bg-sigma-radial opacity-[0.14] sm:opacity-[0.18] md:opacity-[0.22] [mask-image:linear-gradient(180deg,#000_0%,#000_72%,transparent_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_48%_at_50%_42%,rgba(189,224,254,0.04),transparent_62%)] [mask-image:linear-gradient(180deg,#000_0%,#000_75%,transparent_100%)]" />
-      <div
-        ref={glowRef}
-        className={`sigma-hero-cursor-glow ${glowEnabled ? "is-active" : ""}`}
-      />
-      <HeroAtmosphere />
-    </div>
-    <div className="relative z-10 mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center text-center">
-      <div className="flex w-full min-w-0 max-w-5xl flex-col items-center">
-        <div className="mb-10 flex w-full min-w-0 items-center justify-center gap-2 sm:mb-12 sm:gap-3 md:mb-14 md:gap-3.5">
-          <HeroEyebrowShard
-            side="left"
-            scrollProgress={scrollYProgress}
-            pointerX={pointerX}
-            pointerY={pointerY}
-          />
-          <div
-            className="h-px w-7 shrink-0 bg-gradient-to-r from-transparent via-[#7daaff]/45 to-transparent sm:w-10 md:w-12"
-            aria-hidden
-          />
-          <span className="sigma-hero-eyebrow min-w-0 max-w-[min(100%,34rem)] break-words text-center text-[11px] font-semibold uppercase leading-snug text-[#e2e7ec] sm:text-xs md:text-[13px]">
-            {t.hero.eyebrow}
-          </span>
-          <div
-            className="h-px w-7 shrink-0 bg-gradient-to-l from-transparent via-[#7daaff]/45 to-transparent sm:w-10 md:w-12"
-            aria-hidden
-          />
-          <HeroEyebrowShard
-            side="right"
-            scrollProgress={scrollYProgress}
-            pointerX={pointerX}
-            pointerY={pointerY}
-          />
-        </div>
-
-        <motion.h1
-          initial={reduceMotion ? false : { opacity: 0.92, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className={`sigma-hero-title mb-5 w-full max-w-5xl break-words text-center text-[clamp(1.65rem,8vw,2.75rem)] font-semibold uppercase leading-[1.1] text-balance [overflow-wrap:anywhere] sm:mb-6 sm:text-6xl sm:leading-none md:mb-7 md:text-8xl lg:text-[5.75rem] xl:text-[6.25rem] ${
-            isRtl ? "text-white glow-text" : "sigma-hero-wordmark"
-          }`}
-        >
-          {t.hero.title}
-        </motion.h1>
-
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
-          className={`mb-5 max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:mb-5 sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
-        >
-          {t.hero.subtitle}
-        </motion.p>
-
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-          className={`sigma-body-measure mx-auto mb-8 max-w-2xl px-1 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:px-0 sm:text-[15px] md:text-[#aeb5bd] ${localeHeroSupporting(lang)}`}
-        >
-          {t.hero.supporting}
-        </motion.p>
-
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="flex w-full min-w-0 max-w-xl flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-3.5"
-        >
-          <MagneticButton
-            primary
-            isRtl={isRtl}
-            onClick={openPartnerIntentFlow}
-            fullWidthMobile
-          >
-            {t.hero.primaryCta}
-          </MagneticButton>
-          <MagneticButton
-            isRtl={isRtl}
-            href={t.hero.secondaryHref}
-            fullWidthMobile
-          >
-            {t.hero.secondaryCta}
-          </MagneticButton>
-        </motion.div>
-      </div>
-    </div>
-
-    <div
-      className="pointer-events-none absolute inset-x-0 bottom-5 z-10 hidden justify-center sm:bottom-7 sm:flex md:bottom-9"
-      aria-hidden
+    <section
+      id="hero"
+      className="relative flex min-h-[min(100svh,860px)] scroll-mt-24 items-center justify-start overflow-x-clip px-5 pb-16 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.5rem))] sm:px-6 sm:pb-20 sm:pt-24 md:min-h-screen md:px-16 md:pb-24 md:pt-[6.5rem] lg:px-24"
     >
-      <span className="sigma-hero-scroll-cue" />
-    </div>
-  </section>
+      {/* Replace the simple slot inside SigmaHeroCurvedLoop when the new component is ready. */}
+      <SigmaHeroCurvedLoop text={t.hero.eyebrow} />
+
+      <div className="relative z-10 mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center text-center">
+        <div className="mx-auto flex w-full min-w-0 max-w-5xl flex-col items-center">
+          <SigmaHeroCurvedLoopSpacer />
+
+          <div className="sigma-hero-content-group mx-auto flex w-full min-w-0 flex-col items-center text-center">
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0.92, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full"
+            >
+              <SigmaHeroTitleMark title={t.hero.title} />
+            </motion.div>
+
+            <motion.p
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className={`mb-5 max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:mb-5 sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
+            >
+              {t.hero.subtitle}
+            </motion.p>
+
+            <motion.p
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className={`sigma-body-measure mx-auto mb-8 max-w-2xl px-1 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:px-0 sm:text-[15px] md:text-[#aeb5bd] ${localeHeroSupporting(lang)}`}
+            >
+              {t.hero.supporting}
+            </motion.p>
+
+            <div className="flex w-full min-w-0 max-w-xl flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-3.5">
+              <AnimatedContent
+                className="w-full sm:w-auto"
+                direction="horizontal"
+                distance={200}
+                duration={2}
+                delay={0.2}
+                ease="bounce.out"
+                disappearEase="elastic.in(1, 0.3)"
+                reverse
+              >
+                <MagneticButton
+                  primary
+                  liquid
+                  isRtl={isRtl}
+                  onClick={openPartnerIntentFlow}
+                  fullWidthMobile
+                >
+                  {t.hero.primaryCta}
+                </MagneticButton>
+              </AnimatedContent>
+              <AnimatedContent
+                className="w-full sm:w-auto"
+                direction="horizontal"
+                distance={200}
+                duration={2}
+                delay={0.2}
+                ease="bounce.out"
+                disappearEase="elastic.in(1, 0.3)"
+              >
+                <MagneticButton
+                  liquid
+                  isRtl={isRtl}
+                  href={t.hero.secondaryHref}
+                  fullWidthMobile
+                >
+                  {t.hero.secondaryCta}
+                </MagneticButton>
+              </AnimatedContent>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -1407,12 +1264,11 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="what-is-sigma"
-      className="sigma-landing-section-shell relative z-10 scroll-mt-24 px-5 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
+      className="sigma-what-is-ripple relative z-10 scroll-mt-24 overflow-hidden px-5 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
     >
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.08]" />
       <div className="relative z-10 mx-auto max-w-[90rem]">
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,400px)] lg:gap-10 xl:gap-14">
-          <div className="sigma-section-header-glass min-w-0 max-w-3xl px-5 py-5 sm:px-6 sm:py-6">
+          <div className="sigma-liquid-card sigma-what-is-glass min-w-0 max-w-3xl px-5 py-5 sm:px-6 sm:py-6">
             <p
               className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
             >
@@ -1430,29 +1286,30 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
 
           {/* Decorative ticker cloud — lg+ only */}
           <div className="relative hidden min-h-[420px] w-full max-w-[440px] items-center justify-center self-center justify-self-end lg:flex">
-            <CryptoWordCloudVisual />
+            <CryptoWordCloudVisual tone="dark" />
           </div>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {pillars.map((pillar, idx) => (
-            <motion.div
-              key={pillar.title}
-              initial={{ opacity: 1, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-48px" }}
-              transition={{ duration: 0.45, delay: idx * 0.06 }}
-              className="group rounded-md border border-white/[0.06] bg-white/[0.02] px-6 py-7 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[#1c39bb]/22 hover:bg-white/[0.035] hover:shadow-[0_0_36px_rgba(28,57,187,0.09)]"
-            >
-              <h3
-                className={`font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em] ${localeCardTitle(language)}`}
+            <SigmaBorderGlow key={pillar.title} borderRadius={8}>
+              <motion.div
+                initial={{ opacity: 1, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-48px" }}
+                transition={{ duration: 0.45, delay: idx * 0.06 }}
+                className="sigma-liquid-card sigma-what-is-glass group px-6 py-7 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[rgba(29,137,187,0.38)] hover:bg-[rgba(10,18,40,0.58)] hover:shadow-[0_0_36px_rgba(29,58,187,0.14)]"
               >
-                {pillar.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-[#c8d0d8] md:text-[15px] md:text-[#aeb5bd]">
-                {pillar.description}
-              </p>
-            </motion.div>
+                <h3
+                  className={`font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em] ${localeCardTitle(language)}`}
+                >
+                  {pillar.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#c8d0d8] md:text-[15px] md:text-[#aeb5bd]">
+                  {pillar.description}
+                </p>
+              </motion.div>
+            </SigmaBorderGlow>
           ))}
         </div>
         <div className="mt-10 flex justify-center">
@@ -1482,7 +1339,8 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
           className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 rounded-[2rem] bg-[radial-gradient(ellipse_70%_65%_at_50%_45%,rgba(28,57,187,0.18)_0%,rgba(28,57,187,0.06)_42%,transparent_72%)]"
           aria-hidden
         />
-        <div className="relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-[rgba(125,170,255,0.14)] bg-[linear-gradient(160deg,rgba(7,12,24,0.52)_0%,rgba(10,18,36,0.44)_48%,rgba(6,10,20,0.5)_100%)] px-5 py-6 text-center shadow-[0_18px_50px_rgba(2,8,22,0.28),inset_0_1px_0_rgba(210,228,255,0.08)] backdrop-blur-xl sm:rounded-[1.75rem] sm:px-10 sm:py-8 md:rounded-[28px]">
+        <SigmaBorderGlow borderRadius={28}>
+          <div className="sigma-liquid-card relative mx-auto w-full overflow-hidden rounded-[1.5rem] border border-[rgba(125,170,255,0.14)] bg-[linear-gradient(160deg,rgba(7,12,24,0.52)_0%,rgba(10,18,36,0.44)_48%,rgba(6,10,20,0.5)_100%)] px-5 py-6 text-center shadow-[0_18px_50px_rgba(2,8,22,0.28),inset_0_1px_0_rgba(210,228,255,0.08)] backdrop-blur-xl sm:rounded-[1.75rem] sm:px-10 sm:py-8 md:rounded-[28px]">
           <div
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_70%_at_50%_0%,rgba(189,224,254,0.06),transparent_58%)]"
             aria-hidden
@@ -1506,11 +1364,108 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
             </div>
           </div>
         </div>
+        </SigmaBorderGlow>
       </div>
 
-      {/* Desktop float = absolute layer. Mobile/reduced = static row under intro. */}
-      <FloatingTeamCards />
+      {/* Desktop = Dome Gallery behind panel. Mobile/reduced = static photo grid. */}
+      <TeamDomeGallery />
     </section>
+  );
+};
+
+const TiltCard = ({
+  title,
+  icon: Icon,
+  desc,
+}: {
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  desc: string;
+}) => {
+  const { lang } = useLanguage();
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const isNarrow = useIsMobile(1024);
+  const reduceMotion = useReducedMotion() ?? false;
+  const simplifyGlass = reduceMotion || isNarrow;
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const smoothRotateX = useSpring(rotateX, { stiffness: 260, damping: 24, mass: 0.2 });
+  const smoothRotateY = useSpring(rotateY, { stiffness: 260, damping: 24, mass: 0.2 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isNarrow || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const nextRotateX = ((y - centerY) / centerY) * -10;
+    const nextRotateY = ((x - centerX) / centerX) * 10;
+    rotateX.set(nextRotateX);
+    rotateY.set(nextRotateY);
+  };
+
+  const handleMouseLeave = () => {
+    rotateX.set(0);
+    rotateY.set(0);
+  };
+
+  return (
+    <SigmaBorderGlow borderRadius={0}>
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX: isNarrow || reduceMotion ? 0 : smoothRotateX,
+        rotateY: isNarrow || reduceMotion ? 0 : smoothRotateY,
+        transformStyle: isNarrow || reduceMotion ? "flat" : "preserve-3d",
+      }}
+      className="group relative h-full min-h-[16.75rem] w-full min-w-0 max-w-full"
+    >
+      <GlassSurface
+        width="100%"
+        height="100%"
+        borderRadius={0}
+        borderWidth={0.055}
+        brightness={simplifyGlass ? 11 : 16}
+        opacity={simplifyGlass ? 0.9 : 0.93}
+        blur={simplifyGlass ? 7 : 10}
+        displace={simplifyGlass ? 0 : 0.32}
+        backgroundOpacity={simplifyGlass ? 0.52 : 0.4}
+        saturation={simplifyGlass ? 1.06 : 1.18}
+        distortionScale={simplifyGlass ? 0 : -78}
+        redOffset={0}
+        greenOffset={simplifyGlass ? 0 : 5}
+        blueOffset={simplifyGlass ? 0 : 12}
+        xChannel="R"
+        yChannel="G"
+        mixBlendMode="difference"
+        forceFallback={simplifyGlass}
+        className="sigma-fluid-glass sigma-capabilities-glass sharp-edge h-full min-h-[16.75rem] w-full min-w-0"
+        contentClassName="!flex !h-full !min-h-[16.75rem] !w-full !flex-col !items-stretch !justify-start !p-6 sm:!p-8"
+      >
+        <div className="sigma-capabilities-glass__sheen" aria-hidden />
+        {!simplifyGlass ? (
+          <div className="sigma-capabilities-glass__refract" aria-hidden />
+        ) : null}
+        <div
+          className="relative z-10 flex h-full flex-col"
+          style={{ transform: "translateZ(30px)" }}
+        >
+          <Icon className="mb-6 h-10 w-10 text-[#adb5bd] transition-colors duration-300 group-hover:text-[#bde0fe]" />
+          <h3
+            className={`mb-3 break-words font-display text-lg font-semibold tracking-wide text-[#e9ecef] sm:text-xl ${localeCardTitle(lang)}`}
+          >
+            {title}
+          </h3>
+          <p className="text-sm leading-relaxed text-[#d0d7df] md:text-[#c5ccd4]">{desc}</p>
+        </div>
+        <div className="absolute left-0 top-0 z-10 h-2 w-2 border-l border-t border-[#bde0fe]/70 opacity-0 transition-opacity group-hover:opacity-100" />
+        <div className="absolute bottom-0 right-0 z-10 h-2 w-2 border-b border-r border-[#bde0fe]/70 opacity-0 transition-opacity group-hover:opacity-100" />
+      </GlassSurface>
+    </motion.div>
+    </SigmaBorderGlow>
   );
 };
 
@@ -1531,7 +1486,8 @@ const DEFAULT_SERVICE_ICONS: ServiceIconId[] = [
 const ServicesSection = ({ t }: { t: SiteTranslations }) => {
   const { language } = useLanguage();
   const H = getHomeSectionLinks(language);
-  const services = t.services.cards.map((card, i) => {
+  // Exchanges & Platforms + KOLs & Creators only (first two cards).
+  const services = t.services.cards.slice(0, 2).map((card, i) => {
     const iconId =
       card.icon ??
       DEFAULT_SERVICE_ICONS[Math.min(i, DEFAULT_SERVICE_ICONS.length - 1)]!;
@@ -1546,13 +1502,13 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="capabilities"
-      className="sigma-landing-section-shell relative z-10 min-h-0 scroll-mt-24 px-5 py-16 sm:px-6 sm:py-24 md:scroll-mt-28 md:px-16 md:py-28 lg:px-24"
+      className="sigma-landing-section-shell relative z-10 min-h-0 scroll-mt-24 overflow-hidden px-5 py-14 sm:px-6 sm:py-16 md:scroll-mt-28 md:px-12 md:py-20 lg:px-20"
     >
-      <div className="relative z-10 mx-auto min-w-0 max-w-7xl">
-        <div className="mx-auto mb-10 max-w-[52rem] md:mb-14">
-          <div className="sigma-section-header-glass mx-auto px-5 py-5 text-center sm:px-7 sm:py-6 md:px-8 md:py-7">
+      <div className="relative z-10 mx-auto min-w-0 max-w-[1280px]">
+        <div className="mx-auto mb-8 max-w-[52rem] md:mb-10">
+          <div className="sigma-section-header-glass mx-auto px-5 py-4 text-center sm:px-7 sm:py-5 md:px-8 md:py-6">
             <p
-              className={`mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-4 sm:text-[11px] ${localeEyebrow(language)}`}
+              className={`mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-3 sm:text-[11px] ${localeEyebrow(language)}`}
             >
               {t.services.sectionLabel}
             </p>
@@ -1564,7 +1520,7 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
         </div>
 
         <div
-          className="grid min-w-0 grid-cols-1 auto-rows-fr gap-6 md:grid-cols-2 lg:grid-cols-4"
+          className="mx-auto grid min-w-0 max-w-4xl grid-cols-1 auto-rows-fr gap-6 md:grid-cols-2"
           style={{ perspective: "1000px" }}
         >
           {services.map((service, idx) => (
@@ -1580,7 +1536,7 @@ const ServicesSection = ({ t }: { t: SiteTranslations }) => {
             </motion.div>
           ))}
         </div>
-        <div className="mt-10 flex justify-center md:mt-14">
+        <div className="mt-8 flex justify-center md:mt-10">
           <SectionDeepLink href={H.capabilities.href} label={H.capabilities.label} openInNewTab />
         </div>
       </div>
@@ -1599,12 +1555,13 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
     >
       <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px max-w-4xl -translate-y-1/2 bg-gradient-to-r from-transparent via-[#1c39bb]/35 to-transparent opacity-60" />
       <div className="relative mx-auto min-w-0 max-w-5xl">
+        <SigmaBorderGlow borderRadius={16}>
         <motion.div
           initial={{ opacity: 1, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-48px" }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="relative min-w-0 overflow-hidden rounded-2xl border border-white/[0.09] bg-gradient-to-br from-[#10131a]/95 via-[#0a0c12] to-[#07090f] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.55)] backdrop-blur-2xl sm:p-8 md:p-12 md:ps-14 md:pe-14"
+          className="sigma-liquid-card relative min-w-0 overflow-hidden rounded-2xl border border-white/[0.09] bg-gradient-to-br from-[#10131a]/95 via-[#0a0c12] to-[#07090f] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.55)] backdrop-blur-2xl sm:p-8 md:p-12 md:ps-14 md:pe-14"
         >
           <div className="pointer-events-none absolute -end-24 -top-28 h-72 w-72 rounded-full bg-[#1c39bb]/25 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -start-16 h-56 w-56 rounded-full bg-[#bde0fe]/[0.06] blur-3xl" />
@@ -1646,6 +1603,7 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
             </div>
           </div>
         </motion.div>
+        </SigmaBorderGlow>
       </div>
     </section>
   );
@@ -1676,6 +1634,7 @@ const Navbar = () => {
   const { t, lang: currentLang, setLang: setCurrentLang, isRtl } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [glassActive, setGlassActive] = useState<GlassNavId | null>(null);
+  const gooeyNavTrackRef = useRef<HTMLDivElement | null>(null);
   const navClickScrollingRef = useRef(false);
   const navClickTimerRef = useRef<number | null>(null);
   const scrollRafRef = useRef<number | null>(null);
@@ -1831,19 +1790,24 @@ const Navbar = () => {
           if (e.target === e.currentTarget) scrollToTop();
         }}
       >
-        <div className="relative flex h-[72px] min-w-0 w-[calc(100%-0.75rem)] max-w-[1440px] shrink-0 items-center gap-2 rounded-full border border-white/[0.07] bg-[#07090f]/70 px-2.5 shadow-[0_4px_24px_rgba(0,0,0,0.2)] backdrop-blur-xl sm:w-[calc(100%-1.25rem)] sm:gap-3 sm:px-3.5 md:gap-4 md:px-5 lg:gap-5 lg:px-6">
+        <FluidGlassNavShell
+          variant="shell"
+          height={72}
+          className="sigma-home-liquid-nav min-w-0 w-[calc(100%-0.75rem)] max-w-[1440px] shrink-0 sm:w-[calc(100%-1.25rem)]"
+          contentClassName="!flex !h-full !w-full !items-center !justify-start !gap-3 !p-0 !px-3 sm:!gap-4 sm:!px-4 md:!gap-5 md:!px-6 lg:!gap-7 lg:!px-7"
+        >
           <button
             type="button"
             onClick={() => scrollToTop()}
             className="relative z-10 flex h-full min-w-0 max-w-[min(42%,9.5rem)] shrink-0 cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-start transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 sm:max-w-none sm:gap-2.5"
             aria-label={t.ui.navChrome.brandAria}
           >
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center font-display text-[1.5rem] font-semibold leading-none tracking-tight text-white drop-shadow-[0_0_12px_rgba(189,224,254,0.2)] transition-transform duration-300 hover:scale-[1.02] sm:text-[1.65rem]">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center font-display text-[1.6rem] font-semibold leading-none tracking-tight text-white drop-shadow-[0_0_12px_rgba(29,137,187,0.28)] transition-transform duration-300 hover:scale-[1.04] sm:h-9 sm:w-9 sm:text-[1.7rem]">
               Σ
             </span>
             <span
               data-latin-tracking
-              className="truncate font-display text-[11px] font-semibold uppercase tracking-[0.14em] text-[#c5ccd3] sm:text-lg sm:tracking-[0.12em]"
+              className="truncate font-display text-[11px] font-semibold uppercase tracking-[0.16em] text-[#dce2e8] sm:text-lg sm:tracking-[0.14em]"
             >
               SIGMA
             </span>
@@ -1861,65 +1825,62 @@ const Navbar = () => {
 
           <div className="relative z-0 hidden min-h-0 min-w-0 flex-1 justify-center overflow-visible px-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:flex">
             <div
-              className="inline-flex h-14 w-max flex-nowrap items-center gap-2 rounded-full border border-white/[0.06] bg-[#05070c]/50 px-3 shadow-[0_2px_12px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.03)] backdrop-blur-xl sm:gap-2.5 sm:px-3.5 md:gap-3 md:px-4 lg:gap-3.5"
+              ref={gooeyNavTrackRef}
+              className="sigma-home-nav-track sigma-gooey-nav-track relative inline-flex h-14 w-max max-w-full flex-nowrap items-center gap-1.5 sm:gap-2 md:gap-2.5"
               dir="ltr"
             >
-              {primaryNav.map(({ id, icon: Icon, label }) => {
-                const isActive = glassActive === id;
-                const isPro = id === "sigmapro";
-                return (
-                  <Link
-                    key={id}
-                    href={navHrefById[id]}
-                    onClick={(event) => navigateToSectionFromLink(event, id)}
-                    className={`relative isolate box-border inline-flex h-14 min-h-14 max-h-14 shrink-0 items-center overflow-visible rounded-full border text-start transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c39bb]/45 focus-visible:ring-offset-1 focus-visible:ring-offset-[#07090f] ${
-                      isActive
-                        ? "min-w-0 border-transparent text-white"
-                        : isPro
-                          ? "min-w-max border-white/[0.12] bg-white/[0.04] text-[#dce2e8] hover:border-[#1c39bb]/45 hover:bg-white/[0.055] hover:text-white hover:shadow-[0_0_22px_rgba(28,57,187,0.14)]"
-                          : "min-w-0 border-transparent text-[#8b939e] hover:bg-white/[0.045] hover:text-[#e6e9ed]"
-                    } `}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {isActive ? (
-                      <motion.div
-                        layoutId="sigma-glass-nav-pill"
-                        className="pointer-events-none absolute inset-0 z-0 rounded-full border border-transparent bg-[#1c39bb]/95 shadow-[0_1px_12px_rgba(28,57,187,0.32)]"
-                        transition={{
-                          type: "spring",
-                          stiffness: 420,
-                          damping: 36,
-                        }}
-                      />
-                    ) : null}
-                    <span className="relative z-10 inline-flex h-full min-h-0 items-center gap-1.5 px-2.5 sm:gap-2 sm:px-3 md:px-3.5">
-                      <Icon
-                        className={`size-[15px] shrink-0 md:size-4 ${
-                          isPro && !isActive
-                            ? "text-[#bde0fe]/85"
-                            : "text-current opacity-[0.92]"
-                        }`}
-                        strokeWidth={2}
-                        aria-hidden
-                      />
-                      <span
-                        className={`max-w-[9.5rem] truncate text-[11px] font-semibold uppercase leading-tight tracking-[0.06em] text-current sm:max-w-none sm:text-[13px] sm:leading-none sm:tracking-[0.07em] md:text-[14px] md:tracking-[0.08em] xl:whitespace-nowrap ${localeNav(currentLang)} ${
-                          isPro && !isActive ? "shrink-0 text-[#dce2e8]" : ""
-                        }`}
-                        title={label}
-                      >
-                        {label}
+                <GooeyNavIndicator
+                  containerRef={gooeyNavTrackRef}
+                  activeSelector='[data-gooey-nav-item][aria-current="page"]'
+                  activeKey={glassActive}
+                  enabled={Boolean(glassActive)}
+                />
+                {primaryNav.map(({ id, icon: Icon, label }) => {
+                  const isActive = glassActive === id;
+                  const isPro = id === "sigmapro";
+                  return (
+                    <Link
+                      key={id}
+                      href={navHrefById[id]}
+                      data-gooey-nav-item=""
+                      onClick={(event) => navigateToSectionFromLink(event, id)}
+                      className={`sigma-home-nav-item relative isolate box-border inline-flex h-14 min-h-14 max-h-14 shrink-0 items-center overflow-visible rounded-full border border-transparent text-start transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D89BB]/55 focus-visible:ring-offset-1 focus-visible:ring-offset-[#07090f] ${
+                        isActive
+                          ? "min-w-0 text-white"
+                          : isPro
+                            ? "min-w-max text-[#dce2e8] hover:bg-white/[0.05] hover:text-white"
+                            : "min-w-0 text-[#8b939e] hover:bg-white/[0.045] hover:text-[#e6e9ed]"
+                      } `}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      <span className="relative z-10 inline-flex h-full min-h-0 items-center gap-1.5 px-2.5 sm:gap-2 sm:px-3 md:px-3.5">
+                        <Icon
+                          className={`size-[15px] shrink-0 md:size-4 ${
+                            isPro && !isActive
+                              ? "text-[#bde0fe]/85"
+                              : "text-current opacity-[0.92]"
+                          }`}
+                          strokeWidth={2}
+                          aria-hidden
+                        />
+                        <span
+                          className={`max-w-[9.5rem] truncate text-[11px] font-semibold uppercase leading-tight tracking-[0.06em] text-current sm:max-w-none sm:text-[13px] sm:leading-none sm:tracking-[0.07em] md:text-[14px] md:tracking-[0.08em] xl:whitespace-nowrap ${localeNav(currentLang)} ${
+                            isPro && !isActive ? "shrink-0 text-[#dce2e8]" : ""
+                          }`}
+                          title={label}
+                        >
+                          {label}
+                        </span>
                       </span>
-                    </span>
-                  </Link>
-                );
-              })}
+                    </Link>
+                  );
+                })}
             </div>
           </div>
 
           <div className="relative z-10 flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 md:gap-4 lg:ms-auto">
             <InsightsOuterLink
-              className={`hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-white/[0.1] bg-white/[0.03] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[background,border-color,box-shadow] hover:border-[#1c39bb]/40 hover:bg-white/[0.055] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px] ${localeNav(currentLang)}`}
+              className={`hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-[rgba(29,137,187,0.2)] bg-[rgba(8,12,24,0.45)] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(189,224,254,0.08)] transition-[background,border-color,box-shadow] hover:border-[#1D89BB]/45 hover:bg-[rgba(29,137,187,0.1)] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px] ${localeNav(currentLang)}`}
             >
               <Newspaper
                 className="size-[15px] shrink-0 text-[#bde0fe]/80"
@@ -1937,7 +1898,7 @@ const Navbar = () => {
             <button
               type="button"
               onClick={openPartnerIntentFlow}
-              className={`hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1c39bb]/48 bg-[linear-gradient(180deg,rgba(28,57,187,0.26)_0%,rgba(28,57,187,0.09)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_0_22px_rgba(28,57,187,0.14)] transition-[background,box-shadow,border-color,transform] hover:border-[#2a4acd]/70 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_28px_rgba(28,57,187,0.22)] active:scale-[0.99] md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px] ${localeCta(currentLang)}`}
+              className={`hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1D89BB]/55 bg-[linear-gradient(180deg,rgba(29,58,187,0.42)_0%,rgba(29,137,187,0.18)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_24px_rgba(29,58,187,0.22)] transition-[background,box-shadow,border-color,transform] hover:border-[#1D89BB]/75 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_30px_rgba(29,58,187,0.3)] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px] ${localeCta(currentLang)}`}
             >
               {t.nav.navCta}
             </button>
@@ -1953,7 +1914,7 @@ const Navbar = () => {
 
             <button
               type="button"
-              className="inline-flex h-12 min-h-12 w-12 min-w-12 shrink-0 touch-manipulation items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] text-[#e9ecef] transition-colors hover:border-white/18 hover:bg-white/[0.06] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 lg:hidden"
+              className="inline-flex h-12 min-h-12 w-12 min-w-12 shrink-0 touch-manipulation items-center justify-center rounded-full border border-[rgba(29,137,187,0.22)] bg-[rgba(8,12,24,0.5)] text-[#e9ecef] transition-colors hover:border-[#1D89BB]/4 hover:bg-[rgba(29,137,187,0.1)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 lg:hidden"
               aria-expanded={mobileOpen}
               aria-controls="sigma-mobile-nav-panel"
               aria-label={
@@ -1968,7 +1929,7 @@ const Navbar = () => {
               )}
             </button>
           </div>
-        </div>
+        </FluidGlassNavShell>
       </nav>
 
       <SigmaMobileNavPanel
@@ -2006,7 +1967,6 @@ export function SigmaLandingClient({
   return (
     <div className="sigma-landing-root">
       <GlobalStyles />
-      <WebGLBackground />
 
       <main
         key={currentLang}

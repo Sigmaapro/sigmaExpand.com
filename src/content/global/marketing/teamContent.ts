@@ -159,7 +159,11 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       imageSrc: "/images/team/omid-modaber.jpg",
       portrait: "/images/team/omid-modaber.jpg",
       portraitObjectPosition: "center 18%",
+      profileStatus: "active",
       bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
+      seoTitle: "Omid Modaber | Founder & Strategic Growth Consultant at Sigma",
+      metaDescription:
+        "Omid Modaber sets the long-term direction of Sigma, focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
     }),
     {
       ...withMemberProfileDefaults(
@@ -332,6 +336,8 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
               { label: "Instagram", href: "https://www.instagram.com/nobakhthastam?utm_source=qr" },
               { label: "Telegram", href: "https://t.me/Nobakht_ashkan" },
             ],
+            profileStatus: "active",
+            seoTitle: "Ashkan Nobakht | Growth Marketing Strategist & Web3 Business Development",
             metaDescription: "Profile of Ashkan Nobakht, Growth Marketing Strategist and Inner Circle Partner at Sigma.",
           },
           MALE_MEMBER_PLACEHOLDER,
@@ -537,6 +543,7 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
               { title: "Combined an MBA from the University of Tehran with a Biomedical Engineering background" },
             ],
             linkedin: "https://www.linkedin.com/in/mahdiyar-mehmandoust",
+            profileStatus: "active",
             seoTitle: "Mahdiyar Mehmandoust | Crypto & Web3 Product Manager & Community Builder",
             metaDescription:
               "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder with an MBA from the University of Tehran. From founding a crypto department at a currency exchange to launching a tokenized real estate project, he builds products and communities side by side — today leading West Asia KOL communities at LBank.",
@@ -632,6 +639,10 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
       ],
       linkedin: "https://www.linkedin.com/in/babak-ravanbakhsh-16535a327/",
       website: "https://madbak.art",
+      profileStatus: "active",
+      seoTitle: "Babak Ravanbakhsh | Creative Designer & Web Developer",
+      metaDescription:
+        "Babak Ravanbakhsh, professionally known as Madbak, is a creative designer and web developer focused on distinctive digital experiences, interactive websites, visual systems, and user-focused products at Sigma.",
       socialLinks: [
         { label: "Instagram", href: "https://www.instagram.com/madbak98/" },
         { label: "X", href: "https://x.com/Lilosama98" },
@@ -741,6 +752,7 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
             { label: "YouTube", href: "https://www.youtube.com/@ShahanBehkamrad" },
             { label: "INTCH", href: "https://intch.org/p/shahanbehkamrad" },
           ],
+          profileStatus: "active",
           seoTitle: "Shahan Behkamrad | Entrepreneur, SEO Specialist & Digital Growth Consultant",
           metaDescription:
             "Shahan Behkamrad is an entrepreneur, SEO specialist, and digital growth consultant with 10+ years of experience and 65+ international projects. He builds SEO and AI-powered growth systems that engineer demand and compound revenue.",

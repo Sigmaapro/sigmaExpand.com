@@ -4,6 +4,7 @@ import type {
   ServiceKey,
   ServiceSlug,
 } from "./types";
+import { CRYPTO_EXCHANGE_MARKETING_SERVICE } from "./definitions/cryptoExchangeMarketing";
 
 const SERVICE_SLUGS = [
   "crypto-exchange-marketing",
@@ -352,27 +353,7 @@ function stubService(
  * Placeholder structural content only; Word/doc import happens in later phases.
  */
 export const SERVICES_CATALOG: ServiceCatalog = [
-  stubService({
-    slug: "crypto-exchange-marketing",
-    key: "cryptoExchangeMarketing",
-    order: 1,
-    icon: "activity",
-    visualType: "growth",
-    title: "Crypto Exchange Marketing",
-    shortLabel: "Exchange Marketing",
-    eyebrow: "Platform growth",
-    lead:
-      "Operator-led acquisition, localization, and liquidity-aligned distribution for crypto exchanges and trading platforms.",
-    intro:
-      "Build durable user and volume growth with partner networks, regional funnels, and instrumentation designed for exchange operators — not one-off campaign bursts.",
-    keywords: [
-      "crypto exchange marketing",
-      "exchange growth",
-      "crypto user acquisition",
-      "exchange localization",
-    ],
-    relatedSlugs: ["crypto-marketing-agency", "kol-infrastructure", "ib-affiliate-growth"],
-  }),
+  CRYPTO_EXCHANGE_MARKETING_SERVICE,
   stubService({
     slug: "crypto-marketing-agency",
     key: "cryptoMarketingAgency",

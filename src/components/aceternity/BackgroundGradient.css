@@ -1,0 +1,97 @@
+.sigma-bg-gradient {
+  --sigma-gradient-cyan: #1d89bb;
+  --sigma-gradient-blue: #1d3abb;
+  --sigma-gradient-violet: #4f1dbb;
+  --sigma-gradient-base: #080c18;
+
+  position: relative;
+  padding: 1px;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  box-shadow:
+    0 18px 48px rgba(2, 8, 22, 0.42),
+    0 0 0 1px rgba(29, 137, 187, 0.08);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease;
+  will-change: transform;
+}
+
+.sigma-bg-gradient:hover,
+.sigma-bg-gradient:focus-within {
+  transform: translate3d(0, -4px, 0) scale(1.02);
+  box-shadow:
+    0 24px 52px rgba(29, 58, 187, 0.26),
+    0 0 0 1px rgba(29, 137, 187, 0.32),
+    0 0 16px rgba(29, 58, 187, 0.18);
+}
+
+.sigma-bg-gradient__layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-size: 400% 400%;
+  background-image:
+    radial-gradient(circle farthest-side at 0 100%, var(--sigma-gradient-cyan), transparent),
+    radial-gradient(circle farthest-side at 100% 0, var(--sigma-gradient-blue), transparent),
+    radial-gradient(circle farthest-side at 100% 100%, var(--sigma-gradient-violet), transparent),
+    radial-gradient(circle farthest-side at 0 0, var(--sigma-gradient-blue), var(--sigma-gradient-base));
+  transition: opacity 300ms ease;
+}
+
+.sigma-bg-gradient__layer--soft {
+  z-index: 0;
+  opacity: 0.38;
+  filter: blur(10px);
+}
+
+.sigma-bg-gradient__layer--edge {
+  z-index: 1;
+  opacity: 0.52;
+}
+
+.sigma-bg-gradient[data-animate="true"] .sigma-bg-gradient__layer {
+  animation: sigma-bg-gradient-shift 8s ease-in-out infinite;
+}
+
+.sigma-bg-gradient:hover .sigma-bg-gradient__layer--soft,
+.sigma-bg-gradient:focus-within .sigma-bg-gradient__layer--soft {
+  opacity: 0.54;
+}
+
+.sigma-bg-gradient:hover .sigma-bg-gradient__layer--edge,
+.sigma-bg-gradient:focus-within .sigma-bg-gradient__layer--edge {
+  opacity: 0.72;
+}
+
+@keyframes sigma-bg-gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.sigma-bg-gradient__content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-bg-gradient[data-animate="true"] .sigma-bg-gradient__layer {
+    animation: none;
+  }
+
+  .sigma-bg-gradient:hover,
+  .sigma-bg-gradient:focus-within {
+    transform: translate3d(0, 0, 0);
+  }
+}

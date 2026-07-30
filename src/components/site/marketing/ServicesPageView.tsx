@@ -1,7 +1,7 @@
 "use client";
 
 import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
-import { ServiceCarousel } from "@/components/site/marketing/ServiceCarousel";
+import { ServiceRoutesGrid } from "@/components/site/marketing/ServiceRoutesGrid";
 import { TrueFocus } from "@/components/react-bits/TrueFocus";
 import {
   primaryServicesByLang,
@@ -46,7 +46,7 @@ export function ServicesPageView() {
             descriptionClassName={`mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-[#b6bcc4] md:text-base ${localeBody(language)}`}
           />
 
-          <section className="mt-8 overflow-hidden rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-4 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-6 lg:p-7">
+          <section className="mt-8 rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-4 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-6 lg:p-7">
             <h2 className="sr-only">{serviceRouteLabel}</h2>
             <div className="border-b border-white/[0.08] pb-5 sm:pb-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -68,7 +68,7 @@ export function ServicesPageView() {
                 />
               </div>
             </div>
-            <ServiceCarousel
+            <ServiceRoutesGrid
               services={primaryServices}
               language={language}
               actionLabel={serviceRouteActionLabel}

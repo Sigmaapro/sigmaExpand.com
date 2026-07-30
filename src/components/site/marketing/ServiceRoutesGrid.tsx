@@ -67,7 +67,9 @@ export function ServiceRoutesGrid({ services, language, actionLabel }: ServiceRo
 
                 <span className="service-routes-grid__copy">
                   <span className="service-routes-grid__title">{service.title}</span>
-                  <span className="service-routes-grid__description">{service.description}</span>
+                  {service.description ? (
+                    <span className="service-routes-grid__description">{service.description}</span>
+                  ) : null}
                 </span>
 
                 <span className="service-routes-grid__footer">

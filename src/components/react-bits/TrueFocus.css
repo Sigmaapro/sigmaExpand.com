@@ -27,6 +27,7 @@
 
 .true-focus-word.active {
   color: #ffffff;
+  filter: blur(0);
 }
 
 .true-focus-frame {

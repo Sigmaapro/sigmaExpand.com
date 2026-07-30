@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllInsightsPosts } from "@/content/insights";
-import { primaryServicesByLang } from "@/content/global/marketing/servicesContent";
+import { getFinalServices } from "@/content/services/finalServices";
 import {
   getAllTeamMembers,
   getTeamMemberSlug,
@@ -28,7 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.55,
   }));
 
-  const services: MetadataRoute.Sitemap = primaryServicesByLang.EN.map((service) => ({
+  const services: MetadataRoute.Sitemap = getFinalServices().map((service) => ({
     url: `${base}${service.href}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

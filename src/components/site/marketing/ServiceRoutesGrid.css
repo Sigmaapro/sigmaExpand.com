@@ -21,8 +21,84 @@
   border-radius: 1.25rem;
 }
 
+/* Service Routes header — positioning/spacing only (keep TrueFocus visuals intact) */
+.service-routes-header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.service-routes-header__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.service-routes-header__label,
+.service-routes-header__counter {
+  margin: 0;
+  min-width: 0;
+}
+
+.service-routes-header__counter {
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-align: end;
+}
+
+.service-route-heading {
+  display: flex;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.85rem;
+  overflow: visible;
+}
+
+.service-route-heading .true-focus-container {
+  flex-wrap: nowrap;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  /* Symmetric padding so corner brackets stay centered around the active word */
+  padding: 1rem 1.35rem;
+  min-height: clamp(4.25rem, 8.5vw, 6rem);
+  overflow: visible;
+}
+
 .service-route-heading .true-focus-word {
-  color: #ffffff !important;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.service-route-heading .true-focus-frame {
+  top: 0;
+  left: 0;
+}
+
+@media (max-width: 640px) {
+  .service-routes-header__meta {
+    gap: 0.5rem 0.75rem;
+  }
+
+  .service-route-heading {
+    margin-top: 0.65rem;
+  }
+
+  .service-route-heading .true-focus-container {
+    gap: 0.55rem;
+    padding: 0.85rem 0.85rem;
+    min-height: clamp(3.75rem, 16vw, 5rem);
+  }
 }
 
 .service-routes-grid__card-content {

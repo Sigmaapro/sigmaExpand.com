@@ -1,11 +1,12 @@
 import type { LangCode } from "@/content/types";
 import type { PageMeta } from "@/content/pages/meta";
 import type { ServiceIconName } from "@/content/services";
-import { ROUTES } from "@/content/global/routes";
+import { getFinalServices } from "@/content/services/finalServices";
 
 export type PrimaryServiceCard = {
   title: string;
-  description: string;
+  /** Optional — final 15 services intentionally have no descriptions yet */
+  description?: string;
   icon: ServiceIconName;
   href: string;
 };
@@ -25,50 +26,12 @@ export type ServicesMarketingBody = {
   sections: MarketingServiceSection[];
 };
 
-const primaryServicesEN: PrimaryServiceCard[] = [
-  {
-    title: "Crypto Exchange Marketing",
-    description:
-      "Growth infrastructure for crypto exchanges, combining acquisition, regional distribution, partnerships, and trader activation.",
-    icon: "activity",
-    href: ROUTES.servicesCryptoExchangeMarketing,
-  },
-  {
-    title: "Web3 Growth Agency",
-    description:
-      "End-to-end growth strategy and execution for Web3 products entering competitive regional and global markets.",
-    icon: "sparkles",
-    href: ROUTES.servicesWeb3GrowthAgency,
-  },
-  {
-    title: "Crypto Marketing Agency",
-    description:
-      "Strategic marketing, campaign execution, content distribution, and audience growth for crypto-native brands.",
-    icon: "shield",
-    href: ROUTES.servicesCryptoMarketingAgency,
-  },
-  {
-    title: "IB & Affiliate Growth",
-    description:
-      "Development and activation of IB, affiliate, and partner networks designed to generate qualified trading activity.",
-    icon: "network",
-    href: ROUTES.servicesIbAffiliateGrowth,
-  },
-  {
-    title: "Market-Maker Introductions",
-    description:
-      "Strategic introductions between suitable projects, exchanges, liquidity providers, and professional market-making teams.",
-    icon: "layers",
-    href: ROUTES.servicesMarketMakerIntroductions,
-  },
-  {
-    title: "Token Launch & Listing",
-    description:
-      "Launch strategy, exchange positioning, listing support, distribution planning, and post-launch market activation.",
-    icon: "code2",
-    href: ROUTES.servicesTokenLaunchListing,
-  },
-];
+/** Client-approved final 15 services — exact titles only; no invented descriptions. */
+const primaryServicesEN: PrimaryServiceCard[] = getFinalServices().map((service) => ({
+  title: service.title,
+  icon: service.icon,
+  href: service.href,
+}));
 
 /**
  * Primary /services cards. Non-English locales intentionally use the English

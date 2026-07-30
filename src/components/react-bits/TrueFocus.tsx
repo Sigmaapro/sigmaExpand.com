@@ -1,7 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState, type CSSProperties, type FC } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FC,
+} from "react";
 import "./TrueFocus.css";
 
 export type TrueFocusProps = {
@@ -57,7 +64,7 @@ export const TrueFocus: FC<TrueFocusProps> = ({
     return () => window.clearInterval(interval);
   }, [animationDuration, manualMode, pauseBetweenAnimations, words.length]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const activeWord = wordRefs.current[currentIndex];
     const container = containerRef.current;
     if (!activeWord || !container) return;
@@ -74,8 +81,21 @@ export const TrueFocus: FC<TrueFocusProps> = ({
     };
 
     updateFocusRect();
+
+    const observer =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => {
+            updateFocusRect();
+          })
+        : null;
+    observer?.observe(container);
+    observer?.observe(activeWord);
+
     window.addEventListener("resize", updateFocusRect);
-    return () => window.removeEventListener("resize", updateFocusRect);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", updateFocusRect);
+    };
   }, [currentIndex, sentence, words.length]);
 
   const handleMouseEnter = (index: number) => {
@@ -94,7 +114,8 @@ export const TrueFocus: FC<TrueFocusProps> = ({
         const isActive = index === currentIndex;
         const wordStyle = {
           filter: isActive ? "blur(0px)" : `blur(${blurAmount}px)`,
-          transition: `filter ${animationDuration}s ease`,
+          WebkitFilter: isActive ? "blur(0px)" : `blur(${blurAmount}px)`,
+          transition: `filter ${animationDuration}s ease, color ${animationDuration}s ease`,
           "--true-focus-border": borderColor,
           "--true-focus-glow": glowColor,
         } as CSSProperties;
@@ -122,7 +143,7 @@ export const TrueFocus: FC<TrueFocusProps> = ({
           y: focusRect.y,
           width: focusRect.width,
           height: focusRect.height,
-          opacity: words.length ? 1 : 0,
+          opacity: focusRect.width > 0 && words.length ? 1 : 0,
         }}
         transition={{ duration: animationDuration }}
         style={{

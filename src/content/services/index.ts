@@ -35,3 +35,14 @@ export {
   getServiceSlugs,
   isServiceSlug,
 } from "./catalog";
+
+export {
+  FINAL_SERVICES,
+  SERVICE_DISCLAIMER,
+  SERVICE_PLACEHOLDER_NOTE,
+  getFinalServiceBySlug,
+  getFinalServiceSlugs,
+  getFinalServices,
+  isFinalServiceSlug,
+} from "./finalServices";
+export type { FinalService, FinalServiceSlug } from "./finalServices";

@@ -35,7 +35,7 @@
 | **LinkedIn** | `https://www.linkedin.com/company/sigmaapro` in `socials.ts` + footer/contact + Organization `sameAs` |
 | **Client intake** | `/client-content/` folder + templates (not wired to app) |
 
-**Architecture (unchanged but verified):** App Router, 7 languages (EN, FA, AR, TR, RU, ZH, ES), FA/AR RTL, centralized SEO/sitemap/robots/canonical/hreflang, JSON-LD publisher graph, static market pages.
+**Architecture (unchanged but verified):** App Router, 6 languages (EN, FA, AR, RU, ZH, ES), FA/AR RTL, centralized SEO/sitemap/robots/canonical/hreflang, JSON-LD publisher graph, static market pages.
 
 **WordPress / external blog:** No WordPress integration in the repo. Insights use built-in `/insights` routes unless `NEXT_PUBLIC_INSIGHTS_URL` points elsewhere. Content team / ZIP import is out of band — not a code blocker.
 
@@ -190,7 +190,7 @@ Optional: `NEXT_PUBLIC_CALENDLY_URL`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, 
 | Command | Result |
 |---------|--------|
 | `npm run lint` | ✔ No ESLint warnings or errors |
-| `npm run build` | ✔ Success — 32 static pages, 7 market routes (`uae`, `turkey`, `wana`, `china`, `latam`, `balkans`, `global`) |
+| `npm run build` | ✔ Success — 32 static pages, 7 market routes (`uae`, `wana`, `china`, `latam`, `balkans`, `global`) |
 
 **Action before every deploy:**
 

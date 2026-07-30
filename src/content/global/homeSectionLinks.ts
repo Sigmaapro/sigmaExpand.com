@@ -29,11 +29,6 @@ const EXTRA_LABELS_BY_LANG: Record<LangCode, ExtraLabels> = {
     contact: "Contact us",
     faq: "Read Full FAQ",
   },
-  TR: {
-    heroInsights: "İçgörülere git",
-    contact: "İletişim sayfası",
-    faq: "SSS",
-  },
   FA: {
     heroInsights: "مشاهده بینش‌ها",
     contact: "صفحه تماس",

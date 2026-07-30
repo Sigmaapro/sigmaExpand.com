@@ -1,6 +1,5 @@
 import type { LangCode, SiteTranslations } from "./types";
 import { en } from "./locales/en";
-import { tr } from "./locales/tr";
 import { zh } from "./locales/zh";
 import { fa } from "./locales/fa";
 import { es } from "./locales/es";
@@ -29,7 +28,6 @@ function mergeWithFallback<T>(fallback: T, value: unknown): T {
 
 const rawSiteTranslations: Record<LangCode, SiteTranslations> = {
   EN: en,
-  TR: tr,
   ZH: zh,
   FA: fa,
   ES: es,
@@ -40,7 +38,6 @@ const rawSiteTranslations: Record<LangCode, SiteTranslations> = {
 /** Localized bundle with automatic EN fallback for missing keys */
 export const siteTranslations: Record<LangCode, SiteTranslations> = {
   EN: rawSiteTranslations.EN,
-  TR: mergeWithFallback(rawSiteTranslations.EN, rawSiteTranslations.TR),
   ZH: mergeWithFallback(rawSiteTranslations.EN, rawSiteTranslations.ZH),
   FA: mergeWithFallback(rawSiteTranslations.EN, rawSiteTranslations.FA),
   ES: mergeWithFallback(rawSiteTranslations.EN, rawSiteTranslations.ES),

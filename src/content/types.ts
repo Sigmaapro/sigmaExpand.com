@@ -5,7 +5,7 @@
 
 import type { SocialPlatformKey } from "./socials";
 
-export type LangCode = "EN" | "TR" | "ZH" | "FA" | "ES" | "RU" | "AR";
+export type LangCode = "EN" | "ZH" | "FA" | "ES" | "RU" | "AR";
 
 /** Labels for homepage social grid (brand names may repeat across locales). */
 export type SocialPlatformLabelsMap = Record<SocialPlatformKey, string>;

@@ -6,7 +6,7 @@ import { absoluteOgImage, getCanonicalUrl } from "@/content/seo";
 
 const TITLE = "Cookie Policy | Sigma Growth Network";
 const DESCRIPTION =
-  "What cookies Sigma uses, why, and how to manage them. GDPR / KVKK / UAE PDPL compliant cookie usage.";
+  "What cookies Sigma uses, why, and how to manage them. GDPR / UAE PDPL compliant cookie usage.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },

@@ -108,7 +108,7 @@ export default async function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=new URLSearchParams(window.location.search);var l=(p.get("lang")||"").toUpperCase();if(!l)return;var map={EN:"en",FA:"fa",AR:"ar",TR:"tr",RU:"ru",ZH:"zh-CN",ES:"es"};if(!map[l])return;document.documentElement.lang=map[l];document.documentElement.dir=(l==="FA"||l==="AR")?"rtl":"ltr";}catch(e){}})();`,
+            __html: `(function(){try{var p=new URLSearchParams(window.location.search);var l=(p.get("lang")||"").toUpperCase();if(!l)return;var map={EN:"en",FA:"fa",AR:"ar",RU:"ru",ZH:"zh-CN",ES:"es"};if(!map[l])return;document.documentElement.lang=map[l];document.documentElement.dir=(l==="FA"||l==="AR")?"rtl":"ltr";}catch(e){}})();`,
           }}
         />
         <GlobalStructuredData />

@@ -21,12 +21,6 @@ const ERROR_COPY: Record<LangCode, ErrorPageCopy> = {
       "The Sigma interface could not complete this request. Please try again in a moment.",
     retryLabel: "Try again",
   },
-  TR: {
-    title: "Bir şeyler ters gitti.",
-    message:
-      "Sigma arayüzü bu isteği tamamlayamadı. Lütfen biraz sonra tekrar deneyin.",
-    retryLabel: "Tekrar dene",
-  },
   FA: {
     title: "مشکلی پیش آمد.",
     message:
@@ -65,13 +59,6 @@ const NOT_FOUND_COPY: Record<LangCode, NotFoundCopy> = {
     description: "The requested Sigma page could not be found.",
     body: "This page could not be found.",
     backHome: "Back to home",
-    wordmark: "SIGMA",
-  },
-  TR: {
-    title: "Sayfa bulunamadı",
-    description: "İstenen Sigma sayfası bulunamadı.",
-    body: "Bu sayfa bulunamadı.",
-    backHome: "Ana sayfaya dön",
     wordmark: "SIGMA",
   },
   FA: {

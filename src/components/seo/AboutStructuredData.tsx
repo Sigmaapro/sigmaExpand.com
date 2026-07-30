@@ -32,7 +32,6 @@ export function AboutStructuredData() {
       foundingLocation: { "@type": "Place", name: "Dubai, UAE" },
       location: [
         { "@type": "Place", name: "Dubai, UAE" },
-        { "@type": "Place", name: "Istanbul, Turkey" },
         { "@type": "Place", name: "Bali, Indonesia" },
         { "@type": "Place", name: "Canada" },
       ],

@@ -19,12 +19,6 @@ export const homePageContent = localizeFromLangRecord({
     services: servicesByLang.FA,
     heroCarousel: heroCarouselByLang.FA,
   },
-  TR: {
-    ...siteRestByLang.TR,
-    hero: heroByLang.TR,
-    services: servicesByLang.TR,
-    heroCarousel: heroCarouselByLang.TR,
-  },
   ZH: {
     ...siteRestByLang.ZH,
     hero: heroByLang.ZH,

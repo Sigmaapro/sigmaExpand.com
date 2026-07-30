@@ -18,10 +18,6 @@ export const termsPageMetaByLang: Record<LangCode, TermsPageMeta> = {
     title: "Terms",
     description: "Terms of use for the Sigma marketing website and contact channels.",
   },
-  TR: {
-    title: "Şartlar",
-    description: "Sigma pazarlama sitesi ve iletişim kanalları için kullanım şartları.",
-  },
   FA: {
     title: "شرایط",
     description: "شرایط استفاده از وب‌سایت بازاریابی سیگما و کانال‌های تماس.",
@@ -113,34 +109,6 @@ export const termsPageContentByLang: Record<LangCode, TermsPageContent> = {
       {
         title: "Contact",
         body: "Questions about these terms: legal@sigmaa.pro.",
-      },
-    ],
-  },
-  TR: {
-    kicker: "Yasal",
-    headline: "Kullanım şartları",
-    updatedLabel: "Son güncelleme",
-    updatedDate: "Mayıs 2026",
-    sections: [
-      {
-        title: "Kabul",
-        body: "Bu siteye erişerek bu şartları kabul etmiş olursunuz. Kabul etmiyorsanız siteyi kullanmayın.",
-      },
-      {
-        title: "Yatırım tavsiyesi değildir",
-        body: "İçerik bilgilendiricidir; finansal, hukuki veya yatırım tavsiyesi değildir.",
-      },
-      {
-        title: "İletişim",
-        body: "Formlar aracılığıyla gönderdiğiniz bilgiler yanıt vermek ve hizmetleri geliştirmek için kullanılabilir.",
-      },
-      {
-        title: "Sorumluluk",
-        body: "Yürürlükteki hukukun izin verdiği ölçüde, dolaylı zararlardan sorumluluk reddedilir.",
-      },
-      {
-        title: "Değişiklikler",
-        body: "Şartlar güncellenebilir; değişikliklerden sonra kullanım devamını kabul sayarız.",
       },
     ],
   },

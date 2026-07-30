@@ -92,14 +92,6 @@ const EN_CONTENT: RiskDisclosureContent = {
 
 export const riskDisclosureContentByLang: Record<LangCode, RiskDisclosureContent> = {
   EN: EN_CONTENT,
-  TR: {
-    ...EN_CONTENT,
-    kicker: "Risk ve Şeffaflık",
-    title: "Risk ve Şeffaflık Beyanı",
-    headline: "Sigma Nedir — Sigma Ne Değildir",
-    primaryCtaLabel: "Sigma ile Ortak Olun",
-    secondaryCtaLabel: "SSS'ye Dön",
-  },
   ZH: {
     ...EN_CONTENT,
     kicker: "风险与透明",

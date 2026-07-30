@@ -14,12 +14,6 @@ const FA: HeroCarouselContent = {
   paginationDotLabels: ["بینش‌ها", "چهار موتور", "اثبات در اعداد"],
 };
 
-const TR: HeroCarouselContent = {
-  carouselAriaLabel: "Öne çıkanlar",
-  ecosystemCtaLabel: "Kimin için inşa ediyoruz",
-  proofCtaLabel: "Sayılarla kanıt",
-  paginationDotLabels: ["İçgörüler", "Dört motor", "Sayılarla kanıt"],
-};
 
 const ZH: HeroCarouselContent = {
   carouselAriaLabel: "精选亮点",
@@ -52,7 +46,6 @@ const AR: HeroCarouselContent = {
 export const heroCarouselByLang: Record<LangCode, HeroCarouselContent> = {
   EN,
   FA,
-  TR,
   ZH,
   ES,
   RU,

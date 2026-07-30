@@ -92,7 +92,7 @@ export const CEM_PROBLEMS = {
     {
       title: "Generic global messaging",
       description:
-        "A single global message is pushed into MENA, the GCC, Turkey, LATAM, CIS and Persian-speaking communities without localization. Trust behaviour, language and payment expectations differ, and undifferentiated crypto exchange marketing quietly wastes budget.",
+        "A single global message is pushed into MENA, the GCC, LATAM, CIS and Persian-speaking communities without localization. Trust behaviour, language and payment expectations differ, and undifferentiated crypto exchange marketing quietly wastes budget.",
     },
   ],
   midDisclaimer:
@@ -198,7 +198,7 @@ export const CEM_MODULES = {
         {
           title: "Localization & Regional Expansion",
           description:
-            "Language, trust and payment adaptation for MENA, GCC, Turkey, Europe, LATAM, CIS and Persian-speaking markets.",
+            "Language, trust and payment adaptation for MENA, GCC, Europe, LATAM, CIS and Persian-speaking markets.",
         },
         {
           title: "Product & Market Feedback",
@@ -314,11 +314,6 @@ export const CEM_REGIONS = {
         "High-trust, mobile-first audiences where local KOLs and Arabic-language community drive adoption.",
     },
     {
-      title: "Turkey",
-      description:
-        "An active trading culture where localized content and regional BD access matter more than global brand.",
-    },
-    {
       title: "Persian-speaking markets",
       description:
         "Engaged trading communities reached through Persian-speaking and Farsi-speaking creators and localized education, within a careful compliance boundary.",
@@ -356,7 +351,7 @@ export const CEM_FUNNEL = {
     {
       title: "Localise the first experience",
       description:
-        "Language, currency, payment rails and even trust cues in the first session determine whether a user from MENA, Turkey, LATAM or a Persian-speaking community completes onboarding. Localised acquisition is a core reason Sigma's crypto exchange marketing converts where generic campaigns stall.",
+        "Language, currency, payment rails and even trust cues in the first session determine whether a user from MENA, LATAM or a Persian-speaking community completes onboarding. Localised acquisition is a core reason Sigma's crypto exchange marketing converts where generic campaigns stall.",
     },
   ],
 } as const;
@@ -393,7 +388,7 @@ export const CEM_COMPARISON = {
     {
       dimension: "Regional depth",
       standard: "Generic global",
-      sigma: "MENA, GCC, Turkey, Persian-speaking, LATAM, CIS, Europe",
+      sigma: "MENA, GCC, Persian-speaking, LATAM, CIS, Europe",
     },
   ],
 } as const;

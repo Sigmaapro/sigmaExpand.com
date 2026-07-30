@@ -116,11 +116,6 @@ export const teamPageMetaByLang: Record<LangCode, PageMeta> = {
     description:
       "Sigma is led by a core team of growth, BD, marketing, and market-expansion consultants with hands-on experience across major exchange ecosystems and financial platforms.",
   },
-  TR: {
-    title: "Sigma'nın Arkasındaki İnsanlar",
-    description:
-      "Sigma, büyük borsa ekosistemleri ve finansal platformlarda deneyimli çekirdek bir büyüme, BD ve pazarlama ekibi tarafından yönetilir.",
-  },
   FA: {
     title: "افراد پشت Sigma",
     description:
@@ -238,7 +233,7 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
           MALE_MEMBER_PLACEHOLDER,
         ),
       ),
-      languages: ["Persian — Native", "English — Professional", "Turkish — Conversational"],
+      languages: ["Persian — Native", "English — Professional"],
       markets: ["Middle East (MENA)", "Europe", "LATAM", "Africa", "CIS", "Asia"],
     },
     withMemberProfileDefaults(
@@ -662,7 +657,7 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
           shortBio:
             "Shahan Behkamrad is an entrepreneur, SEO specialist, and digital growth consultant. He builds the kind of systems that market leaders quietly rely on. Over more than a decade in fiercely competitive markets, he has designed SEO and AI-powered growth systems for brands on an international scale. His systems never chase traffic. They engineer demand.",
           fullBio:
-            "Shahan Behkamrad is an entrepreneur, SEO specialist, and digital marketing strategist, the founder of Shahan, and an officially certified digital marketing instructor working with brands across international markets.\n\nFor more than ten years, he has operated inside high-pressure, high-competition industries, designing growth systems built on advanced SEO, data-driven content architecture, performance advertising, and artificial intelligence. His systems are not built only to collect visits. They shape how a market perceives a brand, capture the moment a customer starts searching, and turn that intent into revenue that compounds over time.\n\nShahan does not treat digital marketing as a task to execute. In his view, it is business infrastructure: the layer where positioning, psychology, data, and strategy meet. This philosophy defines how he consults and teaches. Working closely with founders, executives, and teams, he helps businesses move away from isolated campaigns and toward intelligent marketing systems that keep working long after any single campaign ends.\n\nHis reputation is built on measurable evidence: organic traffic growth, first-page rankings across competitive keywords, visibility inside AI-generated search results, and natural authority earned without shortcuts or purchased links.\n\nSince 2017, he has collaborated directly with more than 65 international companies on cross-border SEO and digital marketing projects across the Middle East, Eastern Europe, Central Asia, and the United Kingdom. As a certified instructor, he has trained hundreds of professionals and entrepreneurs. He is also an official member of the Istanbul Chamber of Commerce.",
+            "Shahan Behkamrad is an entrepreneur, SEO specialist, and digital marketing strategist, the founder of Shahan, and an officially certified digital marketing instructor working with brands across international markets.\n\nFor more than ten years, he has operated inside high-pressure, high-competition industries, designing growth systems built on advanced SEO, data-driven content architecture, performance advertising, and artificial intelligence. His systems are not built only to collect visits. They shape how a market perceives a brand, capture the moment a customer starts searching, and turn that intent into revenue that compounds over time.\n\nShahan does not treat digital marketing as a task to execute. In his view, it is business infrastructure: the layer where positioning, psychology, data, and strategy meet. This philosophy defines how he consults and teaches. Working closely with founders, executives, and teams, he helps businesses move away from isolated campaigns and toward intelligent marketing systems that keep working long after any single campaign ends.\n\nHis reputation is built on measurable evidence: organic traffic growth, first-page rankings across competitive keywords, visibility inside AI-generated search results, and natural authority earned without shortcuts or purchased links.\n\nSince 2017, he has collaborated directly with more than 65 international companies on cross-border SEO and digital marketing projects across the Middle East, Eastern Europe, Central Asia, and the United Kingdom. As a certified instructor, he has trained hundreds of professionals and entrepreneurs. ",
           skills: [
             "Search Authority Systems",
             "Advanced SEO",
@@ -693,7 +688,7 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
               role: "Entrepreneur & Founder",
               organization: "Shahan",
               description:
-                "Built a digital growth practice from the ground up and scaled it into a multi-country operation. Collaborated with more than 65 international companies on SEO and digital marketing projects across Iran, Turkiye, Northern Cyprus, Russia, Uzbekistan, Tajikistan, and London.",
+                "Built a digital growth practice from the ground up and scaled it into a multi-country operation. Collaborated with more than 65 international companies on SEO and digital marketing projects across Iran, Northern Cyprus, Russia, Uzbekistan, Tajikistan, and London.",
             },
             {
               dateRange: "2023 to Present",
@@ -707,7 +702,7 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
               role: "Founder",
               organization: "International Education Consulting",
               description:
-                "Established a consulting practice representing more than 72 private universities in Turkiye, guiding international students through admission and academic pathway consulting.",
+                "Established a consulting practice representing more than 72 private universities, guiding international students through admission and academic pathway consulting.",
             },
             {
               dateRange: "2022 to Present",
@@ -738,7 +733,6 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
             { title: "Grew his company from a startup into a multi-country operation in under two years." },
             { title: "Collaborated with more than 65 international companies on SEO and digital marketing projects." },
             { title: "Trained hundreds of professionals and entrepreneurs as a certified instructor." },
-            { title: "Became an official member of the Istanbul Chamber of Commerce." },
             { title: "Built SEO and digital growth systems across international markets." },
             { title: "Developed performance-focused content, advertising, and email marketing systems for competitive industries." },
           ],
@@ -787,26 +781,6 @@ const EN_CONTENT: TeamMarketingBody = {
 
 export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
   EN: EN_CONTENT,
-  TR: {
-    ...EN_CONTENT,
-    kicker: "Çekirdek Ekip",
-    headline: "Sigma'nın Arkasındaki İnsanlar",
-    intro:
-      "Sigma; büyük borsa ekosistemleri ve finansal platformlarda saha deneyimi olan büyüme, BD, pazarlama ve pazar genişleme danışmanlarından oluşan bir çekirdek ekip tarafından yönetilir.",
-    boardKicker: "Sigma Ekip Panosu",
-    boardTitle: "Ağ Yapısı",
-    coreLabel: "Çekirdek Ekip",
-    innerCircleLabel: "İç Çember",
-    contributorsLabel: "Katkıda Bulunanlar",
-    coreMembers: buildCoreMembers("Stratejik Büyüme Danışmanı"),
-    innerCircleMembers: buildInnerCircleMembers("İç Çember Partneri"),
-    contributorsMembers: buildContributorsMembers("Vibe Coding / UI/UX Tasarımcısı"),
-    extendedNetwork:
-      "Beş çekirdek ortağın ötesinde Sigma, her öncelikli pazarda bölgesel topluluk yöneticileri, KOL yöneticileri, BD uzmanları, içerik iş ortakları, lokalizasyon liderleri ve partner operatörlerle çalışır.",
-    ndaLine:
-      "Sigma ekibindeki bazı üyeler aktif finansal platformlarda kıdemli rollerde görev alır. Platform ilişki detayları NDA kapsamında korunur.",
-    ctaLabel: "Sigma ile Ortak Olun",
-  },
   FA: {
     ...EN_CONTENT,
     kicker: "تیم اصلی",

@@ -15,7 +15,7 @@ Use this after deploy to **https://sigmaa.pro**. Desktop responsive mode in DevT
 | Required | EN | Baseline |
 | Required | FA | RTL |
 | Required | AR | RTL |
-| Required | TR or ES | One additional LTR locale |
+| Required | ES | One additional LTR locale |
 
 Switch language via the globe control in the homepage nav (mobile: center of nav bar) or Marketing header on inner pages.
 
@@ -31,7 +31,7 @@ Switch language via the globe control in the homepage nav (mobile: center of nav
 - [ ] Tap **Get Access** / secondary CTA — navigates correctly (same tab)
 - [ ] Open **hamburger menu** — panel opens; close (×) works; Escape closes
 - [ ] Tap a section link (About, Capabilities, etc.) — scrolls and menu closes
-- [ ] **Locations** accordion lists UAE, Turkey, WANA, Greater China, LATAM, Balkans, Global — links work
+- [ ] **Locations** accordion lists UAE, WANA, Greater China, LATAM, Balkans, Global — links work
 - [ ] **Markets** section: region tabs scroll horizontally; active tab visible; panel text readable
 - [ ] **Book a Call** (bottom CTA) — modal opens; form or Calendly usable; closes cleanly
 - [ ] **Live support** (headphones, bottom corner) — panel opens; does not cover primary CTAs; safe-area respected on iPhone

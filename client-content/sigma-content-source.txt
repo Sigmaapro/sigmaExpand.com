@@ -1,5 +1,5 @@
 ﻿Sigma Homepage
-Sigma — Homepage 
+Sigma — Homepage
 هدف SEO: "Finance and Web3 growth partner" — territory unique که هیچ رقیبی مالکش نیست. Brief alignment target: ~92/100 · SEO craft: ~88/100
 ________________
 
@@ -41,7 +41,7 @@ Eyebrow: 01 // The Sigma Operating Stack
 H2: How Sigma Grows Financial Platforms, Creators, and Networks
 Every engagement runs on the same four-layer stack — adapted to your venue, region, and stage.
 🧠 GROWTH INTELLIGENCE Market audits, competitor SEO and SERP analysis, audience research, and product-market-fit feedback. Every campaign starts with signal — not assumption.
-📣 DISTRIBUTION NETWORK 1,500+ vetted crypto, forex, stock, and Web3 KOLs, IBs, community managers, and BD partners across MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking markets — deployable on day one.
+📣 DISTRIBUTION NETWORK 1,500+ vetted crypto, forex, stock, and Web3 KOLs, IBs, community managers, and BD partners across MENA, GCC, Europe, LATAM, CIS, East Asia, and Persian-speaking markets — deployable on day one.
 💧 LIQUIDITY & VOLUME ENGINES Campaign architectures designed to convert acquisition into recurring trading volume — VIP and whale onboarding, market-maker introductions, listing coordination, contest design, and retention loops calibrated to your venue.
 🛠 CREATOR & PARTNER INFRASTRUCTURE Telegram bots, affiliate systems, personal websites, SEO for creators, content engines, payment gateways, studio access, and monetization stacks for the KOLs, IBs, and partners who carry your distribution.
 Keyword targets: crypto user acquisition · liquidity activation · creator infrastructure · KOL affiliate system · crypto BD network
@@ -55,7 +55,7 @@ H2: Crypto, Forex & Web3 Growth Services — Built for Real Throughput
 02 · KOL Marketing & Creator Infrastructure A selective network of crypto, forex, stock, and Web3 creators. Beyond placements, Sigma builds infrastructure for KOLs themselves — affiliate bots, websites, SEO for KOLs, premium platform deals, signal provider and data-tool partnerships (TradingView, Glassnode, Santiment), events, and full monetization stacks. → Crypto KOL Agency
 03 · IB & Affiliate Program Design Structured IB programs for crypto exchanges and forex brokers — custom commission architecture, partner onboarding, conversion playbooks, content and SEO, retention systems, and regional BD expansion. → Crypto IB Program
 04 · Token Launch, Listing & Market-Making Introductions Coordinated launch playbooks for token projects — KOL synchronization, community building, exchange listing support, market-maker introductions, and post-TGE retention. → Token Launch & Listing Services
-05 · Regional Market Expansion & Localization Entering MENA, GCC, Turkey, LATAM, CIS, East Asia, or Persian-speaking markets — full market audit, localization strategy, native KOL deployment, regional BD support, and on-the-ground execution. → Regional Crypto Marketing
+05 · Regional Market Expansion & Localization Entering MENA, GCC, LATAM, CIS, East Asia, or Persian-speaking markets — full market audit, localization strategy, native KOL deployment, regional BD support, and on-the-ground execution. → Regional Crypto Marketing
 06 · Sigma Helper Products — Tools, Bots, Dashboards & Analytics Sigma builds and operates supporting products for the network — analytics dashboards, affiliate services, community tools, content systems, and growth bots that compound campaign performance. → Explore Sigma Tools
 Keyword targets per service: crypto exchange marketing agency · crypto KOL marketing · forex IB network · token launch marketing · crypto exchange listing service · market maker introduction · MENA crypto marketing · crypto growth tools
 ________________
@@ -64,7 +64,7 @@ ________________
 🔹 SECTION 6 — Regional Coverage
 Eyebrow: Regional Crypto & Web3 Marketing · Native Teams · Physical Presence
 H2: Built for Where Your Next Users Actually Live
-Web3 growth doesn't happen at the global average — it happens region by region. Sigma operates with native KOLs, on-the-ground BD, and locally calibrated funnels across the highest-velocity financial markets — with team presence in Dubai, Istanbul, Bali, Canada, and across MENA, GCC, Turkey, LATAM, CIS, East Asia, Europe, and Persian-speaking communities.
+Web3 growth doesn't happen at the global average — it happens region by region. Sigma operates with native KOLs, on-the-ground BD, and locally calibrated funnels across the highest-velocity financial markets — with team presence in Dubai, Bali, Canada, and across MENA, GCC, LATAM, CIS, East Asia, Europe, and Persian-speaking communities.
 Region
 	Sigma's Edge
 	Keyword Target
@@ -72,11 +72,8 @@ Region
 	Compliance-aware growth across UAE, KSA, Qatar, Kuwait, Bahrain, Oman
 	crypto marketing agency GCC · Dubai crypto agency
 	🌍 MENA / WANA
-	Arabic, Persian, and Turkish-native KOL networks
+	Arabic and Persian-native KOL networks
 	MENA crypto marketing · Arabic crypto KOL
-	🌐 Turkey (Istanbul presence)
-	Telegram-first communities, FX-aware messaging, native Turkish creators
-	Turkey crypto KOL agency · Istanbul crypto marketing
 	🇮🇷 Persian-Speaking Markets
 	Native Farsi KOLs, broker IB programs, community infrastructure
 	Persian crypto KOL agency · Farsi crypto marketing
@@ -148,7 +145,7 @@ Most providers do one thing — KOLs, or PR, or ads, or affiliates. Sigma operat
 * Operator DNA — Built by people who have grown exchanges, run BD desks, and onboarded whales — not pitched them from outside.
 * Crypto + Forex + Stock + Web3 coverage — Most agencies are crypto-only. Sigma covers brokers, prop firms, stock KOLs, and Web3 protocols in one network.
 * Deployable distribution — 1,500+ KOLs and 190+ surfaces activated on day one, not "in six weeks once contracts are signed."
-* Native regional teams — MENA, GCC, Turkey, LATAM, CIS, Persian-speaking, with physical presence in Dubai, Istanbul, Bali, and Canada.
+* Native regional teams — MENA, GCC, LATAM, CIS, Persian-speaking, with physical presence in Dubai, Bali, and Canada.
 * Outcome-led — Programs tied to acquisition, volume, and retention KPIs — never impression dashboards.
 * Infrastructure mindset — Every engagement leaves you with playbooks, dashboards, and systems your team owns.
 * No empty promises — No guaranteed profits, no guaranteed withdrawals, no shortcuts.
@@ -184,7 +181,7 @@ Eyebrow: Selected Engagements
 H2: Anonymized Snapshots from Live Growth Programs
 Case 01 — Tier-1 CEX, MENA Expansion 80+ regional KOLs deployed, Arabic and Persian funnels launched, IB onboarding rebuilt. Outcome: multi-quarter lift in regional FTDs and monthly active traders.
 Case 02 — Layer-1 Protocol, Global TGE Distribution 40+ distribution surfaces across 6 languages, KOL synchronization to product milestones, market-maker coordination. Outcome: top-tier exchange visibility in launch window.
-Case 03 — Forex Broker, Persian-Speaking & Turkish Markets Full IB program restructure, native KOL deployment, affiliate funnel rebuild. Outcome: measurable lift in FTDs and retention over consecutive quarters.
+Case 03 — Forex Broker, Persian-Speaking Markets Full IB program restructure, native KOL deployment, affiliate funnel rebuild. Outcome: measurable lift in FTDs and retention over consecutive quarters.
 Full case studies, with platform names and verified metrics, available under NDA.
 → Request Full Case Studies
 ________________
@@ -215,7 +212,7 @@ ________________
 🔹 SECTION 14 — Insights / Blog Teaser
 Eyebrow: Insights
 H2: Field Notes from the Finance & Web3 Growth Frontier
-* How to Grow a Crypto Exchange in 2026 — Regional playbooks for MENA, Turkey, LATAM · 8 min
+* How to Grow a Crypto Exchange in 2026 — Regional playbooks for MENA, LATAM · 8 min
 * The Real Economics of Crypto IB Programs — Commission models that compound · 6 min
 * What Is a Crypto KOL Agency, and When Do You Need One? — Field guide · 7 min
 * Forex IB Networks: How to Build a Sustainable Program — 9 min
@@ -244,7 +241,7 @@ Q: Is Sigma a crypto marketing agency? Not exactly. Most crypto marketing agenci
 Q: Does Sigma work with both crypto exchanges and forex brokers? Yes. Sigma covers crypto exchanges (CEX and DEX), forex brokers, prop firms, Web3 protocols, fintech platforms, trading tools, and data providers — across crypto-native and traditional finance.
 Q: How does Sigma's crypto KOL agency model work? Sigma operates a vetted 1,500+ KOL and BD network across crypto, forex, stock, and Web3. Beyond placing campaigns, Sigma builds infrastructure for KOLs — bots, affiliate stacks, SEO, premium platform deals, and data-tool partnerships — so creator economics compound.
 Q: How do crypto and forex IB programs work with Sigma? Sigma designs custom commission structures, connects IBs directly to top-tier exchanges and brokers, and provides content, SEO, conversion playbooks, and retention systems. IBs move from scattered referrals to structured BD operations.
-Q: Which regions does Sigma operate in? 40+ markets including MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking communities — with physical team presence in Dubai, Istanbul, Bali, and Canada.
+Q: Which regions does Sigma operate in? 40+ markets including MENA, GCC, Europe, LATAM, CIS, East Asia, and Persian-speaking communities — with physical team presence in Dubai, Bali, and Canada.
 Q: Is Sigma a broker, exchange, or investment fund? No. Sigma does not operate as a broker, exchange, investment fund, or licensed financial advisor, and does not hold, custody, or trade user funds.
 Q: Does Sigma guarantee trading profits? No. Financial markets carry risk. Sigma provides growth infrastructure and strategic services — never guaranteed financial outcomes.
 → Read Full FAQ
@@ -296,9 +293,9 @@ Schema (JSON-LD — drop into <head>)
 *     "@type": "ContactPoint",
 *     "email": "BD@sigmaa.pro",
 *     "contactType": "Business Development",
-*     "availableLanguage": ["English", "Arabic", "Persian", "Turkish", "Spanish", "Russian"]
+*     "availableLanguage": ["English", "Arabic", "Persian", "Spanish", "Russian"]
 *   },
-*   "areaServed": ["MENA", "GCC", "Turkey", "Europe", "LATAM", "CIS", "East Asia", "Persian-speaking markets"],
+*   "areaServed": ["MENA", "GCC", "Europe", "LATAM", "CIS", "East Asia", "Persian-speaking markets"],
 *   "knowsAbout": [
 *     "Crypto exchange marketing",
 *     "Forex broker marketing",
@@ -355,7 +352,6 @@ Anchor
 * <link rel="alternate" hreflang="en" href="https://sigmaa.pro/" />
 * <link rel="alternate" hreflang="fa" href="https://sigmaa.pro/fa/" />
 * <link rel="alternate" hreflang="ar" href="https://sigmaa.pro/ar/" />
-* <link rel="alternate" hreflang="tr" href="https://sigmaa.pro/tr/" />
 * <link rel="alternate" hreflang="x-default" href="https://sigmaa.pro/" />
 
 
@@ -396,7 +392,7 @@ The earliest version of Sigma was a group chat. Operators across crypto exchange
 What started as informal coordination became structural. We realized the same playbooks, the same KOL relationships, the same IB frameworks, the same regional intelligence — could be operated as infrastructure, not as one-off favors.
 We began running joint campaigns. Then joint launches. Then we noticed a pattern: every venue that plugged into the shared network grew faster than the ones that kept running alone. Not because the campaigns were more clever, but because acquisition, distribution, and liquidity were finally running on the same operating clock.
 That was the moment Sigma became a network, not a circle.
-Today, Sigma is a global infrastructure layer connecting platforms, creators, partners, and traders across crypto, forex, stocks, and Web3 — with operators on the ground in Dubai, Istanbul, Bali, Canada, and across MENA, GCC, Turkey, LATAM, CIS, and Persian-speaking markets.
+Today, Sigma is a global infrastructure layer connecting platforms, creators, partners, and traders across crypto, forex, stocks, and Web3 — with operators on the ground in Dubai, Bali, Canada, and across MENA, GCC, LATAM, CIS, and Persian-speaking markets.
 Keyword targets: Sigma origin story · how Sigma started · LBank operators · BingX growth team · Binance-era ecosystem
 ________________
 
@@ -457,7 +453,7 @@ ________________
 🔹 SECTION 8 — Where We're Going
 Eyebrow: Vision
 H2: The Sigma We're Building
-Inside one year, Sigma will be the recognized financial growth network across MENA, GCC, Turkey, Europe, LATAM, CIS, and Persian-speaking communities — with named regional operators and live execution in every priority market.
+Inside one year, Sigma will be the recognized financial growth network across MENA, GCC, Europe, LATAM, CIS, and Persian-speaking communities — with named regional operators and live execution in every priority market.
 Inside three years, Sigma will be the default growth infrastructure layer for Finance and Web3 globally — with proprietary growth tools, an institutional KOL and BD network, helper products serving every layer of the financial value chain, and a brand position alongside the most trusted names in crypto growth.
 But the more honest version of the vision is this: we want to be the network that operators inside the industry recommend to each other when nobody is watching. Public credibility is built; private credibility is earned.
 We are building for private credibility first.
@@ -532,7 +528,6 @@ json
     "foundingLocation": { "@type": "Place", "name": "Dubai, UAE" },
     "location": [
       { "@type": "Place", "name": "Dubai, UAE" },
-      { "@type": "Place", "name": "Istanbul, Turkey" },
       { "@type": "Place", "name": "Bali, Indonesia" },
       { "@type": "Place", "name": "Canada" }
     ]

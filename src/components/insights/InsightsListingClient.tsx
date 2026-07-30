@@ -12,7 +12,6 @@ import { InsightCard } from "./InsightCard";
 
 const DATE_LOCALE: Record<LangCode, string> = {
   EN: "en-US",
-  TR: "tr-TR",
   ZH: "zh-CN",
   FA: "fa-IR",
   ES: "es-ES",

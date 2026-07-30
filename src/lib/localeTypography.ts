@@ -1,8 +1,8 @@
 import type { LangCode } from "@/content/types";
 
-/** EN, TR, ES, RU — Latin script; wide tracking / uppercase OK */
+/** EN, ES, RU — Latin script; wide tracking / uppercase OK */
 export function isLatinLang(lang: LangCode): boolean {
-  return lang === "EN" || lang === "TR" || lang === "ES" || lang === "RU";
+  return lang === "EN" || lang === "ES" || lang === "RU";
 }
 
 /** FA, AR — RTL connected script */

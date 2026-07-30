@@ -6,7 +6,7 @@
 
 ## Market name
 
-<!-- e.g. UAE, Turkey, WANA, Greater China, LATAM, Balkans, Global -->
+<!-- e.g. UAE, WANA, Greater China, LATAM, Balkans, Global -->
 
 ## Target audience
 
@@ -42,4 +42,4 @@
 
 ## Language notes
 
-<!-- EN only, or FA/AR/TR/RU/ZH/ES; RTL considerations for FA/AR -->
+<!-- EN only, or FA/AR/RU/ZH/ES; RTL considerations for FA/AR -->

@@ -86,11 +86,6 @@ export const aboutPageMetaByLang: Record<LangCode, PageMeta> = {
     description:
       "Sigma is led by operators who grew exchanges, ran KOL portfolios, and built IB programs from inside the industry — before turning that experience into infrastructure.",
   },
-  TR: {
-    title: "Sigma Hakkında | Küresel Web3 Büyüme Ağının Operatörleri",
-    description:
-      "Sigma; borsaları büyüten, KOL portföyleri yöneten ve IB programları kuran operatörler tarafından, bu deneyimi altyapıya dönüştürerek yönetilir.",
-  },
   FA: {
     title: "درباره Sigma | اپراتورهای پشت یک شبکه جهانی رشد Web3",
     description:
@@ -144,7 +139,7 @@ const EN_CONTENT: AboutPageBody = {
       "What started as informal coordination became structural. We realized the same playbooks, the same KOL relationships, the same IB frameworks, the same regional intelligence — could be operated as infrastructure, not as one-off favors.",
       "We began running joint campaigns. Then joint launches. Then we noticed a pattern: every venue that plugged into the shared network grew faster than the ones that kept running alone. Not because the campaigns were more clever, but because acquisition, distribution, and liquidity were finally running on the same operating clock.",
       "That was the moment Sigma became a network, not a circle.",
-      "Today, Sigma is a global infrastructure layer connecting platforms, creators, partners, and traders across crypto, forex, stocks, and Web3 — with operators on the ground in Dubai, Istanbul, Bali, Canada, and across MENA, GCC, Turkey, LATAM, CIS, and Persian-speaking markets.",
+      "Today, Sigma is a global infrastructure layer connecting platforms, creators, partners, and traders across crypto, forex, stocks, and Web3 — with operators on the ground in Dubai, Bali, Canada, and across MENA, GCC, LATAM, CIS, and Persian-speaking markets.",
     ],
   },
   founderNote: {
@@ -234,7 +229,7 @@ const EN_CONTENT: AboutPageBody = {
     eyebrow: "Vision",
     title: "The Sigma We’re Building",
     paragraphs: [
-      "Inside one year, Sigma will be the recognized financial growth network across MENA, GCC, Turkey, Europe, LATAM, CIS, and Persian-speaking communities — with named regional operators and live execution in every priority market.",
+      "Inside one year, Sigma will be the recognized financial growth network across MENA, GCC, Europe, LATAM, CIS, and Persian-speaking communities — with named regional operators and live execution in every priority market.",
       "Inside three years, Sigma will be the default growth infrastructure layer for Finance and Web3 globally — with proprietary growth tools, an institutional KOL and BD network, helper products serving every layer of the financial value chain, and a brand position alongside the most trusted names in crypto growth.",
       "But the more honest version of the vision is this: we want to be the network that operators inside the industry recommend to each other when nobody is watching. Public credibility is built; private credibility is earned.",
       "We are building for private credibility first.",
@@ -272,99 +267,6 @@ function coreMembersByRole(role: string): AboutCoreMember[] {
 
 export const aboutPageContentByLang: Record<LangCode, AboutPageBody> = {
   EN: EN_CONTENT,
-  TR: {
-    ...EN_CONTENT,
-    kicker: "Biz Kimiz",
-    headline: "Bu Pazarı Sunumdan Öğrenmedik. İçinde İnşa Ettik.",
-    subhead: "Sigma, sektörden gelen operatörlerin gerçek saha deneyimini altyapıya dönüştürmesiyle kuruldu.",
-    bodyLine: "Bu sayfa ne sattığımızı değil; Sigma'yı kuran insanları, ilkeleri ve yolu anlatır.",
-    identity: ["Stratejik.", "Güvenilir.", "Ölçeklenebilir."],
-    whySigmaExists: {
-      eyebrow: "Sigma Neden Var",
-      title: "İçeriden Sürekli Gördüğümüz Boşluk",
-      paragraphs: [
-        "Büyüme, KOL, IB, ürün ve likidite ekipleri çoğu zaman ayrı çalışıyordu; sonuçta performans parçalanıyordu.",
-        "Sigma bu parçaları tek ritimde çalıştıran operasyon katmanı olarak kuruldu.",
-      ],
-    },
-    story: {
-      eyebrow: "Hikayemiz",
-      title: "Sigma Nasıl Kuruldu",
-      paragraphs: [
-        "İlk hali farklı borsa ve büyüme operatörlerinin not paylaştığı bir koordinasyon alanıydı.",
-        "Zamanla tekrar eden yöntemleri tek seferlik destek olmaktan çıkarıp ölçeklenebilir bir sisteme dönüştürdük.",
-      ],
-    },
-    founderNote: {
-      eyebrow: "Kurucudan",
-      title: "Omid Modaber’den Not",
-      quote:
-        "Sigma, sektörde çalışırken ihtiyaç duyduğum sistemin kendisi. Gürültüye değil faydaya odaklanıyoruz; uzun vadeli güven ve ölçülebilir performans inşa ediyoruz.",
-      attribution: "Omid Modaber, Kurucu, Sigma",
-    },
-    coreTeam: {
-      ...EN_CONTENT.coreTeam,
-      eyebrow: "Çekirdek Ekip",
-      title: "Sigma’yı Kim İnşa Ediyor",
-      intro: "Sigma, ağın farklı alanlarını yöneten beş çekirdek ortak tarafından yönetilir.",
-      members: coreMembersByRole("Stratejik Büyüme Danışmanı"),
-      extendedNetwork:
-        "Çekirdek ortakların ötesinde Sigma, öncelikli pazarlarda bölgesel topluluk, KOL, BD, içerik ve lokalizasyon operatörleriyle çalışır.",
-      ndaLine:
-        "Bazı Sigma ekip üyeleri aktif finansal platformlarda kıdemli rollerdedir. Platform detayları NDA kapsamındadır.",
-      ctaLabel: "Tam Ekip Sayfası",
-    },
-    industryPov: {
-      eyebrow: "Sektör Perspektifi",
-      title: "Kararlarımızı Yöneten İlkeler",
-      intro: "Yaptığımız işi ve yapmayı reddettiğimiz şeyleri belirleyen temel ilkeler.",
-      principles: [
-        "Büyüme bir kampanya değil, bir sistemdir.",
-        "Bu sektörde saha operatörleri dışarıdan pazarlamacılardan daha güçlü sonuç üretir.",
-        "Küresel ortalama yerine bölgesel uygulama kalıcı büyüme sağlar.",
-      ],
-    },
-    insideNetwork: {
-      eyebrow: "Ağın İçinden",
-      title: "Nasıl Çalışıyoruz",
-      body: "Sigma klasik ajans modelinde çalışmaz; strateji ve icra aynı ekipte ilerler.",
-      operatingPoints: [
-        { title: "Tek operasyon ritmi.", body: "Strateji, uygulama ve raporlama aynı haftalık ritimde yürür." },
-        { title: "Kıdemli teslimat.", body: "İlk görüşmedeki ekip, operasyon boyunca işi sahiplenmeye devam eder." },
-      ],
-    },
-    vision: {
-      eyebrow: "Vizyon",
-      title: "İnşa Ettiğimiz Sigma",
-      paragraphs: [
-        "Hedefimiz, öncelikli bölgelerde tanınan güvenilir büyüme altyapısı olmaktır.",
-        "Uzun vadede finans ve Web3 için varsayılan büyüme işletim katmanına dönüşmeyi amaçlıyoruz.",
-      ],
-    },
-    recognition: {
-      ...EN_CONTENT.recognition,
-      eyebrow: "Sigma’ya Güvenen Ağ",
-      title: "Birlikte Çalıştıklarımız",
-      body:
-        "Sigma ekibi, global borsa ekosistemleri ve finans platformlarında büyüme, BD ve KOL operasyonlarına katkı sundu. Detaylar NDA kapsamında korunur.",
-      ctaLabel: "Referans ve Vaka Talep Et",
-    },
-    transparency: {
-      eyebrow: "Şeffaflık",
-      title: "Açık Beyan",
-      body:
-        "Sigma bir büyüme ağıdır; broker, borsa, yatırım fonu veya lisanslı finansal danışman değildir. Kullanıcı fonlarını tutmaz ve finansal sonuç garantisi vermez.",
-    },
-    invitation: {
-      ...EN_CONTENT.invitation,
-      eyebrow: "Bunu Okuyorsanız",
-      title: "Bizimle İletişime Geçmesi Gereken İki Kitle Var",
-      body:
-        "Platform, KOL kanalı, IB işi veya yüksek hacimli işlem yönetiyorsanız ve yaklaşımımız size uyuyorsa, bağlantı kuralım.\n\nHızlı kazanç vaadi arıyorsanız Sigma doğru adres değildir.",
-      primaryCtaLabel: "Sigma ile Ortak Olun",
-      secondaryCtaLabel: "KOL / IB Olarak Başvurun",
-    },
-  },
   FA: {
     ...EN_CONTENT,
     kicker: "ما که هستیم",

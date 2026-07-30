@@ -12,7 +12,7 @@ Use after deploy to **https://sigmaa.pro**. Automated lint/build do not replace 
 
 ## Languages
 
-Test at minimum: **EN**, **FA**, **AR**, plus **TR** or **ES**.
+Test at minimum: **EN**, **FA**, **AR**, plus **ES**.
 
 ---
 
@@ -42,7 +42,7 @@ Test at minimum: **EN**, **FA**, **AR**, plus **TR** or **ES**.
 - [ ] Home / End jump to first/last language
 - [ ] Enter or Space on option applies language
 - [ ] Escape closes and returns focus to trigger
-- [ ] All 7 languages selectable: EN, FA, AR, TR, RU, ZH, ES
+- [ ] All 6 languages selectable: EN, FA, AR, RU, ZH, ES
 - [ ] FA/AR switch: page `dir` becomes RTL; layout remains usable
 
 ## 4. Mobile navigation

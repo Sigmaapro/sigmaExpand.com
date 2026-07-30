@@ -65,8 +65,7 @@ const EN_CONTENT: CookiesPolicyContent = {
 
 export const cookiesPolicyContentByLang: Record<LangCode, CookiesPolicyContent> = {
   EN: EN_CONTENT,
-  TR: EN_CONTENT,
-  FA: EN_CONTENT,
+FA: EN_CONTENT,
   ZH: EN_CONTENT,
   ES: EN_CONTENT,
   RU: EN_CONTENT,

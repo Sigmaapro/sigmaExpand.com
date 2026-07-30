@@ -226,78 +226,6 @@ const FA: ProofContent = {
   ],
 };
 
-const TR: ProofContent = {
-  trustedBy: {
-    sectionLabel: "GÜVENENLER",
-    headline: "Web3'ü şekillendiren ekiplerle birlikte inşa edildi",
-  },
-  proofInNumbers: {
-    sectionLabel: "SAYILARLA KANIT",
-    headline: "Kullanıcıları, hacmi ve erişimi hareket ettiren yürütme",
-  },
-  partnerFeedback: {
-    sectionLabel: "Partner Geri Bildirimleri",
-    headline: "Operatörler Sigma ile Çalışmak Hakkında Ne Diyor",
-  },
-  metrics: [
-    {
-      id: "volume",
-      value: "$7B+",
-      label: "Aylık nominal hacim",
-      note: "Desteklenen ağ aktivitesinde kümülatif",
-    },
-    {
-      id: "users",
-      value: "2.4M+",
-      label: "Aktifleştirilen kullanıcı",
-      note: "Cüzdan doğrulamalı kohortlar",
-    },
-    {
-      id: "reach",
-      value: "190+",
-      label: "Ağ yüzeyleri",
-      note: "Bölgeler genelinde dağıtım temas noktaları",
-    },
-    {
-      id: "partners",
-      value: "85",
-      label: "Stratejik ortak",
-      note: "Borsa, broker ve protokollerle aktif ilişkiler",
-    },
-    {
-      id: "markets",
-      value: "40+",
-      label: "Kapsanan pazar",
-      note: "Canlı yürütmenin olduğu bölgeler",
-    },
-  ],
-  testimonials: [
-    {
-      id: "t1",
-      quote:
-        "Sigma gösteriş kampanyaları üretmez. Kullanıcı kazanımını likidite kontrol noktalarına bağlar ve ekip aksiyon alana kadar raporlama disiplinini korur.",
-      name: "Partner",
-      role: "Head of Growth",
-      company: "Global CEX Desk",
-    },
-    {
-      id: "t2",
-      quote:
-        "KOL’ler, ürün kilometre taşları ve piyasa etkinlikleri arasında sonunda tek bir operasyon ritmi yakaladık.",
-      name: "Partner",
-      role: "VP Ecosystem",
-      company: "Layer-1 Foundation",
-    },
-    {
-      id: "t3",
-      quote:
-        "Ekipleri uygulama dilini konuşuyor: daha az deck, daha fazla playbook ve haftalık önceliklerimizi gerçekten değiştiren telemetry.",
-      name: "Partner",
-      role: "CMO",
-      company: "DeFi Protocol",
-    },
-  ],
-};
 
 const ZH: ProofContent = {
   trustedBy: {
@@ -594,7 +522,6 @@ const AR: ProofContent = {
 export const proofByLang: Record<LangCode, ProofContent> = {
   EN,
   FA,
-  TR,
   ZH,
   ES,
   RU,

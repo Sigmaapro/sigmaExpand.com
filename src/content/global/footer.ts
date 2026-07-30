@@ -119,64 +119,6 @@ const FOOTER_EN: GlobalFooterContent = {
   landmarkSocial: "Social links",
 };
 
-const FOOTER_TR: GlobalFooterContent = {
-  brandWordmark: "Sigma",
-  brandTagline:
-    "Borsalar, brokerlar, KOL'lar, IB'ler ve Web3 platformları için küresel finansal büyüme altyapısı.",
-  trustLine:
-    "7B$+ desteklenen aylık hacim · 2,4M+ aktifleştirilen kullanıcı · 1.500+ ağ ortağı · 40+ pazar",
-  contactIntro:
-    "Ortaklıklar, borsa ve broker büyümesi, KOL başvuruları, IB programları ve kurumsal talepler için",
-  email: contactEmail,
-  columnPlatform: {
-    title: "Platform",
-    links: [
-      { label: "Sistem", href: A.system },
-      { label: "Yetenekler", href: A.capabilities },
-      { label: "Ağ", href: A.network },
-      { label: "Sigma Pro", href: A.sigmaPro },
-      insightsFooterLink("İçgörüler"),
-    ],
-  },
-  columnCompany: {
-    title: "Şirket",
-    links: [
-      { label: "Hakkımızda", href: ROUTES.about },
-      { label: "Hizmetler", href: ROUTES.services },
-      { label: "Ekip", href: ROUTES.team },
-      { label: "İletişim", href: ROUTES.contact },
-      { label: "SSS", href: ROUTES.faq },
-    ],
-  },
-  columnResources: {
-    title: "Kaynaklar",
-    links: [
-      insightsFooterLink("Araştırma / İçgörüler"),
-      insightsFooterLink("Örnek olaylar"),
-      { label: "Gizlilik", href: ROUTES.privacy },
-      { label: "Şartlar", href: ROUTES.terms },
-      { label: "Görüşme ayırt", href: ROUTES.contact },
-    ],
-  },
-  socialColumnTitle: "Sosyal",
-  socialLabels: {
-    x: "X",
-    instagram: "Instagram",
-    telegram: "Telegram",
-    linkedin: "LinkedIn",
-    youtube: "YouTube",
-    whatsapp: "WhatsApp",
-    discord: "Discord",
-    tiktok: "TikTok",
-  },
-  bottomCopyright: "© 2026 Sigma. Tüm hakları saklıdır.",
-  privacy: { label: "Gizlilik", href: ROUTES.privacy },
-  terms: { label: "Şartlar", href: ROUTES.terms },
-  statusLabel: "Sistem durumu",
-  statusValue: "Çalışıyor",
-  landmarkNav: "Alt bilgi gezinmesi",
-  landmarkSocial: "Sosyal bağlantılar",
-};
 
 const FOOTER_FA: GlobalFooterContent = {
   brandWordmark: "Sigma",
@@ -472,8 +414,7 @@ const FOOTER_RU: GlobalFooterContent = {
 
 export const globalFooterByLang: Record<LangCode, GlobalFooterContent> = {
   EN: FOOTER_EN,
-  TR: FOOTER_TR,
-  FA: FOOTER_FA,
+FA: FOOTER_FA,
   AR: FOOTER_AR,
   ZH: FOOTER_ZH,
   ES: FOOTER_ES,

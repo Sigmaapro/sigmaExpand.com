@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <LegalWebPageStructuredData
         path="/privacy"
         name="Privacy Policy"
-        description="How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR, KVKK, and UAE PDPL compliant."
+        description="How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR and UAE PDPL compliant."
       />
       <PrivacyPageView />
     </InnerPageShell>

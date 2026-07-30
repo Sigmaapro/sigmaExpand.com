@@ -17,21 +17,6 @@ const EN: HeroContent = {
   scrollHint: "Scroll",
 };
 
-const TR: HeroContent = {
-  eyebrow: "Finans ve Web3 Büyüme Altyapısı · 40+ Pazar · 1.500+ Ağ",
-  title: "SIGMA",
-  subtitle:
-    "Borsalar, Aracı Kurumlar, KOL'lar ve Ticaret Toplulukları İçin Finans ve Web3 Büyüme Ortağı",
-  supporting:
-    "Bir pazarlama ajansı değiliz. Sigma; borsaları büyüten, BD masalarını yöneten ve balinaları onboard eden operatörler tarafından kurulan, ürününüz, dağıtımınız ve likiditeniz arasındaki operasyon katmanıdır.",
-  primaryCta: "Sigma ile Ortak Olun",
-  secondaryCta: "Büyüme Danışmanlığı Talep Edin",
-  primaryHref: ROUTES.contact,
-  secondaryHref: ROUTES.contact,
-  logoSrc:
-    "https://github.com/madbak98/My-image/blob/main/logo-transparent.png?raw=true",
-  scrollHint: "Kaydır",
-};
 
 const ZH: HeroContent = {
   eyebrow: "金融与 Web3 增长基础设施 · 40+ 市场 · 1,500+ 网络",
@@ -115,7 +100,6 @@ const AR: HeroContent = {
 /** Hero — swap for CMS `fetch` later; keys mirror a typical headless hero document */
 export const heroByLang: Record<LangCode, HeroContent> = {
   EN,
-  TR,
   ZH,
   FA,
   ES,

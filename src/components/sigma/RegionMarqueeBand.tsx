@@ -285,7 +285,6 @@ const PLACE_FLAG_CODE: Record<string, string> = {
   Spain: "es",
   Italy: "it",
   Poland: "pl",
-  Turkey: "tr",
   Bali: "id",
   UAE: "ae",
   KSA: "sa",
@@ -361,7 +360,6 @@ export const APPROVED_MARKET_PLACE_TOKENS = [
   "Spain",
   "Italy",
   "Poland",
-  "Turkey",
   "Bali",
 ] as const;
 

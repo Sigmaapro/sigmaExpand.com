@@ -6,8 +6,7 @@ import { localizeFromLangRecord } from "../_contentLocales";
 export const insightsSectionContent = localizeFromLangRecord({
   EN: siteRestByLang.EN.insights,
   FA: siteRestByLang.FA.insights,
-  TR: siteRestByLang.TR.insights,
-  ZH: siteRestByLang.ZH.insights,
+ZH: siteRestByLang.ZH.insights,
   ES: siteRestByLang.ES.insights,
   RU: siteRestByLang.RU.insights,
   AR: siteRestByLang.AR.insights,

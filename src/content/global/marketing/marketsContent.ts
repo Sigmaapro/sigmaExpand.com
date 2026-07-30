@@ -44,8 +44,8 @@ const EN_CONTENT: MarketsIndexContent = {
     {
       title: "Europe",
       body:
-        "MiCA-aware campaigns across Germany, Spain, Italy, Poland, the Balkans, and Turkey, with Telegram-first communities, FX-aware messaging, and native Turkish creator networks.",
-      keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · Turkey crypto KOL agency · Istanbul crypto marketing · European Web3 growth",
+        "MiCA-aware campaigns across Germany, Spain, Italy, Poland, and the Balkans, with Telegram-first communities and FX-aware messaging.",
+      keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · European Web3 growth",
     },
     {
       title: "LATAM",
@@ -60,42 +60,6 @@ const EN_CONTENT: MarketsIndexContent = {
 
 export const marketsIndexContentByLang: Record<LangCode, MarketsIndexContent> = {
   EN: EN_CONTENT,
-  TR: {
-    ...EN_CONTENT,
-    kicker: "Bölgesel Kripto Pazarlama",
-    title: "Bir Sonraki Kullanıcılarınızın Gerçekten Yaşadığı Yerler İçin",
-    intro:
-      "Web3 büyümesi küresel ortalamada değil, bölge bölge gerçekleşir. Sigma; MENA/WANA, CIS, APAC, Avrupa ve LATAM boyunca yerel KOL, saha BD ve yerel kalibreli hunilerle çalışır.",
-    regions: [
-      {
-        title: "MENA / WANA",
-        body: "MENA, WANA, Dubai/GCC ve Farsça konuşan finans topluluklarında Arapça, Farsça ve GCC-yerel büyüme altyapısı.",
-        keywordFocus:
-          "MENA crypto marketing · Arabic crypto KOL · crypto marketing agency GCC · Dubai crypto agency · Persian crypto KOL agency · Farsi crypto marketing",
-      },
-      {
-        title: "CIS",
-        body: "CIS pazarlarında Rusça dağıtım, futures ve prop-trading kitleleri ile bölgesel crypto/finance toplulukları.",
-        keywordFocus: "CIS crypto agency · Russian crypto marketing · Russian-language crypto distribution · CIS crypto marketing",
-      },
-      {
-        title: "APAC",
-        body: "Korece, Vietnamca, Tayca, Endonezce ve geniş Asya-Pasifik büyüme yüzeyleri; bölgesel KOL erişimi ve Bali bağlantılı icra.",
-        keywordFocus: "APAC crypto marketing · Asia crypto KOL · Bali crypto agency · Asia-Pacific Web3 growth · Southeast Asia crypto marketing",
-      },
-      {
-        title: "Europe",
-        body: "Germany, Spain, Italy, Poland, Balkans ve Türkiye genelinde MiCA-aware kampanyalar; Telegram-first topluluklar, FX-aware mesajlama ve yerel Türk creator ağları.",
-        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · Turkey crypto KOL agency · Istanbul crypto marketing · European Web3 growth",
-      },
-      {
-        title: "LATAM",
-        body: "Portekizce ve İspanyolca huniler, stablecoin-first anlatılar, Spain bağlantılı İspanyolca büyüme ve bölgesel trading toplulukları.",
-        keywordFocus: "LATAM crypto marketing · Spanish crypto KOL · Spain crypto marketing · Latin America crypto agency · Portuguese crypto marketing",
-      },
-    ],
-    ctaLabel: "Bölgesel Genişlemenizi Planlayın",
-  },
   ZH: {
     ...EN_CONTENT,
     kicker: "区域加密营销",
@@ -121,8 +85,8 @@ export const marketsIndexContentByLang: Record<LangCode, MarketsIndexContent> = 
       },
       {
         title: "Europe",
-        body: "在 Germany、Spain、Italy、Poland、Balkans 与 Turkey 推进 MiCA-aware 增长，并结合 Telegram-first 社区、FX-aware 信息与土耳其本地创作者网络。",
-        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · Turkey crypto KOL agency · Istanbul crypto marketing · European Web3 growth",
+        body: "在 Germany、Spain、Italy、Poland 与 Balkans 推进 MiCA-aware 增长，并结合 Telegram-first 社区与 FX-aware 信息。",
+        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · European Web3 growth",
       },
       {
         title: "LATAM",
@@ -157,8 +121,8 @@ export const marketsIndexContentByLang: Record<LangCode, MarketsIndexContent> = 
       },
       {
         title: "Europe",
-        body: "کمپین‌های MiCA-aware در Germany، Spain، Italy، Poland، Balkans و Turkey همراه با کامیونیتی‌های Telegram-first، پیام‌رسانی FX-aware و شبکه کریتورهای بومی ترکی.",
-        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · Turkey crypto KOL agency · Istanbul crypto marketing · European Web3 growth",
+        body: "کمپین‌های MiCA-aware در Germany، Spain، Italy، Poland و Balkans همراه با کامیونیتی‌های Telegram-first و پیام‌رسانی FX-aware.",
+        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · European Web3 growth",
       },
       {
         title: "LATAM",
@@ -193,8 +157,8 @@ export const marketsIndexContentByLang: Record<LangCode, MarketsIndexContent> = 
       },
       {
         title: "Europe",
-        body: "Campañas MiCA-aware en Germany, Spain, Italy, Poland, Balkans y Turkey, con comunidades Telegram-first, mensajería FX-aware y redes de creadores turcos nativos.",
-        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · Turkey crypto KOL agency · Istanbul crypto marketing · European Web3 growth",
+        body: "Campañas MiCA-aware en Germany, Spain, Italy, Poland y Balkans, con comunidades Telegram-first y mensajería FX-aware.",
+        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · European Web3 growth",
       },
       {
         title: "LATAM",
@@ -229,8 +193,8 @@ export const marketsIndexContentByLang: Record<LangCode, MarketsIndexContent> = 
       },
       {
         title: "Europe",
-        body: "MiCA-aware кампании по Germany, Spain, Italy, Poland, Balkans и Turkey с Telegram-first сообществами, FX-aware сообщениями и локальными турецкими creator-сетями.",
-        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · Turkey crypto KOL agency · Istanbul crypto marketing · European Web3 growth",
+        body: "MiCA-aware кампании по Germany, Spain, Italy, Poland и Balkans с Telegram-first сообществами и FX-aware сообщениями.",
+        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · European Web3 growth",
       },
       {
         title: "LATAM",
@@ -265,8 +229,8 @@ export const marketsIndexContentByLang: Record<LangCode, MarketsIndexContent> = 
       },
       {
         title: "Europe",
-        body: "حملات MiCA-aware عبر Germany وSpain وItaly وPoland وBalkans وTurkey مع مجتمعات Telegram-first ورسائل FX-aware وشبكات صناع محتوى أتراك محليين.",
-        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · Turkey crypto KOL agency · Istanbul crypto marketing · European Web3 growth",
+        body: "حملات MiCA-aware عبر Germany وSpain وItaly وPoland وBalkans مع مجتمعات Telegram-first ورسائل FX-aware.",
+        keywordFocus: "MiCA crypto marketing · EU crypto agency · Europe crypto marketing · Balkans crypto marketing · European Web3 growth",
       },
       {
         title: "LATAM",

@@ -6,7 +6,6 @@ import { localeBody, localeMeta, localeNav } from "@/lib/localeTypography";
 
 const DATE_LOCALE: Record<LangCode, string> = {
   EN: "en-US",
-  TR: "tr-TR",
   ZH: "zh-CN",
   FA: "fa-IR",
   ES: "es-ES",

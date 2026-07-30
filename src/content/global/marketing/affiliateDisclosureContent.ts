@@ -81,8 +81,7 @@ const EN_CONTENT: AffiliateDisclosureContent = {
 
 export const affiliateDisclosureContentByLang: Record<LangCode, AffiliateDisclosureContent> = {
   EN: EN_CONTENT,
-  TR: EN_CONTENT,
-  FA: EN_CONTENT,
+FA: EN_CONTENT,
   ZH: EN_CONTENT,
   ES: EN_CONTENT,
   RU: EN_CONTENT,

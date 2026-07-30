@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import type { LangCode } from "@/content/types";
 
-export const SUPPORTED_LANGS: readonly LangCode[] = ["EN", "FA", "AR", "TR", "RU", "ZH", "ES"] as const;
+export const SUPPORTED_LANGS: readonly LangCode[] = ["EN", "FA", "AR", "RU", "ZH", "ES"] as const;
 
 export const HTML_LANG_BY_CODE: Record<LangCode, string> = {
   EN: "en",
   FA: "fa",
   AR: "ar",
-  TR: "tr",
   RU: "ru",
   ZH: "zh-CN",
   ES: "es",
@@ -17,7 +16,6 @@ const LANG_CODE_BY_HTML: Record<string, LangCode> = {
   en: "EN",
   fa: "FA",
   ar: "AR",
-  tr: "TR",
   ru: "RU",
   zh: "ZH",
   "zh-cn": "ZH",

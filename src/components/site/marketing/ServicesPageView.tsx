@@ -18,7 +18,6 @@ export function ServicesPageView() {
   const primaryServices = pickLang(primaryServicesByLang, language);
   const serviceRouteLabel = {
     EN: "Service Routes",
-    TR: "Hizmet Rotaları",
     FA: "مسیرهای خدمات",
     ZH: "服务路径",
     ES: "Rutas de Servicio",
@@ -27,7 +26,6 @@ export function ServicesPageView() {
   }[language];
   const serviceRouteActionLabel = {
     EN: "Explore route",
-    TR: "Rotayı keşfet",
     FA: "مشاهده مسیر",
     ZH: "查看路径",
     ES: "Explorar ruta",

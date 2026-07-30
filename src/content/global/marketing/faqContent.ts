@@ -16,11 +16,6 @@ export const faqPageMetaByLang: Record<LangCode, PageMeta> = {
     description:
       "Answers to common questions about Sigma’s engagement model, timelines, regions, and how we work with protocols and exchanges.",
   },
-  TR: {
-    title: "SSS",
-    description:
-      "Sigma ile çalışma modeli, süreler, bölgeler ve protokol/borsa işbirliği hakkında sık sorulan sorular.",
-  },
   FA: {
     title: "سوالات متداول",
     description:
@@ -82,7 +77,7 @@ export const faqPageContentByLang: Record<LangCode, FaqMarketingBody> = {
       {
         question: "Which regions does Sigma operate in?",
         answer:
-          "Sigma operates across 40+ markets including MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking communities — with physical team presence in Dubai, Istanbul, Bali, and Canada.",
+          "Sigma operates across 40+ markets including MENA, GCC, Europe, LATAM, CIS, East Asia, and Persian-speaking communities — with physical team presence in Dubai, Bali, and Canada.",
       },
       {
         question: "Is Sigma a broker, exchange, or investment fund?",
@@ -93,39 +88,6 @@ export const faqPageContentByLang: Record<LangCode, FaqMarketingBody> = {
         question: "Does Sigma guarantee trading profits?",
         answer:
           "No. Financial markets carry risk. Sigma provides growth infrastructure and strategic services — never guaranteed financial outcomes.",
-      },
-    ],
-  },
-  TR: {
-    kicker: "Yardım",
-    headline: "Sık sorulan sorular",
-    intro:
-      "Sorunuzu burada görmüyorsanız iletişim sayfasından yazın—ciddi taleplere hızlı dönüş yaparız.",
-    items: [
-      {
-        question: "Hangi ekiplerle çalışıyorsunuz?",
-        answer:
-          "Öncelikle kripto borsaları, altyapı protokolleri ve ölçekte likidite, dağıtım veya teknik yürütme gereken Web3 ürünleriyle ortaklık kuruyoruz.",
-      },
-      {
-        question: "Çalışmalar genelde nasıl başlar?",
-        answer:
-          "Çoğu proje odaklı bir keşif fazıyla başlar: hedefler, kısıtlar, hukuk bölgeleri ve başarı metrikleri. Ardından süresiz retainer yerine kilometre taşlı fazlı plan öneririz.",
-      },
-      {
-        question: "Küresel çalışıyor musunuz?",
-        answer:
-          "Evet. Saat dilimleri arasında koordinasyon kurar, bölgelerinize uygun uyum ve operasyon detayını özelleştiririz. Özel düzenleyici tavsiye için hukuk danışmanınız gerekebilir.",
-      },
-      {
-        question: "İlk görüşmeden önce ne hazırlamalıyız?",
-        answer:
-          "Ürün bağlamı, hedef pazarlar, güncel metrikler (kabaca bile olsa) ve listeleme/lansman gibi kesin tarihler. Hedefler ne kadar somut olursa yol o kadar hızlı netleşir.",
-      },
-      {
-        question: "Başarıyı nasıl ölçüyoruz?",
-        answer:
-          "Likidite derinliği, hacim bantları, edinim maliyeti, tutma veya teknik güvenilirlik gibi sayısal hedefleri başta hizalarız; niteliksel kontroller de paydaşlarınızla yapılır.",
       },
     ],
   },

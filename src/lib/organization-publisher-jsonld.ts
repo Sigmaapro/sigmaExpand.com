@@ -35,9 +35,9 @@ export function getPublisherJsonLdGraph() {
           "@type": "ContactPoint",
           email: "BD@sigmaa.pro",
           contactType: "Business Development",
-          availableLanguage: ["English", "Arabic", "Persian", "Turkish", "Spanish", "Russian"],
+          availableLanguage: ["English", "Arabic", "Persian", "Spanish", "Russian"],
         },
-        areaServed: ["MENA", "GCC", "Turkey", "Europe", "LATAM", "CIS", "East Asia", "Persian-speaking markets"],
+        areaServed: ["MENA", "GCC", "Europe", "LATAM", "CIS", "East Asia", "Persian-speaking markets"],
         knowsAbout: [
           "Crypto exchange marketing",
           "Forex broker marketing",

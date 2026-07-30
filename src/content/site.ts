@@ -22,23 +22,6 @@ const livePanelEN = {
   sendError: "Could not start support chat. Please try again.",
 } as const;
 
-const livePanelTR = {
-  panelTitle: "Canlı Destek",
-  panelSubtitle: "Sigma desteğiyle konuşun",
-  panelAriaLabel: "Canlı destek paneli",
-  closeAria: "Destek panelini kapat",
-  namePlaceholder: "Ad (isteğe bağlı)",
-  emailPlaceholder: "E-posta",
-  messagePlaceholder: "Sigma desteği size nasıl yardımcı olabilir?",
-  submit: "Sohbeti Başlat",
-  submitSending: "Gönderiliyor...",
-  successBody: "Mesajınız alındı. Ekibimiz kısa sürede size dönecek.",
-  footerNote: "Ekibimiz en kısa sürede yanıtlayacaktır.",
-  validationError: "Lütfen e-posta ve mesajınızı girin.",
-  invalidEmailError: "Lütfen geçerli bir e-posta girin.",
-  sendError: "Destek sohbeti başlatılamadı. Lütfen tekrar deneyin.",
-} as const;
-
 const livePanelZH = {
   panelTitle: "实时支持",
   panelSubtitle: "与 Sigma 支持团队沟通",
@@ -182,7 +165,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         {
           title: "Distribution Network",
           description:
-            "1,500+ vetted crypto, forex, stock, and Web3 KOLs, IBs, community managers, and BD partners across MENA, GCC, Turkey, Europe, LATAM, CIS, East Asia, and Persian-speaking markets — deployable on day one.",
+            "1,500+ vetted crypto, forex, stock, and Web3 KOLs, IBs, community managers, and BD partners across MENA, GCC, Europe, LATAM, CIS, East Asia, and Persian-speaking markets — deployable on day one.",
         },
         {
           title: "Liquidity & Volume",
@@ -304,186 +287,6 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
     },
     testimonials: [],
   },
-  TR: {
-    nav: {
-      system: "Sistem",
-      capabilities: "Yetenekler",
-      network: "Ağ",
-      metrics: "Metrikler",
-      sigmaPro: "Sigma Pro",
-      contact: "İletişim",
-      navCta: "Sigma ile Ortak Olun",
-      insights: "İçgörüler",
-      insightsAccessLabel: "Erişim",
-    },
-    insights: {
-      pageTitle: "Sigma İçgörüleri",
-      pageSubtitle:
-        "Finans ve Web3 büyüme cephesinden saha notları — bölgesel playbook'lar, IB ekonomisi, KOL stratejisi ve lansman dağıtımı.",
-      pageEyebrow: "İÇGÖRÜLER",
-      filterAllLabel: "Tümü",
-      readLabel: "İçgörüyü Oku",
-      relatedHeading: "İlgili içgörüler",
-      backToInsights: "İçgörüler",
-      sigmaHome: "Sigma",
-      chromeNavAriaLabel: "İçgörüler gezinmesi",
-      categoryTablistAriaLabel: "Kategoriler",
-      featuredLabel: "Öne Çıkan",
-      emptyState: "Bu görünümde bülten bulunmuyor.",
-      insightBadge: "Sigma İçgörüsü",
-      insightAriaLabel: "Sigma içgörüsü",
-      articleCtaMidHeading:
-        "Sadece pazarlama değil, büyüme altyapısına mı ihtiyacınız var?",
-      articleCtaMidSupporting:
-        "Edinim, likidite ve pazar erişimi için yürütme sistemleri.",
-      articleCtaMidButton: "Erişim Al",
-      articleCtaEndHeading: "Sigma ile çalışın",
-      articleCtaEndSupporting:
-        "Kullanıcıları, likiditeyi ve ağ dağıtımını tek bir stratejik sistemde birleştirin.",
-      articleCtaEndButton: "Sigma ile çalışın",
-      categories: {
-        growth: "Büyüme",
-        distribution: "Dağıtım",
-        liquidity: "Likidite",
-      },
-    },
-    whatIsSigma: {
-      label: "SIGMA NEDİR",
-      headline:
-        "Kripto, Forex, Hisse ve Web3 İçin Finansal Büyüme Altyapı Ağı",
-      description:
-        "Sigma; kripto borsaları, forex brokerları, prop firmalar, hisse ve Web3 KOL'ları, IB'ler, trader'lar ve finansal platformların kullanıcı edinimi, KOL altyapısı, IB/affiliate programları, likidite aktivasyonu, topluluk yönetimi, bölgesel pazar genişlemesi ve stratejik ortaklıklarla büyümesine yardımcı olan küresel bir finansal büyüme altyapı ağıdır. Tek kanala odaklanan geleneksel kripto pazarlama ajanslarının aksine Sigma, tüm finansal değer zincirinin üzerindeki büyüme operasyon katmanı olarak çalışır. Sigma bir broker, borsa, yatırım fonu veya lisanslı finansal danışman değildir — kullanıcı fonlarını yönetmez, saklamaz veya işlem yapmaz.",
-      pillars: [
-        {
-          title: "Büyüme İstihbaratı",
-          description:
-            "Pazar denetimleri, rakip SEO/SERP analizi, kitle araştırması ve ürün-pazar uyumu geri bildirimi — her kampanya varsayımla değil, sinyalle başlar.",
-        },
-        {
-          title: "Dağıtım Ağı",
-          description:
-            "MENA, GCC, Türkiye, Avrupa, LATAM, BDT ve Farsça konuşulan pazarlarda 1.500+ doğrulanmış KOL, IB, topluluk yöneticisi ve BD ortağı — ilk günden devreye alınabilir.",
-        },
-        {
-          title: "Likidite ve Hacim",
-          description:
-            "Edinimi tekrarlayan işlem hacmine dönüştüren kampanya mimarileri — VIP/whale onboarding, market maker tanıtımları, listing koordinasyonu ve mekanınıza göre retention döngüleri.",
-        },
-      ],
-    },
-    about: {
-      kicker: "OPERATÖRLER TARAFINDAN KURULDU",
-      title: "SIGMA'NIN ARKASINDAKİ İNSANLAR",
-      description:
-        "Sigma; büyük borsa ekosistemleri ve finansal platformlarda sahada deneyimli büyüme, BD, pazarlama ve pazar genişletme danışmanlarından oluşan bir çekirdek ekip tarafından yönetilir — 40+ pazarda bölgesel operatörlerle desteklenir.",
-    },
-    metrics: {
-      kicker: "Ağ",
-      title:
-        "Küresel yönlendirme, likidite derinliği ve yürütme düzeyinde telemetri—ölçek için tasarlandı.",
-      stats: [
-        { label: "Kilitlenen Toplam Değer", target: 50, suffix: "B+" },
-        { label: "Aktif Düğümler", target: 14, suffix: "K+" },
-        { label: "Ağ Gecikmesi", target: 12, suffix: "ms" },
-      ],
-    },
-    network: {
-      kicker: "Ağ",
-      title: "Topluluk Grafiği",
-      body: "Düğümler paylaşılan teşviklerle hizalanır. Sigma mesh'i haritalar—kenarlar güven, verim ve doğrulanabilir durumdur.",
-    },
-    sigmaPro: {
-      badge: "VIP · ELİT ERİŞİM",
-      title: "SigmaPRO — Yüksek Hacimli Ortaklar İçin Ayrılmış Büyüme Operasyonları",
-      description:
-        "Yüksek hacimli borsalar, brokerlar, protokoller ve kurumsal ortaklar için özel throughput, öncelikli yönlendirme ve kıdemli büyüme masası.",
-      bullets: [
-        "SLA destekli yürütme planlarıyla ayrılmış büyüme masası",
-        "Likidite ve dağıtım katmanlarında öncelikli yönlendirme",
-        "Gizli telemetri, özel raporlama ve doğrudan eskalasyon",
-        "Sigma liderliği ile üç aylık stratejik değerlendirmeler",
-      ],
-      footnote: "Erişim sınırlıdır ve uygunluk koşullarına tabidir.",
-    },
-    contact: {
-      kicker: "BAŞLAT · ANA SİSTEME ERİŞ",
-      title: "SIGMA İLE BAĞLANTIDA KALIN",
-      description:
-        "Ortaklıklar, borsa ve broker büyümesi, KOL başvuruları, IB programları ve kurumsal talepler — ekibe e-posta gönderin veya kanal listesini açın.",
-      emailCta: "E-posta",
-      socialCta: "Kanallar ve sosyal",
-      fallbackMailto: "mailto:BD@sigmaa.pro",
-    },
-    stayConnected: {
-      kicker: "BAŞLAT · ANA SİSTEME ERİŞ",
-      title: "Sigma ile bağlantıda kalın",
-      description:
-        "Ortaklıklar, borsa ve broker büyümesi, KOL başvuruları, IB programları ve kurumsal talepler.",
-      reachUsPrefix: "Bize ulaşın:",
-      socialLabels: {
-        x: "X",
-        instagram: "Instagram",
-        telegram: "Telegram",
-        linkedin: "LinkedIn",
-        youtube: "YouTube",
-        whatsapp: "WhatsApp",
-        discord: "Discord",
-        tiktok: "TikTok",
-      },
-    },
-    contactHub: {
-      pageEyebrow: "SIGMA",
-      title: "Bağlan",
-      subtitle:
-        "Resmi kanallar, sosyal profiller ve doğrudan iletişim — link-in-bio tarzı bir merkez.",
-      backHome: "Sigma'ya dön",
-      empty:
-        "Henüz bağlantı yok. Ortam değişkenlerinde NEXT_PUBLIC_SOCIAL_* değerlerini ayarlayın (.env.example).",
-      labels: {
-        instagram: "Instagram",
-        x: "X",
-        linkedin: "LinkedIn",
-        telegram: "Telegram",
-        discord: "Discord",
-        email: "E-posta",
-        website: "Web sitesi",
-      },
-      footerLine: "© 2026 SIGMA",
-    },
-    cta: {
-      title: "BAŞLAT",
-      description: "ANA SİSTEME ERİŞ",
-      primaryCta: "Ekosisteme Gir",
-      secondaryCta: "Teklif İste",
-      primaryHref: "#capabilities",
-      secondaryHref: "#contact",
-    },
-    ui: {
-      liveSupport: "Canlı Destek",
-      liveSupportPanel: { ...livePanelTR },
-      navChrome: {
-        brandAria: "SIGMA",
-        openMenuAria: "Menüyü aç",
-        closeMenuAria: "Menüyü kapat",
-        languageMenuAria: "Dil seçin",
-      },
-      logoAlt: "SIGMA",
-      learnMore: "Daha fazla öğren",
-    },
-    footer: {
-      rights: "© 2026 SIGMA PROTOKOLÜ. TÜM HAKLARI SAKLIDIR.",
-      statusPrefix: "SİS.DUR:",
-      statusValue: "OPTİMAL",
-      tagline: "Web3 · Stratejik · Kesin",
-      navAriaLabel: "Altbilgi",
-      links: [],
-    },
-    trustedBy: {
-      sectionLabel: "GÜVENENLER",
-      logos: [],
-    },
-    testimonials: [],
-  },
   ZH: {
     nav: {
       system: "系统",
@@ -538,7 +341,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         {
           title: "分发网络",
           description:
-            "覆盖 MENA、GCC、土耳其、欧洲、LATAM、独联体与波斯语市场的 1,500+ 经审核 KOL、IB、社区经理与 BD 伙伴——首日即可部署。",
+            "覆盖 MENA、GCC、欧洲、LATAM、独联体与波斯语市场的 1,500+ 经审核 KOL、IB、社区经理与 BD 伙伴——首日即可部署。",
         },
         {
           title: "流动性与交易量",
@@ -713,7 +516,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         {
           title: "Red de distribución",
           description:
-            "1.500+ KOLs, IBs, community managers y socios BD verificados en MENA, GCC, Turquía, Europa, LATAM, CEI y mercados persas — desplegables desde el día uno.",
+            "1.500+ KOLs, IBs, community managers y socios BD verificados en MENA, GCC, Europa, LATAM, CEI y mercados persas — desplegables desde el día uno.",
         },
         {
           title: "Liquidez y volumen",
@@ -893,7 +696,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         {
           title: "Сеть дистрибуции",
           description:
-            "1 500+ проверенных KOL, IB, community-менеджеров и BD-партнёров в MENA, GCC, Турции, Европе, LATAM, СНГ и персоязычных рынках — готовы с первого дня.",
+            "1 500+ проверенных KOL, IB, community-менеджеров и BD-партнёров в MENA, GCC, Европе, LATAM, СНГ и персоязычных рынках — готовы с первого дня.",
         },
         {
           title: "Ликвидность и объём",
@@ -1072,7 +875,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         {
           title: "شبکه توزیع",
           description:
-            "بیش از ۱٬۵۰۰ KOL، IB، مدیر جامعه و شریک BD تأییدشده در MENA، GCC، ترکیه، اروپا، LATAM، CIS و بازارهای فارسی‌زبان — از روز اول قابل استقرار.",
+            "بیش از ۱٬۵۰۰ KOL، IB، مدیر جامعه و شریک BD تأییدشده در MENA، GCC، اروپا، LATAM، CIS و بازارهای فارسی‌زبان — از روز اول قابل استقرار.",
         },
         {
           title: "نقدینگی و حجم",
@@ -1251,7 +1054,7 @@ export const siteRestByLang: Record<LangCode, SiteRest> = {
         {
           title: "شبكة التوزيع",
           description:
-            "أكثر من 1,500 KOL وIB ومدير مجتمع وشريك BD موثّقين عبر MENA وGCC وتركيا وأوروبا وLATAM وCIS والأسواق الناطقة بالفارسية — جاهزون من اليوم الأول.",
+            "أكثر من 1,500 KOL وIB ومدير مجتمع وشريك BD موثّقين عبر MENA وGCC وأوروبا وLATAM وCIS والأسواق الناطقة بالفارسية — جاهزون من اليوم الأول.",
         },
         {
           title: "السيولة والحجم",

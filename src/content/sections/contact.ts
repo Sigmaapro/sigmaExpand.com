@@ -12,10 +12,6 @@ export const contactSectionContent = localizeFromLangRecord({
     contact: siteRestByLang.FA.contact,
     stayConnected: siteRestByLang.FA.stayConnected,
   },
-  TR: {
-    contact: siteRestByLang.TR.contact,
-    stayConnected: siteRestByLang.TR.stayConnected,
-  },
   ZH: {
     contact: siteRestByLang.ZH.contact,
     stayConnected: siteRestByLang.ZH.stayConnected,

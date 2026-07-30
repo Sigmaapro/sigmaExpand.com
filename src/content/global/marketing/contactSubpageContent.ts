@@ -28,11 +28,6 @@ export const contactSubpageMetaByLang: Record<LangCode, PageMeta> = {
     description:
       "Book a strategy call or send a message to Sigma. We help exchanges and protocols with liquidity, distribution, and technical execution.",
   },
-  TR: {
-    title: "İletişim",
-    description:
-      "Strateji görüşmesi ayırın veya Sigma’ya mesaj gönderin. Borsalar ve protokoller için likidite, dağıtım ve teknik yürütme.",
-  },
   FA: {
     title: "تماس",
     description:
@@ -85,32 +80,6 @@ export const contactSubpageContentByLang: Record<LangCode, ContactSubpageBody> =
       sendError: "Something went wrong. Please try again or contact BD@sigmaa.pro directly.",
     },
     social: { title: "Connect" },
-  },
-  TR: {
-    kicker: "Konuşma başlatın",
-    headline: "Bir sonrakini birlikte kuralım",
-    intro:
-      "Yol haritanızı ve kısıtları paylaşın. Asenkron mu tercih ediyorsunuz? Kısa bir brif gönderin; ekibimiz bir sonraki adım için seçeneklerle döner.",
-    bookCall: {
-      title: "Strateji görüşmesi ayırın",
-      subtitle:
-        "Sigma ile özel bir strateji görüşmesi ayırın. Oturum öncesinde pazarınızı, çekim aşamanızı ve büyüme kısıtlarınızı değerlendiririz; böylece görüşme bağlamıyla başlar.",
-      cta: "Görüşme ayır",
-    },
-    form: {
-      title: "Mesaj gönderin",
-      nameLabel: "Ad",
-      emailLabel: "E-posta",
-      messageLabel: "Size nasıl yardımcı olabiliriz?",
-      submit: "Mesajı gönder",
-      sending: "Gönderiliyor…",
-      success: "Teşekkürler. Mesajınız alındı. Sigma ekibi sizinle iletişime geçecek.",
-      requiredFieldError: "Bu alan zorunludur.",
-      validationError: "Lütfen e-posta ve mesaj girin.",
-      invalidEmailError: "Lütfen geçerli bir e-posta girin.",
-      sendError: "Bir şeyler ters gitti. Lütfen tekrar deneyin veya doğrudan BD@sigmaa.pro ile iletişime geçin.",
-    },
-    social: { title: "Bağlan" },
   },
   FA: {
     kicker: "گفتگو را شروع کنید",

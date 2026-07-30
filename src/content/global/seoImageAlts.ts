@@ -24,17 +24,6 @@ const SEO_IMAGE_ALTS: Record<LangCode, SeoAltSet> = {
       liquidityExchange: "web3 liquidity and exchange growth",
     },
   },
-  TR: {
-    home: {
-      web3Growth: "Web3 büyüme altyapısı paneli",
-      cryptoMarketing: "Kripto pazarlama performans analitiği",
-      liquiditySystem: "Likidite sistemi görselleştirmesi",
-    },
-    services: {
-      servicesDashboard: "kripto pazarlama hizmetleri paneli",
-      liquidityExchange: "web3 likidite ve borsa büyümesi",
-    },
-  },
   FA: {
     home: {
       web3Growth: "داشبورد زیرساخت رشد وب۳",

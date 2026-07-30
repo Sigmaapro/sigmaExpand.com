@@ -268,7 +268,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Language, trust and market adaptation for MENA, GCC, Turkey, Europe, LATAM, CIS and Persian-speaking communities."
+        "text": "Language, trust and market adaptation for MENA, GCC, Europe, LATAM, CIS and Persian-speaking communities."
       },
       {
         "type": "heading",
@@ -426,7 +426,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "list",
-        "text": "Regional depth: Deep regional execution across MENA, GCC, Turkey, Europe, LATAM, CIS and Persian-speaking communities."
+        "text": "Regional depth: Deep regional execution across MENA, GCC, Europe, LATAM, CIS and Persian-speaking communities."
       },
       {
         "type": "list",
@@ -589,7 +589,7 @@ export const SERVICE_DOCUMENTS = {
           [
             "Regional depth",
             "Global, generic",
-            "MENA, GCC, Turkey, Persian-speaking, LATAM, CIS, Europe"
+            "MENA, GCC, Persian-speaking, LATAM, CIS, Europe"
           ],
           [
             "Compliance posture",
@@ -925,7 +925,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "IB and affiliate networks are deeply regional. The deals, languages, payment methods and trust behaviours that work in one market fail in another. Sigma builds regional IB and affiliate growth across MENA, the GCC, Turkey, Europe, LATAM, CIS and Persian-speaking communities, using local KOL and BD access so operators are supported by people who understand each market from the inside. For Persian-speaking and Farsi-speaking markets, Sigma works within a clear compliance boundary, using safe wording and avoiding any structure that would bypass platform rules or local regulation."
+        "text": "IB and affiliate networks are deeply regional. The deals, languages, payment methods and trust behaviours that work in one market fail in another. Sigma builds regional IB and affiliate growth across MENA, the GCC, Europe, LATAM, CIS and Persian-speaking communities, using local KOL and BD access so operators are supported by people who understand each market from the inside. For Persian-speaking and Farsi-speaking markets, Sigma works within a clear compliance boundary, using safe wording and avoiding any structure that would bypass platform rules or local regulation."
       },
       {
         "type": "heading",
@@ -1006,7 +1006,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Yes. Sigma builds regional IB and affiliate growth across MENA, the GCC, Turkey and Persian-speaking communities through local BD and KOL access, described as network presence and market coverage, and always within a clear compliance boundary."
+        "text": "Yes. Sigma builds regional IB and affiliate growth across MENA, the GCC and Persian-speaking communities through local BD and KOL access, described as network presence and market coverage, and always within a clear compliance boundary."
       },
       {
         "type": "paragraph",
@@ -1433,7 +1433,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "KOL infrastructure is stronger when it is built for the creator's actual audience geography. Sigma operates across MENA, the GCC, Turkey, Europe, LATAM, CIS and Persian-speaking communities, so the affiliate deals, platform relationships and localization behind a creator's KOL infrastructure fit the market they actually serve. For creators reaching Persian-speaking and Farsi-speaking audiences, Sigma builds monetization within a clear compliance boundary, using safe language and avoiding any activity that would bypass platform rules or local regulation."
+        "text": "KOL infrastructure is stronger when it is built for the creator's actual audience geography. Sigma operates across MENA, the GCC, Europe, LATAM, CIS and Persian-speaking communities, so the affiliate deals, platform relationships and localization behind a creator's KOL infrastructure fit the market they actually serve. For creators reaching Persian-speaking and Farsi-speaking audiences, Sigma builds monetization within a clear compliance boundary, using safe language and avoiding any activity that would bypass platform rules or local regulation."
       },
       {
         "type": "heading",
@@ -1545,7 +1545,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Yes. Sigma builds regional KOL infrastructure across MENA, the GCC, Turkey and Persian-speaking communities, with localization and market-fit deals — always within a clear compliance boundary and safe wording."
+        "text": "Yes. Sigma builds regional KOL infrastructure across MENA, the GCC and Persian-speaking communities, with localization and market-fit deals — always within a clear compliance boundary and safe wording."
       },
       {
         "type": "paragraph",
@@ -1885,7 +1885,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "A token launch is rarely global from day one. Market-maker introductions work best when coordinated with the regions a project is actually targeting — the exchanges that matter there, the communities that will trade, and the localized go-to-market behind them. Sigma operates across MENA, the GCC, Turkey, Europe, LATAM, CIS and Persian-speaking communities, so market-making coordination can be aligned with regional listing readiness and community growth. For Persian-speaking and Farsi-speaking markets, Sigma works within a clear compliance boundary and never supports any structure intended to bypass exchange rules or local regulation."
+        "text": "A token launch is rarely global from day one. Market-maker introductions work best when coordinated with the regions a project is actually targeting — the exchanges that matter there, the communities that will trade, and the localized go-to-market behind them. Sigma operates across MENA, the GCC, Europe, LATAM, CIS and Persian-speaking communities, so market-making coordination can be aligned with regional listing readiness and community growth. For Persian-speaking and Farsi-speaking markets, Sigma works within a clear compliance boundary and never supports any structure intended to bypass exchange rules or local regulation."
       },
       {
         "type": "heading",
@@ -2091,7 +2091,7 @@ export const SERVICE_DOCUMENTS = {
   "regionalMarketExpansion": {
     "title": "Regional Market Expansion for Crypto, Forex and Web3 Platforms",
     "metaTitle": "Regional Market Expansion for Crypto & Web3 Platforms | Sigma",
-    "metaDescription": "Sigma runs regional market expansion for exchanges, brokers and Web3 projects — localization, regional BD and local KOL access across MENA, GCC, Turkey, LATAM, CIS and more.",
+    "metaDescription": "Sigma runs regional market expansion for exchanges, brokers and Web3 projects — localization, regional BD and local KOL access across MENA, GCC, LATAM, CIS and more.",
     "urlSlug": "/regional-market-expansion/",
     "primaryKeyword": "regional market expansion",
     "secondaryKeywords": [
@@ -2114,7 +2114,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Sigma runs regional market expansion for exchanges, brokers, token projects and Web3 products. We help platforms enter and grow in specific markets through localization, regional business development, local KOL and community access, and market-specific growth playbooks. Unlike a global agency that translates one campaign into several languages, Sigma treats regional market expansion as distinct operations in distinct markets — because that is how growth actually works across MENA, the GCC, Turkey, Europe, LATAM, CIS and Persian-speaking communities."
+        "text": "Sigma runs regional market expansion for exchanges, brokers, token projects and Web3 products. We help platforms enter and grow in specific markets through localization, regional business development, local KOL and community access, and market-specific growth playbooks. Unlike a global agency that translates one campaign into several languages, Sigma treats regional market expansion as distinct operations in distinct markets — because that is how growth actually works across MENA, the GCC, Europe, LATAM, CIS and Persian-speaking communities."
       },
       {
         "type": "paragraph",
@@ -2144,7 +2144,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "list",
-        "text": "Crypto exchanges: Exchanges entering MENA, the GCC, Turkey, LATAM, CIS, Europe or Persian-speaking markets."
+        "text": "Crypto exchanges: Exchanges entering MENA, the GCC, LATAM, CIS, Europe or Persian-speaking markets."
       },
       {
         "type": "list",
@@ -2333,7 +2333,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Sigma provides regional KOL access matched to each market's language and platforms — Arabic creators for the GCC and MENA, Turkish creators for Turkey, Farsi-speaking creators for Persian-speaking communities, Spanish creators for LATAM, and Russian-language creators for CIS. Alongside this, regional BD builds the local partnerships and IB relationships that give a platform durable distribution beyond paid channels. Because these relationships already exist within Sigma's network, a platform's regional market expansion starts with warm access rather than cold outreach, which shortens the time between market entry and real traction. Sigma describes this footprint as regional network presence and market coverage, never as unverified physical offices."
+        "text": "Sigma provides regional KOL access matched to each market's language and platforms — Arabic creators for the GCC and MENA, Farsi-speaking creators for Persian-speaking communities, Spanish creators for LATAM, and Russian-language creators for CIS. Alongside this, regional BD builds the local partnerships and IB relationships that give a platform durable distribution beyond paid channels. Because these relationships already exist within Sigma's network, a platform's regional market expansion starts with warm access rather than cold outreach, which shortens the time between market entry and real traction. Sigma describes this footprint as regional network presence and market coverage, never as unverified physical offices."
       },
       {
         "type": "heading",
@@ -2360,7 +2360,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Localization is the engine of regional market expansion, and it goes far beyond translation. Real localization adapts the examples a message uses, the trust signals it leans on, the payment methods it offers, the onboarding flow it expects users to complete, and the creators and communities it partners with. A German trader and a Turkish trader respond to different proof; a GCC user and a LATAM user expect different payment rails. Sigma treats each of these as a deliberate design choice, because in regional market expansion the details that feel small are usually the ones that decide whether a user completes onboarding or leaves."
+        "text": "Localization is the engine of regional market expansion, and it goes far beyond translation. Real localization adapts the examples a message uses, the trust signals it leans on, the payment methods it offers, the onboarding flow it expects users to complete, and the creators and communities it partners with. Traders in different markets respond to different proof; a GCC user and a LATAM user expect different payment rails. Sigma treats each of these as a deliberate design choice, because in regional market expansion the details that feel small are usually the ones that decide whether a user completes onboarding or leaves."
       },
       {
         "type": "paragraph",
@@ -2424,7 +2424,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Sigma supports regional market expansion across Dubai and the GCC, the wider MENA region, Turkey, Persian-speaking communities, Europe, LATAM and CIS, through localization, regional BD and local KOL and community access described as network presence and market coverage."
+        "text": "Sigma supports regional market expansion across Dubai and the GCC, the wider MENA region, Persian-speaking communities, Europe, LATAM and CIS, through localization, regional BD and local KOL and community access described as network presence and market coverage."
       },
       {
         "type": "paragraph",
@@ -2471,7 +2471,6 @@ export const SERVICE_DOCUMENTS = {
             "Country-level localization and KOL segmentation"
           ],
           [
-            "Turkey",
             "Active trading culture, strong local ecosystem",
             "Local creators, localized content, regional BD"
           ],
@@ -2649,7 +2648,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "A single English-first campaign is pushed into MENA, Turkey, LATAM, CIS and Persian-speaking communities. Trust, language and community behaviour differ sharply, and undifferentiated Web3 growth wastes budget on markets it never localized for."
+        "text": "A single English-first campaign is pushed into MENA, LATAM, CIS and Persian-speaking communities. Trust, language and community behaviour differ sharply, and undifferentiated Web3 growth wastes budget on markets it never localized for."
       },
       {
         "type": "heading",
@@ -2754,7 +2753,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Language, trust and community adaptation for MENA, GCC, Turkey, Europe, LATAM, CIS and Persian-speaking markets."
+        "text": "Language, trust and community adaptation for MENA, GCC, Europe, LATAM, CIS and Persian-speaking markets."
       },
       {
         "type": "heading",
@@ -2958,7 +2957,7 @@ export const SERVICE_DOCUMENTS = {
       },
       {
         "type": "paragraph",
-        "text": "Yes. Sigma supports regional Web3 growth across MENA, the GCC, Turkey and Persian-speaking communities through localization, regional BD and local KOL and community access, described as network presence and market coverage rather than unverified offices."
+        "text": "Yes. Sigma supports regional Web3 growth across MENA, the GCC and Persian-speaking communities through localization, regional BD and local KOL and community access, described as network presence and market coverage rather than unverified offices."
       },
       {
         "type": "paragraph",
@@ -3092,7 +3091,7 @@ export const SERVICE_DOCUMENTS = {
           [
             "Regional depth",
             "Global, generic",
-            "MENA, GCC, Turkey, Persian-speaking, LATAM, CIS, Europe"
+            "MENA, GCC, Persian-speaking, LATAM, CIS, Europe"
           ]
         ]
       }

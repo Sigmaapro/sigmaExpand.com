@@ -83,11 +83,11 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         href: "/markets/europe",
         panelTitle: "Europe",
         description:
-          "Sigma supports European and Turkey-linked expansion through MiCA-aware campaign planning, localized KOL and BD coordination, Telegram-first Turkish communities, FX-aware messaging, native Turkish creators, and region-specific growth infrastructure.",
+          "Sigma supports European expansion through MiCA-aware campaign planning, localized KOL and BD coordination, FX-aware messaging, and region-specific growth infrastructure.",
         bullets: [
           "MiCA-aware campaigns across Germany, Spain, Italy, Poland, and broader EU corridors",
-          "Balkans growth surfaces plus Turkey / Istanbul presence",
-          "Telegram-first Turkish communities, FX-aware messaging, and native Turkish creators",
+          "Balkans growth surfaces",
+          "Telegram-first communities and FX-aware messaging",
         ],
       },
       {
@@ -164,11 +164,11 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         href: "/markets/europe",
         panelTitle: "Europe",
         description:
-          "Sigma توسعه اروپا و Turkey را با برنامه‌ریزی کمپین MiCA-aware، هماهنگی KOL و BD بومی، کامیونیتی‌های Turkish Telegram-first، پیام‌رسانی FX-aware و شبکه کریتورهای بومی ترکی پشتیبانی می‌کند.",
+          "Sigma توسعه اروپا را با برنامه‌ریزی کمپین MiCA-aware، هماهنگی KOL و BD بومی و پیام‌رسانی FX-aware پشتیبانی می‌کند.",
         bullets: [
           "کمپین‌های MiCA-aware در Germany، Spain، Italy، Poland و مسیرهای گسترده EU",
-          "سطوح رشد Balkans همراه با Turkey / Istanbul presence",
-          "کامیونیتی‌های Turkish Telegram-first، پیام FX-aware و کریتورهای بومی ترکی",
+          "سطوح رشد Balkans",
+          "کامیونیتی‌های Telegram-first و پیام FX-aware",
         ],
       },
       {
@@ -183,87 +183,6 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
           "قیف‌های اسپانیایی و پرتغالی برای توسعه LATAM و Spain",
           "روایت stablecoin-first متناسب با رفتار محلی معامله‌گران",
           "سیستم‌های توزیع KOL و کامیونیتی‌های معاملاتی منطقه",
-        ],
-      },
-    ],
-  },
-
-  tr: {
-    eyebrow: "Bölgesel Crypto ve Web3 Pazarlama · Yerel Ekipler · Saha İcrası",
-    title: "Bir Sonraki Kullanıcılarınızın Gerçekten Yaşadığı Yerler İçin",
-    description:
-      "Web3 büyümesi küresel ortalamada değil, bölge bölge gerçekleşir. Sigma; MENA/WANA, CIS, APAC, Europe ve LATAM boyunca yerel KOL ağları, saha BD ve yerel kalibreli hunilerle çalışır.",
-    cta: "Bölgesel Genişlemenizi Planlayın",
-    regionsAriaLabel: "Bölgeler",
-    tabs: [
-      {
-        key: "wana",
-        label: "MENA / WANA",
-        flag: "🌍",
-        href: "/markets/wana",
-        panelTitle: "MENA / WANA",
-        description:
-          "Sigma; MENA ve WANA genelinde Arapça, Farsça ve GCC-yerel KOL ağları, bölgesel BD desteği, broker IB altyapısı ve yerel büyüme hunileriyle çalışır.",
-        bullets: [
-          "UAE, KSA, Katar, Kuveyt, Bahreyn ve Umman genelinde uyum odaklı büyüme",
-          "Arapça ve Farsça yerel KOL ve topluluk ağları",
-          "Yerel Farsça KOL, broker IB altyapısı ve bölgesel BD icrası",
-        ],
-      },
-      {
-        key: "cis",
-        label: "CIS",
-        flag: "🧭",
-        href: "/markets/cis",
-        panelTitle: "CIS",
-        description:
-          "Sigma, CIS genişlemesini Rusça dağıtım, bölgesel KOL ağları, trading toplulukları, futures/prop-trading kitlesi ve yerelleştirilmiş BD icrası ile destekler.",
-        bullets: [
-          "Rusça creator ve dağıtım altyapısı",
-          "Crypto ve finance odaklı CIS trading topluluklarına erişim",
-          "Exchange ve broker büyümesi için yerelleştirilmiş BD yönlendirmesi",
-        ],
-      },
-      {
-        key: "apac",
-        label: "APAC",
-        flag: "🌏",
-        href: "/markets/apac",
-        panelTitle: "APAC",
-        description:
-          "Sigma, APAC büyümesini Asia-Pacific KOL yüzeyleri, bölgesel topluluk kanalları ve Kore, Vietnam, Tayland, Endonezya ile geniş Güneydoğu Asya’da yerel icrayla destekler.",
-        bullets: [
-          "Kore, Vietnam, Tayland ve Endonezya kitlelerinde bölgesel KOL erişimi",
-          "Yerel davranışlara uygun APAC topluluk ve dağıtım kanalları",
-          "Güneydoğu Asya kampanyaları için Bali bağlantılı icra desteği",
-        ],
-      },
-      {
-        key: "europe",
-        label: "Europe",
-        flag: "🏛️",
-        href: "/markets/europe",
-        panelTitle: "Europe",
-        description:
-          "Sigma, Avrupa ve Türkiye bağlantılı genişlemeyi MiCA-aware kampanya planlama, yerel KOL/BD koordinasyonu, Telegram-first Türk toplulukları, FX-aware mesajlama ve yerel Türk creator ağları ile destekler.",
-        bullets: [
-          "Germany, Spain, Italy, Poland ve geniş AB koridorlarında MiCA-aware kampanyalar",
-          "Balkans büyüme yüzeyleri + Turkey / Istanbul presence",
-          "Telegram-first Türk toplulukları, FX-aware mesajlama ve yerel Türk creator ağları",
-        ],
-      },
-      {
-        key: "latam",
-        label: "LATAM",
-        flag: "🌎",
-        href: "/markets/latam",
-        panelTitle: "LATAM",
-        description:
-          "Sigma, LATAM ve Spain odaklı büyümeyi İspanyolca/Portekizce huniler, stablecoin-first anlatılar, bölgesel KOL erişimi, trading toplulukları ve yerel edinim altyapısıyla destekler.",
-        bullets: [
-          "LATAM ve Spain bağlantılı genişleme için İspanyolca ve Portekizce huniler",
-          "Yerel trading davranışına uygun stablecoin-first anlatılar",
-          "Bölgesel KOL ve trading topluluk dağıtım sistemleri",
         ],
       },
     ],
@@ -326,11 +245,11 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         href: "/markets/europe",
         panelTitle: "Europe",
         description:
-          "Sigma 通过 MiCA-aware 活动规划、本地 KOL/BD 协同、Turkey 相关执行、Telegram-first 土耳其社区、FX-aware 信息与土耳其本地创作者网络支持欧洲扩张。",
+          "Sigma 通过 MiCA-aware 活动规划、本地 KOL/BD 协同、Telegram-first 社区与 FX-aware 信息支持欧洲扩张。",
         bullets: [
           "面向 Germany、Spain、Italy、Poland 与更广 EU 走廊的 MiCA-aware 活动",
-          "Balkans 增长面 + Turkey / Istanbul presence",
-          "Telegram-first 土耳其社区、FX-aware 信息与本地土耳其创作者网络",
+          "Balkans 增长面",
+          "Telegram-first 社区与 FX-aware 信息",
         ],
       },
       {
@@ -407,11 +326,11 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         href: "/markets/europe",
         panelTitle: "Europe",
         description:
-          "Sigma apoya expansión europea y Turkey-linked con planificación MiCA-aware, coordinación local de KOL y BD, comunidades turcas Telegram-first, mensajería FX-aware y redes nativas de creadores turcos.",
+          "Sigma apoya la expansión europea con planificación MiCA-aware, coordinación local de KOL y BD, comunidades Telegram-first y mensajería FX-aware.",
         bullets: [
           "Campañas MiCA-aware en Germany, Spain, Italy, Poland y corredores EU ampliados",
-          "Superficies Balkans + Turkey / Istanbul presence",
-          "Comunidades turcas Telegram-first, mensajería FX-aware y creadores turcos nativos",
+          "Superficies Balkans",
+          "Comunidades Telegram-first y mensajería FX-aware",
         ],
       },
       {
@@ -488,11 +407,11 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         href: "/markets/europe",
         panelTitle: "Europe",
         description:
-          "Sigma поддерживает европейскую и Turkey-linked экспансию через MiCA-aware планирование кампаний, локальную координацию KOL/BD, Telegram-first турецкие сообщества, FX-aware сообщения и сети локальных турецких creators.",
+          "Sigma поддерживает европейскую экспансию через MiCA-aware планирование кампаний, локальную координацию KOL/BD, Telegram-first сообщества и FX-aware сообщения.",
         bullets: [
           "MiCA-aware кампании по Germany, Spain, Italy, Poland и расширенным EU-коридорам",
-          "Balkans поверхности роста + Turkey / Istanbul presence",
-          "Telegram-first турецкие сообщества, FX-aware сообщения и локальные турецкие creators",
+          "Balkans поверхности роста",
+          "Telegram-first сообщества и FX-aware сообщения",
         ],
       },
       {
@@ -569,11 +488,11 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         href: "/markets/europe",
         panelTitle: "Europe",
         description:
-          "تدعم Sigma التوسع الأوروبي والمرتبط بـ Turkey عبر تخطيط حملات MiCA-aware، وتنسيق KOL وBD محلي، ومجتمعات تركية Telegram-first، ورسائل FX-aware، وشبكات صناع محتوى أتراك محليين.",
+          "تدعم Sigma التوسع الأوروبي عبر تخطيط حملات MiCA-aware، وتنسيق KOL وBD محلي، ومجتمعات Telegram-first، ورسائل FX-aware.",
         bullets: [
           "حملات MiCA-aware عبر Germany وSpain وItaly وPoland وممرات EU الأوسع",
-          "أسطح نمو Balkans مع Turkey / Istanbul presence",
-          "مجتمعات تركية Telegram-first ورسائل FX-aware وصناع محتوى أتراك محليون",
+          "أسطح نمو Balkans",
+          "مجتمعات Telegram-first ورسائل FX-aware",
         ],
       },
       {

@@ -94,43 +94,6 @@ const enBundle: ConversionBundle = {
   bookCall: EN_BOOK,
 };
 
-const trBundle: ConversionBundle = {
-  mid: {
-    label: "SAYILARLA KANIT",
-    headline: "Kullanıcıları, Hacmi ve Erişimi Hareket Ettiren Yürütme",
-    supporting:
-      "Rakamlar toplam ağ aktivitesini yansıtır. Geçmiş performans gelecekteki sonuçların göstergesi değildir.",
-    primaryLabel: "Sigma ile Ortak Olun",
-    primaryHref: ROUTES.contact,
-  },
-  final: {
-    headline: "Gerçekten Dönüşen Büyüme İnşa Edin",
-    supporting:
-      "Kullanıcı ediniminden likiditeye kadar Sigma; kripto, forex, hisse ve Web3 genelinde tüm sistemi birbirine bağlar. Masaya brief verin, ölçülebilir throughput için en kısa yolu birlikte çizelim.",
-    primaryLabel: "Sigma ile Ortak Olun",
-    primaryHref: ROUTES.contact,
-    secondaryLabel: "Büyüme Danışmanlığı Talep Edin",
-  },
-  bookCall: {
-    title: "Görüşme planla",
-    subtitle:
-      "Bilgilerinizi paylaşın — bir zaman onayı veya bir iş günü içinde dönüş alırsınız.",
-    nameLabel: "Ad",
-    emailLabel: "E-posta",
-    messageLabel: "Mesaj (isteğe bağlı)",
-    submitLabel: "Talep gönder",
-    sendingLabel: "Gönderiliyor…",
-    successTitle: "Talep alındı",
-    successBody: "Teşekkürler. Ekibimiz kısa süre içinde ulaşacak.",
-    closeLabel: "Kapat",
-    calendlyHint: "Takviminize uygun bir zaman seçin.",
-    backdropCloseAria: "Diyaloğu kapat",
-    calendlyIframeTitle: "Calendly planlama",
-    submitError: "Talep gönderilemedi. Lütfen tekrar deneyin.",
-    invalidEmailError: "Lütfen geçerli bir e-posta adresi girin.",
-    unavailableError: "Talepler geçici olarak kullanılamıyor.",
-  },
-};
 
 const zhBundle: ConversionBundle = {
   mid: {
@@ -322,8 +285,7 @@ const ruBundle: ConversionBundle = {
 
 export const conversionByLang: Record<LangCode, ConversionBundle> = {
   EN: enBundle,
-  TR: trBundle,
-  ZH: zhBundle,
+ZH: zhBundle,
   FA: faBundle,
   AR: arBundle,
   ES: esBundle,

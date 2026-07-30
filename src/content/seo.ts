@@ -319,22 +319,20 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     path: "/markets/europe",
     title: "Europe Crypto Marketing | Sigma",
     description:
-      "Sigma supports European and Turkey-linked expansion through MiCA-aware campaign planning, localized KOL and BD coordination, Telegram-first Turkish communities, FX-aware messaging, native Turkish creators, and region-specific growth infrastructure across Germany, Spain, Italy, Poland, the Balkans, Turkey, and broader European markets.",
+      "Sigma supports European expansion through MiCA-aware campaign planning, localized KOL and BD coordination, Telegram-first communities, FX-aware messaging, and region-specific growth infrastructure across Germany, Spain, Italy, Poland, the Balkans, and broader European markets.",
     keywords: [
       "MiCA crypto marketing",
       "EU crypto agency",
       "Europe crypto marketing",
       "Balkans crypto marketing",
-      "Turkey crypto KOL agency",
-      "Istanbul crypto marketing",
       "European Web3 growth",
     ],
     ogTitle: "Europe Crypto Marketing | Sigma",
     ogDescription:
-      "MiCA-aware European growth execution across EU, Balkan, and Turkey-linked markets.",
+      "MiCA-aware European growth execution across EU and Balkan markets.",
     twitterTitle: "Europe Crypto Marketing | Sigma",
     twitterDescription:
-      "Localized KOL and BD infrastructure for European and Turkey-linked crypto and Web3 expansion.",
+      "Localized KOL and BD infrastructure for European crypto and Web3 expansion.",
   },
   marketsLatam: {
     path: "/markets/latam",
@@ -434,14 +432,14 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     path: "/privacy",
     title: "Privacy Policy",
     description:
-      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR, KVKK, and UAE PDPL compliant.",
+      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR and UAE PDPL compliant.",
     keywords: ["Sigma privacy policy", "Sigma data handling", "Sigma GDPR"],
     ogTitle: "Privacy Policy | Sigma Growth Network",
     ogDescription:
-      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR, KVKK, and UAE PDPL compliant.",
+      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR and UAE PDPL compliant.",
     twitterTitle: "Privacy Policy | Sigma Growth Network",
     twitterDescription:
-      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR, KVKK, and UAE PDPL compliant.",
+      "How Sigma collects, uses, stores, and shares information about partners, KOLs, IBs, traders, and visitors. GDPR and UAE PDPL compliant.",
   },
   team: {
     path: "/team",

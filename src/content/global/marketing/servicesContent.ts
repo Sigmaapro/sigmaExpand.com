@@ -40,7 +40,6 @@ const primaryServicesEN: PrimaryServiceCard[] = getFinalServices().map((service)
  */
 export const primaryServicesByLang: Record<LangCode, PrimaryServiceCard[]> = {
   EN: primaryServicesEN,
-  TR: primaryServicesEN,
   FA: primaryServicesEN,
   ZH: primaryServicesEN,
   ES: primaryServicesEN,
@@ -53,11 +52,6 @@ export const servicesPageMetaByLang: Record<LangCode, PageMeta> = {
     title: "Services",
     description:
       "Explore Sigma’s core capabilities: liquidity programs, risk & compliance layers, technical integration, and Web3-native growth execution.",
-  },
-  TR: {
-    title: "Hizmetler",
-    description:
-      "Likidite programları, risk ve uyum katmanları, teknik entegrasyon ve Web3 odaklı büyütme yürütmesini keşfedin.",
   },
   FA: {
     title: "خدمات",
@@ -144,67 +138,11 @@ export const servicesPageContentByLang: Record<LangCode, ServicesMarketingBody> 
       "Each engagement combines strategy, execution, and instrumentation. Below is how we typically structure work—your roadmap is tailored during onboarding.",
     sections: sectionsEN,
   },
-  TR: {
-    kicker: "Yetenekler",
-    headline: "Güvenle ölçeklemek için gereken her şey",
-    intro:
-      "Her çalışma strateji, yürütme ve ölçüm içerir. Aşağıda tipik yapımız—yol haritanız başlangıçta birlikte netleşir.",
-    sections: [
-      {
-        id: "liquidity",
-        eyebrow: "Piyasalar",
-        title: "Likidite ve piyasa yapısı",
-        description:
-          "İlk günden olgun iki taraflı piyasalara kadar rejimler arasında dayanıklı likidite programları tasarlar ve işletiriz.",
-        bullets: [
-          "Gerçek derinlik hedefleriyle uyumlu envanter ve teşvik tasarımı",
-          "Maker, mecra ve dahili masa koordinasyonu",
-          "Stres, listeleme ve kampanya senaryoları için playbook’lar",
-        ],
-      },
-      {
-        id: "risk",
-        eyebrow: "Güven",
-        title: "Risk, uyumluluk ve izleme",
-        description:
-          "Ürün hızını düşürmeden paydaş beklentilerini karşılayan operasyonel disiplin.",
-        bullets: [
-          "Yargı ve karşı taraf karışımınıza göre kontrol çerçeveleri",
-          "Ekibinizin sahiplenebileceği gerçek zamanlı izleme ve eskalasyon",
-          "Ortaklar ve kurumsal incelemeler için dokümantasyon paketleri",
-        ],
-      },
-      {
-        id: "integration",
-        eyebrow: "Mühendislik",
-        title: "Teknik entegrasyon ve API’ler",
-        description:
-          "Go-to-market hareketleriyle birlikte bağlayıcılar, veri hatları ve güvenilirlik iyileştirmeleri teslim edilir.",
-        bullets: [
-          "Önemli yerlerde net SLI/SLO ile API öncelikli entegrasyon",
-          "Staging ve prod geçişlerinde mühendislik işbirliği",
-          "Olayların seyrek ve telafi edilebilir olduğu runbook ve gözlemlenebilirlik",
-        ],
-      },
-      {
-        id: "growth",
-        eyebrow: "Dağıtım",
-        title: "Web3 odaklı büyüme ve ortaklıklar",
-        description:
-          "Topluluk normlarına saygılıyken somut edinim ve tutma hedeflerine odaklanan dağıtım.",
-        bullets: [
-          "İçerik üreticileri, topluluklar ve kurumsal kanalları kapsayan kampanya mimarisi",
-          "Yerelleştirmede markada kalan mesaj sistemleri",
-          "Kuzey yıldızı metriklerinize bağlı huni ölçümü",
-        ],
-      },
-    ],
-  },
   FA: {
     kicker: "قابلیت‌ها",
     headline: "آنچه برای مقیاس با اطمینان نیاز دارید",
     intro:
-      "هر همکاری ترکیبی از استراتژی، اجرا و ابزارسازی است. زیر ساختار معمول کار است—نقشه راه در شروع هم‌راستا می‌شود.",
+      "هر همکاری از استراتژی، اجرا و ابزارسازی تشکیل می‌شود. زیر ساختار معمول کار است—نقشه راه در شروع هم‌راستا می‌شود.",
     sections: [
       {
         id: "liquidity",
@@ -225,7 +163,7 @@ export const servicesPageContentByLang: Record<LangCode, ServicesMarketingBody> 
         description:
           "انضباط عملیاتی که ذینفعان را راضی کند بدون کند کردن محصول.",
         bullets: [
-          "چارچوب کنترل متناسب با حوزه قضایی و ترکیب طرف مقابل",
+          "چارچوب کنترل متناسب با حوزه قضایی و ساختار طرف مقابل",
           "قلاب‌های پایش بلادرنگ و مسیرهای تشدید قابل مالکیت توسط شما",
           "بسته‌های مستندسازی برای طرف‌ها و بازبینان نهادی",
         ],

@@ -54,17 +54,6 @@ const EN_CONTENT: ProductsContent = {
 
 export const productsContentByLang: Record<LangCode, ProductsContent> = {
   EN: EN_CONTENT,
-  TR: {
-    ...EN_CONTENT,
-    kicker: "Sigma Yardımcı Ürünleri",
-    title: "Sigma Yardımcı Ürünleri — Araçlar, Botlar, Paneller ve Analitik",
-    intro:
-      "Sigma, ağ için analitik paneller, affiliate servisleri, topluluk araçları, içerik sistemleri ve büyüme botları geliştirir.",
-    positioning:
-      "Bunlar genel SaaS ürünleri değildir. Sigma ağı içinde kampanyaları, affiliate süreçlerini ve raporlamayı güçlendiren operasyonel araçlardır.",
-    primaryCtaLabel: "Sigma Araçlarını Keşfet",
-    secondaryCtaLabel: "Sigma ile Ortak Olun",
-  },
   ZH: {
     ...EN_CONTENT,
     kicker: "Sigma 辅助产品",

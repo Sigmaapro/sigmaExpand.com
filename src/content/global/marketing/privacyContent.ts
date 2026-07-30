@@ -16,10 +16,6 @@ export const privacyPageMetaByLang: Record<LangCode, PageMeta> = {
     title: "Privacy",
     description: "How Sigma handles information when you use our website and contact channels.",
   },
-  TR: {
-    title: "Gizlilik",
-    description: "Web sitemizi ve iletişim kanallarını kullandığınızda Sigma’nın bilgileri nasıl işlediği.",
-  },
   FA: {
     title: "حریم خصوصی",
     description: "هنگام استفاده از وب‌سایت و کانال‌های تماس، سیگما چگونه با اطلاعات برخورد می‌کند.",
@@ -100,8 +96,8 @@ export const privacyPageContentByLang: Record<LangCode, PrivacyMarketingBody> = 
         body: "We don't sell partner or visitor data. We don't share it with third parties for marketing purposes.",
       },
       {
-        title: "Legal basis (GDPR / KVKK / UAE PDPL)",
-        body: "Where you're in the EU/EEA, UK, Turkey, or the UAE, our processing relies on one of:",
+        title: "Legal basis (GDPR / UAE PDPL)",
+        body: "Where you're in the EU/EEA, UK, or the UAE, our processing relies on one of:",
         items: [
           "Your consent (which you can withdraw)",
           "Performance of a contract (engagement, partnership)",
@@ -139,7 +135,7 @@ export const privacyPageContentByLang: Record<LangCode, PrivacyMarketingBody> = 
       },
       {
         title: "Your rights",
-        body: "Under GDPR, KVKK, UAE PDPL, and equivalent frameworks, you have the right to:",
+        body: "Under GDPR, UAE PDPL, and equivalent frameworks, you have the right to:",
         items: [
           "Access the data we hold about you",
           "Correct inaccurate data",
@@ -165,38 +161,6 @@ export const privacyPageContentByLang: Record<LangCode, PrivacyMarketingBody> = 
       {
         title: "Updates",
         body: "We update this policy as our operations and regulations evolve. The effective date above changes when we do. Significant changes are notified to active partners; visitors are notified via the website.",
-      },
-    ],
-  },
-  TR: {
-    kicker: "Yasal",
-    headline: "Gizlilik bildirimi",
-    updatedLabel: "Son güncelleme",
-    updatedDate: "Mayıs 2026",
-    sections: [
-      {
-        title: "Genel bakış",
-        body: "Bu bildirim, bu web sitesi üzerinden (iletişim ve lead formları dahil) gönderilen bilgilerin Sigma tarafından nasıl toplanıp kullanıldığını açıklar. Genel kitle içindir; hukuk danışmanınızın talep edebileceği bölgesel açıklamaların yerini almaz.",
-      },
-      {
-        title: "Topladığımız bilgiler",
-        body: "Form gönderdiğinizde veya görüşme ayırdığınızda ad, e-posta, mesaj içeriği ve sunucu günlüklerinden türeyen tarayıcı ve yaklaşık bölge gibi teknik üst veriler toplanabilir. Analitik araçlar etkinse kullanım verisi ilgili politikalarına göre işlenebilir.",
-      },
-      {
-        title: "Bilgilerin kullanımı",
-        body: "Gönderileri soruları yanıtlamak, hizmetleri işletmek, siteyi geliştirmek ve izin verilen ölçüde Sigma teklifleri hakkında takip için kullanırız. Kişisel bilgi satmayız.",
-      },
-      {
-        title: "Saklama ve güvenlik",
-        body: "Kayıtları yukarıdaki amaçlar veya yasal gereklilikler için gerekli süre boyunca tutarız. Makul teknik ve organizasyonel önlemler uygularız; internet üzerinden iletim tamamen risksiz değildir.",
-      },
-      {
-        title: "Seçenekleriniz",
-        body: "Yürürlükteki hukuk çerçevesinde erişim, düzeltme veya silme talep edebilirsiniz. Bu sitedeki e-posta veya form ile iletişime geçin; talepten önce kimlik doğrulaması isteyebiliriz.",
-      },
-      {
-        title: "Değişiklikler",
-        body: "Bu bildirimi zaman zaman güncelleyebiliriz. Önemli değişiklikler güncellenmiş tarihle bu sayfada yer alır.",
       },
     ],
   },

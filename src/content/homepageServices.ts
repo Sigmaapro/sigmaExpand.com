@@ -31,36 +31,6 @@ const EN: ServicesContent = {
   ],
 };
 
-const TR: ServicesContent = {
-  sectionLabel: "03 // KİMİN İÇİN İNŞA EDİYORUZ",
-  headline: "TEK BÜYÜME AĞI. DÖRT MOTOR.",
-  cards: [
-    {
-      title: "BORSA VE PLATFORMLAR",
-      description:
-        "Kullanıcı, işlem hacmi ve bölgesel pazar payını ölçekleyin — KOL aktivasyonu, IB ağları, yerelleştirilmiş huniler, market maker tanıtımları, listing koordinasyonu ve VIP onboarding.",
-      icon: "activity",
-    },
-    {
-      title: "KOL VE İÇERİK ÜRETİCİLER",
-      description:
-        "Finansal içerik üretici altyapınızı kurun — affiliate yığınları, Telegram botları, web siteleri, KOL SEO, premium platform anlaşmaları ve veri araçları ortaklıkları.",
-      icon: "cpu",
-    },
-    {
-      title: "IB VE BD AĞLARI",
-      description:
-        "Dağınık referanslardan yapılandırılmış BD operasyonuna — özel komisyon mimarisi, dönüşüm playbook'ları, retention sistemleri ve üst düzey borsa/broker erişimi.",
-      icon: "shield",
-    },
-    {
-      title: "TRADER VE VIP'LER",
-      description:
-        "Daha iyi ücretler, araçlar ve destek — platform eşleştirme, VIP/whale onboarding, copy trading, opsiyonlar, prop firmalar ve pro veri terminalleri.",
-      icon: "code2",
-    },
-  ],
-};
 
 const ZH: ServicesContent = {
   sectionLabel: "03 // 我们服务的对象",
@@ -219,7 +189,6 @@ const AR: ServicesContent = {
 
 export const servicesByLang: Record<LangCode, ServicesContent> = {
   EN,
-  TR,
   ZH,
   FA,
   ES,

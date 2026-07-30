@@ -27,7 +27,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 const STORAGE_KEY = "sigma-lang";
 
-const LANG_CODES: LangCode[] = ["EN", "TR", "ZH", "FA", "ES", "RU", "AR"];
+const LANG_CODES: LangCode[] = ["EN", "ZH", "FA", "ES", "RU", "AR"];
 
 function isLangCode(value: string): value is LangCode {
   return (LANG_CODES as readonly string[]).includes(value);

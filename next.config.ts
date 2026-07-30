@@ -56,11 +56,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/markets/turkey",
-        destination: "/markets/europe",
-        permanent: true,
-      },
-      {
         source: "/markets/china",
         destination: "/markets/apac",
         permanent: true,

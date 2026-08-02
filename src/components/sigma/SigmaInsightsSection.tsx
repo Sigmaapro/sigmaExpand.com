@@ -73,6 +73,7 @@ import {
   rtlScriptSurfaceClass,
 } from "@/lib/localeTypography";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
+import { LiquidGlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button";
 
 
 export const BLOG_INSIGHTS_URL = "https://blog.sigmaa.pro";
@@ -1895,13 +1896,13 @@ const Navbar = () => {
               />
             </InsightsOuterLink>
 
-            <button
+            <LiquidGlassButton
               type="button"
               onClick={openPartnerIntentFlow}
-              className={`hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap rounded-full border border-[#1D89BB]/55 bg-[linear-gradient(180deg,rgba(29,58,187,0.42)_0%,rgba(29,137,187,0.18)_100%)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_24px_rgba(29,58,187,0.22)] transition-[background,box-shadow,border-color,transform] hover:border-[#1D89BB]/75 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_30px_rgba(29,58,187,0.3)] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 md:inline-flex md:h-14 md:min-h-14 md:px-5 md:text-[13px] ${localeCta(currentLang)}`}
+              className={`hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap !rounded-full !border border-[#1D89BB]/55 bg-[linear-gradient(180deg,rgba(29,58,187,0.42)_0%,rgba(29,137,187,0.18)_100%)] !px-3.5 !py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_24px_rgba(29,58,187,0.22)] transition-[background,box-shadow,border-color,transform] hover:border-[#1D89BB]/75 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_30px_rgba(29,137,187,0.3)] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 md:inline-flex md:h-14 md:min-h-14 md:!px-5 md:text-[13px] ${localeCta(currentLang)}`}
             >
-              {t.nav.navCta}
-            </button>
+              <span className="text-white">{t.nav.navCta}</span>
+            </LiquidGlassButton>
 
             <div className="hidden shrink-0 lg:block">
               <LanguageSwitcherButton

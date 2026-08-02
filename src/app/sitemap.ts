@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllInsightsPosts } from "@/content/insights";
 import { getFinalServices } from "@/content/services/finalServices";
+import { isImportedFinalServiceSlug } from "@/content/services/importedFinalServiceDocuments";
 import {
   getAllTeamMembers,
   getTeamMemberSlug,
@@ -28,12 +29,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.55,
   }));
 
-  const services: MetadataRoute.Sitemap = getFinalServices().map((service) => ({
-    url: `${base}${service.href}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.72,
-  }));
+  // Imported draft service pages are temporarily noindex and excluded from the sitemap.
+  const services: MetadataRoute.Sitemap = getFinalServices()
+    .filter((service) => !isImportedFinalServiceSlug(service.slug))
+    .map((service) => ({
+      url: `${base}${service.href}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.72,
+    }));
 
   const seenTeamSlugs = new Set<string>();
   const teamProfiles: MetadataRoute.Sitemap = [];

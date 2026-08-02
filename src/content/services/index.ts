@@ -46,3 +46,15 @@ export {
   isFinalServiceSlug,
 } from "./finalServices";
 export type { FinalService, FinalServiceSlug } from "./finalServices";
+
+export {
+  IMPORTED_FINAL_SERVICE_DOCUMENTS,
+  IMPORTED_FINAL_SERVICE_SLUGS,
+  getImportedFinalServiceDocument,
+  isImportedFinalServiceSlug,
+} from "./importedFinalServiceDocuments";
+export type {
+  ImportedFinalServiceSlug,
+  ImportedServiceBlock,
+  ImportedServiceDocument,
+} from "./importedFinalServiceDocuments";

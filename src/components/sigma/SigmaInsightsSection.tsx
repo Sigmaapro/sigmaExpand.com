@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Link from "next/link";
 import { LiveSupportButton } from "@/components/sigma/LiveSupportButton";
 import { ProofLayer } from "@/components/sigma/ProofLayer";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
@@ -11,11 +10,8 @@ import { PartnerIntentModalHost, openPartnerIntentFlow } from "@/components/part
 import { getConversion } from "@/content/conversion";
 import { TeamDomeGallery } from "@/components/sigma/TeamDomeGallery";
 import { CryptoMarketingSection } from "@/components/sigma/CryptoMarketingSection";
-import { CryptoWordCloudVisual } from "@/components/sigma/CryptoWordCloudVisual";
 import { SectionTitleTypewriter } from "@/components/sigma/SectionTitleTypewriter";
 import { SeoHiddenImages } from "@/components/seo/SeoHiddenImages";
-import { GooeyNavIndicator } from "@/components/sigma/GooeyNavIndicator";
-import { FluidGlassNavShell } from "@/components/sigma/FluidGlassNavShell";
 import GlassSurface from "@/components/react-bits/GlassSurface";
 import { SigmaBorderGlow } from "@/components/sigma/SigmaBorderGlow";
 import { SigmaHeroCurvedLoop, SigmaHeroCurvedLoopSpacer } from "@/components/sigma/SigmaHeroCurvedLoop";
@@ -32,15 +28,8 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  Mail,
-  Info,
-  Network,
-  LayoutGrid,
-  Menu,
-  X,
   Sparkles,
   Check,
-  Newspaper,
   Activity,
   Shield,
   Cpu,
@@ -48,16 +37,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { ServiceIconId, SiteTranslations } from "@/content/types";
-import { InsightsOuterLink } from "@/components/site/InsightsOuterLink";
-import { LanguageSwitcherButton } from "@/components/site/LanguageSwitcherButton";
-import { SigmaMobileNavPanel } from "@/components/sigma/SigmaMobileNavPanel";
-import { pickLang } from "@/content/global/marketing/helpers";
-import { aboutPageMetaByLang } from "@/content/global/marketing/aboutContent";
-import { teamPageMetaByLang } from "@/content/global/marketing/teamContent";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
-import { ROUTES } from "@/content/global/routes";
 import { useLanguage } from "@/context/LanguageContext";
 import type { CSSProperties } from "react";
 import {
@@ -73,7 +55,7 @@ import {
   rtlScriptSurfaceClass,
 } from "@/lib/localeTypography";
 import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
-import { LiquidGlassButton } from "@/components/ui/apple-tahoe-liquid-glass-button";
+import { SigmaSiteNavbar } from "@/components/sigma/SigmaSiteNavbar";
 
 
 export const BLOG_INSIGHTS_URL = "https://blog.sigmaa.pro";
@@ -1268,27 +1250,20 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
       className="sigma-what-is-ripple relative z-10 scroll-mt-24 overflow-hidden px-5 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
     >
       <div className="relative z-10 mx-auto max-w-[90rem]">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(260px,400px)] lg:gap-10 xl:gap-14">
-          <div className="sigma-liquid-card sigma-what-is-glass min-w-0 max-w-3xl px-5 py-5 sm:px-6 sm:py-6">
-            <p
-              className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
-            >
-              {t.whatIsSigma.label}
-            </p>
-            <h2
-              className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-3xl ${localeHeading(language)}`}
-            >
-              {t.whatIsSigma.headline}
-            </h2>
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
-              {t.whatIsSigma.description}
-            </p>
-          </div>
-
-          {/* Decorative ticker cloud — lg+ only */}
-          <div className="relative hidden min-h-[420px] w-full max-w-[440px] items-center justify-center self-center justify-self-end lg:flex">
-            <CryptoWordCloudVisual tone="dark" />
-          </div>
+        <div className="sigma-liquid-card sigma-what-is-glass min-w-0 max-w-3xl px-5 py-5 sm:px-6 sm:py-6">
+          <p
+            className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
+          >
+            {t.whatIsSigma.label}
+          </p>
+          <h2
+            className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-3xl ${localeHeading(language)}`}
+          >
+            {t.whatIsSigma.headline}
+          </h2>
+          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
+            {t.whatIsSigma.description}
+          </p>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
@@ -1610,353 +1585,6 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
   );
 };
 
-type GlassNavId =
-  | "about"
-  | "capabilities"
-  | "network"
-  | "metrics"
-  | "sigmapro"
-  | "contact"
-  | "connect";
-
-const SECTION_ORDER: GlassNavId[] = [
-  "about",
-  "capabilities",
-  "network",
-  "sigmapro",
-  "contact",
-  "connect",
-];
-
-const NAV_SCROLL_GAP = 112;
-const NAV_CLICK_SCROLL_LOCK_MS = 900;
-
-const Navbar = () => {
-  const { t, lang: currentLang, setLang: setCurrentLang, isRtl } = useLanguage();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [glassActive, setGlassActive] = useState<GlassNavId | null>(null);
-  const gooeyNavTrackRef = useRef<HTMLDivElement | null>(null);
-  const navClickScrollingRef = useRef(false);
-  const navClickTimerRef = useRef<number | null>(null);
-  const scrollRafRef = useRef<number | null>(null);
-
-  const primaryNav: {
-    id: Exclude<GlassNavId, "connect" | "metrics">;
-    icon: typeof Mail;
-    label: string;
-  }[] = [
-    { id: "about", icon: Info, label: t.nav.system },
-    { id: "capabilities", icon: LayoutGrid, label: t.nav.capabilities },
-    { id: "network", icon: Network, label: t.nav.network },
-    { id: "sigmapro", icon: Sparkles, label: t.nav.sigmaPro },
-    { id: "contact", icon: Mail, label: t.nav.contact },
-  ];
-  const navHrefById: Record<Exclude<GlassNavId, "connect" | "metrics">, string> = {
-    about: ROUTES.anchor.system,
-    capabilities: ROUTES.anchor.capabilities,
-    network: ROUTES.anchor.network,
-    sigmapro: ROUTES.anchor.sigmaPro,
-    contact: ROUTES.anchor.contactStrip,
-  };
-
-  const syncActiveFromScroll = useCallback(() => {
-    if (navClickScrollingRef.current) return;
-    const hero = document.getElementById("hero");
-    if (hero) {
-      const heroTop =
-        hero.getBoundingClientRect().top + window.scrollY;
-      const heroH = hero.offsetHeight;
-      if (window.scrollY < heroTop + heroH - NAV_SCROLL_GAP) {
-        setGlassActive(null);
-        return;
-      }
-    }
-    let current: GlassNavId | null = null;
-    for (const id of SECTION_ORDER) {
-      const el = document.getElementById(id);
-      if (!el) continue;
-      const top = el.getBoundingClientRect().top + window.scrollY;
-      if (window.scrollY + NAV_SCROLL_GAP >= top - 4) {
-        current = id;
-      }
-    }
-    if (current === "connect") {
-      setGlassActive(null);
-      return;
-    }
-    setGlassActive(current);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => {
-      if (scrollRafRef.current != null) return;
-      scrollRafRef.current = requestAnimationFrame(() => {
-        scrollRafRef.current = null;
-        syncActiveFromScroll();
-      });
-    };
-
-    syncActiveFromScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", syncActiveFromScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", syncActiveFromScroll);
-      if (scrollRafRef.current != null) {
-        cancelAnimationFrame(scrollRafRef.current);
-        scrollRafRef.current = null;
-      }
-      if (navClickTimerRef.current != null) {
-        window.clearTimeout(navClickTimerRef.current);
-        navClickTimerRef.current = null;
-      }
-    };
-  }, [syncActiveFromScroll, currentLang]);
-
-  const beginNavClickScrollLock = () => {
-    navClickScrollingRef.current = true;
-    if (navClickTimerRef.current != null) {
-      window.clearTimeout(navClickTimerRef.current);
-    }
-    navClickTimerRef.current = window.setTimeout(() => {
-      navClickScrollingRef.current = false;
-      navClickTimerRef.current = null;
-      syncActiveFromScroll();
-    }, NAV_CLICK_SCROLL_LOCK_MS);
-  };
-
-  const goToSection = (id: GlassNavId) => {
-    beginNavClickScrollLock();
-    setMobileOpen(false);
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-    if (id !== "connect") {
-      setGlassActive(id);
-    } else {
-      setGlassActive(null);
-    }
-  };
-
-  const navigateToSectionFromLink = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    id: Exclude<GlassNavId, "connect" | "metrics">,
-  ) => {
-    setMobileOpen(false);
-    if (
-      event.defaultPrevented ||
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
-    ) {
-      return;
-    }
-    event.preventDefault();
-    goToSection(id);
-    if (typeof window !== "undefined") {
-      window.history.replaceState(null, "", navHrefById[id]);
-    }
-  };
-
-  const scrollToTop = () => {
-    beginNavClickScrollLock();
-    setMobileOpen(false);
-    setGlassActive(null);
-    const hero = document.getElementById("hero");
-    if (hero) {
-      hero.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [mobileOpen]);
-
-  return (
-    <>
-      <nav
-        dir="ltr"
-        className="sigma-nav-shell fixed inset-x-0 top-0 z-[10000] flex justify-center pt-2 md:pt-5"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) scrollToTop();
-        }}
-      >
-        <FluidGlassNavShell
-          variant="shell"
-          height={72}
-          className="sigma-home-liquid-nav min-w-0 w-[calc(100%-0.75rem)] max-w-[1440px] shrink-0 sm:w-[calc(100%-1.25rem)]"
-          contentClassName="!flex !h-full !w-full !items-center !justify-start !gap-3 !p-0 !px-3 sm:!gap-4 sm:!px-4 md:!gap-5 md:!px-6 lg:!gap-7 lg:!px-7"
-        >
-          <button
-            type="button"
-            onClick={() => scrollToTop()}
-            className="relative z-10 flex h-full min-w-0 max-w-[min(42%,9.5rem)] shrink-0 cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 text-start transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 sm:max-w-none sm:gap-2.5"
-            aria-label={t.ui.navChrome.brandAria}
-          >
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center font-display text-[1.6rem] font-semibold leading-none tracking-tight text-white drop-shadow-[0_0_12px_rgba(29,137,187,0.28)] transition-transform duration-300 hover:scale-[1.04] sm:h-9 sm:w-9 sm:text-[1.7rem]">
-              Σ
-            </span>
-            <span
-              data-latin-tracking
-              className="truncate font-display text-[11px] font-semibold uppercase tracking-[0.16em] text-[#dce2e8] sm:text-lg sm:tracking-[0.14em]"
-            >
-              SIGMA
-            </span>
-          </button>
-
-          <div className="relative z-10 ms-auto flex shrink-0 items-center gap-2 sm:gap-3 lg:ms-0 lg:hidden">
-            <LanguageSwitcherButton
-              currentLang={currentLang}
-              setLang={setCurrentLang}
-              ariaLabel={t.ui.navChrome.languageMenuAria}
-              compactLabel={t.ui.languageSwitcherCompact[currentLang]}
-              variant="navCompact"
-            />
-          </div>
-
-          <div className="relative z-0 hidden min-h-0 min-w-0 flex-1 justify-center overflow-visible px-0.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:flex">
-            <div
-              ref={gooeyNavTrackRef}
-              className="sigma-home-nav-track sigma-gooey-nav-track relative inline-flex h-14 w-max max-w-full flex-nowrap items-center gap-1.5 sm:gap-2 md:gap-2.5"
-              dir="ltr"
-            >
-                <GooeyNavIndicator
-                  containerRef={gooeyNavTrackRef}
-                  activeSelector='[data-gooey-nav-item][aria-current="page"]'
-                  activeKey={glassActive}
-                  enabled={Boolean(glassActive)}
-                />
-                {primaryNav.map(({ id, icon: Icon, label }) => {
-                  const isActive = glassActive === id;
-                  const isPro = id === "sigmapro";
-                  return (
-                    <Link
-                      key={id}
-                      href={navHrefById[id]}
-                      data-gooey-nav-item=""
-                      onClick={(event) => navigateToSectionFromLink(event, id)}
-                      className={`sigma-home-nav-item relative isolate box-border inline-flex h-14 min-h-14 max-h-14 shrink-0 items-center overflow-visible rounded-full border border-transparent text-start transition-[color,background-color,border-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D89BB]/55 focus-visible:ring-offset-1 focus-visible:ring-offset-[#07090f] ${
-                        isActive
-                          ? "min-w-0 text-white"
-                          : isPro
-                            ? "min-w-max text-[#dce2e8] hover:bg-white/[0.05] hover:text-white"
-                            : "min-w-0 text-[#8b939e] hover:bg-white/[0.045] hover:text-[#e6e9ed]"
-                      } `}
-                      aria-current={isActive ? "page" : undefined}
-                    >
-                      <span className="relative z-10 inline-flex h-full min-h-0 items-center gap-1.5 px-2.5 sm:gap-2 sm:px-3 md:px-3.5">
-                        <Icon
-                          className={`size-[15px] shrink-0 md:size-4 ${
-                            isPro && !isActive
-                              ? "text-[#bde0fe]/85"
-                              : "text-current opacity-[0.92]"
-                          }`}
-                          strokeWidth={2}
-                          aria-hidden
-                        />
-                        <span
-                          className={`max-w-[9.5rem] truncate text-[11px] font-semibold uppercase leading-tight tracking-[0.06em] text-current sm:max-w-none sm:text-[13px] sm:leading-none sm:tracking-[0.07em] md:text-[14px] md:tracking-[0.08em] xl:whitespace-nowrap ${localeNav(currentLang)} ${
-                            isPro && !isActive ? "shrink-0 text-[#dce2e8]" : ""
-                          }`}
-                          title={label}
-                        >
-                          {label}
-                        </span>
-                      </span>
-                    </Link>
-                  );
-                })}
-            </div>
-          </div>
-
-          <div className="relative z-10 flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 md:gap-4 lg:ms-auto">
-            <InsightsOuterLink
-              className={`hidden h-12 max-w-[min(11rem,32vw)] shrink-0 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap rounded-full border border-[rgba(29,137,187,0.2)] bg-[rgba(8,12,24,0.45)] px-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#dce2e8] shadow-[inset_0_1px_0_rgba(189,224,254,0.08)] transition-[background,border-color,box-shadow] hover:border-[#1D89BB]/45 hover:bg-[rgba(29,137,187,0.1)] hover:text-white md:inline-flex md:h-14 md:max-w-[min(200px,28vw)] md:gap-2 md:px-3.5 md:text-[11px] lg:px-4 lg:text-[12px] ${localeNav(currentLang)}`}
-            >
-              <Newspaper
-                className="size-[15px] shrink-0 text-[#bde0fe]/80"
-                strokeWidth={2}
-                aria-hidden
-              />
-              <span className="min-w-0 truncate">{t.nav.insights}</span>
-              <ArrowUpRight
-                className="size-3.5 shrink-0 opacity-55"
-                strokeWidth={2}
-                aria-hidden
-              />
-            </InsightsOuterLink>
-
-            <LiquidGlassButton
-              type="button"
-              onClick={openPartnerIntentFlow}
-              className={`hidden h-12 min-h-12 shrink-0 items-center whitespace-nowrap !rounded-full !border border-[#1D89BB]/55 bg-[linear-gradient(180deg,rgba(29,58,187,0.42)_0%,rgba(29,137,187,0.18)_100%)] !px-3.5 !py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_24px_rgba(29,58,187,0.22)] transition-[background,box-shadow,border-color,transform] hover:border-[#1D89BB]/75 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_30px_rgba(29,137,187,0.3)] active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 md:inline-flex md:h-14 md:min-h-14 md:!px-5 md:text-[13px] ${localeCta(currentLang)}`}
-            >
-              <span className="text-white">{t.nav.navCta}</span>
-            </LiquidGlassButton>
-
-            <div className="hidden shrink-0 lg:block">
-              <LanguageSwitcherButton
-                currentLang={currentLang}
-                setLang={setCurrentLang}
-                ariaLabel={t.ui.navChrome.languageMenuAria}
-                compactLabel={t.ui.languageSwitcherCompact[currentLang]}
-              />
-            </div>
-
-            <button
-              type="button"
-              className="inline-flex h-12 min-h-12 w-12 min-w-12 shrink-0 touch-manipulation items-center justify-center rounded-full border border-[rgba(29,137,187,0.22)] bg-[rgba(8,12,24,0.5)] text-[#e9ecef] transition-colors hover:border-[#1D89BB]/4 hover:bg-[rgba(29,137,187,0.1)] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 lg:hidden"
-              aria-expanded={mobileOpen}
-              aria-controls="sigma-mobile-nav-panel"
-              aria-label={
-                mobileOpen ? t.ui.navChrome.closeMenuAria : t.ui.navChrome.openMenuAria
-              }
-              onClick={() => setMobileOpen((o) => !o)}
-            >
-              {mobileOpen ? (
-                <X className="size-[18px]" strokeWidth={2} aria-hidden />
-              ) : (
-                <Menu className="size-[18px]" strokeWidth={2} aria-hidden />
-              )}
-            </button>
-          </div>
-        </FluidGlassNavShell>
-      </nav>
-
-      <SigmaMobileNavPanel
-        panelId="sigma-mobile-nav-panel"
-        open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-        closeAriaLabel={t.ui.navChrome.closeMenuAria}
-        goToSection={goToSection}
-        glassActive={glassActive}
-        mobileNav={t.ui.mobileNavSheet}
-        isRtl={isRtl}
-        labels={{
-          about: t.nav.system,
-          capabilities: t.nav.capabilities,
-          network: t.nav.network,
-          sigmapro: t.nav.sigmaPro,
-          contact: t.nav.contact,
-        }}
-        aboutLabel={pickLang(aboutPageMetaByLang, currentLang).title}
-        teamLabel={pickLang(teamPageMetaByLang, currentLang).title}
-        workWithSigmaLabel={t.nav.navCta}
-      />
-    </>
-  );
-};
-
 export function SigmaLandingClient({
   insights,
 }: {
@@ -2013,7 +1641,7 @@ export function SigmaLandingClient({
       />
       <PartnerIntentModalHost />
 
-      <Navbar />
+      <SigmaSiteNavbar />
     </div>
   );
 }

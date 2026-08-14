@@ -39,7 +39,7 @@ export function FluidGlassNavShell({
     <GlassSurface
       width="100%"
       height={height}
-      borderRadius={999}
+      borderRadius={isShell ? 28 : 999}
       borderWidth={isShell ? 0.06 : 0.05}
       brightness={simplify ? 12 : 18}
       opacity={simplify ? 0.88 : 0.92}

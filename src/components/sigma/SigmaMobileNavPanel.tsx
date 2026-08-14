@@ -53,6 +53,7 @@ type Props = {
   glassActive: GlassNavId | null;
   mobileNav: MobileNavSheetStrings;
   isRtl: boolean;
+  isHomepage: boolean;
   /** Labels keyed by nav id (from primaryNav + contact) */
   labels: Record<CoreNavId | "contact", string>;
   aboutLabel: string;
@@ -174,6 +175,7 @@ export function SigmaMobileNavPanel({
   glassActive,
   mobileNav,
   isRtl,
+  isHomepage,
   labels,
   aboutLabel,
   teamLabel,
@@ -325,6 +327,7 @@ export function SigmaMobileNavPanel({
                           href={coreHrefById[id]}
                           onClick={(event) => {
                             onClose();
+                            if (!isHomepage) return;
                             if (
                               event.defaultPrevented ||
                               event.button !== 0 ||

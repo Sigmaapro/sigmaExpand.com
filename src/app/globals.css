@@ -1221,6 +1221,18 @@ html[lang="zh-CN"] .sigma-contact-root h1 {
   html.sigma-cursor-active body {
     cursor: none;
   }
+
+  /* Restore system cursor while language menu is open (navbar / custom cursor conflict) */
+  html.sigma-cursor-active.sigma-lang-menu-open body,
+  html.sigma-cursor-active.sigma-lang-menu-open body * {
+    cursor: auto;
+  }
+
+  html.sigma-cursor-active.sigma-lang-menu-open body button,
+  html.sigma-cursor-active.sigma-lang-menu-open body [role="option"],
+  html.sigma-cursor-active.sigma-lang-menu-open body [role="combobox"] {
+    cursor: pointer;
+  }
 }
 
 ::selection {

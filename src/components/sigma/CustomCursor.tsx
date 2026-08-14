@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "@/hooks/useMedia";
 
 export function CustomCursor() {
@@ -12,6 +12,7 @@ export function CustomCursor() {
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 420, damping: 36, mass: 0.4 });
   const sy = useSpring(y, { stiffness: 420, damping: 36, mass: 0.4 });
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   useEffect(() => {
     if (reduced || pathname !== "/") return;
@@ -21,14 +22,21 @@ export function CustomCursor() {
       x.set(e.clientX);
       y.set(e.clientY);
     };
+    const syncLangMenu = () => {
+      setLangMenuOpen(root.classList.contains("sigma-lang-menu-open"));
+    };
+    syncLangMenu();
+    const observer = new MutationObserver(syncLangMenu);
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
     window.addEventListener("pointermove", onMove);
     return () => {
       root.classList.remove("sigma-cursor-active");
+      observer.disconnect();
       window.removeEventListener("pointermove", onMove);
     };
   }, [pathname, reduced, x, y]);
 
-  if (reduced || pathname !== "/") return null;
+  if (reduced || pathname !== "/" || langMenuOpen) return null;
 
   return (
     <motion.div

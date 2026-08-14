@@ -51,7 +51,7 @@ export function ServiceDetailPageView({ serviceKey }: { serviceKey: ServiceDetai
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Link
             href={c.primaryCtaHref}
-            className={`inline-flex min-h-11 items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeCta(language)}`}
+            className={`sigma-framer-liquid-button inline-flex min-h-11 items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeCta(language)}`}
           >
             {c.primaryCtaLabel}
           </Link>

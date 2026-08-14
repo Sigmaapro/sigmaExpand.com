@@ -105,7 +105,7 @@ export function AboutPageView() {
           <div className="mt-5">
             <Link
               href={c.coreTeam.ctaHref}
-              className={`inline-flex items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeCta(language)}`}
+              className={`sigma-framer-liquid-button inline-flex items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeCta(language)}`}
             >
               {c.coreTeam.ctaLabel}
             </Link>
@@ -172,7 +172,7 @@ export function AboutPageView() {
           <div className="mt-5">
             <Link
               href={c.recognition.ctaHref}
-              className={`inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}
+              className={`sigma-framer-liquid-button inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}
             >
               {c.recognition.ctaLabel}
             </Link>
@@ -206,7 +206,7 @@ export function AboutPageView() {
             </PartnerIntentTriggerButton>
             <Link
               href={c.invitation.secondaryCtaHref}
-              className={`inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}
+              className={`sigma-framer-liquid-button inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}
             >
               {c.invitation.secondaryCtaLabel}
             </Link>

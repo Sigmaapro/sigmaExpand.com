@@ -1,6 +1,6 @@
 import type { PageMeta } from "./meta";
 
-/** SEO + UI copy for `/contact` (full marketing page; distinct from `contactPageContent` in `contact.ts` for ContactHub) */
+/** SEO + UI copy for `/contact` (full marketing page; distinct from `contactPageContent` in `contact.ts`) */
 export const contactSubpageMeta: PageMeta = {
   title: "Contact",
   description:

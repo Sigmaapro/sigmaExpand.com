@@ -13,7 +13,7 @@ type ServiceChannelStackProps = {
 };
 
 /**
- * ReactBits Scroll Stack — restrained sticky stack with mobile sequence fallback.
+ * ReactBits Scroll Stack — same sticky stack chrome on all viewports.
  */
 export function ServiceChannelStack({
   title,
@@ -63,13 +63,10 @@ export function ServiceChannelStack({
           </p>
         </header>
 
-        <div className="mx-auto max-w-3xl space-y-4 md:hidden">
-          {items.map((item, i) => (
-            <ChannelCard key={item.title} item={item} index={i} elevated />
-          ))}
-        </div>
-
-        <div className="relative mx-auto hidden max-w-3xl md:block" style={{ minHeight: reduceMotion ? undefined : `${items.length * 42}vh` }}>
+        <div
+          className="relative mx-auto max-w-3xl"
+          style={{ minHeight: reduceMotion ? undefined : `${items.length * 36}vh` }}
+        >
           {items.map((item, i) => (
             <div
               key={item.title}
@@ -77,7 +74,7 @@ export function ServiceChannelStack({
                 cardRefs.current[i] = el;
               }}
               data-index={i}
-              className={reduceMotion ? "mb-5" : "sticky top-[22vh] mb-[18vh]"}
+              className={reduceMotion ? "mb-5" : "sticky top-[max(5.5rem,env(safe-area-inset-top)+4.25rem)] mb-[12vh] sm:top-[22vh] sm:mb-[18vh]"}
               style={
                 reduceMotion
                   ? undefined

@@ -1,4 +1,5 @@
 import type { ImportedServiceDocument } from "@/content/services/importedFinalServiceDocuments";
+import { buildCryptoExchangeLandingModel } from "@/content/services/landing/cryptoExchangeLandingModel";
 import { CryptoExchangeServiceHero } from "@/components/services/hero/CryptoExchangeServiceHero";
 import { CryptoExchangeLandingBody } from "@/components/services/landing/CryptoExchangeLandingBody";
 
@@ -8,11 +9,14 @@ import { CryptoExchangeLandingBody } from "@/components/services/landing/CryptoE
  */
 export function CryptoExchangeServiceDraftPage({ document }: { document: ImportedServiceDocument }) {
   const lead = document.blocks[0]?.type === "paragraph" ? document.blocks[0].text : "";
+  const intro = buildCryptoExchangeLandingModel(document).intro;
 
   return (
     <div className="relative isolate min-h-0 flex-1 overflow-x-clip">
-      <CryptoExchangeServiceHero document={document} lead={lead} />
-      <CryptoExchangeLandingBody document={document} />
+      <div className="relative z-10">
+        <CryptoExchangeServiceHero document={document} lead={lead} intro={intro} />
+        <CryptoExchangeLandingBody document={document} />
+      </div>
     </div>
   );
 }

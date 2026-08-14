@@ -19,8 +19,8 @@ export function ServiceRegionalMap({ title, intro, regions, outro }: ServiceRegi
     <ServiceSectionShell id="regional" atmosphere="violet">
       <ServiceSectionHeading id="regional" title={title} intro={intro} />
 
-      <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
-        <div className="relative hidden overflow-hidden rounded-2xl border border-white/[0.09] bg-[#05070c]/80 p-6 md:block lg:p-8">
+      <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
+        <div className="relative mx-auto w-full max-w-lg overflow-hidden rounded-2xl border border-white/[0.09] bg-[#05070c]/80 p-4 sm:max-w-none sm:p-6 lg:mx-0 lg:p-8">
           <DottedMapArt regions={regions.map((r) => r.title)} />
         </div>
 

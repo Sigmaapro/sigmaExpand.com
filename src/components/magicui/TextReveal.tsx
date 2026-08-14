@@ -16,7 +16,7 @@ type WordProps = {
 };
 
 const Word: FC<WordProps> = ({ children, progress, range, reduceMotion }) => {
-  const opacity = useTransform(progress, range, reduceMotion ? [1, 1] : [0.28, 1]);
+  const opacity = useTransform(progress, range, reduceMotion ? [1, 1] : [0.68, 1]);
   return (
     <motion.span style={{ opacity }} className="mr-[0.28em] inline-block will-change-[opacity]">
       {children}
@@ -36,7 +36,7 @@ export const TextReveal: FC<TextRevealProps> = ({ children, className = "" }) =>
   const reduceMotion = useReducedMotion() ?? false;
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 85%", "end 45%"],
+    offset: ["start 55%", "end 25%"],
   });
 
   if (typeof children !== "string") {

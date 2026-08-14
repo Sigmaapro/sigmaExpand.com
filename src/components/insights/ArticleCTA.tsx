@@ -14,7 +14,7 @@ export function ArticleCTA({
   const { t, lang } = useLanguage();
   const isInternal = href.startsWith("/");
   const className =
-    `inline-flex min-h-12 w-full max-w-[20rem] touch-manipulation items-center justify-center border border-[#2a4ecf]/80 bg-[#1c39bb] px-6 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_12px_40px_rgba(28,57,187,0.3)] transition-[background,box-shadow,border-color] hover:border-[#bde0fe]/40 hover:bg-[#152a8a] active:scale-[0.99] sm:w-auto sm:max-w-none sm:px-10 ${localeCta(lang)}`;
+    `sigma-framer-liquid-button inline-flex min-h-12 w-full max-w-[20rem] touch-manipulation items-center justify-center border border-[#2a4ecf]/80 bg-[#1c39bb] px-6 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_12px_40px_rgba(28,57,187,0.3)] transition-[background,box-shadow,border-color] hover:border-[#bde0fe]/40 hover:bg-[#152a8a] active:scale-[0.99] sm:w-auto sm:max-w-none sm:px-10 ${localeCta(lang)}`;
   const heading =
     slot === "mid"
       ? t.insights.articleCtaMidHeading

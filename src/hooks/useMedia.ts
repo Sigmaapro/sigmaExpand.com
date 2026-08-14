@@ -2,8 +2,15 @@
 
 import { useEffect, useState } from "react";
 
+function readMatch(query: string): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia(query).matches;
+}
+
 export function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() =>
+    readMatch(`(max-width: ${breakpoint - 1}px)`),
+  );
 
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
@@ -16,9 +23,9 @@ export function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-/** True when viewport is at least `minWidth` (default 768). SSR-safe: false until mounted. */
+/** True when viewport is at least `minWidth` (default 768). */
 export function useMinWidth(minWidth = 768) {
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(() => readMatch(`(min-width: ${minWidth}px)`));
 
   useEffect(() => {
     const mq = window.matchMedia(`(min-width: ${minWidth}px)`);
@@ -32,7 +39,9 @@ export function useMinWidth(minWidth = 768) {
 }
 
 export function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
+  const [reduced, setReduced] = useState(() =>
+    readMatch("(prefers-reduced-motion: reduce)"),
+  );
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");

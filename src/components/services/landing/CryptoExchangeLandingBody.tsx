@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import type { ImportedServiceDocument } from "@/content/services/importedFinalServiceDocuments";
 import { buildCryptoExchangeLandingModel } from "@/content/services/landing/cryptoExchangeLandingModel";
-import { ServiceIntroStatement } from "@/components/services/landing/ServiceIntroStatement";
 import { ServiceWhatIsSection } from "@/components/services/landing/ServiceWhatIsSection";
 import { ServiceAudienceBento } from "@/components/services/landing/ServiceAudienceBento";
 import { ServiceProblemGrid } from "@/components/services/landing/ServiceProblemGrid";
@@ -63,8 +62,6 @@ export function CryptoExchangeLandingBody({ document }: { document: ImportedServ
 
   return (
     <div className="relative z-10">
-      {model.intro ? <ServiceIntroStatement text={model.intro} /> : null}
-
       <ServiceWhatIsSection title={model.whatIs.title} paragraphs={model.whatIs.paragraphs} />
 
       <ServiceAudienceBento

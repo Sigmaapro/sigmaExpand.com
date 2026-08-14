@@ -154,7 +154,7 @@ export function TeamPageView() {
           <p className={`mt-3 text-xs leading-relaxed text-[#8f98a3] ${localeMeta(language)}`}>{c.ndaLine}</p>
           <div className="mt-5">
             <PartnerIntentTriggerButton
-              className={`inline-flex items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeMeta(language)}`}
+              className={`sigma-framer-liquid-button inline-flex items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/16 px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/30 ${localeMeta(language)}`}
               ariaLabel={c.ctaLabel}
             >
               {c.ctaLabel}

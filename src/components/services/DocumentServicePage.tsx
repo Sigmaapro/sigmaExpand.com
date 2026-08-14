@@ -13,6 +13,7 @@ import {
 import { ServicePageStructuredData } from "@/components/seo/ServicePageStructuredData";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { ServiceBreadcrumbs } from "@/components/services/ServiceBreadcrumbs";
+import { LocalizedServiceText } from "@/components/services/LocalizedServiceText";
 import { getCanonicalUrl, absoluteOgImage } from "@/content/seo";
 import {
   SERVICE_DOCUMENTS,
@@ -92,7 +93,7 @@ function DocumentGroup({ group }: { group: { title: string; blocks: ServiceDocum
     <section className="scroll-mt-28 border-t border-white/[0.08] py-10 first:border-t-0 first:pt-0 md:py-12">
       <header className="max-w-3xl">
         <p className="font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb] sm:text-[11px]">
-          Service detail
+          <LocalizedServiceText kind="serviceDetail" />
         </p>
         <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-white text-balance md:text-3xl">
           {group.title}
@@ -110,10 +111,10 @@ function DocumentTables({ tables }: { tables: ServiceDocument["tables"] }) {
     <section className="border-t border-white/[0.08] py-10 md:py-12">
       <header className="max-w-3xl">
         <p className="font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1c39bb] sm:text-[11px]">
-          Reference
+          <LocalizedServiceText kind="reference" />
         </p>
         <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-white md:text-3xl">
-          Service details at a glance
+          <LocalizedServiceText as="span" kind="detailsAtAGlance" />
         </h2>
       </header>
       <div className="mt-8 space-y-6">
@@ -199,15 +200,15 @@ export function DocumentServicePage({ documentKey }: { documentKey: DocumentServ
             <section className="relative mt-14 overflow-hidden rounded-[1.75rem] border border-[rgba(147,197,253,0.14)] bg-[linear-gradient(155deg,rgba(8,20,55,0.55),rgba(5,12,30,0.4))] px-6 py-10 text-center shadow-[0_24px_64px_rgba(2,8,22,0.35)] backdrop-blur-xl sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(28,57,187,0.2),transparent_65%)]" aria-hidden="true" />
               <div className="relative mx-auto max-w-2xl">
-                <p className="font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#93C5FD]">Next step</p>
-                <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-white md:text-3xl">Build the right growth infrastructure with Sigma</h2>
-                <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">Share your product, markets and constraints so Sigma can map the right operating path.</p>
+                <LocalizedServiceText kind="nextStep" className="font-display text-[10px] font-semibold uppercase tracking-[0.22em] text-[#93C5FD]" />
+                <LocalizedServiceText as="h2" kind="buildGrowthInfrastructure" className="mt-3 font-display text-2xl font-semibold tracking-tight text-white md:text-3xl" />
+                <LocalizedServiceText as="p" kind="shareProductMarketsConstraints" className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]" />
                 <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-                  <Link href="/contact" className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55">
-                    {document.primaryCta ?? "Talk to Sigma"}
+                  <Link href="/contact" className="sigma-framer-liquid-button inline-flex min-h-11 items-center justify-center rounded-full border border-[#1c39bb]/50 bg-[#1c39bb]/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#1c39bb]/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55">
+                    {document.primaryCta ?? <LocalizedServiceText kind="talkToSigma" />}
                   </Link>
-                  <Link href="/services" className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/45 hover:bg-[#1c39bb]/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55">
-                    Explore all services
+                  <Link href="/services" className="sigma-framer-liquid-button inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/45 hover:bg-[#1c39bb]/12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55">
+                    <LocalizedServiceText kind="exploreAllServices" />
                   </Link>
                 </div>
               </div>

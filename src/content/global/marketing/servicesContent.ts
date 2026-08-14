@@ -2,6 +2,7 @@ import type { LangCode } from "@/content/types";
 import type { PageMeta } from "@/content/pages/meta";
 import type { ServiceIconName } from "@/content/services";
 import { getFinalServices } from "@/content/services/finalServices";
+import { getFinalServiceTitle } from "@/content/services/localizedServiceUi";
 
 export type PrimaryServiceCard = {
   title: string;
@@ -33,18 +34,13 @@ const primaryServicesEN: PrimaryServiceCard[] = getFinalServices().map((service)
   href: service.href,
 }));
 
-/**
- * Primary /services cards. Non-English locales intentionally use the English
- * source until approved translations are available; the locale architecture
- * remains intact and no legacy service entries are rendered here.
- */
 export const primaryServicesByLang: Record<LangCode, PrimaryServiceCard[]> = {
   EN: primaryServicesEN,
-  FA: primaryServicesEN,
-  ZH: primaryServicesEN,
-  ES: primaryServicesEN,
-  RU: primaryServicesEN,
-  AR: primaryServicesEN,
+  FA: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "FA") })),
+  ZH: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "ZH") })),
+  ES: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "ES") })),
+  RU: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "RU") })),
+  AR: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "AR") })),
 };
 
 export const servicesPageMetaByLang: Record<LangCode, PageMeta> = {

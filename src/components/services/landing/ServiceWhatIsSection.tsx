@@ -1,5 +1,5 @@
 import { ServiceSectionShell } from "@/components/services/landing/ServiceSectionShell";
-import { ServiceSectionHeading } from "@/components/services/landing/ServiceSectionHeading";
+import { Skiper28TextScroll } from "@/components/services/landing/Skiper28TextScroll";
 
 type ServiceWhatIsSectionProps = {
   title: string;
@@ -10,14 +10,7 @@ type ServiceWhatIsSectionProps = {
 export function ServiceWhatIsSection({ title, paragraphs }: ServiceWhatIsSectionProps) {
   return (
     <ServiceSectionShell id="what-is" atmosphere="soft">
-      <ServiceSectionHeading id="what-is" title={title} />
-      <div className="mx-auto max-w-[48rem] space-y-5">
-        {paragraphs.map((p) => (
-          <p key={p.slice(0, 48)} className="text-[15px] leading-relaxed text-[#cfd6de] md:text-base">
-            {p}
-          </p>
-        ))}
-      </div>
+      <Skiper28TextScroll id="what-is" title={title} paragraphs={paragraphs} />
     </ServiceSectionShell>
   );
 }

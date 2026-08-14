@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { ImportedServiceBlock, ImportedServiceDocument } from "@/content/services/importedFinalServiceDocuments";
+import { LocalizedFinalServiceTitle, LocalizedServiceText } from "@/components/services/LocalizedServiceText";
+import { useLanguage } from "@/context/LanguageContext";
 
 function renderBlocks(blocks: readonly ImportedServiceBlock[]) {
   const nodes: React.ReactNode[] = [];
@@ -117,27 +119,30 @@ function renderBlocks(blocks: readonly ImportedServiceBlock[]) {
  * Implementation notes are intentionally not rendered.
  */
 export function ImportedServiceDraftPage({ document }: { document: ImportedServiceDocument }) {
+  const { language } = useLanguage();
+
   return (
     <div className="relative isolate min-h-0 flex-1 overflow-x-clip">
       <div className="relative z-10 mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
         <article className="mx-auto max-w-4xl">
           <header className="border-b border-white/[0.08] pb-8">
             <h1 className="font-display text-3xl font-semibold tracking-tight text-white text-balance md:text-4xl">
-              {document.title}
+              {language === "EN" ? document.title : <LocalizedFinalServiceTitle slug={document.finalSlug} />}
             </h1>
           </header>
 
           <div className="mt-10 space-y-5">{renderBlocks(document.blocks)}</div>
 
           {(document.primaryCta || document.secondaryCta) && (
-            <section className="mt-12 space-y-3 border-t border-white/[0.08] pt-8" aria-label="Calls to action">
+            <section className="mt-12 space-y-3 border-t border-white/[0.08] pt-8" aria-labelledby="service-calls-to-action">
+              <LocalizedServiceText id="service-calls-to-action" kind="callsToAction" className="sr-only" as="h2" />
               {document.primaryCta ? (
                 <p className="text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">
                   <Link
                     href="/contact"
                     className="font-semibold text-white underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-[#bde0fe] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55"
                   >
-                    {document.primaryCta}
+                    {language === "EN" ? document.primaryCta : <LocalizedServiceText kind="talkToSigma" />}
                   </Link>
                 </p>
               ) : null}

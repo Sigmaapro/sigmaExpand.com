@@ -8,7 +8,7 @@ import {
   servicesPageContentByLang,
 } from "@/content/global/marketing/servicesContent";
 import { pickLang } from "@/content/global/marketing/helpers";
-import { SERVICE_DISCLAIMER } from "@/content/services/finalServices";
+import { serviceDisclaimerByLang, serviceUiByLang } from "@/content/services/localizedServiceUi";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeBody, localeEyebrow, localeHeading } from "@/lib/localeTypography";
 
@@ -16,6 +16,7 @@ export function ServicesPageView() {
   const { language } = useLanguage();
   const c = pickLang(servicesPageContentByLang, language);
   const primaryServices = pickLang(primaryServicesByLang, language);
+  const ui = serviceUiByLang[language];
   const serviceRouteLabel = {
     EN: "Service Routes",
     FA: "مسیرهای خدمات",
@@ -52,10 +53,10 @@ export function ServicesPageView() {
                 <p
                   className={`service-routes-header__label font-display text-[10px] font-semibold uppercase tracking-[0.2em] text-[#93C5FD]/75 ${localeEyebrow(language)}`}
                 >
-                  {language === "FA" ? "توانمندی‌های اصلی" : "Primary capabilities"}
+                  {ui.primaryCapabilities}
                 </p>
                 <span className="service-routes-header__counter font-mono text-[10px] uppercase tracking-[0.18em] text-[#b6bcc4]/55">
-                  {String(primaryServices.length).padStart(2, "0")} / {language === "FA" ? "مسیر" : "Routes"}
+                  {String(primaryServices.length).padStart(2, "0")} / {ui.routes}
                 </span>
               </div>
               <div className="service-route-heading">
@@ -78,10 +79,10 @@ export function ServicesPageView() {
 
           <aside
             className="mt-10 rounded-2xl border border-white/[0.08] bg-[#07090f]/55 px-5 py-4"
-            aria-label="Service disclaimer"
+            aria-label={ui.serviceDisclaimer}
           >
             <p className={`text-xs leading-relaxed text-[#8b929c] md:text-sm ${localeBody(language)}`}>
-              {SERVICE_DISCLAIMER}
+              {serviceDisclaimerByLang[language]}
             </p>
           </aside>
 

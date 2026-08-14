@@ -66,7 +66,7 @@ export function PartnerIntentTriggerButton({
         openPartnerIntentFlow();
       }}
       aria-label={ariaLabel}
-      className={className}
+      className={`${className} sigma-framer-liquid-button`}
     >
       {children}
     </button>

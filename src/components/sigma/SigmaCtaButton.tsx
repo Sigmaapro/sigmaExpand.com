@@ -22,7 +22,7 @@ export const magneticButtonClass = (
     primary
       ? "border border-[#2a4ecf]/80 bg-[#1c39bb] text-white shadow-[0_0_0_1px_rgba(189,224,254,0.08),0_12px_40px_rgba(28,57,187,0.35)] hover:border-[#bde0fe]/40 hover:bg-[#152a8a]"
       : "border border-white/15 bg-white/[0.03] text-white/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] hover:border-[#bde0fe]/35 hover:bg-white/[0.06]"
-  } ${liquid ? `sigma-cta-liquid ${primary ? "sigma-cta-liquid--primary" : "sigma-cta-liquid--ghost"}` : ""}`;
+  } sigma-framer-liquid-button ${liquid ? `sigma-cta-liquid ${primary ? "sigma-cta-liquid--primary" : "sigma-cta-liquid--ghost"}` : ""}`;
 
 export const MagneticButton = ({
   children,

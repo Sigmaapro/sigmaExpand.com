@@ -54,7 +54,7 @@ export function RiskDisclosurePageView() {
           </PartnerIntentTriggerButton>
           <Link
             href={c.secondaryCtaHref}
-            className={`inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}
+            className={`sigma-framer-liquid-button inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:border-[#1c39bb]/50 hover:bg-[#1c39bb]/14 ${localeCta(language)}`}
           >
             {c.secondaryCtaLabel}
           </Link>

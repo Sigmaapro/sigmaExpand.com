@@ -20,7 +20,7 @@ import {
   CEM_RISK,
   CEM_STAGES,
   CEM_VOLUME,
-} from "../pilots/cryptoExchangeMarketing.content";
+} from "./cryptoExchangeMarketing.content";
 
 const slug = "crypto-exchange-marketing" as const;
 

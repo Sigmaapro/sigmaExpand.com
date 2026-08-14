@@ -17,6 +17,7 @@ import {
 import type { PrimaryServiceCard } from "@/content/global/marketing/servicesContent";
 import type { ServiceIconName } from "@/content/services";
 import type { LangCode } from "@/content/types";
+import { serviceUiByLang } from "@/content/services/localizedServiceUi";
 import { localeBody } from "@/lib/localeTypography";
 import { BackgroundGradient } from "@/components/aceternity/BackgroundGradient";
 import "./ServiceRoutesGrid.css";
@@ -42,7 +43,7 @@ export function ServiceRoutesGrid({ services, language, actionLabel }: ServiceRo
   const reduceMotion = useReducedMotion() ?? false;
 
   return (
-    <ul className="service-routes-grid" aria-label="Primary service routes">
+    <ul className="service-routes-grid" aria-label={`${serviceUiByLang[language].primaryCapabilities} ${serviceUiByLang[language].routes}`}>
       {services.map((service, index) => {
         const Icon = SERVICE_ICON_MAP[service.icon];
 

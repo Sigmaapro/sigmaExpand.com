@@ -9,13 +9,13 @@ type ServiceAcquisitionFlowProps = {
   stages: Stage[];
 };
 
-/** Two-column editorial acquisition path with abstract flow visual. */
+/** Two-column editorial acquisition path with abstract flow visual — same art all breakpoints. */
 export function ServiceAcquisitionFlow({ title, intro, stages }: ServiceAcquisitionFlowProps) {
   return (
     <ServiceSectionShell id="acquisition" atmosphere="soft">
       <ServiceSectionHeading id="acquisition" title={title} intro={intro} />
-      <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
-        <div className="relative hidden overflow-hidden rounded-2xl border border-white/[0.09] bg-[#05070c]/85 p-8 lg:block">
+      <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
+        <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-2xl border border-white/[0.09] bg-[#05070c]/85 p-5 sm:max-w-none sm:p-8 lg:mx-0">
           <svg viewBox="0 0 280 320" className="h-auto w-full text-[#1D89BB]" aria-hidden="true">
             <defs>
               <linearGradient id="acq-beam" x1="0" y1="0" x2="0" y2="1">

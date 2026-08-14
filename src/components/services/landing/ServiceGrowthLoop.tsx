@@ -27,7 +27,7 @@ const PANEL_PATHS = [
 
 /**
  * Aceternity Sticky Scroll Reveal — adapted for growth-loop stages.
- * Mobile / reduced-motion: vertical sequence, no sticky trap.
+ * Same sticky SVG panel on all viewports; mobile stacks panel above steps.
  */
 export function ServiceGrowthLoop({
   title,
@@ -80,59 +80,13 @@ export function ServiceGrowthLoop({
           </p>
         </header>
 
-        {/* Mobile / reduced-motion: plain vertical */}
-        <div className="space-y-6 lg:hidden">
-          {steps.map((step, i) => (
-            <article
-              key={step.full}
-              className="rounded-2xl border border-white/[0.09] bg-[#07090f]/70 p-6"
-            >
-              <span className="font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1D89BB]">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-2 font-display text-xl font-semibold text-white">{step.title}</h3>
-              {step.body ? (
-                <p className="mt-3 text-sm leading-relaxed text-[#b6bcc4] md:text-[15px]">{step.body}</p>
-              ) : null}
-            </article>
-          ))}
-        </div>
-
-        {/* Desktop sticky */}
-        <div className="relative hidden lg:grid lg:grid-cols-2 lg:gap-14 xl:gap-20">
-          <ol className="space-y-24 pb-32">
-            {steps.map((step, i) => (
-              <li
-                key={step.full}
-                ref={(el) => {
-                  itemRefs.current[i] = el;
-                }}
-                data-index={i}
-                className={`transition-opacity duration-300 ${
-                  active === i ? "opacity-100" : "opacity-45"
-                }`}
-              >
-                <span className="font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1D89BB]">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3
-                  className={`mt-3 font-display text-2xl font-semibold tracking-tight ${
-                    active === i ? "text-white" : "text-[#cfd6de]"
-                  }`}
-                >
-                  {step.title}
-                </h3>
-                {step.body ? (
-                  <p className="mt-4 max-w-[34rem] text-[15px] leading-relaxed text-[#b6bcc4]">
-                    {step.body}
-                  </p>
-                ) : null}
-              </li>
-            ))}
-          </ol>
-
-          <div className="sticky top-[28vh] h-[min(22rem,42vh)] self-start">
-            <div className="relative flex h-full items-center justify-center overflow-hidden rounded-2xl border border-white/[0.1] bg-[#05070c]/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <div className="relative grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-20">
+          <div
+            className={`order-first self-start lg:order-none ${
+              reduceMotion ? "" : "sticky top-[max(5.5rem,env(safe-area-inset-top)+4.5rem)] lg:top-[28vh]"
+            }`}
+          >
+            <div className="relative flex h-[min(14rem,36svh)] items-center justify-center overflow-hidden rounded-2xl border border-white/[0.1] bg-[#05070c]/90 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] sm:h-[min(18rem,40svh)] lg:h-[min(22rem,42vh)]">
               <div
                 className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_40%,rgba(29,58,187,0.22),transparent_70%)]"
                 aria-hidden="true"
@@ -152,11 +106,42 @@ export function ServiceGrowthLoop({
                   opacity="0.85"
                 />
               </svg>
-              <p className="absolute bottom-5 left-0 right-0 text-center font-display text-xs font-semibold uppercase tracking-[0.22em] text-[#bde0fe]/80">
+              <p className="absolute bottom-4 left-0 right-0 px-3 text-center font-display text-[10px] font-semibold uppercase tracking-[0.18em] text-[#bde0fe]/80 sm:bottom-5 sm:text-xs sm:tracking-[0.22em]">
                 {steps[active]?.title}
               </p>
             </div>
           </div>
+
+          <ol className={`m-0 list-none space-y-10 p-0 lg:space-y-24 ${reduceMotion ? "" : "lg:pb-32"}`}>
+            {steps.map((step, i) => (
+              <li
+                key={step.full}
+                ref={(el) => {
+                  itemRefs.current[i] = el;
+                }}
+                data-index={i}
+                className={`transition-opacity duration-300 ${
+                  reduceMotion || active === i ? "opacity-100" : "opacity-45"
+                }`}
+              >
+                <span className="font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1D89BB]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3
+                  className={`mt-2 font-display text-xl font-semibold tracking-tight sm:mt-3 sm:text-2xl ${
+                    reduceMotion || active === i ? "text-white" : "text-[#cfd6de]"
+                  }`}
+                >
+                  {step.title}
+                </h3>
+                {step.body ? (
+                  <p className="mt-3 max-w-[34rem] text-sm leading-relaxed text-[#b6bcc4] sm:mt-4 md:text-[15px]">
+                    {step.body}
+                  </p>
+                ) : null}
+              </li>
+            ))}
+          </ol>
         </div>
 
         {outro ? (

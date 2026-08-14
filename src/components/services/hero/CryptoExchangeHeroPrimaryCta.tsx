@@ -19,7 +19,7 @@ type CryptoExchangeHeroPrimaryCtaProps = {
 export function CryptoExchangeHeroPrimaryCta({ label, href }: CryptoExchangeHeroPrimaryCtaProps) {
   return (
     <div className="crypto-exchange-hero-primary-cta">
-      <Link href={href} className="crypto-exchange-hero-primary-cta__link">
+      <Link href={href} className="crypto-exchange-hero-primary-cta__link sigma-framer-liquid-button">
         <span className="crypto-exchange-hero-primary-cta__label">{label}</span>
         <ArrowUpRight
           size={16}

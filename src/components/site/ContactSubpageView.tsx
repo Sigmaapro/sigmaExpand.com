@@ -189,7 +189,7 @@ export function ContactSubpageView() {
             <button
               type="button"
               onClick={() => setBookOpen(true)}
-              className={`mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/25 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,transform] hover:bg-[#1c39bb]/45 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(language)}`}
+              className={`sigma-framer-liquid-button mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#1c39bb]/55 bg-[#1c39bb]/25 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-[0_8px_32px_rgba(28,57,187,0.28)] transition-[background,transform] hover:bg-[#1c39bb]/45 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(language)}`}
             >
               <CalendarPlus className="size-4 shrink-0" strokeWidth={2} aria-hidden />
               {copy.bookCall.cta}
@@ -316,7 +316,7 @@ export function ContactSubpageView() {
                   type="submit"
                   disabled={formState === "loading"}
                   aria-busy={formState === "loading"}
-                  className={`inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-[background,opacity] hover:bg-[#152a8a] disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(language)}`}
+                  className={`sigma-framer-liquid-button inline-flex min-h-11 w-full items-center justify-center rounded-md border border-[#2a4ecf]/80 bg-[#1c39bb] px-4 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-[background,opacity] hover:bg-[#152a8a] disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 ${localeCta(language)}`}
                 >
                   {formState === "loading" ? copy.form.sending : copy.form.submit}
                 </button>

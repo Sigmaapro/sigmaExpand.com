@@ -458,8 +458,6 @@ function InsightsFallbackNotice({
 export function SigmaInsightsSection({ insights }: { insights: InsightsPayload }) {
   const { language, isRtl } = useLanguage();
   const reduceMotion = useReducedMotion() ?? false;
-  const isMobile = useIsMobile(768);
-  const useStatic = reduceMotion || isMobile;
   const cards = insights.cards;
   const showFallback = insights.error && cards.length === 0;
 
@@ -496,7 +494,7 @@ export function SigmaInsightsSection({ insights }: { insights: InsightsPayload }
         {showFallback ? <InsightsFallbackNotice language={language} /> : null}
 
         {cards.length > 0 ? (
-          useStatic ? (
+          reduceMotion ? (
             <InsightsStaticScroller cards={cards} language={language} />
           ) : (
             <InsightsMarqueeScroller cards={cards} language={language} />
@@ -1123,21 +1121,17 @@ const AnimatedText = ({
 
   return (
     <Wrapper
-      {...spanMotion(0)}
-      className={`max-w-full [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
+      className={`flex max-w-full flex-wrap gap-y-1 [overflow-wrap:anywhere] [word-break:normal] ${className ?? ""}`}
     >
-      <span className="md:hidden">{text}</span>
-      <span className="hidden max-w-full flex-wrap break-words md:flex md:gap-y-1">
-        {words.map((word, i) => (
-          <motion.span
-            key={`${word}-${i}`}
-            {...spanMotion(i)}
-            className="mb-1 mr-3 max-w-full break-words [word-break:normal] md:inline-block rtl:mr-0 rtl:ml-3"
-          >
-            {word}
-          </motion.span>
-        ))}
-      </span>
+      {words.map((word, i) => (
+        <motion.span
+          key={`${word}-${i}`}
+          {...spanMotion(i)}
+          className="mb-1 mr-3 max-w-full break-words [word-break:normal] md:inline-block rtl:mr-0 rtl:ml-3"
+        >
+          {word}
+        </motion.span>
+      ))}
     </Wrapper>
   );
 };
@@ -1303,7 +1297,7 @@ const AboutSection = ({ t }: { t: SiteTranslations }) => {
   return (
     <section
       id="about"
-      className="sigma-landing-section-shell relative z-10 flex min-h-0 scroll-mt-24 flex-col items-center justify-center overflow-hidden px-5 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
+      className="sigma-landing-section-shell relative z-10 flex min-h-[min(92svh,720px)] scroll-mt-24 flex-col items-center justify-center overflow-hidden px-5 py-16 sm:min-h-[70svh] sm:px-6 sm:py-24 md:min-h-screen md:scroll-mt-28"
     >
       {/* z-0 — soft grid (continues landing navy atmosphere) */}
       <div className="pointer-events-none absolute inset-0 z-0 grid-bg opacity-[0.1]" />
@@ -1362,14 +1356,15 @@ const TiltCard = ({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const isNarrow = useIsMobile(1024);
   const reduceMotion = useReducedMotion() ?? false;
-  const simplifyGlass = reduceMotion || isNarrow;
+  const lightGlass = isNarrow && !reduceMotion;
+  const simplifyGlass = reduceMotion;
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const smoothRotateX = useSpring(rotateX, { stiffness: 260, damping: 24, mass: 0.2 });
   const smoothRotateY = useSpring(rotateY, { stiffness: 260, damping: 24, mass: 0.2 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isNarrow || !cardRef.current) return;
+    if (isNarrow || reduceMotion || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -1404,16 +1399,16 @@ const TiltCard = ({
         height="100%"
         borderRadius={0}
         borderWidth={0.055}
-        brightness={simplifyGlass ? 11 : 16}
-        opacity={simplifyGlass ? 0.9 : 0.93}
-        blur={simplifyGlass ? 7 : 10}
-        displace={simplifyGlass ? 0 : 0.32}
-        backgroundOpacity={simplifyGlass ? 0.52 : 0.4}
-        saturation={simplifyGlass ? 1.06 : 1.18}
-        distortionScale={simplifyGlass ? 0 : -78}
+        brightness={simplifyGlass ? 11 : lightGlass ? 14 : 16}
+        opacity={simplifyGlass ? 0.9 : lightGlass ? 0.92 : 0.93}
+        blur={simplifyGlass ? 7 : lightGlass ? 8 : 10}
+        displace={simplifyGlass ? 0 : lightGlass ? 0.2 : 0.32}
+        backgroundOpacity={simplifyGlass ? 0.52 : lightGlass ? 0.44 : 0.4}
+        saturation={simplifyGlass ? 1.06 : lightGlass ? 1.12 : 1.18}
+        distortionScale={simplifyGlass ? 0 : lightGlass ? -52 : -78}
         redOffset={0}
-        greenOffset={simplifyGlass ? 0 : 5}
-        blueOffset={simplifyGlass ? 0 : 12}
+        greenOffset={simplifyGlass ? 0 : lightGlass ? 3 : 5}
+        blueOffset={simplifyGlass ? 0 : lightGlass ? 8 : 12}
         xChannel="R"
         yChannel="G"
         mixBlendMode="difference"

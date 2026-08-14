@@ -14,6 +14,7 @@ export const SIGMA_GRADIENT_BLINDS_COLORS = ["#1D89BB", "#1D3ABB", "#4F1DBB"] as
 const SHARED_CONFIG = {
   shaderOpacity: 0.42,
   dprCap: 1.25,
+  dprCapMobile: 1,
   angle: 18,
   noise: 0.08,
   blindCount: 12,
@@ -56,7 +57,8 @@ export function SigmaGradientBlindsBackground({
     mq.addEventListener("change", syncMotion);
 
     const syncDpr = () => {
-      setDpr(Math.min(SHARED_CONFIG.dprCap, window.devicePixelRatio || 1));
+      const cap = window.innerWidth < 768 ? SHARED_CONFIG.dprCapMobile : SHARED_CONFIG.dprCap;
+      setDpr(Math.min(cap, window.devicePixelRatio || 1));
     };
     syncDpr();
     window.addEventListener("resize", syncDpr, { passive: true });

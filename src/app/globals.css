@@ -108,22 +108,11 @@ body:has(.sigma-landing-root) {
     0 0 32px rgba(28, 57, 187, 0.12) !important;
 }
 
-/* Homepage “What Is Sigma” — Ripple Grid + glass cards (scoped) */
+/* Homepage “What Is Sigma” — glass cards (scoped) */
 .sigma-what-is-ripple {
   position: relative;
   background-color: transparent;
   isolation: isolate;
-}
-
-.sigma-what-is-ripple-fallback {
-  background-image:
-    linear-gradient(rgba(29, 137, 187, 0.22) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29, 137, 187, 0.18) 1px, transparent 1px);
-  background-size: 44px 44px;
-  background-position: center;
-  opacity: 0.75;
-  mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 15%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 15%, transparent 80%);
 }
 
 .sigma-what-is-glass {
@@ -370,9 +359,9 @@ body:has(.sigma-landing-root) {
   transform: translateY(-0.5px);
 }
 
-/* Homepage-only Apple liquid bar adaptation: one open shell, no nested menu glass. */
-.sigma-home-liquid-nav {
-  overflow: hidden;
+/* Shared Apple liquid bar treatment: one open shell, no nested menu glass. */
+.sigma-liquid-nav {
+  overflow: visible;
   border-color: rgba(189, 224, 254, 0.2);
   background:
     linear-gradient(
@@ -389,7 +378,7 @@ body:has(.sigma-landing-root) {
   backdrop-filter: blur(24px) saturate(1.45);
 }
 
-.sigma-home-liquid-nav::before {
+.sigma-liquid-nav::before {
   position: absolute;
   inset: 1px 1px auto;
   z-index: 0;
@@ -400,7 +389,7 @@ body:has(.sigma-landing-root) {
   pointer-events: none;
 }
 
-.sigma-home-liquid-nav::after {
+.sigma-liquid-nav::after {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -412,7 +401,7 @@ body:has(.sigma-landing-root) {
   transition: opacity 0.35s ease;
 }
 
-.sigma-home-liquid-nav:hover::after {
+.sigma-liquid-nav:hover::after {
   opacity: 0.85;
 }
 
@@ -481,7 +470,72 @@ body:has(.sigma-landing-root) {
   z-index: 1;
 }
 
-.sigma-home-liquid-nav .glass-surface__content {
+/* Framer Liquid Button treatment shared by every visible CTA. */
+.sigma-framer-liquid-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 14px !important;
+  background: rgba(25, 18, 54, 0.86) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+  backdrop-filter: blur(18px) saturate(1.08);
+  color: rgba(255, 255, 255, 0.92) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+    0 12px 32px rgba(0, 0, 0, 0.16) !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.4s cubic-bezier(0.4, 1.5, 0.3, 1),
+    filter 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.sigma-framer-liquid-button::before {
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.035);
+  content: "";
+  pointer-events: none;
+  transition: background 0.25s ease;
+}
+
+.sigma-framer-liquid-button::after {
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 42%);
+  content: "";
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.sigma-framer-liquid-button:hover {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(35, 25, 78, 0.92) !important;
+  transform: translateY(-1px);
+}
+
+.sigma-framer-liquid-button:hover::before {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.sigma-framer-liquid-button:active {
+  transform: scale(0.97);
+}
+
+.sigma-framer-liquid-button:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.65);
+  opacity: 0.65;
+}
+
+.sigma-liquid-nav .glass-surface__content {
+  overflow: visible;
   z-index: 1;
 }
 
@@ -529,16 +583,16 @@ body:has(.sigma-landing-root) {
 
 .sigma-gooey-nav-effect {
   border-radius: 9999px;
-  border: 1px solid rgba(29, 137, 187, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   background: linear-gradient(
     180deg,
-    rgba(29, 58, 187, 0.92) 0%,
-    rgba(29, 137, 187, 0.78) 62%,
-    rgba(79, 29, 187, 0.55) 100%
+    rgba(255, 255, 255, 0.17) 0%,
+    rgba(255, 255, 255, 0.08) 62%,
+    rgba(255, 255, 255, 0.04) 100%
   );
   box-shadow:
-    inset 0 1px 0 rgba(189, 224, 254, 0.22),
-    0 2px 16px rgba(29, 58, 187, 0.28);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 16px rgba(0, 0, 0, 0.22);
   transition:
     left 0.55s var(--sigma-gooey-ease),
     top 0.55s var(--sigma-gooey-ease),
@@ -568,8 +622,8 @@ body:has(.sigma-landing-root) {
 
 @media (max-width: 1023px) {
   .sigma-fluid-glass.glass-surface--fallback {
-    -webkit-backdrop-filter: blur(7px) saturate(1.05);
-    backdrop-filter: blur(7px) saturate(1.05);
+    -webkit-backdrop-filter: blur(11px) saturate(1.18);
+    backdrop-filter: blur(11px) saturate(1.18);
   }
 }
 

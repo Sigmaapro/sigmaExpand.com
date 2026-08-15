@@ -5,6 +5,9 @@
   height: 30rem;
   overflow: hidden;
   background: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 @media (max-width: 767px) {
@@ -23,6 +26,10 @@
   display: block;
   background: transparent;
   touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
 
   /* Discs cropped by the viewport edge fade out instead of hard-clipping.
      Masks the canvas only, so the title, counter and CTA stay fully opaque.
@@ -58,20 +65,19 @@
 }
 
 .infinite-menu-face-title {
-  user-select: none;
   position: absolute;
   z-index: 5;
-  left: 1.6em;
-  top: 50%;
-  max-width: 11ch;
+  top: 1.65rem;
+  right: 1.75rem;
+  max-width: min(21rem, 52%);
   margin: 0;
   color: #ffffff;
   font-weight: 700;
-  font-size: clamp(1.1rem, 2.1vw, 1.9rem);
+  font-size: clamp(1rem, 2.1vw, 1.9rem);
   line-height: 1.15;
   letter-spacing: -0.01em;
+  text-align: right;
   text-shadow: 0 2px 24px rgba(5, 7, 13, 0.85);
-  transform: translate(0, -50%);
 }
 
 .infinite-menu-face-title.active {
@@ -87,7 +93,6 @@
 }
 
 .infinite-menu-face-index {
-  user-select: none;
   position: absolute;
   z-index: 5;
   top: 50%;
@@ -135,11 +140,8 @@
 }
 
 .infinite-menu-action-icon {
-  user-select: none;
-  position: relative;
-  top: 1px;
-  font-size: 22px;
-  line-height: 1;
+  width: 22px;
+  height: 22px;
 }
 
 .infinite-menu-action.active {
@@ -209,8 +211,11 @@
 
 @media (max-width: 767px) {
   .infinite-menu-face-title {
-    left: 1em;
-    max-width: 8ch;
+    top: 1.15rem;
+    right: 1rem;
+    max-width: min(15.5rem, 62%);
+    font-size: clamp(0.875rem, 4vw, 1.1rem);
+    line-height: 1.2;
   }
 
   .infinite-menu-face-index {

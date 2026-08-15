@@ -1,7 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import { mat4, quat, vec2, vec3 } from "gl-matrix";
 import "./InfiniteMenu.css";
 
@@ -1158,6 +1166,7 @@ export function InfiniteMenu({ items, ariaLabel }: InfiniteMenuProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sketchRef = useRef<InfiniteGridMenu | null>(null);
+  const dragRef = useRef({ pointerId: -1, startX: 0, startY: 0, didDrag: false });
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
 
@@ -1213,10 +1222,42 @@ export function InfiniteMenu({ items, ariaLabel }: InfiniteMenuProps) {
     sketchRef.current?.focusItem(index);
   }, []);
 
+  const handlePointerDownCapture = (event: ReactPointerEvent<HTMLDivElement>) => {
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      didDrag: false,
+    };
+  };
+
+  const handlePointerMoveCapture = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (drag.pointerId !== event.pointerId || drag.didDrag) return;
+
+    const deltaX = event.clientX - drag.startX;
+    const deltaY = event.clientY - drag.startY;
+    if (Math.hypot(deltaX, deltaY) > 8) {
+      drag.didDrag = true;
+    }
+  };
+
+  const preventDragClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!dragRef.current.didDrag) return;
+    event.preventDefault();
+    event.stopPropagation();
+    dragRef.current.didDrag = false;
+  };
+
   const stateClass = isMoving ? "inactive" : "active";
 
   return (
-    <div className="infinite-menu-root" ref={rootRef}>
+    <div
+      className="infinite-menu-root"
+      ref={rootRef}
+      onPointerDownCapture={handlePointerDownCapture}
+      onPointerMoveCapture={handlePointerMoveCapture}
+    >
       <canvas
         className="infinite-menu-canvas"
         ref={canvasRef}
@@ -1237,10 +1278,9 @@ export function InfiniteMenu({ items, ariaLabel }: InfiniteMenuProps) {
             className={`infinite-menu-action ${stateClass}`}
             aria-label={activeItem.title}
             tabIndex={-1}
+            onClick={preventDragClick}
           >
-            <span className="infinite-menu-action-icon" aria-hidden="true">
-              &#x2197;
-            </span>
+            <ArrowUpRight className="infinite-menu-action-icon" aria-hidden="true" strokeWidth={2.25} />
           </Link>
         </>
       ) : null}

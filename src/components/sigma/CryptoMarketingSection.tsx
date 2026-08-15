@@ -10,7 +10,6 @@ import {
   extractApprovedPlaceTokens,
   RegionCountryPills,
   RegionMarqueeBand,
-  offsetPlaceTokens,
 } from "@/components/sigma/RegionMarqueeBand";
 import { SectionTitleTypewriter } from "@/components/sigma/SectionTitleTypewriter";
 import { useLanguage } from "@/context/LanguageContext";
@@ -180,30 +179,15 @@ export function CryptoMarketingSection() {
       </div>
 
       {countryTokens.length > 0 ? (
-        <div className="relative z-10 flex w-full max-w-[100vw] flex-col gap-1 pt-2 sm:gap-1.5 sm:pt-3 md:gap-2">
+        <div className="relative z-10 w-full max-w-[100vw] pt-3 sm:pt-4 md:pt-5">
+          {/* One editorial ticker — same countries, single continuous row. */}
           <RegionMarqueeBand
             direction="ltr"
-            durationSec={52}
+            durationSec={88}
             framed={false}
-            compact
+            size="editorial"
           >
-            <RegionCountryPills countries={countryTokens} />
-          </RegionMarqueeBand>
-          <RegionMarqueeBand
-            direction="rtl"
-            durationSec={58}
-            framed={false}
-            compact
-          >
-            <RegionCountryPills countries={offsetPlaceTokens(countryTokens, 5)} />
-          </RegionMarqueeBand>
-          <RegionMarqueeBand
-            direction="ltr"
-            durationSec={64}
-            framed={false}
-            compact
-          >
-            <RegionCountryPills countries={offsetPlaceTokens(countryTokens, 9)} />
+            <RegionCountryPills countries={countryTokens} size="editorial" />
           </RegionMarqueeBand>
         </div>
       ) : null}

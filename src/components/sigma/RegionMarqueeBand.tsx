@@ -16,6 +16,11 @@ type Props = {
   framed?: boolean;
   /** Tighter vertical padding for stacked location rows. */
   compact?: boolean;
+  /**
+   * `editorial` — one large global ticker (homepage Regions).
+   * Default keeps the compact/shared marquee scale for other surfaces.
+   */
+  size?: "default" | "editorial";
 };
 
 /**
@@ -29,10 +34,33 @@ export function RegionMarqueeBand({
   durationSec = 42,
   framed = true,
   compact = false,
+  size = "default",
 }: Props) {
   const reduceMotion = useReducedMotion() ?? false;
   const animName =
     direction === "rtl" ? "sigma-region-marquee-rtl" : "sigma-region-marquee-ltr";
+  const editorial = size === "editorial";
+  const trackGap = editorial
+    ? "gap-6 sm:gap-8 md:gap-11"
+    : "gap-3 sm:gap-3.5";
+  const rowPad = editorial
+    ? "min-h-[5.5rem] py-[1.15rem] sm:min-h-[6.5rem] sm:py-6 md:min-h-[7.5rem] md:py-7"
+    : compact
+      ? "py-2 sm:py-2.5"
+      : "py-3.5 sm:py-4";
+  const edgeMask = editorial
+    ? ({
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%)",
+      } as CSSProperties)
+    : ({
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%)",
+      } as CSSProperties);
 
   return (
     <div
@@ -40,25 +68,13 @@ export function RegionMarqueeBand({
         framed
           ? "border-y border-white/[0.03] bg-transparent"
           : "border-0 bg-transparent"
-      } ${className}`}
+      } ${editorial ? "select-none [-webkit-user-select:none] [-webkit-touch-callout:none]" : ""} ${className}`}
       aria-hidden={ariaHidden || undefined}
+      style={edgeMask}
     >
-      <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#06122f]/65 via-[#06122f]/30 to-transparent sm:w-16"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#06122f]/65 via-[#06122f]/30 to-transparent sm:w-16"
-        aria-hidden
-      />
-
-      <div
-        className={`flex w-max items-center gap-3 sm:gap-3.5 ${
-          compact ? "py-2 sm:py-2.5" : "py-3.5 sm:py-4"
-        }`}
-      >
+      <div className={`flex w-max items-center ${trackGap} ${rowPad}`}>
         <div
-          className="sigma-region-marquee-track flex w-max items-center gap-3 sm:gap-3.5"
+          className={`sigma-region-marquee-track flex w-max items-center ${trackGap}`}
           style={
             reduceMotion
               ? undefined
@@ -67,8 +83,8 @@ export function RegionMarqueeBand({
                 } as CSSProperties)
           }
         >
-          <div className="flex shrink-0 items-center gap-3 sm:gap-3.5">{children}</div>
-          <div className="flex shrink-0 items-center gap-3 sm:gap-3.5" aria-hidden>
+          <div className={`flex shrink-0 items-center ${trackGap}`}>{children}</div>
+          <div className={`flex shrink-0 items-center ${trackGap}`} aria-hidden>
             {children}
           </div>
         </div>
@@ -276,6 +292,8 @@ function TickerCoinMark({
 
 type CountryPillsProps = {
   countries: string[];
+  /** Matches RegionMarqueeBand `size` for the homepage global ticker. */
+  size?: "default" | "editorial";
 };
 
 /** Place token → ISO flag code (circle-flags). Bali uses Indonesia. */
@@ -293,10 +311,21 @@ const PLACE_FLAG_CODE: Record<string, string> = {
   Bahrain: "bh",
 };
 
-function CircleFlag({ code }: { code: string }) {
+function CircleFlag({
+  code,
+  size = "default",
+}: {
+  code: string;
+  size?: "default" | "editorial";
+}) {
+  const editorial = size === "editorial";
   return (
     <span
-      className="relative inline-flex size-[1.125rem] shrink-0 overflow-hidden rounded-full ring-1 ring-[rgba(147,197,253,0.28)] shadow-[0_0_10px_rgba(28,57,187,0.18)] sm:size-5"
+      className={
+        editorial
+          ? "relative inline-flex size-[1.875rem] shrink-0 overflow-hidden rounded-full ring-1 ring-[rgba(147,197,253,0.32)] shadow-[0_0_16px_rgba(28,57,187,0.22)] sm:size-8 md:size-9"
+          : "relative inline-flex size-[1.125rem] shrink-0 overflow-hidden rounded-full ring-1 ring-[rgba(147,197,253,0.28)] shadow-[0_0_10px_rgba(28,57,187,0.18)] sm:size-5"
+      }
       aria-hidden
     >
       {/* Local circle-flag SVGs — decorative beside visible country name. */}
@@ -304,8 +333,8 @@ function CircleFlag({ code }: { code: string }) {
       <img
         src={`/images/flags/circle/${code}.svg`}
         alt=""
-        width={18}
-        height={18}
+        width={editorial ? 36 : 18}
+        height={editorial ? 36 : 18}
         className="h-full w-full object-cover"
         loading="lazy"
         decoding="async"
@@ -316,8 +345,12 @@ function CircleFlag({ code }: { code: string }) {
 }
 
 /** Minimal location ticker items — circular flag + name, no pill boxes. */
-export function RegionCountryPills({ countries }: CountryPillsProps) {
+export function RegionCountryPills({
+  countries,
+  size = "default",
+}: CountryPillsProps) {
   if (countries.length === 0) return null;
+  const editorial = size === "editorial";
   return (
     <>
       {countries.map((name) => {
@@ -325,10 +358,20 @@ export function RegionCountryPills({ countries }: CountryPillsProps) {
         return (
           <span
             key={name}
-            className="inline-flex shrink-0 items-center gap-2 px-2.5 sm:gap-2.5 sm:px-3.5"
+            className={
+              editorial
+                ? "inline-flex shrink-0 items-center gap-2.5 px-2.5 sm:gap-3.5 sm:px-4 md:gap-4 md:px-5"
+                : "inline-flex shrink-0 items-center gap-2 px-2.5 sm:gap-2.5 sm:px-3.5"
+            }
           >
-            {flagCode ? <CircleFlag code={flagCode} /> : null}
-            <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#e2e8f0] sm:text-[14px]">
+            {flagCode ? <CircleFlag code={flagCode} size={size} /> : null}
+            <span
+              className={
+                editorial
+                  ? "whitespace-nowrap text-[clamp(1.125rem,0.85rem+1.7vw,1.5rem)] font-semibold uppercase tracking-[0.14em] text-[#e8edf4] sm:tracking-[0.16em]"
+                  : "text-[12px] font-semibold uppercase tracking-[0.14em] text-[#e2e8f0] sm:text-[14px]"
+              }
+            >
               {name}
             </span>
           </span>

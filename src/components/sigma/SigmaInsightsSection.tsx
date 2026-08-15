@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { LiveSupportButton } from "@/components/sigma/LiveSupportButton";
 import { ProofLayer } from "@/components/sigma/ProofLayer";
 import { MagneticButton } from "@/components/sigma/SigmaCtaButton";
@@ -40,6 +40,15 @@ import type { ServiceIconId, SiteTranslations } from "@/content/types";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
+import { pickLang } from "@/content/global/marketing/helpers";
+import {
+  servicesPageMetaByLang,
+} from "@/content/global/marketing/servicesContent";
+import { getFinalServices } from "@/content/services/finalServices";
+import {
+  InfiniteMenu,
+  type InfiniteMenuItem,
+} from "@/components/react-bits/InfiniteMenu";
 import { useLanguage } from "@/context/LanguageContext";
 import type { CSSProperties } from "react";
 import {
@@ -1580,6 +1589,58 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
   );
 };
 
+const HomepageServicesSection = () => {
+  const { language } = useLanguage();
+  const meta = pickLang(servicesPageMetaByLang, language);
+  const services = useMemo<InfiniteMenuItem[]>(
+    () =>
+      getFinalServices().map((service) => ({
+        title: service.title,
+        link: service.href,
+      })),
+    [],
+  );
+  // Homepage heading — brand + approved services title (EN: "Sigma Services").
+  const heading =
+    language === "FA" || language === "AR"
+      ? `${meta.title} Sigma`
+      : `Sigma ${meta.title}`;
+
+  return (
+    <section
+      id="capabilities"
+      className="sigma-landing-section-shell relative z-10 scroll-mt-24 overflow-hidden px-5 py-14 sm:px-6 sm:py-16 md:scroll-mt-28 md:px-12 md:py-20 lg:px-20"
+      aria-labelledby="homepage-services-heading"
+    >
+      <div className="relative z-10 mx-auto min-w-0 max-w-[1280px]">
+        <div className="mx-auto mb-8 max-w-[52rem] md:mb-10">
+          <div className="sigma-section-header-glass mx-auto px-5 py-4 text-center sm:px-7 sm:py-5 md:px-8 md:py-6">
+            <p
+              className={`mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:mb-3 sm:text-[11px] ${localeEyebrow(language)}`}
+            >
+              {meta.title}
+            </p>
+            <h2
+              id="homepage-services-heading"
+              className={`mx-auto text-center font-display text-[clamp(1.3rem,5.8vw,1.85rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-4xl md:text-5xl md:tracking-tight ${localeHeading(language)}`}
+            >
+              {heading}
+            </h2>
+          </div>
+        </div>
+
+        {/* ReactBits Infinite Menu test — exact final catalog titles and routes. */}
+        <div className="mx-auto min-w-0 max-w-5xl">
+          <InfiniteMenu items={services} ariaLabel={heading} />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/** Flip to true to restore other hidden homepage sections without deleting them. */
+const RESTORE_HIDDEN_HOME_SECTIONS = false;
+
 export function SigmaLandingClient({
   insights,
 }: {
@@ -1602,22 +1663,50 @@ export function SigmaLandingClient({
           <HeroSection t={t} isRtl={isRtl} />
         </div>
 
+        {/* 1. Hero (above) → 2. Proof by Numbers */}
+        <ProofLayer
+          showTrustedBy={false}
+          showProofInNumbers
+          showPartnerFeedback={false}
+        />
+
+        {/* 3. What Is Sigma */}
+        <WhatIsSigmaSection t={t} />
+
+        {/* 4. Services */}
+        <HomepageServicesSection />
+
+        {/* 5. Regions */}
         <CryptoMarketingSection />
 
-        <WhatIsSigmaSection t={t} />
+        {/* 6. Behind the People */}
         <AboutSection t={t} />
-        <ServicesSection t={t} />
-        <ProofLayer />
-        <MidConversionCta isRtl={isRtl} lang={currentLang} />
-        <SigmaProSection t={t} />
+
+        {/* 7. Insights */}
         <SigmaInsightsSection insights={insights} />
+
+        {/* 8. Partner Feedback — existing ProofLayer implementation */}
+        <ProofLayer
+          showTrustedBy={false}
+          showProofInNumbers={false}
+          showPartnerFeedback
+        />
+
+        {RESTORE_HIDDEN_HOME_SECTIONS ? (
+          <>
+            <ServicesSection t={t} />
+            <MidConversionCta isRtl={isRtl} lang={currentLang} />
+            <SigmaProSection t={t} />
+            <FinalConversionCta
+              isRtl={isRtl}
+              lang={currentLang}
+              onBookCall={() => setBookCallOpen(true)}
+            />
+          </>
+        ) : null}
+
         <div id="connect" className="h-0" aria-hidden />
         <div id="contact" className="h-0" aria-hidden />
-        <FinalConversionCta
-          isRtl={isRtl}
-          lang={currentLang}
-          onBookCall={() => setBookCallOpen(true)}
-        />
       </main>
 
       <MarketingFooter />

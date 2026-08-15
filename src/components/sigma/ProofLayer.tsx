@@ -133,7 +133,18 @@ function TestimonialCard({
   );
 }
 
-export function ProofLayer() {
+export function ProofLayer({
+  showTrustedBy = true,
+  showProofInNumbers = true,
+  showPartnerFeedback = true,
+}: {
+  /** Logo loop — preserved, hidden from the current homepage order. */
+  showTrustedBy?: boolean;
+  /** Metrics strip — the approved Proof by Numbers block. */
+  showProofInNumbers?: boolean;
+  /** Testimonials — can render independently for homepage order. */
+  showPartnerFeedback?: boolean;
+} = {}) {
   const { lang } = useLanguage();
   const reduceMotion = useReducedMotion() ?? false;
   const proof = proofByLang[lang] ?? proofByLang.EN;
@@ -154,7 +165,8 @@ export function ProofLayer() {
     <div className="sigma-landing-section-shell relative z-10">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.1]" aria-hidden />
 
-      {/* Trusted by — scaled ~2× composition */}
+      {/* Trusted by — scaled ~2× composition. Hidden on homepage until restored. */}
+      {showTrustedBy ? (
       <section
         id="trusted-by"
         className="sigma-trusted-by relative scroll-mt-28 overflow-x-clip px-5 py-28 sm:px-6 sm:py-32 md:px-16 md:py-40 lg:px-24"
@@ -200,8 +212,10 @@ export function ProofLayer() {
           </div>
         </div>
       </section>
+      ) : null}
 
       {/* Proof in numbers — `id="network"` preserves navbar scroll target */}
+      {showProofInNumbers ? (
       <section
         id="network"
         className="relative scroll-mt-28 px-5 py-14 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
@@ -233,8 +247,10 @@ export function ProofLayer() {
           </div>
         </div>
       </section>
+      ) : null}
 
-      {/* Partner feedback */}
+      {/* Partner feedback — existing implementation; homepage order may place it later. */}
+      {showPartnerFeedback ? (
       <section
         id="testimonials"
         className="relative scroll-mt-28 px-5 py-16 sm:px-6 sm:py-20 md:px-16 md:py-24 lg:px-24"
@@ -267,6 +283,7 @@ export function ProofLayer() {
           </div>
         </div>
       </section>
+      ) : null}
     </div>
   );
 }

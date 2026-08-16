@@ -57,9 +57,9 @@ function MetricCard({
       initial={reduceMotion ? false : { opacity: 1, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={reduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className={`sigma-liquid-card group relative flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-lg border px-5 py-6 transition-[border-color,box-shadow,transform] duration-300 sm:px-6 sm:py-7 ${
+      className={`sigma-liquid-card group relative flex min-h-0 w-full min-w-0 max-w-full flex-col rounded-lg border px-3.5 py-4 transition-[border-color,box-shadow,transform] duration-300 sm:px-6 sm:py-7 ${
         isSampleCard
-          ? "min-h-[10.5rem] overflow-hidden rounded-[10px] border-[rgba(189,224,254,0.25)] bg-[linear-gradient(116deg,rgba(25,34,52,0.48),rgba(9,14,24,0.26)_62%,rgba(8,21,43,0.42))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_16px_42px_rgba(2,8,22,0.34),0_0_24px_rgba(28,57,187,0.16)] backdrop-blur-xl backdrop-saturate-150 hover:border-[rgba(189,224,254,0.5)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_20px_50px_rgba(2,8,22,0.44),0_0_32px_rgba(28,57,187,0.26)]"
+          ? "min-h-[9.25rem] overflow-hidden rounded-[10px] border-[rgba(189,224,254,0.25)] bg-[linear-gradient(116deg,rgba(25,34,52,0.48),rgba(9,14,24,0.26)_62%,rgba(8,21,43,0.42))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_16px_42px_rgba(2,8,22,0.34),0_0_24px_rgba(28,57,187,0.16)] backdrop-blur-xl backdrop-saturate-150 hover:border-[rgba(189,224,254,0.5)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_20px_50px_rgba(2,8,22,0.44),0_0_32px_rgba(28,57,187,0.26)] sm:min-h-[10.5rem]"
           : "border-white/[0.07] bg-gradient-to-b from-[#10141c]/95 to-[#0a0c12]/95 hover:border-[#1c39bb]/25 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
       }`}
     >
@@ -71,16 +71,16 @@ function MetricCard({
           />
         </>
       ) : null}
-      <p className="relative z-10 font-display text-2xl font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
+      <p className="relative z-10 font-display text-[clamp(1.35rem,6.4vw,1.5rem)] font-semibold tabular-nums tracking-tight text-white sm:text-3xl md:text-[2rem]">
         {metric.value}
       </p>
       <p
-        className={`relative z-10 mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-[#a8b2bd] sm:text-xs md:text-[#8b939e] ${localeNav(lang)}`}
+        className={`relative z-10 mt-2.5 text-[10px] font-semibold uppercase leading-snug tracking-[0.12em] text-[#a8b2bd] sm:mt-3 sm:text-xs sm:tracking-[0.14em] md:text-[#8b939e] ${localeNav(lang)}`}
       >
         {metric.label}
       </p>
       {metric.note ? (
-        <p className="relative z-10 mt-2 text-xs leading-relaxed text-[#9aa2ac] sm:text-[13px] md:text-[#6c757d]">
+        <p className="relative z-10 mt-1.5 text-[11px] leading-relaxed text-[#9aa2ac] sm:mt-2 sm:text-[13px] md:text-[#6c757d]">
           {metric.note}
         </p>
       ) : null}
@@ -236,7 +236,7 @@ export function ProofLayer({
           </div>
           <div
             id="metrics"
-            className="grid min-w-0 grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
+            className="grid min-w-0 grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-5"
           >
             {proof.metrics.map((m, i) => (
               <MetricCard key={m.id} metric={m} index={i} lang={lang} reduceMotion={reduceMotion} />

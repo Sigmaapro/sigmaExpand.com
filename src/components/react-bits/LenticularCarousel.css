@@ -1,0 +1,223 @@
+.lenticular-carousel {
+  --lc-blue: #1d89bb;
+  --lc-deep: #1d3abb;
+  --lc-violet: #4f1dbb;
+  --lc-ink: #05070d;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.lenticular-carousel:focus-visible {
+  outline: 2px solid #82a5ff;
+  outline-offset: 4px;
+}
+
+.lenticular-carousel__stage {
+  position: relative;
+  width: 100%;
+  overflow: clip;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.lenticular-carousel__stage:active {
+  cursor: grabbing;
+}
+
+.lenticular-carousel__world {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.lenticular-carousel__slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  background: var(--lc-ink);
+  border: 1px solid rgba(189, 224, 254, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 44px rgba(2, 8, 22, 0.45);
+}
+
+.lenticular-carousel__slide.is-active {
+  border-color: rgba(189, 224, 254, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 56px rgba(2, 8, 22, 0.52),
+    0 0 36px rgba(29, 58, 187, 0.26);
+}
+
+.lenticular-carousel__faces {
+  position: absolute;
+  inset: 0;
+}
+
+.lenticular-carousel__face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.lenticular-carousel__face img,
+.lenticular-carousel__face-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.lenticular-carousel__face--back {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 12%, rgba(29, 137, 187, 0.38), transparent 58%),
+    radial-gradient(ellipse 70% 55% at 88% 88%, rgba(79, 29, 187, 0.42), transparent 60%),
+    linear-gradient(165deg, #071225 0%, #0b1630 48%, #05070d 100%);
+}
+
+.lenticular-carousel__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.lenticular-carousel__scrim {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2.4rem 0.85rem 0.85rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 7, 13, 0.92) 78%);
+}
+
+.lenticular-carousel__meta {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #bde0fe;
+  font-size: 0.625rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lenticular-carousel__face--back img {
+  mix-blend-mode: luminosity;
+  opacity: 0.42;
+}
+
+.lenticular-carousel__label {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-display), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: clamp(0.86rem, 3.6vw, 1.05rem);
+  font-weight: 650;
+  line-height: 1.28;
+  text-wrap: balance;
+}
+
+.lenticular-carousel__link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block;
+  border-radius: inherit;
+}
+
+.lenticular-carousel__link:focus-visible {
+  outline: 2px solid #82a5ff;
+  outline-offset: -3px;
+}
+
+.lenticular-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0.9rem;
+}
+
+.lenticular-carousel__nav {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(189, 224, 254, 0.18);
+  background: linear-gradient(155deg, rgba(8, 20, 55, 0.72), rgba(5, 12, 30, 0.48));
+  color: #c9d7f0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.lenticular-carousel__nav:hover {
+  border-color: rgba(189, 224, 254, 0.36);
+  color: #ffffff;
+}
+
+.lenticular-carousel__nav:focus-visible {
+  outline: 2px solid #82a5ff;
+  outline-offset: 2px;
+}
+
+.lenticular-carousel__nav:active {
+  transform: scale(0.97);
+}
+
+.lenticular-carousel__nav:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.lenticular-carousel__rail {
+  display: flex;
+  overflow: hidden;
+  width: min(11.5rem, 46vw);
+  height: 0.35rem;
+  border-radius: 999px;
+  background: rgba(189, 224, 254, 0.12);
+}
+
+.lenticular-carousel__seg {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.lenticular-carousel__seg.is-active {
+  background: linear-gradient(90deg, #1d89bb, #4f1dbb);
+}
+
+.lenticular-carousel__seg:focus-visible {
+  outline: 2px solid #82a5ff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lenticular-carousel__slide,
+  .lenticular-carousel__nav {
+    transition-duration: 0.01ms !important;
+  }
+}

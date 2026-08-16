@@ -38,6 +38,24 @@ export function useMinWidth(minWidth = 768) {
   return matches;
 }
 
+/**
+ * Viewport min-width that stays `null` until after mount.
+ * Use when choosing between two heavy trees so SSR and hydration match.
+ */
+export function useClientMinWidth(minWidth = 768): boolean | null {
+  const [matches, setMatches] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(min-width: ${minWidth}px)`);
+    const update = () => setMatches(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [minWidth]);
+
+  return matches;
+}
+
 export function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(() =>
     readMatch("(prefers-reduced-motion: reduce)"),

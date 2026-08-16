@@ -115,6 +115,84 @@ body:has(.sigma-landing-root) {
   isolation: isolate;
 }
 
+/* Cinematic media shell — liquid-glass edge language without milky fill over the video. */
+.sigma-what-is-media {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(189, 224, 254, 0.2);
+  background: #05070d;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(28, 57, 187, 0.14),
+    0 28px 72px rgba(2, 8, 22, 0.42),
+    0 0 48px rgba(28, 57, 187, 0.16);
+}
+
+.sigma-what-is-media::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(189, 224, 254, 0.12) 0%,
+      transparent 28%,
+      transparent 72%,
+      rgba(79, 29, 187, 0.08) 100%
+    );
+  box-shadow: inset 0 0 0 1px rgba(189, 224, 254, 0.06);
+}
+
+.sigma-what-is-media__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.sigma-what-is-media__shade {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 7, 13, 0.52) 0%,
+    rgba(5, 7, 13, 0.28) 28%,
+    rgba(5, 7, 13, 0.08) 48%,
+    transparent 62%
+  );
+}
+
+.sigma-what-is-media__copy {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 767px) {
+  .sigma-what-is-media__video {
+    /* Keep the orbital object in frame while protecting left typography space. */
+    object-position: 68% center;
+  }
+
+  .sigma-what-is-media__shade {
+    background: linear-gradient(
+      90deg,
+      rgba(5, 7, 13, 0.62) 0%,
+      rgba(5, 7, 13, 0.38) 34%,
+      rgba(5, 7, 13, 0.12) 56%,
+      transparent 72%
+    );
+  }
+}
+
 .sigma-what-is-glass {
   position: relative;
   isolation: isolate;
@@ -366,16 +444,39 @@ body:has(.sigma-landing-root) {
   background:
     linear-gradient(
       155deg,
-      rgba(20, 31, 55, 0.72) 0%,
-      rgba(7, 11, 22, 0.48) 48%,
-      rgba(23, 16, 48, 0.58) 100%
+      rgba(20, 31, 55, 0.78) 0%,
+      rgba(7, 11, 22, 0.58) 48%,
+      rgba(23, 16, 48, 0.66) 100%
     );
   box-shadow:
     0 24px 60px rgba(2, 8, 22, 0.34),
     inset 0 1px 0 rgba(255, 255, 255, 0.16),
     inset 0 -1px 0 rgba(79, 29, 187, 0.12);
-  -webkit-backdrop-filter: blur(24px) saturate(1.45);
-  backdrop-filter: blur(24px) saturate(1.45);
+  -webkit-backdrop-filter: blur(34px) saturate(1.3);
+  backdrop-filter: blur(34px) saturate(1.3);
+}
+
+/*
+ * Navbar backdrop isolation. Scoped to the nav shell variant so shared
+ * `.sigma-fluid-glass` surfaces (capabilities cards, service intro) keep
+ * their own treatment. Needed because `.sigma-fluid-glass.glass-surface--*`
+ * outranks `.sigma-liquid-nav` and would otherwise cap the blur at ~10px.
+ */
+.sigma-liquid-nav.glass-surface--svg,
+.sigma-liquid-nav.glass-surface--fallback {
+  background:
+    linear-gradient(
+      155deg,
+      rgba(20, 31, 55, 0.78) 0%,
+      rgba(7, 11, 22, 0.58) 48%,
+      rgba(23, 16, 48, 0.66) 100%
+    );
+}
+
+.sigma-fluid-glass--shell.glass-surface--svg,
+.sigma-fluid-glass--shell.glass-surface--fallback {
+  -webkit-backdrop-filter: blur(34px) saturate(1.3) brightness(0.92);
+  backdrop-filter: blur(34px) saturate(1.3) brightness(0.92);
 }
 
 .sigma-liquid-nav::before {
@@ -635,6 +736,27 @@ body:has(.sigma-landing-root) {
   .sigma-fluid-glass.glass-surface--fallback {
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
+  }
+}
+
+/*
+ * Nav shell keeps strong diffusion on every rendering path (mobile Safari and
+ * reduced-motion both fall back to the CSS surface). Declared after the shared
+ * fallback rules so the navbar-scoped value wins on equal specificity.
+ */
+@media (max-width: 1023px) {
+  .sigma-fluid-glass--shell.glass-surface--svg,
+  .sigma-fluid-glass--shell.glass-surface--fallback {
+    -webkit-backdrop-filter: blur(28px) saturate(1.26) brightness(0.92);
+    backdrop-filter: blur(28px) saturate(1.26) brightness(0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-fluid-glass--shell.glass-surface--svg,
+  .sigma-fluid-glass--shell.glass-surface--fallback {
+    -webkit-backdrop-filter: blur(26px) saturate(1.2) brightness(0.92);
+    backdrop-filter: blur(26px) saturate(1.2) brightness(0.92);
   }
 }
 

@@ -45,12 +45,13 @@ import {
   servicesPageMetaByLang,
 } from "@/content/global/marketing/servicesContent";
 import { getFinalServices } from "@/content/services/finalServices";
-import {
-  InfiniteMenu,
-  type InfiniteMenuItem,
-} from "@/components/react-bits/InfiniteMenu";
+import type { InfiniteMenuItem } from "@/components/react-bits/InfiniteMenu";
+import type { SkewedCarouselItem } from "@/components/react-bits/SkewedCarousel";
+import type { LenticularCarouselItem } from "@/components/react-bits/LenticularCarousel";
+import { createSigmaSurfaceUri } from "@/components/react-bits/sigmaSurface";
 import { useLanguage } from "@/context/LanguageContext";
 import type { CSSProperties } from "react";
+import dynamic from "next/dynamic";
 import {
   localeBody,
   localeCardTitle,
@@ -63,8 +64,23 @@ import {
   localeNav,
   rtlScriptSurfaceClass,
 } from "@/lib/localeTypography";
-import { useIsMobile, useMinWidth } from "@/hooks/useMedia";
+import { useClientMinWidth, useIsMobile, useMinWidth } from "@/hooks/useMedia";
 import { SigmaSiteNavbar } from "@/components/sigma/SigmaSiteNavbar";
+
+const InfiniteMenu = dynamic(
+  () => import("@/components/react-bits/InfiniteMenu").then((mod) => mod.InfiniteMenu),
+  { ssr: false },
+);
+
+const SkewedCarousel = dynamic(
+  () => import("@/components/react-bits/SkewedCarousel").then((mod) => mod.SkewedCarousel),
+  { ssr: false },
+);
+
+const LenticularCarousel = dynamic(
+  () => import("@/components/react-bits/LenticularCarousel").then((mod) => mod.LenticularCarousel),
+  { ssr: false },
+);
 
 
 export const BLOG_INSIGHTS_URL = "https://blog.sigmaa.pro";
@@ -467,8 +483,20 @@ function InsightsFallbackNotice({
 export function SigmaInsightsSection({ insights }: { insights: InsightsPayload }) {
   const { language, isRtl } = useLanguage();
   const reduceMotion = useReducedMotion() ?? false;
+  const isDesktop = useClientMinWidth(768);
   const cards = insights.cards;
   const showFallback = insights.error && cards.length === 0;
+  const lenticularItems = useMemo<LenticularCarouselItem[]>(
+    () =>
+      cards.map((card, index) => ({
+        image: card.imageSrc ?? createSigmaSurfaceUri(index + 21),
+        alt: card.title,
+        label: card.title,
+        href: card.href,
+        meta: [card.category, card.date].filter(Boolean).join(" · ") || undefined,
+      })),
+    [cards],
+  );
 
   return (
     <section
@@ -503,10 +531,49 @@ export function SigmaInsightsSection({ insights }: { insights: InsightsPayload }
         {showFallback ? <InsightsFallbackNotice language={language} /> : null}
 
         {cards.length > 0 ? (
-          reduceMotion ? (
-            <InsightsStaticScroller cards={cards} language={language} />
+          isDesktop === null ? (
+            <div className="mx-auto min-h-[22rem]" aria-hidden />
+          ) : isDesktop ? (
+            reduceMotion ? (
+              <InsightsStaticScroller cards={cards} language={language} />
+            ) : (
+              <InsightsMarqueeScroller cards={cards} language={language} />
+            )
           ) : (
-            <InsightsMarqueeScroller cards={cards} language={language} />
+            <div className="mx-auto max-w-[26rem] px-5">
+              <LenticularCarousel
+                items={lenticularItems}
+                ariaLabel={SECTION_COPY.title}
+                initialIndex={0}
+                cardWidth={220}
+                aspectRatio="3 / 4"
+                gap={22}
+                borderRadius={14}
+                strips={reduceMotion ? 24 : 56}
+                sweep={0.6}
+                refraction={0.32}
+                ridge={0.5}
+                foil={reduceMotion ? 0.18 : 0.5}
+                foilScale={8}
+                scrim={0.85}
+                tilt={reduceMotion ? 0 : 14}
+                travel={0.64}
+                lift={reduceMotion ? 0 : 40}
+                perspective={1200}
+                inactiveScale={0.9}
+                inactiveDim={0.55}
+                speed={reduceMotion ? 0 : 1}
+                trigger="focus"
+                showLabels
+                labelColor="#ffffff"
+                showControls
+                showDots
+                loop
+                enableDrag
+                enableKeyboard
+                paused={reduceMotion}
+              />
+            </div>
           )
         ) : null}
       </div>
@@ -1246,6 +1313,32 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
   const pillars = t.whatIsSigma.pillars;
   const { language } = useLanguage();
   const H = getHomeSectionLinks(language);
+  const reduceMotion = useReducedMotion() ?? false;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (reduceMotion) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch {
+        /* ignore seek errors before metadata */
+      }
+      return;
+    }
+
+    const play = () => {
+      void video.play().catch(() => {
+        /* Autoplay may be blocked; muted + playsInline usually succeeds. */
+      });
+    };
+
+    if (video.readyState >= 2) play();
+    else video.addEventListener("loadeddata", play, { once: true });
+  }, [reduceMotion]);
 
   return (
     <section
@@ -1253,21 +1346,43 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
       className="sigma-what-is-ripple relative z-10 scroll-mt-24 overflow-hidden px-5 py-16 sm:px-6 sm:py-20 md:scroll-mt-28 md:px-16 md:py-24 lg:px-24"
     >
       <div className="relative z-10 mx-auto max-w-[90rem]">
-        <div className="sigma-liquid-card sigma-what-is-glass min-w-0 max-w-3xl px-5 py-5 sm:px-6 sm:py-6">
-          <p
-            className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
-          >
-            {t.whatIsSigma.label}
-          </p>
-          <h2
-            className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl lg:max-w-3xl ${localeHeading(language)}`}
-          >
-            {t.whatIsSigma.headline}
-          </h2>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
-            {t.whatIsSigma.description}
-          </p>
-        </div>
+        <SigmaBorderGlow borderRadius={20}>
+          <div className="sigma-what-is-media relative aspect-[16/10] w-full min-h-[18rem] rounded-[1.15rem] sm:aspect-[16/9] sm:min-h-[22rem] sm:rounded-[1.25rem] md:min-h-[26rem] lg:rounded-[1.35rem]">
+            <video
+              ref={videoRef}
+              className="sigma-what-is-media__video"
+              src="/videos/what_is_sigma.mp4"
+              autoPlay={!reduceMotion}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              controls={false}
+              disablePictureInPicture
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+            <div className="sigma-what-is-media__shade" aria-hidden />
+
+            <div className="sigma-what-is-media__copy flex h-full items-center px-5 py-7 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-12">
+              <div className="w-full max-w-[min(22rem,72%)] sm:max-w-[min(28rem,52%)] md:max-w-[min(32rem,48%)] lg:max-w-[min(34rem,46%)]">
+                <p
+                  className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
+                >
+                  {t.whatIsSigma.label}
+                </p>
+                <h2
+                  className={`max-w-full font-display text-[clamp(1.125rem,4.2vw,1.5rem)] font-semibold uppercase leading-snug tracking-normal text-white text-balance sm:text-3xl sm:tracking-tight sm:leading-tight md:text-4xl ${localeHeading(language)}`}
+                >
+                  {t.whatIsSigma.headline}
+                </h2>
+                <p className="mt-5 max-w-[36rem] text-sm leading-relaxed text-[#cfd6de] md:text-base md:leading-relaxed md:text-[#b6bcc4]">
+                  {t.whatIsSigma.description}
+                </p>
+              </div>
+            </div>
+          </div>
+        </SigmaBorderGlow>
 
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {pillars.map((pillar, idx) => (
@@ -1592,13 +1707,26 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
 const HomepageServicesSection = () => {
   const { language } = useLanguage();
   const meta = pickLang(servicesPageMetaByLang, language);
+  const isDesktop = useClientMinWidth(768);
+  const reduceMotion = useReducedMotion() ?? false;
+  const catalog = useMemo(() => getFinalServices(), []);
   const services = useMemo<InfiniteMenuItem[]>(
     () =>
-      getFinalServices().map((service) => ({
+      catalog.map((service) => ({
         title: service.title,
         link: service.href,
       })),
-    [],
+    [catalog],
+  );
+  const skewedItems = useMemo<SkewedCarouselItem[]>(
+    () =>
+      catalog.map((service, index) => ({
+        title: service.title,
+        href: service.href,
+        image: createSigmaSurfaceUri(index),
+        alt: service.title,
+      })),
+    [catalog],
   );
   // Homepage heading — brand + approved services title (EN: "Sigma Services").
   const heading =
@@ -1629,16 +1757,40 @@ const HomepageServicesSection = () => {
           </div>
         </div>
 
-        {/* ReactBits Infinite Menu test — exact final catalog titles and routes. */}
         <div className="mx-auto min-w-0 max-w-5xl">
-          <InfiniteMenu items={services} ariaLabel={heading} />
+          {isDesktop === null ? (
+            <div className="min-h-[23rem]" aria-hidden />
+          ) : isDesktop ? (
+            <InfiniteMenu items={services} ariaLabel={heading} />
+          ) : (
+            <SkewedCarousel
+              items={skewedItems}
+              ariaLabel={heading}
+              initialIndex={0}
+              cardWidth={188}
+              aspectRatio="3 / 4"
+              rotation={60}
+              inactiveScale={0.85}
+              perspective={800}
+              borderRadius={8}
+              titleBlur={reduceMotion ? 0 : 2}
+              speed={reduceMotion ? 0 : 1}
+              showTitles
+              showControls
+              showDots
+              loop
+              enableDrag
+              enableKeyboard
+              className="mx-auto max-w-[26rem]"
+            />
+          )}
         </div>
       </div>
     </section>
   );
 };
 
-/** Flip to true to restore other hidden homepage sections without deleting them. */
+/** Flip to true to restore remaining hidden homepage sections (legacy Services, mid/final CTAs). */
 const RESTORE_HIDDEN_HOME_SECTIONS = false;
 
 export function SigmaLandingClient({
@@ -1682,10 +1834,13 @@ export function SigmaLandingClient({
         {/* 6. Behind the People */}
         <AboutSection t={t} />
 
-        {/* 7. Insights */}
+        {/* 7. SigmaPRO — restored existing section (was gated with other hidden blocks) */}
+        <SigmaProSection t={t} />
+
+        {/* 8. Insights */}
         <SigmaInsightsSection insights={insights} />
 
-        {/* 8. Partner Feedback — existing ProofLayer implementation */}
+        {/* 9. Partner Feedback — existing ProofLayer implementation */}
         <ProofLayer
           showTrustedBy={false}
           showProofInNumbers={false}
@@ -1696,7 +1851,6 @@ export function SigmaLandingClient({
           <>
             <ServicesSection t={t} />
             <MidConversionCta isRtl={isRtl} lang={currentLang} />
-            <SigmaProSection t={t} />
             <FinalConversionCta
               isRtl={isRtl}
               lang={currentLang}

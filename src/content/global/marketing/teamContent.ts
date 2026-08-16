@@ -24,7 +24,13 @@ export type TeamMember = {
   shortBio?: string;
   fullBio?: string;
   skills?: string[];
-  services?: string[];
+  services?: Array<
+    | string
+    | {
+        title: string;
+        description?: string;
+      }
+  >;
   careerHistory?: Array<{
     dateRange?: string;
     role?: string;
@@ -38,6 +44,8 @@ export type TeamMember = {
     link?: string;
     linkLabel?: string;
   }>;
+  /** Optional override for the achievements section heading. */
+  achievementsTitle?: string;
   /** Named people represented by a combined profile (e.g. Goli Brothers). */
   relatedPersons?: Array<{
     name: string;
@@ -52,7 +60,9 @@ export type TeamMember = {
   };
   languages?: string[];
   quote?: string;
+  quotes?: string[];
   linkedin?: string;
+  email?: string;
   website?: string;
   socialLinks?: Array<{ label: string; href: string }>;
   seoTitle?: string;
@@ -558,12 +568,130 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
         MALE_MEMBER_PLACEHOLDER,
       ),
     ),
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        { id: "hayyam-modir-rosta", name: "Hayyam Modir Rosta", role: roleLabel, group: "innerCircle", initials: "HM", imageSrc: null },
-        MALE_MEMBER_PLACEHOLDER,
+    {
+      ...withMemberProfileDefaults(
+        withPlaceholderImage(
+          {
+            id: "hayyam-modir-rosta",
+            name: "Hayyan Modir Rosta",
+            role: roleLabel,
+            group: "innerCircle",
+            initials: "HM",
+            imageSrc: null,
+            profileStatus: "active",
+            shortBio:
+              "Hayyan builds products for people who participate in financial markets. He co-founded and ran a Telegram-native crypto exchange, and has spent seven years across exchanges, payments and prop trading on the side of the business where users actually arrive.",
+            bio: "Hayyan builds products for people who participate in financial markets. He co-founded and ran a Telegram-native crypto exchange, and has spent seven years across exchanges, payments and prop trading on the side of the business where users actually arrive.",
+            fullBio:
+              "Hayyan builds products for people who participate in financial markets — and then runs them.\n\nHe co-founded SwapNet, a Telegram-native crypto exchange, and led it as CEO for roughly two years after launch. The product reached around 200,000 users on a simple bet: a familiar chat interface removes most of the friction of buying and swapping crypto. A separate automated product he built reached around 130,000.\n\nAcross seven years in the sector — crypto exchanges, payment platforms, proprietary trading — his work sits on the line between product and growth, because on a trading platform that line barely exists. The onboarding flow is the campaign. The fee structure is the positioning. Simplifying a transaction that used to take six steps does more for acquisition than the campaign promoting it.\n\nAt Sigma he works on exchange and broker growth, KOL and influencer distribution, and the partnership structures that connect them.",
+            skills: [
+              "Product building — zero to launch",
+              "Telegram-native and automated products",
+              "Crypto exchange operations",
+              "Onboarding, activation and KYC flows",
+              "Fee structure and pricing",
+              "Growth strategy and user acquisition",
+              "KOL and influencer distribution",
+              "Exchange and platform partnerships",
+              "Business development",
+              "Attribution and funnel analytics",
+              "Team building and operations",
+            ],
+            services: [
+              {
+                title: "Exchange & broker growth",
+                description:
+                  "acquisition, activation and retention for live trading platforms, working from the product side as well as the campaign side.",
+              },
+              {
+                title: "KOL & influencer distribution",
+                description:
+                  "sourcing, structuring and managing creator partnerships in crypto and financial markets, including bringing larger platforms into campaigns as partners.",
+              },
+              {
+                title: "Product & onboarding advisory",
+                description:
+                  "reviewing signup, KYC and first-transaction flows where drop-off is a product problem rather than a traffic problem.",
+              },
+              {
+                title: "Regional market entry",
+                description:
+                  "client acquisition across Gulf and wider MENA markets, in Persian, Arabic and English.",
+              },
+            ],
+            careerHistory: [
+              {
+                dateRange: "2026",
+                role: "Founder & Board Member",
+                organization: "Hayyan.io",
+                description: "AI infrastructure and generative AI platform",
+              },
+              {
+                dateRange: "2025 – 2026",
+                role: "Business Development Manager",
+                organization: "Harmonea",
+                description: "private events for financial professionals, Dubai",
+              },
+              {
+                dateRange: "2024 – 2026",
+                role: "Business Development Manager",
+                organization: "LBank (via Sigma)",
+                description: "KOL onboarding and partnerships",
+              },
+              {
+                dateRange: "[2024] – 2026",
+                role: "Co-Founder & CEO, then Board Member",
+                organization: "SwapNet",
+                description: "Telegram-native crypto exchange",
+              },
+              {
+                dateRange: "2023 – 2026",
+                role: "Marketing Manager",
+                description: "international crypto exchanges (under NDA)",
+              },
+              {
+                dateRange: "2022 – 2023",
+                role: "Marketing Manager",
+                organization: "ViraMiner",
+              },
+              {
+                dateRange: "2018 – 2022",
+                role: "Marketing and business development",
+                organization: "Fillip Marketing Agency (Dubai), Shaparak.Blue, Noor Marketing",
+              },
+            ],
+            achievementsTitle: "VERIFIED HIGHLIGHTS",
+            achievements: [
+              { title: "Co-founded and led a Telegram-native crypto exchange to approximately 200,000 users" },
+              { title: "Built an automated crypto product reaching approximately 130,000 users" },
+              { title: "Roughly two years operating an exchange as CEO, post-launch" },
+              { title: "35% increase in active users through acquisition and product work at a crypto exchange" },
+              { title: "25% improvement in marketing ROI by rebuilding campaign measurement and reallocating spend" },
+              { title: "13% reduction in onboarding activation time through signup and verification redesign" },
+              { title: "Managed 10+ influencer and KOL partnerships as a recurring acquisition channel" },
+            ],
+            quotes: [
+              "The best growth work on a trading platform usually looks like product work. If people are dropping off at verification, no campaign fixes that.",
+              "I don't work around financial markets — I build products for the people in them.",
+              "Most crypto products ask users to learn a new interface first. The ones that grow meet people where they already are.",
+            ],
+            linkedin: "https://www.linkedin.com/in/hayyanmodirrousta",
+            email: "Hayyanmodiri1@gmail.com",
+            seoTitle: "Hayyan Modir Rosta | Inner Circle Partner at Sigma",
+            metaDescription:
+              "Hayyan builds products for people who participate in financial markets. He co-founded and ran a Telegram-native crypto exchange, and has spent seven years across exchanges, payments and prop trading on the side of the business where users actually arrive.",
+          },
+          MALE_MEMBER_PLACEHOLDER,
+        ),
       ),
-    ),
+      location: {
+        city: "Dubai",
+        country: "United Arab Emirates",
+        countryCode: "AE",
+      },
+      languages: ["English", "Persian", "Arabic"],
+      markets: ["MENA", "Gulf", "Asia", "Europe"],
+    },
     withMemberProfileDefaults(
       withPlaceholderImage(
         { id: "shahrzad-rostami", name: "Shahrzad Rostami", role: roleLabel, group: "innerCircle", initials: "SR", imageSrc: null },

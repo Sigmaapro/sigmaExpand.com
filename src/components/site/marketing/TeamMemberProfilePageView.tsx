@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { FaGlobe, FaInstagram, FaLinkedinIn, FaLink, FaXTwitter } from "react-icons/fa6";
+import { FaEnvelope, FaGlobe, FaInstagram, FaLinkedinIn, FaLink, FaXTwitter } from "react-icons/fa6";
 import { getAllTeamMembers, getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
 import { ProfileContentPlaceholder } from "@/components/site/marketing/ProfileContentPlaceholder";
 
@@ -148,7 +148,7 @@ function countryCodeToFlag(countryCode: string): string {
     .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
 }
 
-type SocialIconKey = "x" | "instagram" | "linkedin" | "website" | "generic";
+type SocialIconKey = "x" | "instagram" | "linkedin" | "website" | "email" | "generic";
 
 function getSocialIconKey(label: string, href: string): SocialIconKey {
   const normalizedLabel = label.toLowerCase();
@@ -156,6 +156,7 @@ function getSocialIconKey(label: string, href: string): SocialIconKey {
   if (normalizedLabel === "x" || normalizedHref.includes("x.com") || normalizedHref.includes("twitter.com")) return "x";
   if (normalizedLabel.includes("instagram") || normalizedHref.includes("instagram.com")) return "instagram";
   if (normalizedLabel.includes("linkedin") || normalizedHref.includes("linkedin.com")) return "linkedin";
+  if (normalizedLabel.includes("email") || normalizedHref.startsWith("mailto:")) return "email";
   if (normalizedLabel.includes("website")) return "website";
   return "generic";
 }
@@ -165,6 +166,7 @@ function getSocialPlatformName(key: SocialIconKey, fallbackLabel: string): strin
   if (key === "instagram") return "Instagram";
   if (key === "linkedin") return "LinkedIn";
   if (key === "website") return "Website";
+  if (key === "email") return "Email";
   return fallbackLabel;
 }
 
@@ -173,8 +175,26 @@ const SOCIAL_ICON_MAP: Record<SocialIconKey, React.ComponentType<{ className?: s
   instagram: FaInstagram,
   linkedin: FaLinkedinIn,
   website: FaGlobe,
+  email: FaEnvelope,
   generic: FaLink,
 };
+
+function serviceTitle(item: NonNullable<TeamMember["services"]>[number]): string {
+  return typeof item === "string" ? item : item.title;
+}
+
+function serviceDescription(item: NonNullable<TeamMember["services"]>[number]): string | undefined {
+  return typeof item === "string" ? undefined : item.description?.trim() || undefined;
+}
+
+function socialAnchorProps(href: string, platformName: string, memberName: string) {
+  const isMail = href.startsWith("mailto:");
+  return {
+    href,
+    ...(isMail ? {} : { target: "_blank" as const, rel: "noopener noreferrer" }),
+    "aria-label": isMail ? `Email ${memberName}` : `Open ${memberName} on ${platformName}`,
+  };
+}
 
 const PROFILE_SECTION_ITEMS = [
   { id: "profile-overview", label: "Overview", number: "01" },
@@ -214,12 +234,20 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const fullOverview = member.fullBio;
   const linkedin = safeUrl(member.linkedin);
   const website = safeUrl(member.website);
+  const emailHref = member.email?.trim() ? `mailto:${member.email.trim()}` : null;
   const socialLinks = [
     ...(linkedin ? [{ label: "LinkedIn", href: linkedin }] : []),
     ...(website ? [{ label: "Website", href: website }] : []),
+    ...(emailHref ? [{ label: "Email", href: emailHref }] : []),
     ...((member.socialLinks ?? []).filter((item) => /^https?:\/\//.test(item.href))),
   ];
-  const quote = member.quote?.trim();
+  const quotes = [
+    ...(member.quotes ?? []).map((item) => item.trim()).filter(Boolean),
+    ...(member.quote?.trim() && !(member.quotes?.some((item) => item.trim() === member.quote?.trim()))
+      ? [member.quote.trim()]
+      : []),
+  ];
+  const quote = quotes[0];
   const hasTimeline = (member.careerHistory?.length ?? 0) > 0;
   const hasAchievements = (member.achievements?.length ?? 0) > 0;
   const hasMarkets = (member.markets?.length ?? 0) > 0;
@@ -972,10 +1000,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     <li key={`${item.label}-${item.href}`}>
                       <div className="group/social relative">
                         <a
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Open ${member.name} on ${item.platformName}`}
+                          {...socialAnchorProps(item.href, item.platformName, member.name)}
                           className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-[#d0dcff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#86a8ff]/65 motion-safe:hover:bg-[#86a8ff]/12 motion-safe:hover:shadow-[0_0_18px_rgba(92,136,255,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#82a5ff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09111f] ${microSurface}`}
                         >
                           <Icon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -1104,7 +1129,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         <div className="mt-10 grid gap-6">
           <SectionFrame sectionId="profile-overview" number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
             {fullOverview ? (
-              <p className="text-base leading-relaxed text-[#c0cad8]">{fullOverview}</p>
+              <div className="min-w-0 space-y-4">
+                {fullOverview.split(/\n\n+/).map((paragraph, index) => (
+                  <p key={index} className="max-w-full text-base leading-relaxed text-[#c0cad8]">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             ) : (
               <ProfileContentPlaceholder label="Profile details pending" lines={4} />
             )}
@@ -1123,7 +1154,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                         <span className="text-[11px] uppercase tracking-[0.16em] text-[#93C5FD]">{String(index + 1).padStart(2, "0")}</span>
                         <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#7DD3FC]" />
                       </div>
-                      <p className="mt-2 text-sm text-[#d4ddf0]">{item}</p>
+                      <p className="mt-2 min-w-0 break-words text-sm leading-snug text-[#d4ddf0]">{item}</p>
                       <div aria-hidden="true" className="mt-2 h-px w-0 bg-gradient-to-r from-[#60A5FA]/85 to-transparent transition-all duration-200 group-hover:w-full" />
                     </article>
                   ))}
@@ -1136,18 +1167,33 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             <SectionFrame sectionId="services" number="03" title="SERVICES" subtitle="Engagement Focus">
               {member.services?.length ? (
                 <div className="space-y-2.5">
-                  {member.services.map((item, index) => (
+                  {member.services.map((item, index) => {
+                    const title = serviceTitle(item);
+                    const description = serviceDescription(item);
+                    return (
                     <div
-                      key={item}
-                      className={`group flex items-center justify-between rounded-xl px-3.5 py-3 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/50 ${secondaryGlass}`}
+                      key={`${title}-${index}`}
+                      className={`group min-w-0 rounded-xl px-3.5 py-3 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/50 ${secondaryGlass} ${
+                        description ? "" : "flex items-center justify-between gap-3"
+                      }`}
                     >
-                      <span className="flex items-center gap-2 text-sm text-[#d3ddef]">
-                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#7DD3FC]" />
-                        {item}
+                      <span className="flex min-w-0 items-start gap-2 text-sm text-[#d3ddef]">
+                        <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7DD3FC]" />
+                        <span className="min-w-0">
+                          <span className="block break-words">{title}</span>
+                          {description ? (
+                            <span className="mt-1.5 block break-words text-sm leading-relaxed text-[#b6c0d0]">
+                              {description}
+                            </span>
+                          ) : null}
+                        </span>
                       </span>
-                      <span className="font-mono text-[11px] tracking-[0.18em] text-[#93C5FD]">{String(index + 1).padStart(2, "0")}</span>
+                      <span className={`font-mono text-[11px] tracking-[0.18em] text-[#93C5FD] ${description ? "mt-2 inline-block" : "shrink-0"}`}>
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <ProfileContentPlaceholder label="Profile data pending" lines={4} />
@@ -1161,11 +1207,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 {member.careerHistory!.map((entry, index) => (
                   <li key={`${entry.role ?? "role"}-${entry.organization ?? "org"}-${index}`} className="relative">
                     <span aria-hidden className="absolute -left-[22px] top-1.5 h-3.5 w-3.5 rounded-full border border-[#84a8ff]/60 bg-[#0c172f]" />
-                    {entry.dateRange ? <p className="text-[11px] uppercase tracking-[0.14em] text-[#8ca2d3]">{entry.dateRange}</p> : null}
+                    {entry.dateRange ? <p className="break-words text-[11px] uppercase tracking-[0.14em] text-[#8ca2d3]">{entry.dateRange}</p> : null}
                     {(entry.role || entry.organization) ? (
-                      <p className="mt-1 text-base font-medium text-white">{[entry.role, entry.organization].filter(Boolean).join(" · ")}</p>
+                      <p className="mt-1 break-words text-base font-medium text-white">{[entry.role, entry.organization].filter(Boolean).join(" · ")}</p>
                     ) : null}
-                    {entry.description ? <p className="mt-1 text-sm text-[#b6c0d0]">{entry.description}</p> : null}
+                    {entry.description ? <p className="mt-1 break-words text-sm text-[#b6c0d0]">{entry.description}</p> : null}
                   </li>
                 ))}
               </ol>
@@ -1174,7 +1220,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
-          <SectionFrame sectionId="achievements" number="05" title="SELECTED ACHIEVEMENTS" subtitle="Verified Highlights">
+          <SectionFrame sectionId="achievements" number="05" title={member.achievementsTitle?.trim() || "SELECTED ACHIEVEMENTS"} subtitle="Verified Highlights">
             {hasAchievements ? (
               <div className="grid gap-3 sm:grid-cols-2">
                 {member.achievements!.map((item, index) => (
@@ -1191,7 +1237,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                       {String(index + 1).padStart(2, "0")}
                     </p>
                     {item.year ? <p className="text-[11px] uppercase tracking-[0.14em] text-[#8aa0d1]">{item.year}</p> : null}
-                    {item.title ? <h3 className="mt-1 text-base font-semibold text-white">{item.title}</h3> : null}
+                    {item.title ? <h3 className="mt-1 break-words text-base font-semibold leading-snug text-white">{item.title}</h3> : null}
                     {item.description ? <p className="mt-2 text-sm text-[#b6c1d3]">{item.description}</p> : null}
                     {item.link && (/^https?:\/\//.test(item.link) || item.link.startsWith("/")) ? (
                       <a
@@ -1271,16 +1317,29 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           >
             <DepthGlassLayers strength="soft" />
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
-              <span className="absolute left-5 top-5 font-display text-[clamp(3rem,5vw,6rem)] leading-[0.84] text-[#9bb4ff]/[0.1]">
-                &ldquo;
-              </span>
+              {quotes.length <= 1 ? (
+                <span className="absolute left-5 top-5 font-display text-[clamp(3rem,5vw,6rem)] leading-[0.84] text-[#9bb4ff]/[0.1]">
+                  &ldquo;
+                </span>
+              ) : null}
             </div>
             <div className="relative z-10 min-w-0 max-w-full">
               <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#88a8ff] sm:text-[11px] lg:text-[12px] xl:text-[13px]">07</p>
               <h2 className="font-display mt-1 max-w-full text-[22px] font-semibold leading-[1.06] text-white sm:text-[24px] lg:text-[28px] xl:text-[30px]">
                 QUOTE / PERSONAL NOTE
               </h2>
-              {quote ? (
+              {quotes.length > 1 ? (
+                <div className="mt-5 grid min-w-0 grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
+                  {quotes.map((item, index) => (
+                    <blockquote
+                      key={`${item.slice(0, 24)}-${index}`}
+                      className={`min-w-0 rounded-2xl px-4 py-4 text-sm leading-relaxed text-[#d2dcf0] ${secondaryGlass}`}
+                    >
+                      {item}
+                    </blockquote>
+                  ))}
+                </div>
+              ) : quote ? (
                 <blockquote className="mt-4 max-w-4xl border-l border-[#7da2ff]/50 pl-5 text-base leading-relaxed text-[#d2dcf0]">
                   &ldquo;{quote}&rdquo;
                 </blockquote>
@@ -1299,10 +1358,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   <li key={`${item.label}-${item.href}`}>
                     <div className="group/social relative">
                       <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Open ${member.name} on ${item.platformName}`}
+                        {...socialAnchorProps(item.href, item.platformName, member.name)}
                         className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/70 motion-safe:hover:bg-[#60A5FA]/14 motion-safe:hover:shadow-[0_0_20px_rgba(125,211,252,0.22)] motion-safe:hover:text-[#e5f3ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${microSurface}`}
                       >
                         <Icon className="h-4 w-4" aria-hidden="true" />

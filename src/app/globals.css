@@ -833,6 +833,105 @@ button:focus-visible,
   font-family: var(--font-display), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/*
+ * Homepage Hero — contained cinematic media card.
+ * The page's Gradient Blinds atmosphere stays visible around the card;
+ * the video is clipped to the card only (never viewport-level).
+ */
+.sigma-hero-stage {
+  max-width: 1280px;
+}
+
+.sigma-hero-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 20px;
+  border: 1px solid rgba(189, 224, 254, 0.16);
+  background-color: #05070e;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 26px 70px rgba(2, 8, 22, 0.4);
+  /* Portrait-friendly floor; taller content grows the card so nothing clips. */
+  min-height: calc((100vw - 1.5rem) * 1.15);
+}
+
+.sigma-hero-card__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 38%;
+}
+
+.sigma-hero-card__shade {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(
+      ellipse 92% 62% at 50% 44%,
+      rgba(5, 7, 14, 0.5) 0%,
+      rgba(5, 7, 14, 0.24) 48%,
+      transparent 76%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 7, 14, 0.42) 0%,
+      transparent 22%,
+      rgba(5, 7, 14, 0.28) 62%,
+      rgba(5, 7, 14, 0.55) 100%
+    );
+}
+
+/* Keep the rotating Sigma edge ring crisp above video + overlay. */
+.sigma-hero-card > .sigma-border-glow__edge {
+  z-index: 3;
+}
+
+.sigma-hero-card__content {
+  position: relative;
+  z-index: 4;
+}
+
+/* Signal line docks to the card top instead of clearing the fixed navbar. */
+.sigma-hero-card .sigma-hero-curved-loop {
+  top: clamp(1.1rem, 3vw, 2rem);
+  z-index: 4;
+}
+
+@media (min-width: 640px) {
+  .sigma-hero-card {
+    border-radius: 24px;
+    min-height: min(620px, calc((100vw - 2rem) * 0.85));
+  }
+}
+
+@media (min-width: 768px) {
+  .sigma-hero-card {
+    border-radius: 28px;
+    /* ~4:3 tablet panel */
+    min-height: min(640px, calc((100vw - 4rem) * 0.72));
+  }
+
+  .sigma-hero-card__video {
+    object-position: center center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sigma-hero-card {
+    border-radius: 30px;
+    /* ~16:9 cinematic panel, capped with the 1280px stage */
+    min-height: min(720px, calc((100vw - 4rem) * 0.5625));
+  }
+}
+
 .sigma-hero-title {
   font-family: var(--font-display), "Helvetica Neue", Helvetica, Arial, sans-serif;
   letter-spacing: 0.02em;

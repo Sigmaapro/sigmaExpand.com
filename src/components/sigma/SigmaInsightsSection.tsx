@@ -715,17 +715,34 @@ const GlobalStyles = () => (
         padding-top: max(4.25rem, calc(env(safe-area-inset-top, 0px) + 3rem));
       }
     }
+    /*
+     * Hero box metrics (single source of truth — this ID rule outranks the
+     * section's utility classes). The main element already offsets the fixed
+     * navbar, so the hero fills only the remaining first viewport and uses symmetric
+     * vertical padding, which lands the media card on the true optical center.
+     * Gutters stay narrow so the card reads as a large floating panel.
+     */
     .sigma-landing-root #hero {
-      min-height: min(100svh, 920px);
-      padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
-      padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
-      padding-bottom: 2rem;
+      min-height: min(calc(100svh - 4.25rem), 920px);
+      padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+      padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
       box-sizing: border-box;
     }
     @media (min-width: 640px) {
       .sigma-landing-root #hero {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+    @media (min-width: 768px) {
+      .sigma-landing-root #hero {
+        min-height: min(calc(100svh - 4.5rem), 920px);
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-top: 1.75rem;
+        padding-bottom: 1.75rem;
       }
     }
 
@@ -1221,89 +1238,136 @@ const HeroSection = ({
 }) => {
   const { lang } = useLanguage();
   const reduceMotion = useReducedMotion() ?? false;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (reduceMotion) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch {
+        /* ignore seek errors before metadata */
+      }
+      return;
+    }
+
+    const play = () => {
+      void video.play().catch(() => {
+        /* Autoplay may be blocked; muted + playsInline usually succeeds. */
+      });
+    };
+
+    if (video.readyState >= 2) play();
+    else video.addEventListener("loadeddata", play, { once: true });
+  }, [reduceMotion]);
 
   return (
     <section
       id="hero"
-      className="relative flex min-h-[min(100svh,860px)] scroll-mt-24 items-center justify-start overflow-x-clip px-5 pb-16 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.5rem))] sm:px-6 sm:pb-20 sm:pt-24 md:min-h-screen md:px-16 md:pb-24 md:pt-[6.5rem] lg:px-24"
+      className="sigma-hero-shell relative flex scroll-mt-24 items-center justify-center overflow-x-clip"
     >
-      {/* Replace the simple slot inside SigmaHeroCurvedLoop when the new component is ready. */}
-      <SigmaHeroCurvedLoop text={t.hero.eyebrow} />
+      <div className="sigma-hero-stage relative z-10 mx-auto w-full">
+        <SigmaBorderGlow borderRadius={28}>
+          <div className="sigma-hero-card relative w-full">
+            <video
+              ref={videoRef}
+              className="sigma-hero-card__video"
+              src="/videos/hero_section.MP4"
+              autoPlay={!reduceMotion}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              controls={false}
+              disablePictureInPicture
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+            <div className="sigma-hero-card__shade" aria-hidden />
 
-      <div className="relative z-10 mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center text-center">
-        <div className="mx-auto flex w-full min-w-0 max-w-5xl flex-col items-center">
-          <SigmaHeroCurvedLoopSpacer />
+            {/* Replace the simple slot inside SigmaHeroCurvedLoop when the new component is ready. */}
+            <SigmaHeroCurvedLoop text={t.hero.eyebrow} />
 
-          <div className="sigma-hero-content-group mx-auto flex w-full min-w-0 flex-col items-center text-center">
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0.92, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full"
-            >
-              <SigmaHeroTitleMark title={t.hero.title} />
-            </motion.div>
+            <div className="sigma-hero-card__content mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center px-4 py-10 text-center sm:px-8 sm:py-12 md:px-12 md:py-14">
+              <div className="mx-auto flex w-full min-w-0 max-w-5xl flex-col items-center">
+                <SigmaHeroCurvedLoopSpacer />
 
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className={`mb-5 max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:mb-5 sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
-            >
-              {t.hero.subtitle}
-            </motion.p>
+                <div className="sigma-hero-content-group mx-auto flex w-full min-w-0 flex-col items-center text-center">
+                  <motion.div
+                    initial={reduceMotion ? false : { opacity: 0.92, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full"
+                  >
+                    <SigmaHeroTitleMark title={t.hero.title} />
+                  </motion.div>
 
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className={`sigma-body-measure mx-auto mb-8 max-w-2xl px-1 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:px-0 sm:text-[15px] md:text-[#aeb5bd] ${localeHeroSupporting(lang)}`}
-            >
-              {t.hero.supporting}
-            </motion.p>
+                  <motion.p
+                    initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
+                    className={`mb-5 max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:mb-5 sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
+                  >
+                    {t.hero.subtitle}
+                  </motion.p>
 
-            <div className="flex w-full min-w-0 max-w-xl flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-3.5">
-              <AnimatedContent
-                className="w-full sm:w-auto"
-                direction="horizontal"
-                distance={200}
-                duration={2}
-                delay={0.2}
-                ease="bounce.out"
-                disappearEase="elastic.in(1, 0.3)"
-                reverse
-              >
-                <MagneticButton
-                  primary
-                  liquid
-                  isRtl={isRtl}
-                  onClick={openPartnerIntentFlow}
-                  fullWidthMobile
-                >
-                  {t.hero.primaryCta}
-                </MagneticButton>
-              </AnimatedContent>
-              <AnimatedContent
-                className="w-full sm:w-auto"
-                direction="horizontal"
-                distance={200}
-                duration={2}
-                delay={0.2}
-                ease="bounce.out"
-                disappearEase="elastic.in(1, 0.3)"
-              >
-                <MagneticButton
-                  liquid
-                  isRtl={isRtl}
-                  href={t.hero.secondaryHref}
-                  fullWidthMobile
-                >
-                  {t.hero.secondaryCta}
-                </MagneticButton>
-              </AnimatedContent>
+                  <motion.p
+                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    className={`sigma-body-measure mx-auto mb-8 max-w-2xl px-1 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:px-0 sm:text-[15px] md:text-[#aeb5bd] ${localeHeroSupporting(lang)}`}
+                  >
+                    {t.hero.supporting}
+                  </motion.p>
+
+                  <div className="flex w-full min-w-0 max-w-xl flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-3.5">
+                    <AnimatedContent
+                      className="w-full sm:w-auto"
+                      direction="horizontal"
+                      distance={200}
+                      duration={2}
+                      delay={0.2}
+                      ease="bounce.out"
+                      disappearEase="elastic.in(1, 0.3)"
+                      reverse
+                    >
+                      <MagneticButton
+                        primary
+                        liquid
+                        isRtl={isRtl}
+                        onClick={openPartnerIntentFlow}
+                        fullWidthMobile
+                      >
+                        {t.hero.primaryCta}
+                      </MagneticButton>
+                    </AnimatedContent>
+                    <AnimatedContent
+                      className="w-full sm:w-auto"
+                      direction="horizontal"
+                      distance={200}
+                      duration={2}
+                      delay={0.2}
+                      ease="bounce.out"
+                      disappearEase="elastic.in(1, 0.3)"
+                    >
+                      <MagneticButton
+                        liquid
+                        isRtl={isRtl}
+                        href={t.hero.secondaryHref}
+                        fullWidthMobile
+                      >
+                        {t.hero.secondaryCta}
+                      </MagneticButton>
+                    </AnimatedContent>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </SigmaBorderGlow>
       </div>
     </section>
   );

@@ -12,7 +12,7 @@ type ServiceSectionShellProps = {
 
 /**
  * Shared section frame for service landing pages.
- * No card chrome — spacing and optional atmosphere only.
+ * Continuity comes from a hairline gradient, not boxed chrome.
  */
 export function ServiceSectionShell({
   id,
@@ -24,16 +24,20 @@ export function ServiceSectionShell({
   return (
     <section
       id={id}
-      className={`relative scroll-mt-28 border-t border-white/[0.06] ${className}`}
+      className={`relative scroll-mt-28 ${className}`}
       aria-labelledby={ariaLabel ? undefined : `${id}-heading`}
       aria-label={ariaLabel}
     >
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
+        aria-hidden="true"
+      />
       {atmosphere !== "none" ? (
         <div
           className={`pointer-events-none absolute inset-0 -z-10 ${
             atmosphere === "violet"
-              ? "bg-[radial-gradient(60%_50%_at_50%_0%,rgba(79,29,187,0.12),transparent_70%)]"
-              : "bg-[radial-gradient(55%_45%_at_50%_0%,rgba(29,137,187,0.08),transparent_68%)]"
+              ? "bg-[radial-gradient(60%_50%_at_50%_0%,rgba(79,29,187,0.10),transparent_70%)]"
+              : "bg-[radial-gradient(55%_45%_at_50%_0%,rgba(29,137,187,0.07),transparent_68%)]"
           }`}
           aria-hidden="true"
         />

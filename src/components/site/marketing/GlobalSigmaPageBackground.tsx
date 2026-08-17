@@ -1,16 +1,16 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { SigmaColorBendsBackground } from "@/components/site/marketing/SigmaColorBendsBackground";
 import { SigmaGradientBlindsBackground } from "@/components/site/marketing/SigmaGradientBlindsBackground";
+import { SigmaTwilightLinesBackground } from "@/components/site/marketing/SigmaTwilightLinesBackground";
 
 /**
- * Keep the existing Color Bends background for inner routes and use the
- * Sigma Gradient Blinds treatment on the two homepage locales.
+ * Homepage locales keep Gradient Blinds.
+ * Every other internal route uses React Bits Pro Twilight Lines.
  */
 export function GlobalSigmaPageBackground() {
   const pathname = usePathname();
   const isHomepage = pathname === "/" || pathname === "/ar";
 
-  return isHomepage ? <SigmaGradientBlindsBackground /> : <SigmaColorBendsBackground />;
+  return isHomepage ? <SigmaGradientBlindsBackground /> : <SigmaTwilightLinesBackground />;
 }

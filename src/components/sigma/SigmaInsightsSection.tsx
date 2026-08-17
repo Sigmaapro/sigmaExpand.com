@@ -1275,7 +1275,7 @@ const HeroSection = ({
             <video
               ref={videoRef}
               className="sigma-hero-card__video"
-              src="/videos/hero_section.MP4"
+              src="/videos/hero_section.mp4"
               autoPlay={!reduceMotion}
               muted
               loop
@@ -1314,60 +1314,64 @@ const HeroSection = ({
                     {t.hero.subtitle}
                   </motion.p>
 
-                  <motion.p
+                  <motion.div
                     initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className={`sigma-body-measure mx-auto mb-8 max-w-2xl px-1 text-sm text-[#d0d7df] text-pretty sm:mb-9 sm:px-0 sm:text-[15px] md:text-[#aeb5bd] ${localeHeroSupporting(lang)}`}
+                    className="sigma-hero-supporting-glass"
                   >
-                    {t.hero.supporting}
-                  </motion.p>
-
-                  <div className="flex w-full min-w-0 max-w-xl flex-col items-stretch justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:gap-3.5">
-                    <AnimatedContent
-                      className="w-full sm:w-auto"
-                      direction="horizontal"
-                      distance={200}
-                      duration={2}
-                      delay={0.2}
-                      ease="bounce.out"
-                      disappearEase="elastic.in(1, 0.3)"
-                      reverse
+                    <p
+                      className={`m-0 text-sm text-pretty sm:text-[15px] ${localeHeroSupporting(lang)}`}
                     >
-                      <MagneticButton
-                        primary
-                        liquid
-                        isRtl={isRtl}
-                        onClick={openPartnerIntentFlow}
-                        fullWidthMobile
-                      >
-                        {t.hero.primaryCta}
-                      </MagneticButton>
-                    </AnimatedContent>
-                    <AnimatedContent
-                      className="w-full sm:w-auto"
-                      direction="horizontal"
-                      distance={200}
-                      duration={2}
-                      delay={0.2}
-                      ease="bounce.out"
-                      disappearEase="elastic.in(1, 0.3)"
-                    >
-                      <MagneticButton
-                        liquid
-                        isRtl={isRtl}
-                        href={t.hero.secondaryHref}
-                        fullWidthMobile
-                      >
-                        {t.hero.secondaryCta}
-                      </MagneticButton>
-                    </AnimatedContent>
-                  </div>
+                      {t.hero.supporting}
+                    </p>
+                  </motion.div>
                 </div>
               </div>
             </div>
           </div>
         </SigmaBorderGlow>
+
+        <div className="sigma-hero-cta-row mx-auto flex w-full max-w-xl flex-col items-stretch px-4 sm:w-fit sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:px-0">
+          <AnimatedContent
+            className="max-sm:w-full"
+            direction="horizontal"
+            distance={200}
+            duration={2}
+            delay={0.2}
+            ease="bounce.out"
+            disappearEase="elastic.in(1, 0.3)"
+            reverse
+          >
+            <MagneticButton
+              primary
+              liquid
+              isRtl={isRtl}
+              onClick={openPartnerIntentFlow}
+              fullWidthMobile
+            >
+              {t.hero.primaryCta}
+            </MagneticButton>
+          </AnimatedContent>
+          <AnimatedContent
+            className="max-sm:w-full"
+            direction="horizontal"
+            distance={200}
+            duration={2}
+            delay={0.2}
+            ease="bounce.out"
+            disappearEase="elastic.in(1, 0.3)"
+          >
+            <MagneticButton
+              liquid
+              isRtl={isRtl}
+              href={t.hero.secondaryHref}
+              fullWidthMobile
+            >
+              {t.hero.secondaryCta}
+            </MagneticButton>
+          </AnimatedContent>
+        </div>
       </div>
     </section>
   );

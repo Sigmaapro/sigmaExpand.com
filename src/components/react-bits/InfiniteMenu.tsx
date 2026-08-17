@@ -15,8 +15,14 @@ import "./InfiniteMenu.css";
 
 /**
  * Port of the ReactBits Infinite Menu (WebGL2 disc sphere + arcball control).
- * The only departure from the reference is the texture source: instead of
- * photographic items, each disc is painted procedurally with Sigma artwork.
+ *
+ * Disc material is the React Bits Pro Shader Card field (simplex plasma /
+ * branching energy) painted onto the existing instanced discs. Each service
+ * index maps to a stable SIGMA-spectrum hue; titles stay on an undistorted
+ * atlas overlay — children sit above the shader, same as the original Shader Card.
+ *
+ * GLSL note: never declare a variable named "active" — GLSL ES 3.00 / ANGLE
+ * treats it as reserved and the program will fail to link (invisible discs).
  */
 
 export type InfiniteMenuItem = {
@@ -76,36 +82,208 @@ precision highp float;
 uniform sampler2D uTex;
 uniform int uItemCount;
 uniform int uAtlasSize;
-
-out vec4 outColor;
+uniform float uFrames;
+uniform float uReduceMotion;
 
 in vec2 vUvs;
 in float vAlpha;
 flat in int vInstanceId;
 
+out vec4 outColor;
+
+// React Bits Pro Shader Card fragment (pro.reactbits.dev/docs/components/shader-card),
+// adapted from disc UVs instead of a rectangular fullscreen pass.
+// Preview defaults: speed 0.5, positionY 0.15, scale 4.0, branch 2.0,
+// extents 1.5, radius 0.90, boost 0.50, noise 1.5, width 1.50, wave 0.15,
+// edge 0-1, falloff 2.0. Per-service hue replaces the single #5227FF fill.
+//
+// Authored SIGMA spectrum, indexed by service (vInstanceId % count).
+// Sequence jumps around the range so spherical neighbors are not a
+// blue/purple stripe: Electric Blue, Violet, Magenta, SIGMA Blue, UV, ...
+
+const int SIGMA_PALETTE_LEN = 15;
+const vec3 SIGMA_PALETTE[15] = vec3[15](
+  vec3(0.114, 0.537, 0.733),
+  vec3(0.322, 0.153, 1.000),
+  vec3(0.769, 0.231, 1.000),
+  vec3(0.114, 0.227, 0.733),
+  vec3(0.545, 0.239, 1.000),
+  vec3(0.141, 0.298, 1.000),
+  vec3(0.631, 0.235, 1.000),
+  vec3(0.231, 0.169, 1.000),
+  vec3(0.102, 0.435, 0.749),
+  vec3(0.443, 0.208, 1.000),
+  vec3(0.310, 0.114, 0.733),
+  vec3(0.702, 0.235, 1.000),
+  vec3(0.200, 0.251, 1.000),
+  vec3(0.392, 0.094, 0.910),
+  vec3(0.184, 0.235, 1.000)
+);
+
+const float F3 = 0.3333333;
+const float G3 = 0.1666667;
+const float PI = 3.14159265359;
+
+vec3 random3(vec3 c) {
+  float j = 4096.0 * sin(dot(c, vec3(17.0, 59.4, 15.0)));
+  vec3 r;
+  r.z = fract(512.0 * j);
+  j *= 0.125;
+  r.x = fract(512.0 * j);
+  j *= 0.125;
+  r.y = fract(512.0 * j);
+  return r - 0.5;
+}
+
+float simplex3d(vec3 p) {
+  vec3 s = floor(p + dot(p, vec3(F3)));
+  vec3 x = p - s + dot(s, vec3(G3));
+
+  vec3 e = step(vec3(0.0), x - x.yzx);
+  vec3 i1 = e * (1.0 - e.zxy);
+  vec3 i2 = 1.0 - e.zxy * (1.0 - e);
+
+  vec3 x1 = x - i1 + G3;
+  vec3 x2 = x - i2 + 2.0 * G3;
+  vec3 x3 = x - 1.0 + 3.0 * G3;
+
+  vec4 w, d;
+
+  w.x = dot(x, x);
+  w.y = dot(x1, x1);
+  w.z = dot(x2, x2);
+  w.w = dot(x3, x3);
+
+  w = max(0.6 - w, 0.0);
+
+  d.x = dot(random3(s), x);
+  d.y = dot(random3(s + i1), x1);
+  d.z = dot(random3(s + i2), x2);
+  d.w = dot(random3(s + 1.0), x3);
+
+  w *= w;
+  w *= w;
+  d *= w;
+
+  return dot(d, vec4(52.0));
+}
+
 void main() {
-  int itemIndex = vInstanceId % uItemCount;
-  int cellsPerRow = uAtlasSize;
+  vec2 disc = vUvs * 2.0 - 1.0;
+  float rad = length(disc);
+  if (rad > 1.0) discard;
+  float edge = 1.0 - smoothstep(0.985, 1.0, rad);
+
+  // Never name a variable "active" — reserved in GLSL ES 3.00 / ANGLE.
+  float facing = clamp((vAlpha - 0.1) / 0.9, 0.0, 1.0);
+  float visAmt = mix(0.38, 1.0, pow(max(facing, 0.0), 0.72));
+  float frontAmt = smoothstep(0.48, 0.94, facing);
+
+  int safeCount = max(uItemCount, 1);
+  int itemIndex = vInstanceId % safeCount;
+  int colorIndex = itemIndex % SIGMA_PALETTE_LEN;
+  vec3 cardColor = SIGMA_PALETTE[colorIndex];
+  vec3 cardShift = SIGMA_PALETTE[(colorIndex + 5) % SIGMA_PALETTE_LEN];
+
+  float speed = 0.5 * mix(0.32, 1.0, visAmt) * mix(0.7, 1.0, frontAmt);
+  float iTime = uFrames * 0.016 * speed * (1.0 - uReduceMotion);
+  float time = 28.22 + 1.25 * iTime + float(vInstanceId) * 0.73;
+
+  float uPositionY = 0.15;
+  float uScale = 4.0;
+  float uEffectRadius = 0.90;
+  float uEffectBoost = 0.50 * mix(0.4, 1.0, visAmt) * mix(0.75, 1.08, frontAmt);
+  float uEdgeMin = 0.0;
+  float uEdgeMax = 1.0;
+  float uFalloffPower = 2.0;
+  float uNoiseScale = 1.5;
+  float uWidthFactor = 1.50;
+  float uWaveAmount = 0.15 * mix(0.4, 1.0, visAmt);
+  float uBranchIntensity = 2.0 * mix(0.45, 1.0, visAmt);
+  float uVerticalExtent = 1.5;
+  float uHorizontalExtent = 1.5;
+
+  float bignessScale = 1.0 / uNoiseScale;
+
+  vec2 uv = disc / max(uScale, 0.5);
+  float yOffset = mix(-0.3, 0.8, uPositionY);
+  uv.y -= yOffset;
+  uv.y *= uVerticalExtent;
+  uv.x *= uHorizontalExtent;
+
+  vec2 p = (uv + 1.0) * 0.5;
+
+  vec2 positionFromCenter = uv;
+  positionFromCenter /= uEffectRadius;
+  positionFromCenter.x /= uWidthFactor;
+  float positionFromBottom = 0.5 * (positionFromCenter.y + 1.0);
+
+  vec2 waveOffset = vec2(0.0);
+  waveOffset.x += positionFromBottom * sin(4.0 * positionFromCenter.y - 4.0 * time);
+  waveOffset.x += 0.1 * positionFromBottom * sin(4.0 * positionFromCenter.x - 1.561 * time);
+  waveOffset.x += uBranchIntensity * 0.15 * sin(8.0 * positionFromCenter.y + time * 2.0);
+  waveOffset.x += uBranchIntensity * 0.1 * sin(12.0 * positionFromCenter.y - time * 1.5);
+  waveOffset.y += uBranchIntensity * 0.08 * sin(6.0 * positionFromCenter.x + time * 1.8);
+  positionFromCenter += uWaveAmount * waveOffset;
+
+  positionFromCenter.x += positionFromCenter.x / max(1.0 - positionFromCenter.y, 0.12);
+
+  float effectMask = clamp(1.0 - length(positionFromCenter), 0.0, 1.0);
+  effectMask = 1.0 - pow(1.0 - effectMask, uFalloffPower);
+
+  vec3 p3 = bignessScale * 0.25 * vec3(p.x, p.y, 0.0) + vec3(0.0, -time * 0.1, time * 0.025);
+  float noise = simplex3d(p3 * 32.0);
+  noise += 0.3 * simplex3d(p3 * 64.0 + vec3(time * 0.05, time * 0.03, 0.0));
+  noise += 0.15 * simplex3d(p3 * 128.0 - vec3(time * 0.08, 0.0, time * 0.04));
+  noise = 0.5 + 0.5 * noise;
+
+  float value = effectMask * noise;
+  value += uEffectBoost * effectMask;
+
+  float edgeThresh = mix(uEdgeMin, uEdgeMax, pow(0.5 * (positionFromCenter.y + 1.0), 1.2));
+  float edgedValue = clamp(value - edgeThresh, 0.0, 1.0);
+  float steppedValue = smoothstep(edgeThresh, edgeThresh + 0.1, value);
+  float highlight = 1.0 - edgedValue;
+  float repeatedValue = highlight;
+
+  p3 = bignessScale * 0.1 * vec3(p.x, p.y, 0.0) + vec3(0.0, -time * 0.01, time * 0.025);
+  noise = simplex3d(p3 * 32.0);
+  noise = 0.5 + 0.5 * noise;
+  repeatedValue = mix(repeatedValue, noise, 0.65);
+
+  repeatedValue = 0.5 * sin(6.0 * PI * (1.0 - pow(1.0 - repeatedValue, 1.8)) - 0.5 * PI) + 0.5;
+  float steppedLines = smoothstep(0.88, 1.0, pow(repeatedValue, 8.0));
+  steppedLines = mix(steppedLines, 0.0, 0.8 - noise);
+  highlight = max(steppedLines, highlight);
+  highlight = pow(highlight, 2.0);
+
+  vec3 effectHighlightColor = mix(cardColor * 0.8, mix(cardColor, cardShift, 0.16) * 1.5, p.y);
+  float whiteFlash = pow(sin(time * 3.0), 4.0) * frontAmt;
+  effectHighlightColor += vec3(0.3, 0.2, 0.2) * whiteFlash;
+  vec3 effectBodyColor = mix(cardColor * 0.7, cardColor * 1.0, p.y);
+
+  vec3 field = effectHighlightColor * (steppedValue * highlight);
+  field += effectBodyColor * steppedValue;
+
+  float chroma = mix(0.32, 1.0, visAmt);
+  float fieldLum = dot(field, vec3(0.22, 0.18, 0.62));
+  field = mix(vec3(fieldLum), field, chroma);
+
+  vec3 dark = mix(vec3(0.016, 0.012, 0.045), cardColor * 0.06, mix(0.18, 0.42, visAmt));
+  vec3 color = dark + field * mix(0.38, 1.15, visAmt);
+  float alpha = mix(0.42, 0.92, visAmt) * edge;
+
+  int cellsPerRow = max(uAtlasSize, 1);
   int cellX = itemIndex % cellsPerRow;
   int cellY = itemIndex / cellsPerRow;
   vec2 cellSize = vec2(1.0) / vec2(float(cellsPerRow));
   vec2 cellOffset = vec2(float(cellX), float(cellY)) * cellSize;
+  vec2 st = clamp(vec2(vUvs.x, 1.0 - vUvs.y), 0.0, 1.0) * cellSize + cellOffset;
+  vec4 title = texture(uTex, st);
+  color = mix(color, title.rgb, title.a);
+  alpha = max(alpha, title.a);
 
-  ivec2 texSize = textureSize(uTex, 0);
-  float imageAspect = float(texSize.x) / float(texSize.y);
-  float containerAspect = 1.0;
-
-  float scale = max(imageAspect / containerAspect, containerAspect / imageAspect);
-
-  vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
-  st = (st - 0.5) * scale + 0.5;
-
-  st = clamp(st, 0.0, 1.0);
-
-  st = st * cellSize + cellOffset;
-
-  outColor = texture(uTex, st);
-  outColor.a *= vAlpha;
+  outColor = vec4(color, alpha);
 }
 `;
 
@@ -308,6 +486,7 @@ function createShader(
   if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     return shader;
   }
+  console.error(gl.getShaderInfoLog(shader));
   gl.deleteShader(shader);
   return null;
 }
@@ -335,7 +514,7 @@ function createProgram(
   if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
     return program;
   }
-
+  console.error(gl.getProgramInfoLog(program));
   gl.deleteProgram(program);
   return null;
 }
@@ -404,8 +583,8 @@ function createAndSetupTexture(
 }
 
 /**
- * Sigma disc artwork — replaces the reference's photographic atlas cells.
- * Pure canvas drawing: no imagery is fetched or invented.
+ * Sharp title overlay only — the Shader Card field is generated in the
+ * fragment shader so the energy surface never warps typography.
  */
 function paintSigmaCell(
   ctx: CanvasRenderingContext2D,
@@ -417,65 +596,15 @@ function paintSigmaCell(
 ) {
   ctx.save();
   ctx.translate(originX, originY);
-
-  ctx.fillStyle = "#05070D";
-  ctx.fillRect(0, 0, size, size);
-
-  const hues: Array<[string, string]> = [
-    ["#1D89BB", "#1D3ABB"],
-    ["#1D3ABB", "#4F1DBB"],
-    ["#4F1DBB", "#1D89BB"],
-  ];
-  const [from, to] = hues[index % hues.length]!;
-
-  const diagonal = ctx.createLinearGradient(0, 0, size, size);
-  diagonal.addColorStop(0, `${from}55`);
-  diagonal.addColorStop(0.55, "#05070D00");
-  diagonal.addColorStop(1, `${to}4D`);
-  ctx.fillStyle = diagonal;
-  ctx.fillRect(0, 0, size, size);
-
-  const glow = ctx.createRadialGradient(
-    size * 0.32,
-    size * 0.28,
-    size * 0.02,
-    size * 0.5,
-    size * 0.5,
-    size * 0.72,
-  );
-  glow.addColorStop(0, `${from}66`);
-  glow.addColorStop(1, "#05070D00");
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, size, size);
-
-  ctx.strokeStyle = "rgba(189, 224, 254, 0.07)";
-  ctx.lineWidth = Math.max(1, size / 320);
-  const step = size / 9;
-  for (let i = 1; i < 9; i += 1) {
-    ctx.beginPath();
-    ctx.moveTo(i * step, 0);
-    ctx.lineTo(i * step, size);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(0, i * step);
-    ctx.lineTo(size, i * step);
-    ctx.stroke();
-  }
-
-  ctx.beginPath();
-  ctx.arc(size / 2, size / 2, size * 0.46, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(189, 224, 254, 0.3)";
-  ctx.lineWidth = Math.max(2, size / 190);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(size / 2, size / 2, size * 0.36, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(189, 224, 254, 0.12)";
-  ctx.lineWidth = Math.max(1, size / 320);
-  ctx.stroke();
+  ctx.clearRect(0, 0, size, size);
 
   ctx.textAlign = "center";
-  ctx.fillStyle = "rgba(154, 164, 178, 0.9)";
+  ctx.textBaseline = "middle";
+  ctx.shadowColor = "rgba(5, 7, 14, 0.88)";
+  ctx.shadowBlur = size * 0.045;
+  ctx.shadowOffsetY = size * 0.006;
+
+  ctx.fillStyle = "rgba(189, 224, 254, 0.82)";
   ctx.font = `600 ${size * 0.05}px ui-sans-serif, system-ui, sans-serif`;
   ctx.fillText(String(index + 1).padStart(2, "0"), size / 2, size * 0.27);
 
@@ -499,7 +628,7 @@ function paintSigmaCell(
   if (current) lines.push(current);
 
   const lineHeight = fontSize * 1.24;
-  const startY = size / 2 - ((lines.length - 1) * lineHeight) / 2 + fontSize * 0.34;
+  const startY = size / 2 - ((lines.length - 1) * lineHeight) / 2;
   lines.forEach((line, i) => {
     ctx.fillText(line, size / 2, startY + i * lineHeight);
   });
@@ -696,6 +825,7 @@ type DiscLocations = {
   uFrames: WebGLUniformLocation | null;
   uItemCount: WebGLUniformLocation | null;
   uAtlasSize: WebGLUniformLocation | null;
+  uReduceMotion: WebGLUniformLocation | null;
 };
 
 class InfiniteGridMenu {
@@ -805,6 +935,9 @@ class InfiniteGridMenu {
   dispose() {
     this.stop();
     this.control.dispose();
+    const gl = this.gl;
+    if (this.tex) gl.deleteTexture(this.tex);
+    if (this.discProgram) gl.deleteProgram(this.discProgram);
   }
 
   run(time = 0) {
@@ -885,6 +1018,7 @@ class InfiniteGridMenu {
       uFrames: gl.getUniformLocation(program, "uFrames"),
       uItemCount: gl.getUniformLocation(program, "uItemCount"),
       uAtlasSize: gl.getUniformLocation(program, "uAtlasSize"),
+      uReduceMotion: gl.getUniformLocation(program, "uReduceMotion"),
     };
 
     const discGeo = new DiscGeometry(56, 1);
@@ -925,9 +1059,11 @@ class InfiniteGridMenu {
     this.updateCameraMatrix();
     this.updateProjectionMatrix(gl);
     this.resize();
+    this.animate(16);
+    this.render();
   }
 
-  /** Sigma-branded atlas: painted on a 2D canvas, no external imagery. */
+  /** Sharp title atlas: no mipmaps, no baked grid/fill. */
   private initTexture() {
     const gl = this.gl;
     this.tex = createAndSetupTexture(
@@ -941,13 +1077,14 @@ class InfiniteGridMenu {
     const itemCount = Math.max(1, this.items.length);
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
     const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     const cellSize = 512;
 
     canvas.width = this.atlasSize * cellSize;
     canvas.height = this.atlasSize * cellSize;
 
     if (ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       this.items.forEach((item, i) => {
         const x = (i % this.atlasSize) * cellSize;
         const y = Math.floor(i / this.atlasSize) * cellSize;
@@ -956,8 +1093,8 @@ class InfiniteGridMenu {
     }
 
     gl.bindTexture(gl.TEXTURE_2D, this.tex);
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
-    gl.generateMipmap(gl.TEXTURE_2D);
   }
 
   private initDiscInstances(count: number) {
@@ -1027,7 +1164,7 @@ class InfiniteGridMenu {
     const gl = this.gl;
     gl.useProgram(this.discProgram);
 
-    gl.enable(gl.CULL_FACE);
+    gl.disable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -1058,6 +1195,8 @@ class InfiniteGridMenu {
 
     gl.uniform1f(locations.uFrames, this.frames);
     gl.uniform1f(locations.uScaleFactor, this.scaleFactor);
+    gl.uniform1f(locations.uReduceMotion, this.reduceMotion ? 1 : 0);
+
     gl.uniform1i(locations.uTex, 0);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.tex);
@@ -1120,8 +1259,13 @@ class InfiniteGridMenu {
       );
       this.control.snapTargetDirection = snapDirection;
 
-      // Idle sphere does no useful work — stop until the next interaction.
-      if (!isMoving && vec3.squaredDistance(snapDirection, this.control.snapDirection) < 1e-5) {
+      // Keep the Shader Card field animating while the section is on-screen.
+      // Reduced-motion still parks the loop once the sphere has snapped.
+      if (
+        this.reduceMotion &&
+        !isMoving &&
+        vec3.squaredDistance(snapDirection, this.control.snapDirection) < 1e-5
+      ) {
         this.stop();
       }
     } else {
@@ -1189,7 +1333,9 @@ export function InfiniteMenu({ items, ariaLabel }: InfiniteMenuProps) {
         setIsMoving,
         { reduceMotion, maxDpr: isCoarse ? 1.5 : 2 },
       );
-    } catch {
+    } catch (error) {
+      console.error("InfiniteMenu WebGL init failed", error);
+      canvas.style.background = "#ff00aa";
       return;
     }
     sketchRef.current = sketch;
@@ -1198,20 +1344,27 @@ export function InfiniteMenu({ items, ariaLabel }: InfiniteMenuProps) {
     window.addEventListener("resize", handleResize);
     handleResize();
 
+    let intersecting = false;
+    const syncRun = () => {
+      if (intersecting && !document.hidden) sketch.start();
+      else sketch.stop();
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) {
-          sketch.start();
-        } else {
-          sketch.stop();
-        }
+        intersecting = Boolean(entry?.isIntersecting);
+        syncRun();
       },
       { threshold: 0.05 },
     );
     observer.observe(root);
 
+    const onVisibility = () => syncRun();
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", handleResize);
       sketch.dispose();
       sketchRef.current = null;

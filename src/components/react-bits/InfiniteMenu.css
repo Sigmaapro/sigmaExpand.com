@@ -32,8 +32,7 @@
   -webkit-touch-callout: none;
 
   /* Discs cropped by the viewport edge fade out instead of hard-clipping.
-     Masks the canvas only, so the title, counter and CTA stay fully opaque.
-     Purely visual — hit testing still covers the full canvas. */
+     Masks the canvas only, so the title, counter and CTA stay fully opaque. */
   -webkit-mask-image:
     linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
@@ -78,6 +77,8 @@
   letter-spacing: -0.01em;
   text-align: right;
   text-shadow: 0 2px 24px rgba(5, 7, 13, 0.85);
+  /* Title is painted on the disc atlas so it belongs to the object. */
+  display: none;
 }
 
 .infinite-menu-face-title.active {

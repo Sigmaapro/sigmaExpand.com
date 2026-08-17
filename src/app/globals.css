@@ -842,6 +842,51 @@ button:focus-visible,
   max-width: 1280px;
 }
 
+/* CTA row sits in document flow under the video card — not over it. */
+.sigma-hero-cta-row {
+  margin-top: 1.5rem;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .sigma-hero-cta-row {
+    margin-top: 1.75rem;
+    gap: 1rem;
+  }
+}
+
+/* Dark smoked glass — supporting copy only; text stays unfiltered. */
+.sigma-hero-supporting-glass {
+  width: auto;
+  max-width: min(38.75rem, calc(100vw - 2rem));
+  margin-inline: auto;
+  padding: 0.875rem 1.125rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(148, 180, 220, 0.16);
+  background: linear-gradient(
+    135deg,
+    rgba(8, 14, 28, 0.68),
+    rgba(14, 24, 42, 0.48)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 1px 0 0 rgba(118, 215, 232, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.16);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  pointer-events: none;
+}
+
+.sigma-hero-supporting-glass p {
+  color: rgba(245, 247, 250, 0.84);
+}
+
+@media (min-width: 640px) {
+  .sigma-hero-supporting-glass {
+    padding: 1rem 1.375rem;
+  }
+}
+
 .sigma-hero-card {
   position: relative;
   display: flex;
@@ -940,7 +985,7 @@ button:focus-visible,
 
 .sigma-hero-title-mark {
   isolation: isolate;
-  /* Ring clearance above title — kept modest so the hero group can sit higher */
+  /* Keep the existing title clearance so H1 position does not shift. */
   padding-top: clamp(1.75rem, 4.5vw, 3.25rem);
   padding-bottom: clamp(0.65rem, 2.2vw, 1.35rem);
 }
@@ -992,42 +1037,6 @@ button:focus-visible,
 .sigma-hero-metallic--glare {
   transition: background-position 3.2s ease-in-out;
   background-position: 140% 140%, center;
-}
-
-/* Large Magic Ring frame — mobile 300–380 / tablet 520–650 / desktop 700–850 */
-.sigma-hero-magic-ring {
-  width: clamp(300px, 72vw, 820px);
-  height: clamp(300px, 72vw, 820px);
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .sigma-hero-magic-ring {
-    width: clamp(520px, 68vw, 650px);
-    height: clamp(520px, 68vw, 650px);
-  }
-}
-
-@media (min-width: 1024px) {
-  .sigma-hero-magic-ring {
-    width: clamp(700px, 52vw, 850px);
-    height: clamp(700px, 52vw, 850px);
-  }
-}
-
-/* Static neon ring when prefers-reduced-motion */
-.sigma-hero-magic-ring-fallback {
-  border: 1.5px solid rgba(29, 137, 187, 0.62);
-  box-shadow:
-    0 0 28px rgba(29, 58, 187, 0.32),
-    0 0 56px rgba(29, 137, 187, 0.14),
-    inset 0 0 24px rgba(29, 137, 187, 0.14);
-  background: radial-gradient(
-    circle,
-    transparent 58%,
-    rgba(29, 137, 187, 0.1) 68%,
-    rgba(79, 29, 187, 0.06) 74%,
-    transparent 80%
-  );
 }
 
 @media (prefers-reduced-motion: reduce) {

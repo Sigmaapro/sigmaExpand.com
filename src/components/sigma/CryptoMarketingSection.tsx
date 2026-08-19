@@ -27,11 +27,14 @@ import { SigmaBorderGlow } from "@/components/sigma/SigmaBorderGlow";
 export function CryptoMarketingSection() {
   const { lang, isRtl } = useLanguage();
   const c = getCryptoAgency(lang);
-  const [active, setActive] = useState(0);
+  const tabs = c.tabs;
+  const [active, setActive] = useState(() => {
+    const europeIndex = tabs.findIndex((item) => item.key === "europe");
+    return europeIndex >= 0 ? europeIndex : 0;
+  });
   const [slideDir, setSlideDir] = useState<1 | -1>(1);
   const reduceMotion = useReducedMotion() ?? false;
   const sectionRef = useRef<HTMLElement | null>(null);
-  const tabs = c.tabs;
   const tab = tabs[active] ?? tabs[0]!;
 
   const countryTokens = useMemo(() => {

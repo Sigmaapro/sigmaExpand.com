@@ -1220,8 +1220,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             )}
           </SectionFrame>
 
+          {hasAchievements ? (
           <SectionFrame sectionId="achievements" number="05" title={member.achievementsTitle?.trim() || "SELECTED ACHIEVEMENTS"} subtitle="Verified Highlights">
-            {hasAchievements ? (
               <div className="grid gap-3 sm:grid-cols-2">
                 {member.achievements!.map((item, index) => (
                   <article
@@ -1259,10 +1259,8 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   </article>
                 ))}
               </div>
-            ) : (
-              <ProfileContentPlaceholder label="Profile data pending" blocks={4} />
-            )}
           </SectionFrame>
+          ) : null}
 
           <SectionFrame sectionId="footprint" number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
             <div data-chapter-row="footprint-languages" className="grid gap-3 md:grid-cols-3">

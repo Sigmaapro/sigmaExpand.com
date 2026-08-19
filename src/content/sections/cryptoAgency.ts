@@ -45,7 +45,7 @@ export const cryptoAgency: Localized<CryptoAgencyLocale> = {
         bullets: [
           "Compliance-aware growth across UAE, KSA, Qatar, Kuwait, Bahrain, and Oman",
           "Arabic and Persian-native KOL and community networks",
-          "Native Farsi KOL, broker IB infrastructure, and regional BD execution",
+          "KOL, broker IB infrastructure, and regional BD execution",
         ],
       },
       {

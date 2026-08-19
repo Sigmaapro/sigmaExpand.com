@@ -61,12 +61,17 @@ function MemberTile({
               tone === "core" ? "border-[#1c39bb]/40 bg-[#121b32]" : "border-white/[0.12] bg-[#121621]"
             } ${avatarSize}`}
           >
-            {hasImage ? (
+              {hasImage ? (
               <Image
                 src={portrait!}
                 alt={altText}
                 fill
                 className="object-cover"
+                style={
+                  member.portraitObjectPosition
+                    ? { objectPosition: member.portraitObjectPosition }
+                    : undefined
+                }
                 sizes="72px"
                 onError={() => setHasImageError(true)}
               />
@@ -84,7 +89,7 @@ function MemberTile({
           <div className="min-w-0 flex-1">
             <h3 className={`font-display font-semibold leading-snug text-white ${titleSize} ${localeHeading(language)}`}>{member.name}</h3>
             {member.role ? (
-              <p className={`mt-1 uppercase tracking-[0.12em] text-[#9aa5b3] ${roleSize} ${localeMeta(language)}`}>{member.role}</p>
+              <p className={`mt-1 break-words uppercase tracking-[0.12em] text-[#9aa5b3] ${roleSize} ${localeMeta(language)}`}>{member.role}</p>
             ) : null}
           </div>
         </div>

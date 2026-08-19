@@ -1229,6 +1229,65 @@ const AnimatedText = ({
   );
 };
 
+/** Decorative inline video: mute + playsInline on the DOM node before play() for iOS Safari. */
+function attachAtmosphericPlayback(
+  video: HTMLVideoElement,
+  reduceMotion: boolean,
+): () => void {
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.controls = false;
+  video.setAttribute("playsinline", "true");
+  video.setAttribute("webkit-playsinline", "true");
+  try {
+    video.disablePictureInPicture = true;
+  } catch {
+    /* older browsers */
+  }
+
+  if (reduceMotion) {
+    video.pause();
+    try {
+      video.currentTime = 0;
+    } catch {
+      /* ignore seek errors before metadata */
+    }
+    return () => undefined;
+  }
+
+  let retried = false;
+
+  const tryPlay = () => {
+    void video.play().catch(() => {
+      if (retried) return;
+      retried = true;
+      const retry = () => {
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        void video.play().catch(() => {
+          /* Low Power Mode / policy — keep the current frame, no play UI. */
+        });
+      };
+      video.addEventListener("canplay", retry, { once: true });
+      if (video.readyState >= 3) retry();
+    });
+  };
+
+  if (video.readyState >= 2) {
+    tryPlay();
+  } else {
+    video.addEventListener("loadedmetadata", tryPlay, { once: true });
+    video.addEventListener("canplay", tryPlay, { once: true });
+  }
+
+  return () => {
+    video.removeEventListener("loadedmetadata", tryPlay);
+    video.removeEventListener("canplay", tryPlay);
+  };
+}
+
 const HeroSection = ({
   t,
   isRtl,
@@ -1243,25 +1302,7 @@ const HeroSection = ({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    if (reduceMotion) {
-      video.pause();
-      try {
-        video.currentTime = 0;
-      } catch {
-        /* ignore seek errors before metadata */
-      }
-      return;
-    }
-
-    const play = () => {
-      void video.play().catch(() => {
-        /* Autoplay may be blocked; muted + playsInline usually succeeds. */
-      });
-    };
-
-    if (video.readyState >= 2) play();
-    else video.addEventListener("loadeddata", play, { once: true });
+    return attachAtmosphericPlayback(video, reduceMotion);
   }, [reduceMotion]);
 
   return (
@@ -1280,9 +1321,10 @@ const HeroSection = ({
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               controls={false}
               disablePictureInPicture
+              disableRemotePlayback
               aria-hidden="true"
               tabIndex={-1}
             />
@@ -1387,25 +1429,7 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    if (reduceMotion) {
-      video.pause();
-      try {
-        video.currentTime = 0;
-      } catch {
-        /* ignore seek errors before metadata */
-      }
-      return;
-    }
-
-    const play = () => {
-      void video.play().catch(() => {
-        /* Autoplay may be blocked; muted + playsInline usually succeeds. */
-      });
-    };
-
-    if (video.readyState >= 2) play();
-    else video.addEventListener("loadeddata", play, { once: true });
+    return attachAtmosphericPlayback(video, reduceMotion);
   }, [reduceMotion]);
 
   return (
@@ -1415,7 +1439,9 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
     >
       <div className="relative z-10 mx-auto max-w-[90rem]">
         <SigmaBorderGlow borderRadius={20}>
-          <div className="sigma-what-is-media relative aspect-[16/10] w-full min-h-[18rem] rounded-[1.15rem] sm:aspect-[16/9] sm:min-h-[22rem] sm:rounded-[1.25rem] md:min-h-[26rem] lg:rounded-[1.35rem]">
+          <div className="sigma-what-is-media relative w-full rounded-[1.15rem] sm:rounded-[1.25rem] lg:rounded-[1.35rem]">
+            <div className="sigma-what-is-media__shade" aria-hidden />
+
             <video
               ref={videoRef}
               className="sigma-what-is-media__video"
@@ -1427,12 +1453,30 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
               preload="metadata"
               controls={false}
               disablePictureInPicture
+              disableRemotePlayback
               aria-hidden="true"
               tabIndex={-1}
             />
-            <div className="sigma-what-is-media__shade" aria-hidden />
 
-            <div className="sigma-what-is-media__copy flex h-full items-center px-5 py-7 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-12">
+            <div className="sigma-what-is-intro">
+              <div className="sigma-what-is-intro__inner">
+                <p
+                  className={`sigma-hero-eyebrow sigma-what-is-intro__label text-[11px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] ${localeEyebrow(language)}`}
+                >
+                  {t.whatIsSigma.label}
+                </p>
+                <h2
+                  className={`sigma-what-is-intro__title max-w-full font-display font-semibold uppercase tracking-normal text-white text-balance ${localeHeading(language)}`}
+                >
+                  {t.whatIsSigma.headline}
+                </h2>
+                <p className={`sigma-what-is-intro__body ${localeBody(language)}`}>
+                  {t.whatIsSigma.description}
+                </p>
+              </div>
+            </div>
+
+            <div className="sigma-what-is-media__copy h-full items-center px-5 py-7 sm:px-8 sm:py-10 md:px-10 md:py-12 lg:px-12">
               <div className="w-full max-w-[min(22rem,72%)] sm:max-w-[min(28rem,52%)] md:max-w-[min(32rem,48%)] lg:max-w-[min(34rem,46%)]">
                 <p
                   className={`sigma-hero-eyebrow mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#1c39bb] sm:text-[11px] ${localeEyebrow(language)}`}
@@ -1452,7 +1496,7 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
           </div>
         </SigmaBorderGlow>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="sigma-what-is-pillars mt-8 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {pillars.map((pillar, idx) => (
             <SigmaBorderGlow key={pillar.title} borderRadius={8}>
               <motion.div

@@ -246,20 +246,61 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       languages: ["Persian — Native", "English — Professional"],
       markets: ["Middle East (MENA)", "Europe", "LATAM", "Africa", "CIS", "Asia"],
     },
-    withMemberProfileDefaults(
-      withPlaceholderImage(
+    withMemberProfileDefaults({
+      id: "arad-moaf",
+      name: "Arad Moaf",
+      role: "Crypto Business Development, Growth & Strategic Partnerships",
+      group: "core",
+      initials: "AM",
+      imageSrc: "/images/team/arad-moaf.jpg",
+      portrait: "/images/team/arad-moaf.jpg",
+      portraitObjectPosition: "72% 22%",
+      profileStatus: "active",
+      shortBio:
+        "Arad Moaf is a crypto business development and growth professional with more than 10 years of specialized experience in the cryptocurrency and digital asset industry. Throughout his career, he has worked across major exchange ecosystems including KuCoin, BingX, LBank, XT, Toobit, and WEEX, building deep experience in exchange growth, strategic partnerships, KOL management, affiliate development, trader acquisition, and regional market expansion.",
+      bio: "Arad Moaf is a crypto business development and growth professional with more than 10 years of specialized experience in the cryptocurrency and digital asset industry.",
+      fullBio:
+        "Arad has built his career at the intersection of crypto trading, exchange growth, community building, strategic partnerships, and business development.\n\nThrough Rastad and his broader crypto network, he has been involved in building and managing communities with more than 600,000 subscribers and members, while directly and indirectly contributing to the acquisition, activation, and management of more than 400,000 exchange users.\n\nHe has managed and worked with a network of more than 200 crypto KOLs, traders, affiliates, educators, and community leaders, giving him extensive hands-on experience in understanding how crypto users behave, how trading communities grow, and how exchanges can convert distribution into sustainable trading volume and revenue.\n\nOver the years, Arad has worked both as a top-performing KOL and as a senior business development professional, giving him a rare dual perspective: understanding the market from the side of the trader and community, while also understanding the commercial, operational, and strategic priorities of an exchange.\n\nOne of Arad's strongest areas of expertise is building and managing crypto-native distribution networks.\n\nHe has managed relationships with more than 200 KOLs and strategic partners, ranging from large trading communities and professional educators to high-volume traders and affiliate businesses.\n\nThrough these networks and the broader Rastad ecosystem, he has helped build access to:\n\n600,000+ community members and subscribers\n\n200+ KOLs and strategic partners\n\n400,000+ direct and indirect exchange users\n\nLarge-scale trading and affiliate communities across Persian-speaking and regional markets\n\nHis experience goes beyond simple influencer management. He has been involved in designing the commercial structures behind KOL partnerships, including commission models, trading-volume targets, acquisition incentives, sponsorships, exclusive partnerships, VIP structures, and performance-based campaigns.\n\nArad specializes in building growth systems designed specifically for cryptocurrency exchanges and trading platforms.\n\nHis approach combines distribution, community access, trader behavior, incentive design, affiliate economics, and exchange operations to create scalable acquisition channels.\n\nRather than focusing only on registrations or marketing reach, his primary focus is on acquiring active, revenue-generating traders and building long-term partner ecosystems around them.",
+      skills: [
+        "Business Development",
+        "Strategic Partnerships",
+        "KOL & Affiliate Management",
+        "Regional Growth",
+        "User Acquisition",
+        "High-Volume Trader Acquisition",
+        "Trading Campaign Development",
+        "VIP & Partner Programs",
+        "Community Growth",
+        "Exchange Market Expansion",
+        "Commercial Negotiation",
+        "Revenue & Volume Growth Strategy",
+      ],
+      services: [
+        "KOL and affiliate acquisition",
+        "Exchange user growth",
+        "Active trader conversion",
+        "Trading-volume growth",
+        "Futures and derivatives campaigns",
+        "VIP trader acquisition",
+        "Regional market penetration",
+        "Partner incentive structures",
+        "Referral and commission systems",
+        "Trading competitions and tournaments",
+        "Retention and reactivation campaigns",
+        "Strategic exchange partnerships",
+      ],
+      careerHistory: [
         {
-          id: "arad-moaf",
-          name: "Arad Moaf",
-          role: roleLabel,
-          group: "core",
-          initials: "AM",
-          imageSrc: null,
-          bio: "Owns how Sigma enters and grows in new regions. Builds the relationships and execution frameworks that make Sigma operate locally — not just globally.",
+          organization: "KuCoin, BingX, LBank, XT, Toobit, and WEEX",
+          description:
+            "Worked across major exchange ecosystems including KuCoin, BingX, LBank, XT, Toobit, and WEEX, building deep experience in exchange growth, strategic partnerships, KOL management, affiliate development, trader acquisition, and regional market expansion.",
         },
-        MALE_MEMBER_PLACEHOLDER,
-      ),
-    ),
+      ],
+      markets: ["Persian-speaking markets", "Regional markets"],
+      seoTitle: "Arad Moaf | Crypto Business Development, Growth & Strategic Partnerships | Sigma",
+      metaDescription:
+        "Arad Moaf is a crypto business development and growth professional with more than 10 years of specialized experience across KuCoin, BingX, LBank, XT, Toobit, and WEEX.",
+    }),
     withMemberProfileDefaults(
       withPlaceholderImage(
         {

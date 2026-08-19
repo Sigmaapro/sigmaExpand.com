@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CryptoExchangeServiceDraftPage } from "@/components/services/CryptoExchangeServiceDraftPage";
 import { ImportedServiceDraftPage } from "@/components/services/ImportedServiceDraftPage";
+import { ServiceV2Page } from "@/components/services/v2/ServiceV2Page";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { ServicePlaceholderPageView } from "@/components/site/marketing/ServicePlaceholderPageView";
 import {
@@ -13,6 +14,7 @@ import {
   getImportedFinalServiceDocument,
   isImportedFinalServiceSlug,
 } from "@/content/services/importedFinalServiceDocuments";
+import { getServiceV2Content } from "@/content/services/v2";
 import { absoluteOgImage, getCanonicalUrl } from "@/content/seo";
 
 const CRYPTO_EXCHANGE_SLUG = "crypto-exchange-growth-market-development";
@@ -87,6 +89,15 @@ export default async function FinalServicePage({ params }: PageProps) {
   if (!isFinalServiceSlug(slug)) notFound();
   const service = getFinalServiceBySlug(slug);
   if (!service) notFound();
+
+  const v2 = getServiceV2Content(slug);
+  if (v2) {
+    return (
+      <InnerPageShell>
+        <ServiceV2Page content={v2} />
+      </InnerPageShell>
+    );
+  }
 
   const imported = getImportedFinalServiceDocument(slug);
   if (imported) {

@@ -16,10 +16,8 @@ import "./InfiniteMenu.css";
 /**
  * Port of the ReactBits Infinite Menu (WebGL2 disc sphere + arcball control).
  *
- * Disc material is the React Bits Pro Shader Card field (simplex plasma /
- * branching energy) painted onto the existing instanced discs. Each service
- * index maps to a stable SIGMA-spectrum hue; titles stay on an undistorted
- * atlas overlay — children sit above the shader, same as the original Shader Card.
+ * Disc material is the React Bits Pro Portal field painted onto the existing
+ * instanced discs. Titles stay on an undistorted atlas overlay.
  *
  * GLSL note: never declare a variable named "active" — GLSL ES 3.00 / ANGLE
  * treats it as reserved and the program will fail to link (invisible discs).
@@ -91,81 +89,79 @@ flat in int vInstanceId;
 
 out vec4 outColor;
 
-// React Bits Pro Shader Card fragment (pro.reactbits.dev/docs/components/shader-card),
-// adapted from disc UVs instead of a rectangular fullscreen pass.
-// Preview defaults: speed 0.5, positionY 0.15, scale 4.0, branch 2.0,
-// extents 1.5, radius 0.90, boost 0.50, noise 1.5, width 1.50, wave 0.15,
-// edge 0-1, falloff 2.0. Per-service hue replaces the single #5227FF fill.
+// React Bits Pro Portal fragment (pro.reactbits.dev/docs/components/portal),
+// adapted into disc UV space. Live shader only evaluates layers 0..6
+// (uLayerCount > 0 .. > 6), so 7 is the hard maximum — 10 is a docs-UI
+// value with no extra branches.
 //
-// Authored SIGMA spectrum, indexed by service (vInstanceId % count).
-// Sequence jumps around the range so spherical neighbors are not a
-// blue/purple stripe: Electric Blue, Violet, Magenta, SIGMA Blue, UV, ...
+// Target settings from the supplied Portal preview:
+// primary #344BFC, secondary #533EF9, center #6840FC, bg #0A0A0A,
+// speed 0.3, density 0.5, layers 7, scale 1.2, brightness 0.5,
+// waveAmp 0.0, waveFreq 0.01, vertDist 0.45, depth 0.10.
 
-const int SIGMA_PALETTE_LEN = 15;
-const vec3 SIGMA_PALETTE[15] = vec3[15](
-  vec3(0.114, 0.537, 0.733),
-  vec3(0.322, 0.153, 1.000),
-  vec3(0.769, 0.231, 1.000),
-  vec3(0.114, 0.227, 0.733),
-  vec3(0.545, 0.239, 1.000),
-  vec3(0.141, 0.298, 1.000),
-  vec3(0.631, 0.235, 1.000),
-  vec3(0.231, 0.169, 1.000),
-  vec3(0.102, 0.435, 0.749),
-  vec3(0.443, 0.208, 1.000),
-  vec3(0.310, 0.114, 0.733),
-  vec3(0.702, 0.235, 1.000),
-  vec3(0.200, 0.251, 1.000),
-  vec3(0.392, 0.094, 0.910),
-  vec3(0.184, 0.235, 1.000)
-);
+const vec3 PORTAL_PRIMARY = vec3(0.20392157, 0.29411765, 0.98823529);
+const vec3 PORTAL_SECONDARY = vec3(0.32549020, 0.24313725, 0.97647059);
+const vec3 PORTAL_CENTER = vec3(0.40784314, 0.25098039, 0.98823529);
+const vec3 PORTAL_BG = vec3(0.03921569, 0.03921569, 0.03921569);
 
-const float F3 = 0.3333333;
-const float G3 = 0.1666667;
-const float PI = 3.14159265359;
+const float PORTAL_SPEED = 0.3;
+const float PORTAL_DENSITY = 0.5;
+const int PORTAL_LAYERS = 7;
+const float PORTAL_SCALE = 1.2;
+const float PORTAL_BRIGHTNESS = 0.5;
+const float PORTAL_WAVE_AMP = 0.0;
+const float PORTAL_WAVE_FREQ = 0.01;
+const float PORTAL_VERT_DIST = 0.45;
+const float PORTAL_DEPTH = 0.10;
 
-vec3 random3(vec3 c) {
-  float j = 4096.0 * sin(dot(c, vec3(17.0, 59.4, 15.0)));
-  vec3 r;
-  r.z = fract(512.0 * j);
-  j *= 0.125;
-  r.x = fract(512.0 * j);
-  j *= 0.125;
-  r.y = fract(512.0 * j);
-  return r - 0.5;
+float generateParticleField(vec2 coord, float scale, float time) {
+  float timeOffset = time * PORTAL_SPEED * 2.3;
+  coord *= scale;
+  coord.x += timeOffset;
+
+  vec2 cellId = floor(coord);
+  vec2 localPos = fract(coord);
+
+  vec2 randomSeed = 0.5 + 0.35 * sin(
+    11.0 * fract(
+      sin((cellId + scale) * mat2(7.0, 3.0, 6.0, 5.0)) * 5.0
+    )
+  );
+
+  vec2 particleOffset = randomSeed - localPos;
+  float distToParticle = length(particleOffset);
+
+  float particleIntensity = smoothstep(
+    0.0,
+    distToParticle,
+    sin(localPos.x + localPos.y) * 0.003
+  );
+
+  return particleIntensity;
 }
 
-float simplex3d(vec3 p) {
-  vec3 s = floor(p + dot(p, vec3(F3)));
-  vec3 x = p - s + dot(s, vec3(G3));
+vec3 computePortalEffect(vec2 coord, float depthGradient, float time, float brightness) {
+  coord.x += sin(time * PORTAL_WAVE_FREQ) * PORTAL_WAVE_AMP;
+  coord.y += sin(coord.x * 1.4) * PORTAL_VERT_DIST;
+  coord.x *= 0.1;
 
-  vec3 e = step(vec3(0.0), x - x.yzx);
-  vec3 i1 = e * (1.0 - e.zxy);
-  vec3 i2 = 1.0 - e.zxy * (1.0 - e);
+  float particleSum = 0.0;
 
-  vec3 x1 = x - i1 + G3;
-  vec3 x2 = x - i2 + 2.0 * G3;
-  vec3 x3 = x - 1.0 + 3.0 * G3;
+  if (PORTAL_LAYERS > 0) particleSum += generateParticleField(coord, 30.0 * PORTAL_DENSITY, time) * 0.3;
+  if (PORTAL_LAYERS > 1) particleSum += generateParticleField(coord, 20.0 * PORTAL_DENSITY, time) * 0.5;
+  if (PORTAL_LAYERS > 2) particleSum += generateParticleField(coord, 15.0 * PORTAL_DENSITY, time) * 0.8;
+  if (PORTAL_LAYERS > 3) particleSum += generateParticleField(coord, 10.0 * PORTAL_DENSITY, time);
+  if (PORTAL_LAYERS > 4) particleSum += generateParticleField(coord, 8.0 * PORTAL_DENSITY, time);
+  if (PORTAL_LAYERS > 5) particleSum += generateParticleField(coord, 6.0 * PORTAL_DENSITY, time);
+  if (PORTAL_LAYERS > 6) particleSum += generateParticleField(coord, 5.0 * PORTAL_DENSITY, time);
 
-  vec4 w, d;
+  float safeDepth = max(depthGradient, 0.018);
+  particleSum *= PORTAL_DEPTH / safeDepth;
 
-  w.x = dot(x, x);
-  w.y = dot(x1, x1);
-  w.z = dot(x2, x2);
-  w.w = dot(x3, x3);
+  vec3 portalGlow = mix(PORTAL_PRIMARY, PORTAL_SECONDARY, 0.5) * particleSum * 30.0 * brightness;
+  vec3 centerGlow = PORTAL_CENTER * 0.02 / safeDepth;
 
-  w = max(0.6 - w, 0.0);
-
-  d.x = dot(random3(s), x);
-  d.y = dot(random3(s + i1), x1);
-  d.z = dot(random3(s + i2), x2);
-  d.w = dot(random3(s + 1.0), x3);
-
-  w *= w;
-  w *= w;
-  d *= w;
-
-  return dot(d, vec4(52.0));
+  return portalGlow + centerGlow;
 }
 
 void main() {
@@ -176,103 +172,32 @@ void main() {
 
   // Never name a variable "active" — reserved in GLSL ES 3.00 / ANGLE.
   float facing = clamp((vAlpha - 0.1) / 0.9, 0.0, 1.0);
-  float visAmt = mix(0.38, 1.0, pow(max(facing, 0.0), 0.72));
+  float visAmt = mix(0.32, 1.0, pow(max(facing, 0.0), 0.72));
   float frontAmt = smoothstep(0.48, 0.94, facing);
+
+  float brightness = PORTAL_BRIGHTNESS * mix(0.22, 1.0, visAmt) * mix(0.82, 1.0, frontAmt);
+  float time = uFrames * 0.016 * (1.0 - uReduceMotion);
+
+  // Disc UV → Portal ball. Original Portal uses (uv-0.5)*2 / scale with a
+  // 0.5 ball radius; here the disc IS the ball, so scale zooms the field
+  // while depth is taken from disc radius so the rim sits on the perimeter.
+  vec2 coord = disc * 0.5 / PORTAL_SCALE;
+  float depthGradient = 0.5 * (1.0 - rad);
+
+  vec3 portalColor = computePortalEffect(coord, depthGradient, time, brightness);
+
+  float portalBrightness = length(portalColor);
+  float brightnessThreshold = 0.5;
+  float showPortal = smoothstep(brightnessThreshold, brightnessThreshold + 0.4, portalBrightness);
+  showPortal = pow(showPortal, 2.0);
+  showPortal *= visAmt;
+
+  vec3 color = mix(PORTAL_BG, portalColor, showPortal);
+  float alpha = mix(0.55, 0.94, visAmt) * edge;
+  alpha = max(alpha, showPortal * edge);
 
   int safeCount = max(uItemCount, 1);
   int itemIndex = vInstanceId % safeCount;
-  int colorIndex = itemIndex % SIGMA_PALETTE_LEN;
-  vec3 cardColor = SIGMA_PALETTE[colorIndex];
-  vec3 cardShift = SIGMA_PALETTE[(colorIndex + 5) % SIGMA_PALETTE_LEN];
-
-  float speed = 0.5 * mix(0.32, 1.0, visAmt) * mix(0.7, 1.0, frontAmt);
-  float iTime = uFrames * 0.016 * speed * (1.0 - uReduceMotion);
-  float time = 28.22 + 1.25 * iTime + float(vInstanceId) * 0.73;
-
-  float uPositionY = 0.15;
-  float uScale = 4.0;
-  float uEffectRadius = 0.90;
-  float uEffectBoost = 0.50 * mix(0.4, 1.0, visAmt) * mix(0.75, 1.08, frontAmt);
-  float uEdgeMin = 0.0;
-  float uEdgeMax = 1.0;
-  float uFalloffPower = 2.0;
-  float uNoiseScale = 1.5;
-  float uWidthFactor = 1.50;
-  float uWaveAmount = 0.15 * mix(0.4, 1.0, visAmt);
-  float uBranchIntensity = 2.0 * mix(0.45, 1.0, visAmt);
-  float uVerticalExtent = 1.5;
-  float uHorizontalExtent = 1.5;
-
-  float bignessScale = 1.0 / uNoiseScale;
-
-  vec2 uv = disc / max(uScale, 0.5);
-  float yOffset = mix(-0.3, 0.8, uPositionY);
-  uv.y -= yOffset;
-  uv.y *= uVerticalExtent;
-  uv.x *= uHorizontalExtent;
-
-  vec2 p = (uv + 1.0) * 0.5;
-
-  vec2 positionFromCenter = uv;
-  positionFromCenter /= uEffectRadius;
-  positionFromCenter.x /= uWidthFactor;
-  float positionFromBottom = 0.5 * (positionFromCenter.y + 1.0);
-
-  vec2 waveOffset = vec2(0.0);
-  waveOffset.x += positionFromBottom * sin(4.0 * positionFromCenter.y - 4.0 * time);
-  waveOffset.x += 0.1 * positionFromBottom * sin(4.0 * positionFromCenter.x - 1.561 * time);
-  waveOffset.x += uBranchIntensity * 0.15 * sin(8.0 * positionFromCenter.y + time * 2.0);
-  waveOffset.x += uBranchIntensity * 0.1 * sin(12.0 * positionFromCenter.y - time * 1.5);
-  waveOffset.y += uBranchIntensity * 0.08 * sin(6.0 * positionFromCenter.x + time * 1.8);
-  positionFromCenter += uWaveAmount * waveOffset;
-
-  positionFromCenter.x += positionFromCenter.x / max(1.0 - positionFromCenter.y, 0.12);
-
-  float effectMask = clamp(1.0 - length(positionFromCenter), 0.0, 1.0);
-  effectMask = 1.0 - pow(1.0 - effectMask, uFalloffPower);
-
-  vec3 p3 = bignessScale * 0.25 * vec3(p.x, p.y, 0.0) + vec3(0.0, -time * 0.1, time * 0.025);
-  float noise = simplex3d(p3 * 32.0);
-  noise += 0.3 * simplex3d(p3 * 64.0 + vec3(time * 0.05, time * 0.03, 0.0));
-  noise += 0.15 * simplex3d(p3 * 128.0 - vec3(time * 0.08, 0.0, time * 0.04));
-  noise = 0.5 + 0.5 * noise;
-
-  float value = effectMask * noise;
-  value += uEffectBoost * effectMask;
-
-  float edgeThresh = mix(uEdgeMin, uEdgeMax, pow(0.5 * (positionFromCenter.y + 1.0), 1.2));
-  float edgedValue = clamp(value - edgeThresh, 0.0, 1.0);
-  float steppedValue = smoothstep(edgeThresh, edgeThresh + 0.1, value);
-  float highlight = 1.0 - edgedValue;
-  float repeatedValue = highlight;
-
-  p3 = bignessScale * 0.1 * vec3(p.x, p.y, 0.0) + vec3(0.0, -time * 0.01, time * 0.025);
-  noise = simplex3d(p3 * 32.0);
-  noise = 0.5 + 0.5 * noise;
-  repeatedValue = mix(repeatedValue, noise, 0.65);
-
-  repeatedValue = 0.5 * sin(6.0 * PI * (1.0 - pow(1.0 - repeatedValue, 1.8)) - 0.5 * PI) + 0.5;
-  float steppedLines = smoothstep(0.88, 1.0, pow(repeatedValue, 8.0));
-  steppedLines = mix(steppedLines, 0.0, 0.8 - noise);
-  highlight = max(steppedLines, highlight);
-  highlight = pow(highlight, 2.0);
-
-  vec3 effectHighlightColor = mix(cardColor * 0.8, mix(cardColor, cardShift, 0.16) * 1.5, p.y);
-  float whiteFlash = pow(sin(time * 3.0), 4.0) * frontAmt;
-  effectHighlightColor += vec3(0.3, 0.2, 0.2) * whiteFlash;
-  vec3 effectBodyColor = mix(cardColor * 0.7, cardColor * 1.0, p.y);
-
-  vec3 field = effectHighlightColor * (steppedValue * highlight);
-  field += effectBodyColor * steppedValue;
-
-  float chroma = mix(0.32, 1.0, visAmt);
-  float fieldLum = dot(field, vec3(0.22, 0.18, 0.62));
-  field = mix(vec3(fieldLum), field, chroma);
-
-  vec3 dark = mix(vec3(0.016, 0.012, 0.045), cardColor * 0.06, mix(0.18, 0.42, visAmt));
-  vec3 color = dark + field * mix(0.38, 1.15, visAmt);
-  float alpha = mix(0.42, 0.92, visAmt) * edge;
-
   int cellsPerRow = max(uAtlasSize, 1);
   int cellX = itemIndex % cellsPerRow;
   int cellY = itemIndex / cellsPerRow;
@@ -286,6 +211,7 @@ void main() {
   outColor = vec4(color, alpha);
 }
 `;
+
 
 class Face {
   a: number;
@@ -583,7 +509,7 @@ function createAndSetupTexture(
 }
 
 /**
- * Sharp title overlay only — the Shader Card field is generated in the
+ * Sharp title overlay only — the Portal field is generated in the
  * fragment shader so the energy surface never warps typography.
  */
 function paintSigmaCell(
@@ -1259,7 +1185,7 @@ class InfiniteGridMenu {
       );
       this.control.snapTargetDirection = snapDirection;
 
-      // Keep the Shader Card field animating while the section is on-screen.
+      // Keep the Portal field animating while the section is on-screen.
       // Reduced-motion still parks the loop once the sphere has snapped.
       if (
         this.reduceMotion &&

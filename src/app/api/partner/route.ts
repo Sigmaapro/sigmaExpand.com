@@ -4,6 +4,7 @@ import {
   type EmailAttachment,
 } from "@/lib/contact/server-send";
 import { escapeHtml, isValidEmail, sanitizeText } from "@/lib/contact/sanitize";
+import { enforceRateLimit } from "@/lib/security/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -87,6 +88,9 @@ function buildCommonHtml(params: {
 }
 
 export async function POST(req: Request) {
+  const limited = await enforceRateLimit(req, "partner");
+  if (limited) return limited;
+
   let formData: FormData;
   try {
     formData = await req.formData();

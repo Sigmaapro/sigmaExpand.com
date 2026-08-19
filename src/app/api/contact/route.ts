@@ -7,6 +7,7 @@ import {
   sendLeadTelegram,
   type LeadSource,
 } from "@/lib/contact/server-send";
+import { enforceRateLimit } from "@/lib/security/rate-limit";
 
 const MAX_NAME = 200;
 const MAX_MESSAGE = 8000;
@@ -14,6 +15,9 @@ const MAX_MESSAGE = 8000;
 const SOURCES = new Set<LeadSource>(["book-call", "live-support", "contact-form"]);
 
 export async function POST(req: Request) {
+  const limited = await enforceRateLimit(req, "contact");
+  if (limited) return limited;
+
   let body: unknown;
   try {
     body = await req.json();

@@ -17,6 +17,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.184.0",
+    "@upstash/redis": "^1.38.2",
     "@use-gesture/react": "^10.3.1",
     "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.4.20",

@@ -4,7 +4,8 @@ import {
   type EmailAttachment,
 } from "@/lib/contact/server-send";
 import { escapeHtml, isValidEmail, sanitizeText } from "@/lib/contact/sanitize";
-import { enforceRateLimit } from "@/lib/security/rate-limit";
+import { enforceRateLimit, getClientIdentifier } from "@/lib/security/rate-limit";
+import { enforceTurnstile } from "@/lib/security/turnstile";
 
 export const runtime = "nodejs";
 
@@ -107,6 +108,12 @@ export async function POST(req: Request) {
   if (honeypot) {
     return NextResponse.json({ ok: true });
   }
+
+  const blocked = await enforceTurnstile(
+    formData.get("turnstileToken"),
+    getClientIdentifier(req),
+  );
+  if (blocked) return blocked;
 
   const intentType = parseIntentType(formData.get("intentType"));
   if (!intentType) {

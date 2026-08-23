@@ -11,7 +11,7 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 import type { ComponentType } from "react";
-import { useCallback, useState, type FormEvent } from "react";
+import { useCallback, useRef, useState, type FormEvent } from "react";
 import { CalendarPlus } from "lucide-react";
 import { BookCallModal } from "@/components/sigma/BookCallModal";
 import { MarketingPageShell } from "@/components/site/marketing/MarketingPageShell";
@@ -26,6 +26,7 @@ import {
 } from "@/content/socials";
 import { isValidEmail } from "@/lib/contact/sanitize";
 import { submitLead } from "@/lib/contact/client";
+import { TurnstileWidget, type TurnstileWidgetHandle } from "@/components/security/TurnstileWidget";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   localeCta,
@@ -77,6 +78,8 @@ export function ContactSubpageView() {
   const [submitted, setSubmitted] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [errorText, setErrorText] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef<TurnstileWidgetHandle | null>(null);
 
   const validateFields = useCallback(
     (nextName: string, nextEmail: string, nextMessage: string): FieldErrors => {
@@ -126,6 +129,11 @@ export function ContactSubpageView() {
         setFormState("error");
         return;
       }
+      if (!turnstileToken) {
+        setFormState("error");
+        setErrorText(copy.form.sendError);
+        return;
+      }
       const nm = name.trim();
       const em = email.trim();
       const msg = message.trim();
@@ -137,6 +145,7 @@ export function ContactSubpageView() {
           message: msg,
           source: "contact-form",
           website: "",
+          turnstileToken,
         });
         if (!result.ok) {
           setFormState("error");
@@ -152,9 +161,11 @@ export function ContactSubpageView() {
       } catch {
         setFormState("error");
         setErrorText(copy.form.sendError);
+      } finally {
+        turnstileRef.current?.reset();
       }
     },
-    [copy.form, email, message, name, validateFields],
+    [copy.form, email, message, name, turnstileToken, validateFields],
   );
 
   return (
@@ -312,6 +323,12 @@ export function ContactSubpageView() {
                     </p>
                   ) : null}
                 </div>
+                <TurnstileWidget
+                  widgetRef={turnstileRef}
+                  onToken={setTurnstileToken}
+                  onExpire={() => setTurnstileToken("")}
+                  onError={() => setTurnstileToken("")}
+                />
                 <button
                   type="submit"
                   disabled={formState === "loading"}

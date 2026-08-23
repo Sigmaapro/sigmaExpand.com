@@ -7,7 +7,8 @@ import {
   sendLeadTelegram,
   type LeadSource,
 } from "@/lib/contact/server-send";
-import { enforceRateLimit } from "@/lib/security/rate-limit";
+import { enforceRateLimit, getClientIdentifier } from "@/lib/security/rate-limit";
+import { enforceTurnstile } from "@/lib/security/turnstile";
 
 export const runtime = "nodejs";
 
@@ -38,6 +39,9 @@ export async function POST(req: Request) {
   if (honeypot) {
     return NextResponse.json({ ok: true });
   }
+
+  const blocked = await enforceTurnstile(o.turnstileToken, getClientIdentifier(req));
+  if (blocked) return blocked;
 
   const rawEmail = typeof o.email === "string" ? o.email : "";
   const email = sanitizeText(rawEmail, 320);

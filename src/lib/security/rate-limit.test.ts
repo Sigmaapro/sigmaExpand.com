@@ -71,6 +71,7 @@ function validContactBody(): Record<string, unknown> {
     message: "Hello from tests",
     source: "contact-form",
     website: "",
+    turnstileToken: "test-turnstile-token",
   };
 }
 
@@ -82,11 +83,13 @@ function validPartnerFields(): Record<string, string | string[]> {
     email: "qa@example.com",
     description: "Partnership inquiry",
     website_honeypot: "",
+    turnstileToken: "test-turnstile-token",
   };
 }
 
 beforeEach(() => {
   process.env.VERCEL = "1";
+  process.env.TURNSTILE_SECRET_KEY = "test-secret";
   delete process.env.RESEND_API_KEY;
   delete process.env.EMAIL_API_KEY;
   delete process.env.CONTACT_EMAIL;
@@ -96,6 +99,16 @@ beforeEach(() => {
   delete process.env.UPSTASH_REDIS_REST_TOKEN;
   resetRateLimitClientForTests();
   setRateLimitStoreForTests(createMemoryStore());
+  globalThis.fetch = (async (input, init) => {
+    const url = String(input);
+    if (url.includes("challenges.cloudflare.com/turnstile/v0/siteverify")) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    }
+    return originalFetch(input as RequestInfo, init);
+  }) as typeof fetch;
 });
 
 afterEach(() => {
@@ -434,6 +447,7 @@ test("partner upload size limit still runs after limiter allows", async () => {
       description: "Bio",
       roles: ["KOL"],
       website_honeypot: "",
+      turnstileToken: "test-turnstile-token",
       performanceScreenshot: tooBig,
     }),
   );
@@ -455,4 +469,130 @@ test("fail-closed when no distributed store is configured", async () => {
   assert.equal(res.status, 503);
   const json = (await res.json()) as { error?: string };
   assert.equal(json.error, "Service temporarily unavailable");
+});
+
+test("honeypot does not call Turnstile siteverify", async () => {
+  let siteverifyCalls = 0;
+  globalThis.fetch = (async (input: RequestInfo | URL) => {
+    const url = String(input);
+    if (url.includes("challenges.cloudflare.com/turnstile/v0/siteverify")) siteverifyCalls += 1;
+    throw new Error(`unexpected fetch ${url}`);
+  }) as typeof fetch;
+
+  const res = await contactPOST(
+    contactRequest({ ...validContactBody(), website: "http://spam.test" }),
+  );
+  assert.equal(res.status, 200);
+  assert.equal(siteverifyCalls, 0);
+});
+
+test("rate-limited request does not call Turnstile siteverify", async () => {
+  let siteverifyCalls = 0;
+  globalThis.fetch = (async (input: RequestInfo | URL) => {
+    const url = String(input);
+    if (url.includes("challenges.cloudflare.com/turnstile/v0/siteverify")) siteverifyCalls += 1;
+    throw new Error(`unexpected fetch ${url}`);
+  }) as typeof fetch;
+
+  const ip = "203.0.113.40";
+  for (let i = 0; i < RATE_LIMIT_POLICIES.contact.limit; i++) {
+    await checkRateLimit({ namespace: "contact", identifier: ip, ...RATE_LIMIT_POLICIES.contact });
+  }
+  const res = await contactPOST(contactRequest(validContactBody(), ip));
+  assert.equal(res.status, 429);
+  assert.equal(siteverifyCalls, 0);
+});
+
+test("missing Turnstile token is rejected before delivery", async () => {
+  let resendCalls = 0;
+  globalThis.fetch = (async (input: RequestInfo | URL) => {
+    const url = String(input);
+    if (url.includes("api.resend.com")) resendCalls += 1;
+    if (url.includes("challenges.cloudflare.com/turnstile/v0/siteverify")) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  }) as typeof fetch;
+  process.env.RESEND_API_KEY = "re_test";
+  process.env.CONTACT_EMAIL = "bd@example.com";
+
+  const res = await contactPOST(contactRequest({ ...validContactBody(), turnstileToken: "" }));
+  assert.equal(res.status, 400);
+  const json = (await res.json()) as { error?: string };
+  assert.equal(json.error, "Verification required");
+  assert.equal(resendCalls, 0);
+});
+
+test("invalid Turnstile token is rejected before delivery", async () => {
+  let resendCalls = 0;
+  globalThis.fetch = (async (input: RequestInfo | URL) => {
+    const url = String(input);
+    if (url.includes("api.resend.com")) resendCalls += 1;
+    if (url.includes("challenges.cloudflare.com/turnstile/v0/siteverify")) {
+      return new Response(JSON.stringify({ success: false, "error-codes": ["invalid-input-response"] }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  }) as typeof fetch;
+  process.env.RESEND_API_KEY = "re_test";
+  process.env.CONTACT_EMAIL = "bd@example.com";
+
+  const res = await contactPOST(contactRequest(validContactBody()));
+  assert.equal(res.status, 400);
+  const json = (await res.json()) as { error?: string };
+  assert.equal(json.error, "Verification failed. Please try again.");
+  assert.equal(resendCalls, 0);
+});
+
+test("Turnstile verification failure is fail-closed", async () => {
+  let resendCalls = 0;
+  globalThis.fetch = (async (input: RequestInfo | URL) => {
+    const url = String(input);
+    if (url.includes("api.resend.com")) resendCalls += 1;
+    if (url.includes("challenges.cloudflare.com/turnstile/v0/siteverify")) {
+      throw new Error("timeout");
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  }) as typeof fetch;
+  process.env.RESEND_API_KEY = "re_test";
+  process.env.CONTACT_EMAIL = "bd@example.com";
+
+  const res = await contactPOST(contactRequest(validContactBody()));
+  assert.equal(res.status, 503);
+  assert.equal(resendCalls, 0);
+});
+
+test("valid Turnstile token still cannot bypass validation", async () => {
+  let resendCalls = 0;
+  globalThis.fetch = (async (input: RequestInfo | URL) => {
+    const url = String(input);
+    if (url.includes("api.resend.com")) resendCalls += 1;
+    if (url.includes("challenges.cloudflare.com/turnstile/v0/siteverify")) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      });
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  }) as typeof fetch;
+  process.env.RESEND_API_KEY = "re_test";
+  process.env.CONTACT_EMAIL = "bd@example.com";
+
+  const res = await contactPOST(contactRequest({ ...validContactBody(), email: "not-an-email" }));
+  assert.equal(res.status, 400);
+  const json = (await res.json()) as { error?: string };
+  assert.equal(json.error, "Invalid email");
+  assert.equal(resendCalls, 0);
+});
+
+test("valid Turnstile token lets a contact request continue to delivery config", async () => {
+  const res = await contactPOST(contactRequest(validContactBody()));
+  assert.equal(res.status, 503);
+  const json = (await res.json()) as { error?: string };
+  assert.equal(json.error, "Lead capture is not configured");
 });

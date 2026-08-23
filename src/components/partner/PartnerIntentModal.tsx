@@ -7,6 +7,7 @@ import { Building2, BriefcaseBusiness, X } from "lucide-react";
 import { partnerIntentCopyByLang } from "@/content/partnerIntent";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeBody, localeCta, localeHeading, localeMeta, localeNav } from "@/lib/localeTypography";
+import { TurnstileWidget, type TurnstileWidgetHandle } from "@/components/security/TurnstileWidget";
 
 const PARTNER_INTENT_OPEN_EVENT = "sigma:open-partner-intent";
 
@@ -104,12 +105,15 @@ export function PartnerIntentModalHost() {
   const descriptionId = useId();
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const turnstileRef = useRef<TurnstileWidgetHandle | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const resetFormState = () => {
     setStatus("idle");
     setErrors({});
     setErrorMessage("");
     setFileError("");
+    setTurnstileToken("");
   };
 
   const closeModal = () => {
@@ -170,6 +174,10 @@ export function PartnerIntentModalHost() {
     return fd;
   };
 
+  const resetTurnstile = () => {
+    turnstileRef.current?.reset();
+  };
+
   const handleCompanySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (status === "sending") return;
@@ -191,6 +199,11 @@ export function PartnerIntentModalHost() {
       return;
     }
 
+    if (!turnstileToken) {
+      setErrorMessage(copy.errorMessage);
+      return;
+    }
+
     setStatus("sending");
     const fd = buildCommonFormData();
     fd.set("intentType", "company");
@@ -199,8 +212,10 @@ export function PartnerIntentModalHost() {
     fd.set("email", companyForm.email.trim());
     fd.set("websiteAddress", companyForm.websiteAddress.trim());
     fd.set("description", companyForm.description.trim());
+    fd.set("turnstileToken", turnstileToken);
 
     const ok = await submitForm(fd);
+    resetTurnstile();
     setStatus(ok ? "success" : "error");
   };
 
@@ -220,6 +235,11 @@ export function PartnerIntentModalHost() {
     if (Object.keys(nextErrors).length > 0 || socialLinkInvalid) {
       setErrors(nextErrors);
       if (socialLinkInvalid) setErrorMessage(copy.errorMessage);
+      return;
+    }
+
+    if (!turnstileToken) {
+      setErrorMessage(copy.errorMessage);
       return;
     }
 
@@ -248,8 +268,10 @@ export function PartnerIntentModalHost() {
     if (kolForm.performanceFile) {
       fd.set("performanceScreenshot", kolForm.performanceFile);
     }
+    fd.set("turnstileToken", turnstileToken);
 
     const ok = await submitForm(fd);
+    resetTurnstile();
     setStatus(ok ? "success" : "error");
   };
 
@@ -486,6 +508,12 @@ export function PartnerIntentModalHost() {
                     />
                     {errors.description ? <p className="mt-1 text-xs text-[#ff8f8f]">{errors.description}</p> : null}
                   </div>
+                  <TurnstileWidget
+                    widgetRef={turnstileRef}
+                    onToken={setTurnstileToken}
+                    onExpire={() => setTurnstileToken("")}
+                    onError={() => setTurnstileToken("")}
+                  />
                   {status === "success" ? (
                     <p className={`rounded-md border border-[#1c39bb]/35 bg-[#1c39bb]/12 p-3 text-sm text-[#d4e7ff] ${localeBody(language)}`}>{copy.successMessage}</p>
                   ) : null}
@@ -588,6 +616,12 @@ export function PartnerIntentModalHost() {
                     <textarea rows={4} value={kolForm.description} onChange={(e) => setKolForm((prev) => ({ ...prev, description: e.target.value }))} className="mt-1.5 min-h-[6rem] w-full resize-y rounded-md border border-white/[0.1] bg-[#07090f] px-3 py-2.5 text-base text-[#f1f3f5] outline-none transition-[border-color,box-shadow] focus:border-[#1c39bb]/55 focus:ring-2 focus:ring-[#1c39bb]/25 sm:text-sm" />
                     {errors.description ? <p className="mt-1 text-xs text-[#ff8f8f]">{errors.description}</p> : null}
                   </div>
+                  <TurnstileWidget
+                    widgetRef={turnstileRef}
+                    onToken={setTurnstileToken}
+                    onExpire={() => setTurnstileToken("")}
+                    onError={() => setTurnstileToken("")}
+                  />
                   {status === "success" ? (
                     <p className={`rounded-md border border-[#1c39bb]/35 bg-[#1c39bb]/12 p-3 text-sm text-[#d4e7ff] ${localeBody(language)}`}>{copy.successMessage}</p>
                   ) : null}

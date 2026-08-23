@@ -5,6 +5,8 @@ export type LeadPayload = {
   source: "book-call" | "live-support" | "contact-form";
   /** Honeypot — must stay empty; never shown to users. */
   website?: string;
+  /** Cloudflare Turnstile token from the official widget. */
+  turnstileToken: string;
 };
 
 export type SubmitLeadResult =

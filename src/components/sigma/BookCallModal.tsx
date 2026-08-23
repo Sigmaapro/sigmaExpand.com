@@ -8,6 +8,7 @@ import { getConversion } from "@/content/conversion";
 import type { LangCode } from "@/content/types";
 import { isValidEmail } from "@/lib/contact/sanitize";
 import { submitLead } from "@/lib/contact/client";
+import { TurnstileWidget, type TurnstileWidgetHandle } from "@/components/security/TurnstileWidget";
 import { localeCta, localeHeading, localeNav } from "@/lib/localeTypography";
 
 function readCalendlyUrl(): string | undefined {
@@ -41,6 +42,8 @@ export function BookCallModal({
   const reduceMotion = useReducedMotion() ?? false;
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const turnstileRef = useRef<TurnstileWidgetHandle | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -117,6 +120,12 @@ export function BookCallModal({
         return;
       }
 
+      if (!turnstileToken) {
+        setErrorMessage(copy.submitError);
+        setStatus("error");
+        return;
+      }
+
       setErrorMessage("");
       setStatus("sending");
 
@@ -126,7 +135,9 @@ export function BookCallModal({
         message: message.trim() || undefined,
         source: "book-call",
         website: "",
+        turnstileToken,
       });
+      turnstileRef.current?.reset();
 
       if (result.ok) {
         setStatus("success");
@@ -140,7 +151,7 @@ export function BookCallModal({
       setErrorMessage(msg);
       setStatus("error");
     },
-    [status, email, name, message, copy],
+    [status, email, name, message, turnstileToken, copy],
   );
 
   if (!mounted) return null;
@@ -292,6 +303,12 @@ export function BookCallModal({
                       className="mt-1.5 min-h-[5.5rem] w-full resize-y rounded-md border border-white/[0.1] bg-[#07090f] px-3 py-2.5 text-base text-[#f1f3f5] outline-none transition-[border-color,box-shadow] focus:border-[#1c39bb]/55 focus:ring-2 focus:ring-[#1c39bb]/25 sm:text-sm"
                     />
                   </div>
+                  <TurnstileWidget
+                    widgetRef={turnstileRef}
+                    onToken={setTurnstileToken}
+                    onExpire={() => setTurnstileToken("")}
+                    onError={() => setTurnstileToken("")}
+                  />
                   <button
                     type="submit"
                     disabled={status === "sending"}

@@ -8,6 +8,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { localeCta, localeNav } from "@/lib/localeTypography";
 import { isValidEmail } from "@/lib/contact/sanitize";
 import { submitLead } from "@/lib/contact/client";
+import { TurnstileWidget, type TurnstileWidgetHandle } from "@/components/security/TurnstileWidget";
 
 type LiveSupportButtonProps = {
   /** Accessible name + tooltip (translate in parent). */
@@ -40,6 +41,8 @@ export function LiveSupportButton({
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [errorText, setErrorText] = useState("");
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const turnstileRef = useRef<TurnstileWidgetHandle | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   useEffect(() => {
     if (!open) return;
@@ -84,6 +87,12 @@ export function LiveSupportButton({
       return;
     }
 
+    if (!onSubmit && !turnstileToken) {
+      setSubmitState("error");
+      setErrorText(panel.sendError);
+      return;
+    }
+
     try {
       setSubmitState("loading");
       if (onSubmit) {
@@ -99,7 +108,9 @@ export function LiveSupportButton({
           message: msg,
           source: "live-support",
           website: "",
+          turnstileToken,
         });
+        turnstileRef.current?.reset();
         if (!result.ok) {
           if (result.status === 503 && unavailableError) {
             setSubmitState("error");
@@ -207,6 +218,14 @@ export function LiveSupportButton({
                 required
                 aria-required="true"
               />
+              {onSubmit ? null : (
+                <TurnstileWidget
+                  widgetRef={turnstileRef}
+                  onToken={setTurnstileToken}
+                  onExpire={() => setTurnstileToken("")}
+                  onError={() => setTurnstileToken("")}
+                />
+              )}
 
               {submitState === "success" ? (
                 <p className="text-xs text-[#7bf1d2]" role="status" aria-live="polite">

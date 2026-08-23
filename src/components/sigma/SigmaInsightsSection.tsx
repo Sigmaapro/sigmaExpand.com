@@ -1333,7 +1333,7 @@ const HeroSection = ({
             {/* Replace the simple slot inside SigmaHeroCurvedLoop when the new component is ready. */}
             <SigmaHeroCurvedLoop text={t.hero.eyebrow} />
 
-            <div className="sigma-hero-card__content mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center px-4 py-10 text-center sm:px-8 sm:py-12 md:px-12 md:py-14">
+            <div className="sigma-hero-card__content mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center px-4 pt-10 pb-28 text-center sm:px-8 sm:pt-12 sm:pb-28 md:px-12 md:pt-14 md:pb-32">
               <div className="mx-auto flex w-full min-w-0 max-w-5xl flex-col items-center">
                 <SigmaHeroCurvedLoopSpacer />
 

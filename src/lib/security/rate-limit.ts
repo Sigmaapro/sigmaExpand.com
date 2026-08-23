@@ -43,33 +43,84 @@ local ttl = redis.call("PTTL", KEYS[1])
 return {n, ttl}
 `;
 
-let redisClient: Redis | null | undefined;
+let redisClient: Redis | undefined;
 let storeOverride: RateLimitStore | undefined;
+let loggedMissingConfig = false;
 
 function isProductionRuntime(): boolean {
   return process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
 }
 
+/**
+ * Runtime env read that Next.js cannot replace at build time.
+ * Sensitive Vercel variables are often absent during `next build` and only
+ * injected into the serverless process at request time.
+ */
+function readServerEnv(name: string): string | undefined {
+  const env = typeof process === "undefined" ? undefined : process.env;
+  if (!env) return undefined;
+  const raw = env[name];
+  if (typeof raw !== "string") return undefined;
+  const normalized = raw
+    .replace(/^\uFEFF/, "")
+    .trim()
+    .replace(/^['"]+|['"]+$/g, "")
+    .trim();
+  return normalized.length > 0 ? normalized : undefined;
+}
+
+function urlScheme(value: string | undefined): string {
+  if (!value) return "missing";
+  try {
+    return new URL(value).protocol.replace(/:$/, "") || "unknown";
+  } catch {
+    const match = /^([a-z][a-z0-9+.-]*):/i.exec(value);
+    return match?.[1]?.toLowerCase() ?? "unparseable";
+  }
+}
+
+function logMissingConfig(url: string | undefined, token: string | undefined): void {
+  if (loggedMissingConfig) return;
+  loggedMissingConfig = true;
+  // TEMPORARY diagnostics — no URL, token, IP, or Redis key.
+  console.error("[rate-limit] env presence", {
+    urlPresent: Boolean(url),
+    tokenPresent: Boolean(token),
+    urlLength: url?.length ?? 0,
+    tokenLength: token?.length ?? 0,
+    urlScheme: urlScheme(url),
+    httpsOk: Boolean(url && /^https:/i.test(url)),
+  });
+}
+
 export function getUpstashRestConfig(): { url: string; token: string } | null {
   const url =
-    process.env.UPSTASH_REDIS_REST_URL?.trim() ||
-    process.env.KV_REST_API_URL?.trim();
+    readServerEnv("UPSTASH_REDIS_REST_URL") || readServerEnv("KV_REST_API_URL");
   const token =
-    process.env.UPSTASH_REDIS_REST_TOKEN?.trim() ||
-    process.env.KV_REST_API_TOKEN?.trim();
-  if (!url || !token) return null;
-  if (!/^https:\/\//i.test(url)) return null;
+    readServerEnv("UPSTASH_REDIS_REST_TOKEN") || readServerEnv("KV_REST_API_TOKEN");
+  if (!url || !token) {
+    logMissingConfig(url, token);
+    return null;
+  }
+  if (!/^https:\/\//i.test(url)) {
+    logMissingConfig(url, token);
+    return null;
+  }
   return { url, token };
 }
 
 function getRedis(): Redis | null {
-  if (redisClient !== undefined) return redisClient;
+  if (redisClient) return redisClient;
   const config = getUpstashRestConfig();
-  if (!config) {
-    redisClient = null;
-    return null;
-  }
-  redisClient = new Redis({ url: config.url, token: config.token });
+  if (!config) return null;
+  // Direct EVAL (no auto-pipeline). Default-on pipelining can delay/skip the
+  // HTTP call when we wrap a single eval in Promise.race.
+  redisClient = new Redis({
+    url: config.url,
+    token: config.token,
+    enableAutoPipelining: false,
+    enableTelemetry: false,
+  });
   return redisClient;
 }
 
@@ -161,11 +212,13 @@ export function setRateLimitStoreForTests(store: RateLimitStore | undefined): vo
   }
   storeOverride = store;
   redisClient = undefined;
+  loggedMissingConfig = false;
 }
 
 export function resetRateLimitClientForTests(): void {
   if (isProductionRuntime()) return;
   redisClient = undefined;
+  loggedMissingConfig = false;
 }
 
 export async function checkRateLimit(params: {
@@ -175,19 +228,19 @@ export async function checkRateLimit(params: {
   windowMs: number;
 }): Promise<RateLimitDecision> {
   const { namespace, identifier, limit, windowMs } = params;
-  const store = getStore();
-  if (!store) {
-    return {
-      allowed: false,
-      limit,
-      remaining: 0,
-      resetAtMs: Date.now() + windowMs,
-      retryAfterSec: Math.ceil(windowMs / 1000),
-      status: "unavailable",
-    };
-  }
+  const unavailable = (): RateLimitDecision => ({
+    allowed: false,
+    limit,
+    remaining: 0,
+    resetAtMs: Date.now() + windowMs,
+    retryAfterSec: Math.ceil(windowMs / 1000),
+    status: "unavailable",
+  });
 
   try {
+    const store = getStore();
+    if (!store) return unavailable();
+
     const { count, resetAtMs } = await store.increment(
       rateLimitKey(namespace, identifier),
       windowMs,
@@ -211,16 +264,11 @@ export async function checkRateLimit(params: {
       retryAfterSec,
       status: "ok",
     };
-  } catch {
-    console.error("[rate-limit] limiter unavailable");
-    return {
-      allowed: false,
-      limit,
-      remaining: 0,
-      resetAtMs: Date.now() + windowMs,
-      retryAfterSec: Math.ceil(windowMs / 1000),
-      status: "unavailable",
-    };
+  } catch (error) {
+    // TEMPORARY diagnostics — error class only, never message (may contain URL).
+    const errorClass = error instanceof Error ? error.name : "unknown";
+    console.error("[rate-limit] redis initialization failed:", errorClass);
+    return unavailable();
   }
 }
 

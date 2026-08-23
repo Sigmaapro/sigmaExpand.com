@@ -146,12 +146,64 @@ test("getUpstashRestConfig rejects missing or non-https URLs", () => {
   process.env.UPSTASH_REDIS_REST_TOKEN = "token";
   assert.equal(getUpstashRestConfig(), null);
 
+  process.env.UPSTASH_REDIS_REST_URL = "rediss://default:secret@example.upstash.io:6379";
+  process.env.UPSTASH_REDIS_REST_TOKEN = "token";
+  assert.equal(getUpstashRestConfig(), null);
+
   process.env.UPSTASH_REDIS_REST_URL = "https://example.upstash.io";
   process.env.UPSTASH_REDIS_REST_TOKEN = "token";
   assert.deepEqual(getUpstashRestConfig(), {
     url: "https://example.upstash.io",
     token: "token",
   });
+});
+
+test("getUpstashRestConfig reads runtime env and strips quotes/BOM", () => {
+  process.env.UPSTASH_REDIS_REST_URL = `"https://example.upstash.io"`;
+  process.env.UPSTASH_REDIS_REST_TOKEN = `'token-value'`;
+  assert.deepEqual(getUpstashRestConfig(), {
+    url: "https://example.upstash.io",
+    token: "token-value",
+  });
+
+  process.env.UPSTASH_REDIS_REST_URL = "\uFEFF https://example.upstash.io ";
+  process.env.UPSTASH_REDIS_REST_TOKEN = " token-value ";
+  assert.deepEqual(getUpstashRestConfig(), {
+    url: "https://example.upstash.io",
+    token: "token-value",
+  });
+});
+
+test("missing redis config 503 is not cached after env becomes available", async () => {
+  setRateLimitStoreForTests(undefined);
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  delete process.env.KV_REST_API_URL;
+  delete process.env.KV_REST_API_TOKEN;
+
+  const first = await enforceRateLimit(contactRequest(validContactBody()), "contact");
+  assert.equal(first?.status, 503);
+
+  process.env.UPSTASH_REDIS_REST_URL = "https://example.upstash.io";
+  process.env.UPSTASH_REDIS_REST_TOKEN = "token";
+
+  let evalCalls = 0;
+  globalThis.fetch = (async () => {
+    evalCalls += 1;
+    return new Response(JSON.stringify({ result: [1, 600000] }), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
+  }) as typeof fetch;
+
+  const second = await checkRateLimit({
+    namespace: "contact",
+    identifier: "203.0.113.99",
+    ...RATE_LIMIT_POLICIES.contact,
+  });
+  assert.equal(second.status, "ok");
+  assert.equal(second.allowed, true);
+  assert.ok(evalCalls >= 1);
 });
 
 test("contact: first valid request is allowed", async () => {

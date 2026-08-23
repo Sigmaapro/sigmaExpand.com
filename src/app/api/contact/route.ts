@@ -9,6 +9,8 @@ import {
 } from "@/lib/contact/server-send";
 import { enforceRateLimit } from "@/lib/security/rate-limit";
 
+export const runtime = "nodejs";
+
 const MAX_NAME = 200;
 const MAX_MESSAGE = 8000;
 

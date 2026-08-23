@@ -7,6 +7,11 @@ import {
   sendLeadTelegram,
   type LeadSource,
 } from "@/lib/contact/server-send";
+import {
+  CONTACT_MAX_BODY_BYTES,
+  enforceBodyLimit,
+  payloadTooLargeResponse,
+} from "@/lib/security/body-limit";
 import { enforceRateLimit, getClientIdentifier } from "@/lib/security/rate-limit";
 import { enforceTurnstile } from "@/lib/security/turnstile";
 
@@ -21,9 +26,15 @@ export async function POST(req: Request) {
   const limited = await enforceRateLimit(req, "contact");
   if (limited) return limited;
 
+  const sized = await enforceBodyLimit(req, CONTACT_MAX_BODY_BYTES);
+  if (sized.status === "too-large") return payloadTooLargeResponse();
+  if (sized.status === "unreadable") {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
   let body: unknown;
   try {
-    body = await req.json();
+    body = await sized.request.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }

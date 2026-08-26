@@ -9,6 +9,7 @@ import {
   enforceBodyLimit,
   payloadTooLargeResponse,
 } from "@/lib/security/body-limit";
+import { detectSupportedFileMime } from "@/lib/security/file-signature";
 import { enforceRateLimit, getClientIdentifier } from "@/lib/security/rate-limit";
 import { enforceTurnstile } from "@/lib/security/turnstile";
 
@@ -241,13 +242,18 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
       }
 
-      const cleanFilename = sanitizeText(rawFile.name || "performance-file", 180);
       const bytes = Buffer.from(await rawFile.arrayBuffer());
+      const detectedMime = detectSupportedFileMime(bytes);
+      if (!detectedMime || detectedMime !== rawFile.type) {
+        return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
+      }
+
+      const cleanFilename = sanitizeText(rawFile.name || "performance-file", 180);
       attachments = [
         {
           filename: cleanFilename || "performance-file",
           content: bytes.toString("base64"),
-          type: rawFile.type,
+          type: detectedMime,
         },
       ];
       screenshotText = `${cleanFilename} (attached)`;

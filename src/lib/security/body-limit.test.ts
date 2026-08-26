@@ -458,7 +458,9 @@ test("partner: normal KOL FormData is not 413", async () => {
 });
 
 test("partner: valid file under 5 MiB and total under 6 MiB is not 413", async () => {
-  const file = new File([new Uint8Array(64 * 1024)], "shot.png", { type: "image/png" });
+  const png = new Uint8Array(64 * 1024);
+  png.set([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  const file = new File([png], "shot.png", { type: "image/png" });
   const res = await partnerPOST(
     partnerFormRequest({
       ...validKolFields(),

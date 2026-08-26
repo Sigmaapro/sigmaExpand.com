@@ -10,6 +10,7 @@ import {
   payloadTooLargeResponse,
 } from "@/lib/security/body-limit";
 import { detectSupportedFileMime } from "@/lib/security/file-signature";
+import { sanitizeAttachmentFilename } from "@/lib/security/attachment-filename";
 import { enforceRateLimit, getClientIdentifier } from "@/lib/security/rate-limit";
 import { enforceTurnstile } from "@/lib/security/turnstile";
 
@@ -248,10 +249,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
       }
 
-      const cleanFilename = sanitizeText(rawFile.name || "performance-file", 180);
+      const cleanFilename = sanitizeAttachmentFilename(rawFile.name, detectedMime);
       attachments = [
         {
-          filename: cleanFilename || "performance-file",
+          filename: cleanFilename,
           content: bytes.toString("base64"),
           type: detectedMime,
         },

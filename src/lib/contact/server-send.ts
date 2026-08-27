@@ -1,4 +1,4 @@
-import { escapeHtml } from "./sanitize";
+import { escapeHtml, isValidEmail } from "./sanitize";
 
 export type LeadSource = "book-call" | "live-support" | "contact-form";
 export type EmailAttachment = {
@@ -6,6 +6,67 @@ export type EmailAttachment = {
   content: string;
   type?: string;
 };
+
+const NON_PRODUCTION_FROM_FALLBACK = "Sigma <onboarding@resend.dev>";
+const BLOCKED_FROM_ADDRESS = "onboarding@resend.dev";
+
+/**
+ * Runtime env read that Next.js cannot replace at build time.
+ * Sensitive Vercel variables are often absent during `next build`.
+ */
+function readServerEnv(name: string): string | undefined {
+  const env = typeof process === "undefined" ? undefined : process.env;
+  if (!env) return undefined;
+  const raw = env[name];
+  if (typeof raw !== "string") return undefined;
+  const normalized = raw
+    .replace(/^\uFEFF/, "")
+    .trim()
+    .replace(/^['"]+|['"]+$/g, "")
+    .trim();
+  return normalized.length > 0 ? normalized : undefined;
+}
+
+function isVercelProduction(): boolean {
+  return readServerEnv("VERCEL_ENV") === "production";
+}
+
+function extractSenderAddress(from: string): string | null {
+  const angled = from.match(/^[\s\S]*<([^>]+)>$/);
+  const address = (angled ? angled[1] : from).trim();
+  if (!address || !isValidEmail(address)) return null;
+  return address;
+}
+
+function isBlockedTestSender(address: string): boolean {
+  return address.toLowerCase() === BLOCKED_FROM_ADDRESS;
+}
+
+function isValidProductionSender(from: string): boolean {
+  const address = extractSenderAddress(from);
+  if (!address) return false;
+  if (isBlockedTestSender(address)) return false;
+  return true;
+}
+
+/**
+ * Resolve the Resend From value.
+ * Production (`VERCEL_ENV=production`) requires EMAIL_FROM or FROM_EMAIL
+ * and rejects the Resend onboarding sender. Other environments keep the
+ * historical testing fallback.
+ */
+export function resolveEmailFrom(): string | null {
+  const configured = readServerEnv("EMAIL_FROM") ?? readServerEnv("FROM_EMAIL");
+  const production = isVercelProduction();
+
+  if (configured) {
+    if (production && !isValidProductionSender(configured)) return null;
+    return configured;
+  }
+
+  if (production) return null;
+  return NON_PRODUCTION_FROM_FALLBACK;
+}
 
 function getResendKey(): string | undefined {
   const k = process.env.RESEND_API_KEY ?? process.env.EMAIL_API_KEY;
@@ -130,7 +191,7 @@ export async function sendLeadTelegram(params: {
 
 export function getEmailTransportReady(): boolean {
   const to = process.env.CONTACT_EMAIL?.trim();
-  return Boolean(getResendKey() && to);
+  return Boolean(getResendKey() && to && resolveEmailFrom());
 }
 
 export function getTelegramReady(): boolean {

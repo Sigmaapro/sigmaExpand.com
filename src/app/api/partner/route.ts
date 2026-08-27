@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import {
+  resolveEmailFrom,
   sendPartnerEmail,
   type EmailAttachment,
 } from "@/lib/contact/server-send";
@@ -71,14 +72,6 @@ function parseKolRoles(values: FormDataEntryValue[]): { roles: KolRole[]; hasInv
   }
 
   return { roles: Array.from(new Set(roles)), hasInvalid };
-}
-
-function getFromAddress() {
-  return (
-    process.env.EMAIL_FROM?.trim() ||
-    process.env.FROM_EMAIL?.trim() ||
-    "Sigma <onboarding@resend.dev>"
-  );
 }
 
 function buildCommonHtml(params: {
@@ -168,7 +161,10 @@ export async function POST(req: Request) {
   }
 
   const to = PARTNER_RECIPIENT;
-  const from = getFromAddress();
+  const from = resolveEmailFrom();
+  if (!from) {
+    return NextResponse.json({ error: "Lead capture is not configured" }, { status: 503 });
+  }
 
   try {
     if (intentType === "company") {

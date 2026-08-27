@@ -3,6 +3,7 @@ import { sanitizeText, isValidEmail } from "@/lib/contact/sanitize";
 import {
   getEmailTransportReady,
   getTelegramReady,
+  resolveEmailFrom,
   sendLeadEmail,
   sendLeadTelegram,
   type LeadSource,
@@ -89,17 +90,15 @@ export async function POST(req: Request) {
 
   if (emailReady) {
     const to = process.env.CONTACT_EMAIL!.trim();
-    const from =
-      process.env.EMAIL_FROM?.trim() ||
-      process.env.FROM_EMAIL?.trim() ||
-      "Sigma <onboarding@resend.dev>";
-
-    try {
-      await sendLeadEmail({ to, from, name, email, message, source });
-      results.push(true);
-    } catch (e) {
-      console.error("[contact] email send failed", e);
-      results.push(false);
+    const from = resolveEmailFrom();
+    if (from) {
+      try {
+        await sendLeadEmail({ to, from, name, email, message, source });
+        results.push(true);
+      } catch (e) {
+        console.error("[contact] email send failed", e);
+        results.push(false);
+      }
     }
   }
 

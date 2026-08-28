@@ -29,6 +29,8 @@ type DomeGalleryProps = {
   onItemActivate?: (item: DomeGalleryImage) => void;
   autoRotate?: boolean;
   autoRotateSpeed?: number;
+  /** When false, the sphere stays visual-only: no drag, no preventDefault, page scroll wins. */
+  interactive?: boolean;
   className?: string;
 };
 
@@ -211,6 +213,7 @@ export default function DomeGallery({
   onItemActivate,
   autoRotate = false,
   autoRotateSpeed = 0.06,
+  interactive = true,
   className = "",
 }: DomeGalleryProps) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -480,7 +483,11 @@ export default function DomeGallery({
         }
       },
     },
-    { target: mainRef, eventOptions: { passive: false } },
+    {
+      target: mainRef,
+      enabled: interactive,
+      eventOptions: { passive: !interactive },
+    },
   );
 
   return (
@@ -500,7 +507,11 @@ export default function DomeGallery({
       <div
         ref={mainRef}
         className="absolute inset-0 grid place-items-center overflow-hidden bg-transparent select-none"
-        style={{ touchAction: "none", WebkitUserSelect: "none" }}
+        style={{
+          touchAction: interactive ? "none" : "pan-y",
+          pointerEvents: interactive ? "auto" : "none",
+          WebkitUserSelect: "none",
+        }}
         role="presentation"
       >
         <div className="stage">
@@ -531,22 +542,30 @@ export default function DomeGallery({
                   }
                 >
                   <div
-                    className="item__image absolute block cursor-pointer overflow-hidden bg-[#121b32]/80 transition-transform duration-300"
-                    role="link"
-                    tabIndex={focusableKeys.has(key) ? 0 : -1}
+                    className={`item__image absolute block overflow-hidden bg-[#121b32]/80 transition-transform duration-300 ${interactive ? "cursor-pointer" : ""}`}
+                    role={interactive ? "link" : "presentation"}
+                    tabIndex={interactive && focusableKeys.has(key) ? 0 : -1}
                     data-item-key={key}
-                    aria-label={it.alt ? `Open profile for ${it.alt}` : "Open profile"}
-                    aria-hidden={focusableKeys.has(key) ? undefined : true}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      activateFromElement(e.currentTarget);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        activateFromElement(e.currentTarget);
-                      }
-                    }}
+                    aria-label={interactive && it.alt ? `Open profile for ${it.alt}` : interactive ? "Open profile" : undefined}
+                    aria-hidden={interactive && focusableKeys.has(key) ? undefined : true}
+                    onClick={
+                      interactive
+                        ? (e) => {
+                            e.preventDefault();
+                            activateFromElement(e.currentTarget);
+                          }
+                        : undefined
+                    }
+                    onKeyDown={
+                      interactive
+                        ? (e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              activateFromElement(e.currentTarget);
+                            }
+                          }
+                        : undefined
+                    }
                     style={{
                       inset: "10px",
                       borderRadius: `var(--tile-radius, ${imageBorderRadius})`,

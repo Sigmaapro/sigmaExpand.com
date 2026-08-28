@@ -40,6 +40,7 @@ export {
   FINAL_SERVICES,
   SERVICE_DISCLAIMER,
   SERVICE_PLACEHOLDER_NOTE,
+  finalServiceCoverImage,
   getFinalServiceBySlug,
   getFinalServiceSlugs,
   getFinalServices,

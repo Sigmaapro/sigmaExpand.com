@@ -35,7 +35,17 @@ export type FinalService = {
   href: `/services/${FinalServiceSlug}`;
   /** Visual system only — not client copy */
   icon: ServiceIconName;
+  /**
+   * Numbered cover PNG. Files live at `public/Services photos/{nn}.png`
+   * (order 1 → 01.png). Do not remap by visual similarity.
+   */
+  coverImage: string;
 };
+
+/** Public URL for cover `{nn}.png` matching FINAL catalog `order`. */
+export function finalServiceCoverImage(order: number): string {
+  return `/Services%20photos/${String(order).padStart(2, "0")}.png`;
+}
 
 const ICONS: ServiceIconName[] = [
   "network",
@@ -55,7 +65,7 @@ const ICONS: ServiceIconName[] = [
   "shield",
 ];
 
-export const FINAL_SERVICES: readonly FinalService[] = [
+const FINAL_SERVICE_RECORDS: readonly Omit<FinalService, "coverImage">[] = [
   {
     order: 1,
     title: "Web3 Business Development & Strategic Partnerships",
@@ -161,7 +171,12 @@ export const FINAL_SERVICES: readonly FinalService[] = [
     href: "/services/web3-ecosystem-strategy-advisory",
     icon: ICONS[14]!,
   },
-] as const;
+];
+
+export const FINAL_SERVICES: readonly FinalService[] = FINAL_SERVICE_RECORDS.map((service) => ({
+  ...service,
+  coverImage: finalServiceCoverImage(service.order),
+}));
 
 const bySlug = new Map<FinalServiceSlug, FinalService>(
   FINAL_SERVICES.map((service) => [service.slug, service]),

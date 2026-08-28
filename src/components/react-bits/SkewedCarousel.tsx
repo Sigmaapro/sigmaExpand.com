@@ -36,6 +36,8 @@ export type SkewedCarouselProps = {
   aspectRatio?: string;
   rotation?: number;
   inactiveScale?: number;
+  /** Horizontal travel per step, as a fraction of `cardWidth`. */
+  spacingRatio?: number;
   perspective?: number;
   borderRadius?: number;
   titleBlur?: number;
@@ -105,6 +107,7 @@ export function SkewedCarousel({
   aspectRatio = "3 / 4",
   rotation = 60,
   inactiveScale = 0.85,
+  spacingRatio = 0.58,
   perspective = 800,
   borderRadius = 8,
   titleBlur = 2,
@@ -146,7 +149,7 @@ export function SkewedCarousel({
     (pos: number) => {
       const n = count;
       if (!n) return;
-      const spacing = cardWidth * 0.58;
+      const spacing = cardWidth * spacingRatio;
 
       for (let i = 0; i < n; i++) {
         const el = cardRefs.current[i];
@@ -167,7 +170,7 @@ export function SkewedCarousel({
         el.classList.toggle("is-active", Math.round(pos) === i || (loop && ((Math.round(pos) % n) + n) % n === i));
       }
     },
-    [cardWidth, count, inactiveScale, loop, rotation],
+    [cardWidth, count, inactiveScale, loop, rotation, spacingRatio],
   );
 
   const tweenTo = useCallback(
@@ -232,9 +235,9 @@ export function SkewedCarousel({
     if (!root) return;
     const ro = new ResizeObserver((entries) => {
       const w = entries[0]?.contentRect.width ?? 0;
-      const needed = cardWidth + 96;
-      scaleRef.current = clamp(w / needed, 0.72, 1);
-      const height = cardWidth * scaleRef.current * aspect + 8;
+      const needed = cardWidth + 56;
+      scaleRef.current = clamp(w / needed, 0.82, 1);
+      const height = cardWidth * scaleRef.current * aspect + 28;
       if (stageRef.current) stageRef.current.style.height = `${height}px`;
       layout(posRef.current);
     });

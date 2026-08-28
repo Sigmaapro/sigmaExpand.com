@@ -16,7 +16,7 @@ export function MarketRegionPageView({
   const { language } = useLanguage();
   return (
     <MarketingSubpageScaffold>
-      <div className="mx-auto min-w-0 max-w-3xl px-4 py-12 text-center sm:px-6 md:py-16">
+      <div className="mx-auto min-w-0 max-w-3xl px-4 pt-28 pb-12 text-center sm:px-6 md:pt-32 md:pb-16">
         <header className="min-w-0">
           <p className={`font-display text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c39bb] ${localeEyebrow(language)}`}>
             {marketsLabel}

@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import {
   DOME_TEAM_SHUFFLE_SEED,
@@ -35,7 +35,19 @@ export function TeamDomeGallery() {
   const router = useRouter();
   const reduceMotion = useReducedMotion() ?? false;
   const isMobile = useIsMobile(768);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia("(pointer: coarse)").matches : false,
+  );
   const members = getTeamMembersByLang(language);
+  const domeInteractive = !isMobile && !isCoarsePointer;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse)");
+    const update = () => setIsCoarsePointer(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   const images = useMemo(() => {
     const list: DomeGalleryImage[] = [];
@@ -95,7 +107,7 @@ export function TeamDomeGallery() {
         className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_55%_50%_at_50%_48%,rgba(3,8,20,0.55)_0%,rgba(3,8,20,0.22)_48%,transparent_72%)]"
         aria-hidden
       />
-      <div className="pointer-events-auto absolute inset-0 z-0">
+      <div className={`absolute inset-0 z-0 ${domeInteractive ? "pointer-events-auto" : "pointer-events-none"}`}>
         <DomeGallery
           images={images}
           fit={isMobile ? 0.92 : 0.75}
@@ -110,7 +122,8 @@ export function TeamDomeGallery() {
           shuffleSeed={DOME_TEAM_SHUFFLE_SEED}
           autoRotate
           autoRotateSpeed={isMobile ? 0.04 : 0.06}
-          onItemActivate={onItemActivate}
+          interactive={domeInteractive}
+          onItemActivate={domeInteractive ? onItemActivate : undefined}
         />
       </div>
     </div>

@@ -10,6 +10,8 @@ export type PrimaryServiceCard = {
   description?: string;
   icon: ServiceIconName;
   href: string;
+  /** From FINAL_SERVICES.coverImage — do not remap here. */
+  coverImage: string;
 };
 
 export type MarketingServiceSection = {
@@ -32,6 +34,7 @@ const primaryServicesEN: PrimaryServiceCard[] = getFinalServices().map((service)
   title: service.title,
   icon: service.icon,
   href: service.href,
+  coverImage: service.coverImage,
 }));
 
 export const primaryServicesByLang: Record<LangCode, PrimaryServiceCard[]> = {

@@ -754,7 +754,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
 
   return (
     <div className="relative isolate overflow-hidden">
-      <div className="relative mx-auto max-w-[1720px] px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+      <div className="relative mx-auto max-w-[1720px] px-4 pt-28 pb-12 sm:px-6 md:pt-32 md:pb-16 lg:px-10">
         <div
           ref={profileWrapperRef}
           className="relative min-[1280px]:grid min-[1280px]:grid-cols-[172px_minmax(0,1fr)] min-[1280px]:gap-6 min-[1440px]:grid-cols-[194px_minmax(0,1120px)_minmax(86px,1fr)] min-[1440px]:gap-8 min-[1600px]:grid-cols-[220px_minmax(0,1140px)_minmax(118px,1fr)] min-[1920px]:grid-cols-[232px_minmax(0,1160px)_minmax(148px,1fr)]"

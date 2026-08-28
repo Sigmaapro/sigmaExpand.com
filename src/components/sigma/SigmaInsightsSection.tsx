@@ -1827,15 +1827,16 @@ const HomepageServicesSection = () => {
       catalog.map((service) => ({
         title: service.title,
         link: service.href,
+        image: service.coverImage,
       })),
     [catalog],
   );
   const skewedItems = useMemo<SkewedCarouselItem[]>(
     () =>
-      catalog.map((service, index) => ({
+      catalog.map((service) => ({
         title: service.title,
         href: service.href,
-        image: createSigmaSurfaceUri(index),
+        image: service.coverImage,
         alt: service.title,
       })),
     [catalog],
@@ -1879,12 +1880,13 @@ const HomepageServicesSection = () => {
               items={skewedItems}
               ariaLabel={heading}
               initialIndex={0}
-              cardWidth={188}
+              cardWidth={232}
               aspectRatio="3 / 4"
-              rotation={60}
-              inactiveScale={0.85}
-              perspective={800}
-              borderRadius={8}
+              rotation={22}
+              inactiveScale={0.82}
+              spacingRatio={0.94}
+              perspective={920}
+              borderRadius={12}
               titleBlur={reduceMotion ? 0 : 2}
               speed={reduceMotion ? 0 : 1}
               showTitles
@@ -1893,7 +1895,7 @@ const HomepageServicesSection = () => {
               loop
               enableDrag
               enableKeyboard
-              className="mx-auto max-w-[26rem]"
+              className="mx-auto w-full max-w-[30rem]"
             />
           )}
         </div>

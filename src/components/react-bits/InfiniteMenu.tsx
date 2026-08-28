@@ -26,6 +26,8 @@ import "./InfiniteMenu.css";
 export type InfiniteMenuItem = {
   title: string;
   link: string;
+  /** Optional cover URL from the caller (homepage: FinalService.coverImage). */
+  image?: string;
 };
 
 const discVertShaderSource = `#version 300 es
@@ -508,9 +510,120 @@ function createAndSetupTexture(
   return texture;
 }
 
+async function loadCoverImage(src: string | undefined): Promise<HTMLImageElement | null> {
+  if (!src) return null;
+  const img = new Image();
+  img.decoding = "sync";
+  try {
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error("cover load failed"));
+      img.src = src;
+    });
+    if (typeof img.decode === "function") {
+      await img.decode();
+    }
+    if (img.naturalWidth < 1 || img.naturalHeight < 1) return null;
+    return img;
+  } catch {
+    return null;
+  }
+}
+
+/** Center-crop source into a destination rectangle without stretch or squash. */
+function sourceCoverRect(
+  srcW: number,
+  srcH: number,
+  dstW: number,
+  dstH: number,
+): { sx: number; sy: number; sw: number; sh: number } {
+  const srcAspect = srcW / srcH;
+  const dstAspect = dstW / dstH;
+  if (srcAspect > dstAspect) {
+    const sw = srcH * dstAspect;
+    return { sx: (srcW - sw) / 2, sy: 0, sw, sh: srcH };
+  }
+  const sh = srcW / dstAspect;
+  return { sx: 0, sy: (srcH - sh) / 2, sw: srcW, sh };
+}
+
 /**
- * Sharp title overlay only — the Portal field is generated in the
+ * Paint a service cover into the square atlas cell. Disc geometry already
+ * discards outside rad > 1, so this square becomes a circular crop in WebGL.
+ * Rim alpha is lowered so the existing Portal field still reads at the edge.
+ */
+function paintCoverInCell(
+  ctx: CanvasRenderingContext2D,
+  originX: number,
+  originY: number,
+  size: number,
+  image: HTMLImageElement | null,
+) {
+  if (!image || image.naturalWidth < 1 || image.naturalHeight < 1) return;
+
+  ctx.save();
+  ctx.translate(originX, originY);
+  ctx.beginPath();
+  ctx.rect(0, 0, size, size);
+  ctx.clip();
+
+  const { sx, sy, sw, sh } = sourceCoverRect(
+    image.naturalWidth,
+    image.naturalHeight,
+    size,
+    size,
+  );
+  ctx.drawImage(image, sx, sy, sw, sh, 0, 0, size, size);
+
+  ctx.globalCompositeOperation = "destination-in";
+  const fade = ctx.createRadialGradient(
+    size / 2,
+    size / 2,
+    size * 0.32,
+    size / 2,
+    size / 2,
+    size * 0.5,
+  );
+  fade.addColorStop(0, "rgba(255,255,255,0.90)");
+  fade.addColorStop(0.62, "rgba(255,255,255,0.78)");
+  fade.addColorStop(1, "rgba(255,255,255,0.16)");
+  ctx.fillStyle = fade;
+  ctx.fillRect(0, 0, size, size);
+
+  ctx.globalCompositeOperation = "source-over";
+
+  const vignette = ctx.createRadialGradient(
+    size / 2,
+    size / 2,
+    size * 0.18,
+    size / 2,
+    size / 2,
+    size * 0.5,
+  );
+  vignette.addColorStop(0, "rgba(5,7,14,0.08)");
+  vignette.addColorStop(1, "rgba(5,7,14,0.42)");
+  ctx.fillStyle = vignette;
+  ctx.fillRect(0, 0, size, size);
+
+  const bottom = ctx.createLinearGradient(0, size * 0.36, 0, size);
+  bottom.addColorStop(0, "rgba(5,7,14,0)");
+  bottom.addColorStop(1, "rgba(5,7,14,0.52)");
+  ctx.fillStyle = bottom;
+  ctx.fillRect(0, 0, size, size);
+
+  ctx.strokeStyle = "rgba(52, 75, 252, 0.38)";
+  ctx.lineWidth = Math.max(2, size * 0.018);
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2 - ctx.lineWidth, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+/**
+ * Sharp title overlay — the Portal field is generated in the
  * fragment shader so the energy surface never warps typography.
+ * Covers are painted first; this must not clear the cell.
  */
 function paintSigmaCell(
   ctx: CanvasRenderingContext2D,
@@ -522,7 +635,6 @@ function paintSigmaCell(
 ) {
   ctx.save();
   ctx.translate(originX, originY);
-  ctx.clearRect(0, 0, size, size);
 
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -801,6 +913,7 @@ class InfiniteGridMenu {
   private worldMatrix = mat4.create();
   private tex!: WebGLTexture;
   private atlasSize = 1;
+  private atlasGeneration = 0;
   private viewportSize: vec2 = vec2.create();
   private forcedVertexIndex: number | null = null;
 
@@ -859,6 +972,7 @@ class InfiniteGridMenu {
   }
 
   dispose() {
+    this.atlasGeneration += 1;
     this.stop();
     this.control.dispose();
     const gl = this.gl;
@@ -989,7 +1103,7 @@ class InfiniteGridMenu {
     this.render();
   }
 
-  /** Sharp title atlas: no mipmaps, no baked grid/fill. */
+  /** Atlas: covers (async) under titles. No mipmaps. Portal stays in the shader. */
   private initTexture() {
     const gl = this.gl;
     this.tex = createAndSetupTexture(
@@ -1002,25 +1116,64 @@ class InfiniteGridMenu {
 
     const itemCount = Math.max(1, this.items.length);
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d", { alpha: true });
-    const cellSize = 512;
-
-    canvas.width = this.atlasSize * cellSize;
-    canvas.height = this.atlasSize * cellSize;
-
-    if (ctx) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      this.items.forEach((item, i) => {
-        const x = (i % this.atlasSize) * cellSize;
-        const y = Math.floor(i / this.atlasSize) * cellSize;
-        paintSigmaCell(ctx, x, y, cellSize, item, i);
-      });
-    }
 
     gl.bindTexture(gl.TEXTURE_2D, this.tex);
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.RGBA,
+      1,
+      1,
+      0,
+      gl.RGBA,
+      gl.UNSIGNED_BYTE,
+      new Uint8Array([0, 0, 0, 0]),
+    );
+
+    const generation = ++this.atlasGeneration;
+    void this.populateAtlas(generation);
+  }
+
+  private async populateAtlas(generation: number) {
+    const images = await Promise.all(this.items.map((item) => loadCoverImage(item.image)));
+    if (generation !== this.atlasGeneration) return;
+
+    const cellSize = 512;
+    const atlas = document.createElement("canvas");
+    const atlasCtx = atlas.getContext("2d", { alpha: true });
+    atlas.width = this.atlasSize * cellSize;
+    atlas.height = this.atlasSize * cellSize;
+    if (!atlasCtx) return;
+
+    // Isolated cell canvas: destination-in on a shared atlas wipes every
+    // previously painted cell (WebKit / GPU 2D). Paint one cell, then blit.
+    const cell = document.createElement("canvas");
+    const cellCtx = cell.getContext("2d", { alpha: true });
+    cell.width = cellSize;
+    cell.height = cellSize;
+    if (!cellCtx) return;
+
+    atlasCtx.clearRect(0, 0, atlas.width, atlas.height);
+    atlasCtx.globalCompositeOperation = "source-over";
+
+    this.items.forEach((item, i) => {
+      cellCtx.clearRect(0, 0, cellSize, cellSize);
+      cellCtx.globalCompositeOperation = "source-over";
+      paintCoverInCell(cellCtx, 0, 0, cellSize, images[i] ?? null);
+      paintSigmaCell(cellCtx, 0, 0, cellSize, item, i);
+
+      const x = (i % this.atlasSize) * cellSize;
+      const y = Math.floor(i / this.atlasSize) * cellSize;
+      atlasCtx.drawImage(cell, x, y);
+    });
+
+    if (generation !== this.atlasGeneration) return;
+
+    const gl = this.gl;
+    gl.bindTexture(gl.TEXTURE_2D, this.tex);
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 0);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, atlas);
   }
 
   private initDiscInstances(count: number) {

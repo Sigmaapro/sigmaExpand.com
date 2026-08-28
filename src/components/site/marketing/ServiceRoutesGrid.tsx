@@ -57,9 +57,21 @@ export function ServiceRoutesGrid({ services, language, actionLabel }: ServiceRo
                 href={service.href}
                 className={`service-routes-grid__card-content group ${localeBody(language)}`}
               >
+                <span className="service-routes-grid__media" aria-hidden>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- public cover PNGs; keep source files untouched */}
+                  <img
+                    src={service.coverImage}
+                    alt=""
+                    draggable={false}
+                    loading={index < 3 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
+                </span>
+                <span className="service-routes-grid__veil" aria-hidden />
+
                 <span className="service-routes-grid__card-top">
                   <span className="service-routes-grid__icon">
-                    <Icon className="size-5" strokeWidth={1.6} aria-hidden />
+                    <Icon className="size-4" strokeWidth={1.6} aria-hidden />
                   </span>
                   <span className="service-routes-grid__index">
                     {String(index + 1).padStart(2, "0")}

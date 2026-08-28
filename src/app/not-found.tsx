@@ -3,11 +3,11 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { SIGMA_SITE_AUTHORS } from "@/content/seo";
 import { getNotFoundCopy } from "@/content/global/systemMessages";
-import { langFromUnknown, routePathForLang } from "@/lib/i18n";
+import { langFromUnknown, resolvePublicUiLang, routePathForLang } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
   const cookieStore = await cookies();
-  const lang = langFromUnknown(cookieStore.get("sigma-lang")?.value) ?? "EN";
+  const lang = resolvePublicUiLang(langFromUnknown(cookieStore.get("sigma-lang")?.value));
   const copy = getNotFoundCopy(lang);
   return {
     ...SIGMA_SITE_AUTHORS,
@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function NotFound() {
   const cookieStore = await cookies();
-  const lang = langFromUnknown(cookieStore.get("sigma-lang")?.value) ?? "EN";
+  const lang = resolvePublicUiLang(langFromUnknown(cookieStore.get("sigma-lang")?.value));
   const copy = getNotFoundCopy(lang);
   const homeHref = routePathForLang("/", lang);
   return (

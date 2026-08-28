@@ -3,6 +3,23 @@ import type { LangCode } from "@/content/types";
 
 export const SUPPORTED_LANGS: readonly LangCode[] = ["EN", "FA", "AR", "RU", "ZH", "ES"] as const;
 
+/**
+ * Temporary public-UI language gate.
+ * Other locales stay in translations, routes, and RTL helpers — they are just
+ * not selectable in the UI until this is widened again.
+ */
+export const PUBLIC_UI_LANG: LangCode = "EN";
+
+export function isPublicUiLang(lang: LangCode): boolean {
+  return lang === PUBLIC_UI_LANG;
+}
+
+/** Coerce a stored or requested locale to the currently public UI language. */
+export function resolvePublicUiLang(lang: LangCode | null | undefined): LangCode {
+  if (lang && isPublicUiLang(lang)) return lang;
+  return PUBLIC_UI_LANG;
+}
+
 export const HTML_LANG_BY_CODE: Record<LangCode, string> = {
   EN: "en",
   FA: "fa",

@@ -6,13 +6,13 @@ import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { ServicesPageView } from "@/components/site/marketing/ServicesPageView";
 import { getSeoImageAlts } from "@/content/global/seoImageAlts";
 import { buildPageMetadata } from "@/content/seo";
-import { langFromUnknown } from "@/lib/i18n";
+import { langFromUnknown, resolvePublicUiLang } from "@/lib/i18n";
 
 export const metadata: Metadata = buildPageMetadata("services");
 
 export default async function ServicesPage() {
   const cookieStore = await cookies();
-  const lang = langFromUnknown(cookieStore.get("sigma-lang")?.value) ?? "EN";
+  const lang = resolvePublicUiLang(langFromUnknown(cookieStore.get("sigma-lang")?.value));
   const alts = getSeoImageAlts(lang);
   return (
     <>

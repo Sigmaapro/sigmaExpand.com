@@ -7,8 +7,7 @@ import { ProductionAnalytics } from "@/components/ProductionAnalytics";
 import { GlobalStructuredData } from "@/components/seo/GlobalStructuredData";
 import { GlobalSigmaPageBackground } from "@/components/site/marketing/GlobalSigmaPageBackground";
 import { SEO_PAGES } from "@/content/seo";
-import type { LangCode } from "@/content/types";
-import { buildLanguageAlternates, HTML_LANG_BY_CODE, isRtlLang, langFromUnknown } from "@/lib/i18n";
+import { buildLanguageAlternates, HTML_LANG_BY_CODE, isRtlLang, langFromUnknown, resolvePublicUiLang } from "@/lib/i18n";
 import { SITE_DEFAULT_DESCRIPTION } from "@/lib/site-seo";
 import { getSiteUrl, PRODUCTION_SITE_ORIGIN } from "@/lib/site-url";
 
@@ -94,7 +93,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const initialLang = (langFromUnknown(cookieStore.get("sigma-lang")?.value) ?? "EN") as LangCode;
+  const initialLang = resolvePublicUiLang(langFromUnknown(cookieStore.get("sigma-lang")?.value));
   const htmlDir = isRtlLang(initialLang) ? "rtl" : "ltr";
   const htmlLang = HTML_LANG_BY_CODE[initialLang];
 
@@ -108,7 +107,7 @@ export default async function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=new URLSearchParams(window.location.search);var l=(p.get("lang")||"").toUpperCase();if(!l)return;var map={EN:"en",FA:"fa",AR:"ar",RU:"ru",ZH:"zh-CN",ES:"es"};if(!map[l])return;document.documentElement.lang=map[l];document.documentElement.dir=(l==="FA"||l==="AR")?"rtl":"ltr";}catch(e){}})();`,
+            __html: `(function(){try{var p=new URLSearchParams(window.location.search);var l=(p.get("lang")||"").toUpperCase();if(l!=="EN")return;document.documentElement.lang="en";document.documentElement.dir="ltr";}catch(e){}})();`,
           }}
         />
         <GlobalStructuredData />

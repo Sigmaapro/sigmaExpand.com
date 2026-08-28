@@ -6,8 +6,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { LangCode } from "@/content/types";
-import { LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
-import { buildLocaleSearchParams, routePathForLang } from "@/lib/i18n";
+import { VISIBLE_LANGUAGE_SWITCHER_OPTIONS } from "@/content/languageSwitcher";
+import { buildLocaleSearchParams, isPublicUiLang, routePathForLang } from "@/lib/i18n";
 import {
   isLatinLang,
   localeLanguageSwitcherOption,
@@ -54,6 +54,8 @@ export function LanguageSwitcherButton({
   const [activeIndex, setActiveIndex] = useState(0);
   const listboxId = useId();
   const triggerId = useId();
+  const visibleOptions = VISIBLE_LANGUAGE_SWITCHER_OPTIONS;
+  const canSwitchLanguage = visibleOptions.length > 1;
 
   useEffect(() => {
     setMounted(true);
@@ -109,15 +111,16 @@ export function LanguageSwitcherButton({
     if (!open) return;
     const selectedIndex = Math.max(
       0,
-      LANGUAGE_SWITCHER_OPTIONS.findIndex((item) => item.code === currentLang),
+      visibleOptions.findIndex((item) => item.code === currentLang),
     );
     setActiveIndex(selectedIndex);
     window.requestAnimationFrame(() => {
       optionRefs.current[selectedIndex]?.focus();
     });
-  }, [open, currentLang]);
+  }, [open, currentLang, visibleOptions]);
 
   const applyLanguage = (nextLang: LangCode) => {
+    if (!isPublicUiLang(nextLang)) return;
     setLang(nextLang);
     document.cookie = `sigma-lang=${nextLang}; Path=/; Max-Age=31536000; SameSite=Lax`;
     const targetPath = routePathForLang(pathname || "/", nextLang);
@@ -156,7 +159,7 @@ export function LanguageSwitcherButton({
                 }
                 if (e.key === "ArrowDown") {
                   e.preventDefault();
-                  const next = (activeIndex + 1) % LANGUAGE_SWITCHER_OPTIONS.length;
+                  const next = (activeIndex + 1) % visibleOptions.length;
                   setActiveIndex(next);
                   optionRefs.current[next]?.focus();
                   return;
@@ -164,8 +167,8 @@ export function LanguageSwitcherButton({
                 if (e.key === "ArrowUp") {
                   e.preventDefault();
                   const next =
-                    (activeIndex - 1 + LANGUAGE_SWITCHER_OPTIONS.length) %
-                    LANGUAGE_SWITCHER_OPTIONS.length;
+                    (activeIndex - 1 + visibleOptions.length) %
+                    visibleOptions.length;
                   setActiveIndex(next);
                   optionRefs.current[next]?.focus();
                   return;
@@ -178,13 +181,13 @@ export function LanguageSwitcherButton({
                 }
                 if (e.key === "End") {
                   e.preventDefault();
-                  const last = LANGUAGE_SWITCHER_OPTIONS.length - 1;
+                  const last = visibleOptions.length - 1;
                   setActiveIndex(last);
                   optionRefs.current[last]?.focus();
                 }
               }}
             >
-              {LANGUAGE_SWITCHER_OPTIONS.map((lang, index) => (
+              {visibleOptions.map((lang, index) => (
                 <button
                   key={lang.code}
                   ref={(node) => {
@@ -231,10 +234,14 @@ export function LanguageSwitcherButton({
       <button
         ref={triggerRef}
         type="button"
-        role="combobox"
-        onClick={() => setOpen(!open)}
+        role={canSwitchLanguage ? "combobox" : undefined}
+        onClick={() => {
+          if (!canSwitchLanguage) return;
+          setOpen(!open);
+        }}
         title={`${ariaLabel}: ${compactLabel}`}
         onKeyDown={(e) => {
+          if (!canSwitchLanguage) return;
           if (e.key === "ArrowDown" || e.key === "ArrowUp") {
             e.preventDefault();
             setOpen(true);
@@ -256,10 +263,10 @@ export function LanguageSwitcherButton({
             : `inline-flex h-12 min-h-12 min-w-[4.5rem] max-w-[min(7.25rem,32vw)] shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[12px] font-semibold tracking-[0.04em] text-[#b8c0c8] transition-colors hover:border-white/18 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55 sm:h-14 sm:min-h-14 sm:min-w-[72px] sm:max-w-[min(8.75rem,30vw)] sm:gap-2 sm:px-4 sm:text-[14px] sm:tracking-[0.06em] ${localeNav(currentLang)}`
         }
         aria-label={ariaLabel}
-        aria-expanded={open}
-        aria-haspopup="listbox"
-        aria-controls={listboxId}
-        aria-activedescendant={open ? `${listboxId}-option-${activeIndex}` : undefined}
+        aria-expanded={canSwitchLanguage ? open : false}
+        aria-haspopup={canSwitchLanguage ? "listbox" : undefined}
+        aria-controls={canSwitchLanguage ? listboxId : undefined}
+        aria-activedescendant={canSwitchLanguage && open ? `${listboxId}-option-${activeIndex}` : undefined}
         id={triggerId}
       >
         <Globe
@@ -269,7 +276,7 @@ export function LanguageSwitcherButton({
         />
         <span className="min-w-0 truncate leading-none normal-case">{closedLabel}</span>
       </button>
-      {menu}
+      {canSwitchLanguage ? menu : null}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
 import { usePathname, useSearchParams } from "next/navigation";
 import type { LangCode, SiteTranslations } from "@/content/types";
 import { siteTranslations } from "@/content/siteTranslations";
-import { HTML_LANG_BY_CODE, isRtlLang, langFromUnknown } from "@/lib/i18n";
+import { HTML_LANG_BY_CODE, isRtlLang, langFromUnknown, resolvePublicUiLang } from "@/lib/i18n";
 
 type LanguageContextValue = {
   /** Preferred alias for clarity in consumers */
@@ -33,6 +33,15 @@ function isLangCode(value: string): value is LangCode {
   return (LANG_CODES as readonly string[]).includes(value);
 }
 
+function persistLang(next: LangCode) {
+  try {
+    localStorage.setItem(STORAGE_KEY, next);
+    document.cookie = `sigma-lang=${next}; Path=/; Max-Age=31536000; SameSite=Lax`;
+  } catch {
+    /* ignore */
+  }
+}
+
 export function LanguageProvider({
   children,
   initialLang = "EN",
@@ -42,35 +51,37 @@ export function LanguageProvider({
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [lang, setLangState] = useState<LangCode>(initialLang);
+  const [lang, setLangState] = useState<LangCode>(resolvePublicUiLang(initialLang));
 
   useEffect(() => {
     try {
       const fromQuery = langFromUnknown(searchParams.get("lang"));
       if (fromQuery) {
-        setLangState(fromQuery);
-        localStorage.setItem(STORAGE_KEY, fromQuery);
+        const next = resolvePublicUiLang(fromQuery);
+        setLangState(next);
+        persistLang(next);
         return;
       }
       if (pathname?.startsWith("/ar")) {
-        setLangState("AR");
-        localStorage.setItem(STORAGE_KEY, "AR");
+        const next = resolvePublicUiLang("AR");
+        setLangState(next);
+        persistLang(next);
         return;
       }
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved && isLangCode(saved)) setLangState(saved);
+      const parsed = saved && isLangCode(saved) ? saved : null;
+      const next = resolvePublicUiLang(parsed);
+      setLangState(next);
+      persistLang(next);
     } catch {
       /* ignore */
     }
   }, [pathname, searchParams]);
 
   const setLang = (l: LangCode) => {
-    setLangState((prev) => (prev === l ? prev : l));
-    try {
-      localStorage.setItem(STORAGE_KEY, l);
-    } catch {
-      /* ignore */
-    }
+    const next = resolvePublicUiLang(l);
+    setLangState((prev) => (prev === next ? prev : next));
+    persistLang(next);
   };
 
   const value: LanguageContextValue = {

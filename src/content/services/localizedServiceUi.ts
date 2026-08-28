@@ -32,7 +32,7 @@ export const serviceUiByLang: Record<LangCode, ServiceUiCopy> = {
     routes: "Routes",
     exploreRoute: "Explore route",
     serviceDisclaimer: "Service disclaimer",
-    placeholderNote: "Full service content and final page design will be added after the approved service template is completed.",
+    placeholderNote: "This service is reserved in the final catalog. Its editorial source has not been supplied, so the route stays content-pending — no substitute copy has been published.",
     serviceDetail: "Service detail",
     reference: "Reference",
     detailsAtAGlance: "Service details at a glance",

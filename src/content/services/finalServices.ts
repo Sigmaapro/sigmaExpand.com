@@ -9,7 +9,7 @@ export const SERVICE_DISCLAIMER =
   "Sigmaa provides B2B marketing, growth, technology, research and business-development services. Sigmaa does not provide investment advice, execute transactions, hold customer assets, operate as a broker or market maker, solicit investments, or guarantee listings, liquidity, trading activity or commercial outcomes. Certain services are subject to client eligibility, applicable regulations, target-market restrictions and third-party approval.";
 
 export const SERVICE_PLACEHOLDER_NOTE =
-  "Full service content and final page design will be added after the approved service template is completed.";
+  "This service is reserved in the final catalog. Its editorial source has not been supplied, so the route stays content-pending — no substitute copy has been published.";
 
 export type FinalServiceSlug =
   | "web3-business-development-strategic-partnerships"

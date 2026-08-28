@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllInsightsPosts } from "@/content/insights";
 import { getFinalServices } from "@/content/services/finalServices";
-import { isImportedFinalServiceSlug } from "@/content/services/importedFinalServiceDocuments";
+import { isServiceV2Slug } from "@/content/services/v2";
 import {
   getAllTeamMembers,
   getTeamMemberSlug,
@@ -29,9 +29,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.55,
   }));
 
-  // Imported draft service pages are temporarily noindex and excluded from the sitemap.
+  // Only V2-complete service pages are indexable. Placeholder routes stay out of the sitemap.
   const services: MetadataRoute.Sitemap = getFinalServices()
-    .filter((service) => !isImportedFinalServiceSlug(service.slug))
+    .filter((service) => isServiceV2Slug(service.slug))
     .map((service) => ({
       url: `${base}${service.href}`,
       lastModified: new Date(),

@@ -66,25 +66,25 @@ export type ServiceV2Content = {
     microTrust: string[];
     trustLine: string;
   };
-  audience: {
+  audience?: {
     eyebrow: string;
     title: string;
     fit: string[];
     notFit: string;
   };
-  method: {
+  method?: {
     eyebrow: string;
     name: string;
     body: string;
     jobs: Array<{ id: string; body: string }>;
   };
-  definition: {
+  definition?: {
     eyebrow: string;
     title: string;
     body: string;
     notes: string[];
   };
-  artefacts: {
+  artefacts?: {
     eyebrow: string;
     title: string;
     lead: string;
@@ -97,8 +97,8 @@ export type ServiceV2Content = {
       proof: string[];
     };
   };
-  systemVisual: ServiceV2Visual;
-  problem: {
+  systemVisual?: ServiceV2Visual;
+  problem?: {
     eyebrow: string;
     title: string;
     body: string;
@@ -108,45 +108,45 @@ export type ServiceV2Content = {
     instead: string[];
     cta: ServiceV2Cta;
   };
-  habits: {
+  habits?: {
     eyebrow: string;
     title: string;
     items: ServiceV2NamedItem[];
   };
-  modules: {
+  modules?: {
     eyebrow: string;
     title: string;
     items: ServiceV2Module[];
   };
-  process: {
+  process?: {
     eyebrow: string;
     title: string;
     steps: ServiceV2Step[];
   };
-  engagement: {
+  engagement?: {
     eyebrow: string;
     title: string;
     body: string;
     chips: string[];
     entry: string;
   };
-  decision: {
+  decision?: {
     eyebrow: string;
     title: string;
     criteria: string[];
     options: ServiceV2DecisionColumn[];
   };
-  objections: {
+  objections?: {
     eyebrow: string;
     title: string;
     items: ServiceV2FaqItem[];
   };
-  faq: {
+  faq?: {
     eyebrow: string;
     title: string;
     items: ServiceV2FaqItem[];
   };
-  risk: {
+  risk?: {
     eyebrow: string;
     title: string;
     serviceNoticeTitle: string;
@@ -154,18 +154,18 @@ export type ServiceV2Content = {
     generalDisclaimerTitle: string;
     generalDisclaimer: string;
   };
-  differentiation: {
+  differentiation?: {
     eyebrow: string;
     title: string;
     body: string;
   };
-  afterMessage: {
+  afterMessage?: {
     eyebrow: string;
     title: string;
     lead: string;
     steps: string[];
   };
-  finalCta: {
+  finalCta?: {
     eyebrow: string;
     title: string;
     body: string;
@@ -173,7 +173,7 @@ export type ServiceV2Content = {
     primaryCta: ServiceV2Cta;
     reassure: string;
   };
-  relatedServices: {
+  relatedServices?: {
     eyebrow: string;
     title: string;
     lead: string;

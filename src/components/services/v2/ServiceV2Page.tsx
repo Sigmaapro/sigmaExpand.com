@@ -29,24 +29,28 @@ export function ServiceV2Page({ content }: { content: ServiceV2Content }) {
         aria-hidden="true"
       />
       <ServiceV2Hero content={content.hero} />
-      <ServiceV2Audience content={content.audience} />
-      <ServiceV2Method content={content.method} />
-      <ServiceV2Definition content={content.definition} />
-      <ServiceV2Artefacts content={content.artefacts} />
-      <ServiceV2VisualInterlude id="system-visual" visual={content.systemVisual} />
-      <ServiceV2Problem content={content.problem} />
-      <ServiceV2Habits content={content.habits} />
-      <ServiceV2Modules content={content.modules} />
-      <ServiceV2Process content={content.process} />
-      <ServiceV2Engagement content={content.engagement} />
-      <ServiceV2Decision content={content.decision} />
-      <ServiceV2Objections content={content.objections} />
-      <ServiceV2Faq content={content.faq} />
-      <ServiceV2Risk content={content.risk} />
-      <ServiceV2Differentiation content={content.differentiation} />
-      <ServiceV2AfterMessage content={content.afterMessage} />
-      <ServiceV2FinalCta content={content.finalCta} />
-      <ServiceV2Related content={content.relatedServices} />
+      {content.audience ? <ServiceV2Audience content={content.audience} /> : null}
+      {content.method ? <ServiceV2Method content={content.method} /> : null}
+      {content.definition ? <ServiceV2Definition content={content.definition} /> : null}
+      {content.artefacts ? <ServiceV2Artefacts content={content.artefacts} /> : null}
+      {content.systemVisual ? (
+        <ServiceV2VisualInterlude id="system-visual" visual={content.systemVisual} />
+      ) : null}
+      {content.problem ? <ServiceV2Problem content={content.problem} /> : null}
+      {content.habits ? <ServiceV2Habits content={content.habits} /> : null}
+      {content.modules ? <ServiceV2Modules content={content.modules} /> : null}
+      {content.process ? <ServiceV2Process content={content.process} /> : null}
+      {content.engagement ? <ServiceV2Engagement content={content.engagement} /> : null}
+      {content.decision ? <ServiceV2Decision content={content.decision} /> : null}
+      {content.objections ? <ServiceV2Objections content={content.objections} /> : null}
+      {content.faq ? <ServiceV2Faq content={content.faq} /> : null}
+      {content.risk ? <ServiceV2Risk content={content.risk} /> : null}
+      {content.differentiation ? (
+        <ServiceV2Differentiation content={content.differentiation} />
+      ) : null}
+      {content.afterMessage ? <ServiceV2AfterMessage content={content.afterMessage} /> : null}
+      {content.finalCta ? <ServiceV2FinalCta content={content.finalCta} /> : null}
+      {content.relatedServices ? <ServiceV2Related content={content.relatedServices} /> : null}
     </article>
   );
 }

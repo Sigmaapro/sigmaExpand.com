@@ -8,7 +8,7 @@ import {
   v2Type,
 } from "./ServiceV2Primitives";
 
-export function ServiceV2Audience({ content }: { content: ServiceV2Content["audience"] }) {
+export function ServiceV2Audience({ content }: { content: NonNullable<ServiceV2Content["audience"]> }) {
   return (
     <ServiceV2Section id="who">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -25,7 +25,7 @@ export function ServiceV2Audience({ content }: { content: ServiceV2Content["audi
   );
 }
 
-export function ServiceV2Method({ content }: { content: ServiceV2Content["method"] }) {
+export function ServiceV2Method({ content }: { content: NonNullable<ServiceV2Content["method"]> }) {
   return (
     <ServiceV2Section id="method" tone="veil">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -42,7 +42,7 @@ export function ServiceV2Method({ content }: { content: ServiceV2Content["method
   );
 }
 
-export function ServiceV2Definition({ content }: { content: ServiceV2Content["definition"] }) {
+export function ServiceV2Definition({ content }: { content: NonNullable<ServiceV2Content["definition"]> }) {
   return (
     <ServiceV2Section id="definition">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -58,7 +58,7 @@ export function ServiceV2Definition({ content }: { content: ServiceV2Content["de
   );
 }
 
-export function ServiceV2Artefacts({ content }: { content: ServiceV2Content["artefacts"] }) {
+export function ServiceV2Artefacts({ content }: { content: NonNullable<ServiceV2Content["artefacts"]> }) {
   return (
     <ServiceV2Section id="artifacts" tone="veil">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -92,7 +92,7 @@ export function ServiceV2Artefacts({ content }: { content: ServiceV2Content["art
   );
 }
 
-export function ServiceV2Problem({ content }: { content: ServiceV2Content["problem"] }) {
+export function ServiceV2Problem({ content }: { content: NonNullable<ServiceV2Content["problem"]> }) {
   return (
     <ServiceV2Section id="problem">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -126,7 +126,7 @@ export function ServiceV2Problem({ content }: { content: ServiceV2Content["probl
   );
 }
 
-export function ServiceV2Habits({ content }: { content: ServiceV2Content["habits"] }) {
+export function ServiceV2Habits({ content }: { content: NonNullable<ServiceV2Content["habits"]> }) {
   return (
     <ServiceV2Section id="why-others" tone="veil">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -146,7 +146,7 @@ export function ServiceV2Habits({ content }: { content: ServiceV2Content["habits
   );
 }
 
-export function ServiceV2Modules({ content }: { content: ServiceV2Content["modules"] }) {
+export function ServiceV2Modules({ content }: { content: NonNullable<ServiceV2Content["modules"]> }) {
   return (
     <ServiceV2Section id="what-you-get">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -167,7 +167,7 @@ export function ServiceV2Modules({ content }: { content: ServiceV2Content["modul
   );
 }
 
-export function ServiceV2Process({ content }: { content: ServiceV2Content["process"] }) {
+export function ServiceV2Process({ content }: { content: NonNullable<ServiceV2Content["process"]> }) {
   return (
     <ServiceV2Section id="how" tone="veil">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -188,7 +188,7 @@ export function ServiceV2Process({ content }: { content: ServiceV2Content["proce
   );
 }
 
-export function ServiceV2Engagement({ content }: { content: ServiceV2Content["engagement"] }) {
+export function ServiceV2Engagement({ content }: { content: NonNullable<ServiceV2Content["engagement"]> }) {
   return (
     <ServiceV2Section id="engagement">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -205,7 +205,7 @@ export function ServiceV2Engagement({ content }: { content: ServiceV2Content["en
   );
 }
 
-export function ServiceV2Decision({ content }: { content: ServiceV2Content["decision"] }) {
+export function ServiceV2Decision({ content }: { content: NonNullable<ServiceV2Content["decision"]> }) {
   return (
     <ServiceV2Section id="decision" tone="veil">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -233,7 +233,7 @@ export function ServiceV2Decision({ content }: { content: ServiceV2Content["deci
   );
 }
 
-export function ServiceV2Objections({ content }: { content: ServiceV2Content["objections"] }) {
+export function ServiceV2Objections({ content }: { content: NonNullable<ServiceV2Content["objections"]> }) {
   return (
     <ServiceV2Section id="objections">
       <ServiceV2Eyebrow className="text-center">{content.eyebrow}</ServiceV2Eyebrow>
@@ -243,7 +243,7 @@ export function ServiceV2Objections({ content }: { content: ServiceV2Content["ob
   );
 }
 
-export function ServiceV2Faq({ content }: { content: ServiceV2Content["faq"] }) {
+export function ServiceV2Faq({ content }: { content: NonNullable<ServiceV2Content["faq"]> }) {
   return (
     <ServiceV2Section id="faq" tone="veil">
       <ServiceV2Eyebrow className="text-center">{content.eyebrow}</ServiceV2Eyebrow>
@@ -253,7 +253,7 @@ export function ServiceV2Faq({ content }: { content: ServiceV2Content["faq"] }) 
   );
 }
 
-export function ServiceV2Risk({ content }: { content: ServiceV2Content["risk"] }) {
+export function ServiceV2Risk({ content }: { content: NonNullable<ServiceV2Content["risk"]> }) {
   return (
     <ServiceV2Section id="risk">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -272,7 +272,7 @@ export function ServiceV2Risk({ content }: { content: ServiceV2Content["risk"] }
   );
 }
 
-export function ServiceV2Differentiation({ content }: { content: ServiceV2Content["differentiation"] }) {
+export function ServiceV2Differentiation({ content }: { content: NonNullable<ServiceV2Content["differentiation"]> }) {
   return (
     <ServiceV2Section id="closing-argument" tone="veil">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -287,7 +287,7 @@ export function ServiceV2Differentiation({ content }: { content: ServiceV2Conten
   );
 }
 
-export function ServiceV2AfterMessage({ content }: { content: ServiceV2Content["afterMessage"] }) {
+export function ServiceV2AfterMessage({ content }: { content: NonNullable<ServiceV2Content["afterMessage"]> }) {
   return (
     <ServiceV2Section id="after-message">
       <ServiceV2Eyebrow>{content.eyebrow}</ServiceV2Eyebrow>
@@ -304,7 +304,7 @@ export function ServiceV2AfterMessage({ content }: { content: ServiceV2Content["
   );
 }
 
-export function ServiceV2FinalCta({ content }: { content: ServiceV2Content["finalCta"] }) {
+export function ServiceV2FinalCta({ content }: { content: NonNullable<ServiceV2Content["finalCta"]> }) {
   return (
     <ServiceV2Section id="final-cta" tone="veil">
       <div className="mx-auto max-w-[40rem] text-center">

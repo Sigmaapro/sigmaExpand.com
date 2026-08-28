@@ -8,7 +8,7 @@ import {
   ServiceV2Section,
 } from "./ServiceV2Primitives";
 
-export function ServiceV2Related({ content }: { content: ServiceV2Content["relatedServices"] }) {
+export function ServiceV2Related({ content }: { content: NonNullable<ServiceV2Content["relatedServices"]> }) {
   const related = content.slugs
     .map((slug) => getFinalServiceBySlug(slug))
     .filter((service): service is NonNullable<typeof service> => Boolean(service));

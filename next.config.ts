@@ -1,5 +1,24 @@
 import type { NextConfig } from "next";
 
+/**
+ * Observation-only CSP (does not block). Origins from the CSP pre-implementation audit.
+ * Do not switch to Content-Security-Policy until Report-Only is clean in production.
+ */
+const CONTENT_SECURITY_POLICY_REPORT_ONLY = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https://blog.sigmaa.pro https://images.unsplash.com",
+  "font-src 'self'",
+  "connect-src 'self' https://challenges.cloudflare.com",
+  "frame-src https://challenges.cloudflare.com https://calendly.com",
+  "media-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+].join("; ");
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["three"],
@@ -22,6 +41,10 @@ const nextConfig: NextConfig = {
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
+          },
+          {
+            key: "Content-Security-Policy-Report-Only",
+            value: CONTENT_SECURITY_POLICY_REPORT_ONLY,
           },
         ],
       },

@@ -1,0 +1,350 @@
+.sigma-contact-hub {
+  --hub-blue: #1d89bb;
+  --hub-deep: #1d3abb;
+  --hub-violet: #4f1dbb;
+  --hub-ink: #05070d;
+  --hub-ice: #bde0fe;
+  --hub-radius: 14px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.sigma-contact-hub__inner {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  min-width: 0;
+  max-width: 52rem;
+}
+
+.sigma-contact-hub__stage {
+  position: relative;
+}
+
+.sigma-contact-hub__frame {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: var(--hub-radius);
+  padding: 1px;
+}
+
+.sigma-contact-hub__border-beam,
+.sigma-contact-hub__border-beam-b {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 68%,
+    rgba(29, 137, 187, 0) 74%,
+    rgba(29, 137, 187, 0.7) 82%,
+    rgba(79, 29, 187, 0.55) 88%,
+    transparent 94%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.42;
+  animation: sigma-hub-orbit 16s linear infinite;
+}
+
+.sigma-contact-hub__border-beam-b {
+  background: conic-gradient(
+    from 180deg,
+    transparent 0 70%,
+    rgba(29, 58, 187, 0) 76%,
+    rgba(29, 58, 187, 0.55) 84%,
+    rgba(189, 224, 254, 0.35) 88%,
+    transparent 94%
+  );
+  animation-duration: 22s;
+  animation-direction: reverse;
+  opacity: 0.28;
+}
+
+.sigma-contact-hub__frame:hover .sigma-contact-hub__border-beam,
+.sigma-contact-hub__frame:focus-within .sigma-contact-hub__border-beam {
+  opacity: 0.78;
+  animation-duration: 10s;
+}
+
+.sigma-contact-hub__frame:hover .sigma-contact-hub__border-beam-b,
+.sigma-contact-hub__frame:focus-within .sigma-contact-hub__border-beam-b {
+  opacity: 0.5;
+}
+
+.sigma-contact-hub__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(var(--hub-radius) - 1px);
+  border: 1px solid rgba(189, 224, 254, 0.1);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(29, 58, 187, 0.16), transparent 58%),
+    linear-gradient(
+      165deg,
+      rgba(10, 16, 36, 0.96) 0%,
+      rgba(5, 7, 13, 0.97) 52%,
+      rgba(8, 10, 24, 0.95) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 64px rgba(5, 7, 13, 0.45);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.sigma-contact-hub__panel::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: auto 18% -28% 18%;
+  height: 46%;
+  background: radial-gradient(ellipse at center, rgba(29, 58, 187, 0.18), transparent 70%);
+  filter: blur(18px);
+}
+
+.sigma-contact-hub__copy {
+  position: relative;
+  z-index: 1;
+  padding: 1.75rem 1.25rem 1.35rem;
+  text-align: center;
+}
+
+.sigma-contact-hub__cta-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 1.25rem 1.65rem;
+}
+
+.sigma-contact-hub__cta {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 3rem;
+  min-width: 11rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.85rem 1.35rem;
+  border: 1px solid rgba(42, 78, 207, 0.8);
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(189, 224, 254, 0.1), transparent 42%),
+    #1c39bb;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.08),
+    0 10px 32px rgba(28, 57, 187, 0.32);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.sigma-contact-hub__cta:hover {
+  transform: translateY(-1px);
+  border-color: rgba(189, 224, 254, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(189, 224, 254, 0.12),
+    0 14px 36px rgba(28, 57, 187, 0.4);
+}
+
+.sigma-contact-hub__cta:focus-visible {
+  outline: 2px solid var(--hub-ice);
+  outline-offset: 3px;
+}
+
+.sigma-contact-hub__dock {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 1rem auto 0;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.4rem;
+  border: 1px solid rgba(189, 224, 254, 0.1);
+  border-radius: 12px;
+  background: rgba(5, 7, 13, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px rgba(5, 7, 13, 0.35);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.sigma-contact-hub__node {
+  position: relative;
+  display: flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--hub-ice);
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.sigma-contact-hub__node:hover,
+.sigma-contact-hub__node:focus-visible {
+  border-color: rgba(189, 224, 254, 0.22);
+  background: rgba(29, 58, 187, 0.18);
+  color: #ffffff;
+}
+
+.sigma-contact-hub__node:focus-visible {
+  outline: 2px solid var(--hub-ice);
+  outline-offset: 2px;
+}
+
+.sigma-contact-hub__node-tip {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #cfd6de;
+}
+
+@keyframes sigma-hub-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 640px) {
+  .sigma-contact-hub__copy {
+    padding: 2.15rem 2rem 1.5rem;
+  }
+
+  .sigma-contact-hub__cta-wrap {
+    padding: 0 2rem 1.9rem;
+  }
+
+  .sigma-contact-hub__cta {
+    min-height: 3.25rem;
+    padding: 0.95rem 1.7rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .sigma-contact-hub__dock {
+    margin-top: 1.15rem;
+    gap: 0.35rem;
+    padding: 0.45rem;
+  }
+
+  .sigma-contact-hub__node {
+    min-width: 3.25rem;
+    min-height: 3.25rem;
+    padding: 0.55rem 0.9rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sigma-contact-hub__inner {
+    max-width: 58rem;
+  }
+
+  .sigma-contact-hub__copy {
+    padding: 2.6rem 2.6rem 1.6rem;
+  }
+
+  .sigma-contact-hub__cta-wrap {
+    padding: 0 2.6rem 2.15rem;
+  }
+
+  .sigma-contact-hub__dock {
+    margin-top: 0.35rem;
+    gap: 0.25rem;
+  }
+
+  .sigma-contact-hub__node-tip {
+    pointer-events: none;
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.45rem);
+    padding: 0.28rem 0.5rem;
+    border: 1px solid rgba(189, 224, 254, 0.14);
+    border-radius: 4px;
+    background: rgba(5, 7, 13, 0.94);
+    color: #ffffff;
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+    white-space: nowrap;
+  }
+
+  .sigma-contact-hub__node:hover .sigma-contact-hub__node-tip,
+  .sigma-contact-hub__node:focus-visible .sigma-contact-hub__node-tip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .sigma-contact-hub__border-beam,
+  .sigma-contact-hub__border-beam-b {
+    animation-duration: 28s;
+    opacity: 0.28;
+  }
+
+  .sigma-contact-hub__border-beam-b {
+    display: none;
+  }
+
+  .sigma-contact-hub__cta {
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  .sigma-contact-hub__dock {
+    width: 100%;
+    max-width: 22rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigma-contact-hub__border-beam,
+  .sigma-contact-hub__border-beam-b,
+  .sigma-contact-hub__cta {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .sigma-contact-hub__border-beam,
+  .sigma-contact-hub__border-beam-b {
+    opacity: 0.22;
+  }
+}

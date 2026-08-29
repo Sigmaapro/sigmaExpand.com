@@ -1383,9 +1383,10 @@ class InfiniteGridMenu {
 type InfiniteMenuProps = {
   items: readonly InfiniteMenuItem[];
   ariaLabel: string;
+  learnMoreLabel?: string;
 };
 
-export function InfiniteMenu({ items, ariaLabel }: InfiniteMenuProps) {
+export function InfiniteMenu({ items, ariaLabel, learnMoreLabel = "Learn more" }: InfiniteMenuProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sketchRef = useRef<InfiniteGridMenu | null>(null);
@@ -1508,10 +1509,10 @@ export function InfiniteMenu({ items, ariaLabel }: InfiniteMenuProps) {
           <Link
             href={activeItem.link}
             className={`infinite-menu-action ${stateClass}`}
-            aria-label={activeItem.title}
-            tabIndex={-1}
+            aria-label={`${learnMoreLabel}: ${activeItem.title}`}
             onClick={preventDragClick}
           >
+            <span className="infinite-menu-action-label">{learnMoreLabel}</span>
             <ArrowUpRight className="infinite-menu-action-icon" aria-hidden="true" strokeWidth={2.25} />
           </Link>
         </>

@@ -52,6 +52,7 @@ export type SkewedCarouselProps = {
   enableKeyboard?: boolean;
   className?: string;
   ariaLabel?: string;
+  learnMoreLabel?: string;
   onIndexChange?: (index: number) => void;
 };
 
@@ -122,6 +123,7 @@ export function SkewedCarousel({
   enableKeyboard = true,
   className = "",
   ariaLabel,
+  learnMoreLabel,
   onIndexChange,
 }: SkewedCarouselProps) {
   const data = useMemo(() => (Array.isArray(items) ? items : []), [items]);
@@ -395,6 +397,7 @@ export function SkewedCarousel({
   const atStart = !loop && active <= 0;
   const atEnd = !loop && active >= count - 1;
   const caption = data[active]?.title ?? "";
+  const activeHref = data[active]?.href;
   const slideWidth = cardWidth;
   const slideHeight = cardWidth * aspect;
 
@@ -489,6 +492,23 @@ export function SkewedCarousel({
         >
           {caption}
         </p>
+      ) : null}
+
+      {learnMoreLabel && activeHref ? (
+        isExternalHref(activeHref) ? (
+          <a
+            href={activeHref}
+            className="skewed-carousel__learn-more"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {learnMoreLabel}
+          </a>
+        ) : (
+          <Link href={activeHref} className="skewed-carousel__learn-more">
+            {learnMoreLabel}
+          </Link>
+        )
       ) : null}
 
       {showControls || showDots ? (

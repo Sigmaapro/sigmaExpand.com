@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import type { ServiceIconId, SiteTranslations } from "@/content/types";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
+import { HomepageContactSection } from "@/components/sigma/HomepageContactSection";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import { pickLang } from "@/content/global/marketing/helpers";
@@ -1817,7 +1818,7 @@ const SigmaProSection = ({ t }: { t: SiteTranslations }) => {
 };
 
 const HomepageServicesSection = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const meta = pickLang(servicesPageMetaByLang, language);
   const isDesktop = useClientMinWidth(768);
   const reduceMotion = useReducedMotion() ?? false;
@@ -1874,7 +1875,7 @@ const HomepageServicesSection = () => {
           {isDesktop === null ? (
             <div className="min-h-[23rem]" aria-hidden />
           ) : isDesktop ? (
-            <InfiniteMenu items={services} ariaLabel={heading} />
+            <InfiniteMenu items={services} ariaLabel={heading} learnMoreLabel={t.ui.learnMore} />
           ) : (
             <SkewedCarousel
               items={skewedItems}
@@ -1895,6 +1896,7 @@ const HomepageServicesSection = () => {
               loop
               enableDrag
               enableKeyboard
+              learnMoreLabel={t.ui.learnMore}
               className="mx-auto w-full max-w-[30rem]"
             />
           )}
@@ -1974,7 +1976,7 @@ export function SigmaLandingClient({
         ) : null}
 
         <div id="connect" className="h-0" aria-hidden />
-        <div id="contact" className="h-0" aria-hidden />
+        <HomepageContactSection />
       </main>
 
       <MarketingFooter />

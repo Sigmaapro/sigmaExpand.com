@@ -1,8 +1,15 @@
 // This file is safe to edit for content updates (no code knowledge needed)
 
-import { socials, contactEmail, type SocialPlatformKey } from "./data/socials";
+import {
+  socials,
+  contactEmail,
+  getConfiguredSocials,
+  isConfiguredSocialHref,
+  type SocialPlatformKey,
+} from "./data/socials";
 
 export type { SocialPlatformKey };
+export { getConfiguredSocials, isConfiguredSocialHref };
 
 export type SocialLinks = Record<SocialPlatformKey, string>;
 

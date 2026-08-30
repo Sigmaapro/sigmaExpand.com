@@ -2,9 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { FaEnvelope, FaGlobe, FaInstagram, FaLinkedinIn, FaLink, FaXTwitter } from "react-icons/fa6";
-import { getAllTeamMembers, getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { FaEnvelope, FaGlobe, FaInstagram, FaLinkedinIn, FaLink, FaTelegram, FaXTwitter } from "react-icons/fa6";
+import { SiLinktree, SiTradingview } from "react-icons/si";
+import {
+  getAllTeamMembers,
+  getTeamMemberSlug,
+  TEAM_PROFILE_DISCLAIMER,
+  TEAM_PROFILE_DISCLAIMER_LABEL,
+  type TeamMember,
+} from "@/content/global/marketing/teamContent";
 import { ProfileContentPlaceholder } from "@/components/site/marketing/ProfileContentPlaceholder";
 
 type Props = {
@@ -148,7 +155,16 @@ function countryCodeToFlag(countryCode: string): string {
     .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
 }
 
-type SocialIconKey = "x" | "instagram" | "linkedin" | "website" | "email" | "generic";
+type SocialIconKey =
+  | "x"
+  | "instagram"
+  | "linkedin"
+  | "website"
+  | "email"
+  | "telegram"
+  | "tradingview"
+  | "linktree"
+  | "generic";
 
 function getSocialIconKey(label: string, href: string): SocialIconKey {
   const normalizedLabel = label.toLowerCase();
@@ -156,6 +172,11 @@ function getSocialIconKey(label: string, href: string): SocialIconKey {
   if (normalizedLabel === "x" || normalizedHref.includes("x.com") || normalizedHref.includes("twitter.com")) return "x";
   if (normalizedLabel.includes("instagram") || normalizedHref.includes("instagram.com")) return "instagram";
   if (normalizedLabel.includes("linkedin") || normalizedHref.includes("linkedin.com")) return "linkedin";
+  if (normalizedLabel.includes("telegram") || normalizedHref.includes("t.me/") || normalizedHref.includes("telegram.me/")) {
+    return "telegram";
+  }
+  if (normalizedLabel.includes("tradingview") || normalizedHref.includes("tradingview.com")) return "tradingview";
+  if (normalizedLabel.includes("linktree") || normalizedHref.includes("linktr.ee")) return "linktree";
   if (normalizedLabel.includes("email") || normalizedHref.startsWith("mailto:")) return "email";
   if (normalizedLabel.includes("website")) return "website";
   return "generic";
@@ -167,6 +188,9 @@ function getSocialPlatformName(key: SocialIconKey, fallbackLabel: string): strin
   if (key === "linkedin") return "LinkedIn";
   if (key === "website") return "Website";
   if (key === "email") return "Email";
+  if (key === "telegram") return "Telegram";
+  if (key === "tradingview") return "TradingView";
+  if (key === "linktree") return "Linktree";
   return fallbackLabel;
 }
 
@@ -176,6 +200,9 @@ const SOCIAL_ICON_MAP: Record<SocialIconKey, React.ComponentType<{ className?: s
   linkedin: FaLinkedinIn,
   website: FaGlobe,
   email: FaEnvelope,
+  telegram: FaTelegram,
+  tradingview: SiTradingview,
+  linktree: SiLinktree,
   generic: FaLink,
 };
 
@@ -196,19 +223,24 @@ function socialAnchorProps(href: string, platformName: string, memberName: strin
   };
 }
 
-const PROFILE_SECTION_ITEMS = [
-  { id: "profile-overview", label: "Overview", number: "01" },
-  { id: "skills", label: "Skills", number: "02" },
-  { id: "services", label: "Services", number: "03" },
-  { id: "career", label: "Career", number: "04" },
-  { id: "achievements", label: "Achievements", number: "05" },
-  { id: "footprint", label: "Footprint", number: "06" },
-  { id: "languages", label: "Languages", number: "07" },
-  { id: "personal-note", label: "Personal Note", number: "08" },
-  { id: "contact", label: "Contact", number: "09" },
+const PROFILE_SECTION_DEFS = [
+  { id: "profile-overview", label: "Overview" },
+  { id: "skills", label: "Expertise" },
+  { id: "services", label: "Services" },
+  { id: "career", label: "Career" },
+  { id: "achievements", label: "Achievements" },
+  { id: "footprint", label: "Footprint" },
+  { id: "languages", label: "Languages" },
+  { id: "professional-links", label: "Links" },
+  { id: "personal-note", label: "Personal Note" },
+  { id: "contact", label: "Contact" },
 ] as const;
 
-type ProfileSectionItem = (typeof PROFILE_SECTION_ITEMS)[number];
+type ProfileSectionItem = {
+  id: (typeof PROFILE_SECTION_DEFS)[number]["id"];
+  label: string;
+  number: string;
+};
 
 export function TeamMemberProfilePageView({ member, previousMember, nextMember }: Props) {
   const primaryGlass =
@@ -252,6 +284,48 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   const hasAchievements = (member.achievements?.length ?? 0) > 0;
   const hasMarkets = (member.markets?.length ?? 0) > 0;
   const hasLanguages = (member.languages?.length ?? 0) > 0;
+  const hasSkills = (member.skills?.length ?? 0) > 0;
+  const hasServices = (member.services?.length ?? 0) > 0;
+  const hasOverview = Boolean(fullOverview?.trim());
+  const hasSocialLinks = socialLinks.length > 0;
+  const hasQuotes = quotes.length > 0;
+  const footprintNote = member.footprintNote?.trim() || "";
+  const currentPosition = member.currentPosition?.trim() || "";
+  const locationLabel = member.location
+    ? `${countryCodeToFlag(member.location.countryCode)} ${[member.location.city, member.location.country].filter(Boolean).join(", ")}`
+    : null;
+  const hasFootprint = Boolean(locationLabel) || hasLanguages || hasMarkets || Boolean(footprintNote);
+  const profileSections = useMemo<ProfileSectionItem[]>(() => {
+    const presence: Record<(typeof PROFILE_SECTION_DEFS)[number]["id"], boolean> = {
+      "profile-overview": hasOverview,
+      skills: hasSkills,
+      services: hasServices,
+      career: hasTimeline,
+      achievements: hasAchievements,
+      footprint: hasFootprint,
+      languages: hasLanguages,
+      "professional-links": hasSocialLinks,
+      "personal-note": hasQuotes,
+      contact: true,
+    };
+    return PROFILE_SECTION_DEFS.filter((item) => presence[item.id]).map((item, index) => ({
+      id: item.id,
+      label: item.label,
+      number: String(index + 1).padStart(2, "0"),
+    }));
+  }, [
+    hasOverview,
+    hasSkills,
+    hasServices,
+    hasTimeline,
+    hasAchievements,
+    hasFootprint,
+    hasLanguages,
+    hasSocialLinks,
+    hasQuotes,
+  ]);
+  const sectionNumberFor = (id: ProfileSectionItem["id"]) =>
+    profileSections.find((item) => item.id === id)?.number ?? "";
   const [hasPortraitError, setHasPortraitError] = useState(false);
   const [portraitRetryNonce, setPortraitRetryNonce] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -307,7 +381,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         }
       : undefined;
   const nameWords = member.name.trim().split(/\s+/).filter(Boolean);
-  const locationLabel = member.location ? `${countryCodeToFlag(member.location.countryCode)} ${[member.location.city, member.location.country].filter(Boolean).join(", ")}` : null;
   const socialIconLinks = socialLinks.map((item) => {
     const iconKey = getSocialIconKey(item.label, item.href);
     return {
@@ -450,7 +523,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
   }, [prefersReducedMotion, hasPortrait, portraitCanEnter, portraitReady]);
 
   useEffect(() => {
-    const items = PROFILE_SECTION_ITEMS.filter((item) => Boolean(document.getElementById(item.id)));
+    const items = profileSections.filter((item) => Boolean(document.getElementById(item.id)));
     setAvailableSections(items);
     if (items.length > 0) {
       setActiveSectionId(items[0]!.id);
@@ -491,7 +564,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
     pickActiveSection();
 
     return () => observer.disconnect();
-  }, [profileSlug]);
+  }, [profileSlug, profileSections]);
 
   useEffect(() => {
     const wrapper = profileWrapperRef.current;
@@ -960,6 +1033,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 </span>
               </h1>
               <p className="mt-4 break-words text-sm uppercase tracking-[0.2em] text-[#9db2de]">{role}</p>
+              {currentPosition ? (
+                <p className="mt-2 max-w-2xl break-words text-sm leading-relaxed text-[#c5d0e8] sm:text-[15px]">
+                  {currentPosition}
+                </p>
+              ) : null}
               {headline ? <p className="mt-3 max-w-2xl text-lg leading-relaxed text-[#d9e3ff]">{headline}</p> : null}
               {shortIntro ? (
                 <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#b6c2d8] sm:text-base">{shortIntro}</p>
@@ -976,20 +1054,16 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     {locationLabel}
                   </span>
                 ) : null}
-                {hasLanguages ? (
-                  member.languages!.map((language) => (
+                {hasLanguages
+                  ? member.languages!.map((language) => (
                     <span
                       key={language}
-                      className={`rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#abb6c9] ${microSurface}`}
+                      className={`max-w-full break-words rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#abb6c9] ${microSurface}`}
                     >
                       {language}
                     </span>
-                  ))
-                ) : (
-                  <span className="rounded-full border border-dashed border-white/[0.16] bg-[rgba(16,22,35,0.62)] px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-[#7f8aa0]">
-                    Language data pending
-                  </span>
-                )}
+                    ))
+                  : null}
               </div>
 
               {socialLinks.length ? (
@@ -1127,25 +1201,24 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
         </section>
 
         <div className="mt-10 grid gap-6">
-          <SectionFrame sectionId="profile-overview" number="01" title="PROFILE OVERVIEW" subtitle="Editorial Brief">
-            {fullOverview ? (
+          {hasOverview ? (
+          <SectionFrame sectionId="profile-overview" number={sectionNumberFor("profile-overview")} title="PROFILE OVERVIEW" subtitle="Editorial Brief">
               <div className="min-w-0 space-y-4">
-                {fullOverview.split(/\n\n+/).map((paragraph, index) => (
+                {fullOverview!.split(/\n\n+/).map((paragraph, index) => (
                   <p key={index} className="max-w-full text-base leading-relaxed text-[#c0cad8]">
                     {paragraph}
                   </p>
                 ))}
               </div>
-            ) : (
-              <ProfileContentPlaceholder label="Profile details pending" lines={4} />
-            )}
           </SectionFrame>
+          ) : null}
 
-          <div data-chapter-row="capabilities" className="grid gap-6 lg:grid-cols-2">
-            <SectionFrame sectionId="skills" number="02" title="SKILLS" subtitle="Core Capabilities">
-              {member.skills?.length ? (
+          {hasSkills || hasServices ? (
+          <div data-chapter-row="capabilities" className={`grid gap-6 ${hasSkills && hasServices ? "lg:grid-cols-2" : ""}`}>
+            {hasSkills ? (
+            <SectionFrame sectionId="skills" number={sectionNumberFor("skills")} title="EXPERTISE" subtitle="Core Capabilities">
                 <div className="grid gap-2.5 sm:grid-cols-2">
-                  {member.skills.map((item, index) => (
+                  {member.skills!.map((item, index) => (
                     <article
                       key={item}
                       className={`group rounded-2xl p-3.5 motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/55 motion-safe:hover:bg-[#8cafef]/10 ${secondaryGlass}`}
@@ -1159,15 +1232,13 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     </article>
                   ))}
                 </div>
-              ) : (
-                <ProfileContentPlaceholder label="Profile data pending" blocks={4} />
-              )}
             </SectionFrame>
+            ) : null}
 
-            <SectionFrame sectionId="services" number="03" title="SERVICES" subtitle="Engagement Focus">
-              {member.services?.length ? (
+            {hasServices ? (
+            <SectionFrame sectionId="services" number={sectionNumberFor("services")} title="SERVICES" subtitle="Engagement Focus">
                 <div className="space-y-2.5">
-                  {member.services.map((item, index) => {
+                  {member.services!.map((item, index) => {
                     const title = serviceTitle(item);
                     const description = serviceDescription(item);
                     return (
@@ -1195,33 +1266,58 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     );
                   })}
                 </div>
-              ) : (
-                <ProfileContentPlaceholder label="Profile data pending" lines={4} />
-              )}
             </SectionFrame>
+            ) : null}
           </div>
+          ) : null}
 
-          <SectionFrame sectionId="career" number="04" title="CAREER TIMELINE" subtitle="Trajectory">
-            {hasTimeline ? (
-              <ol className="relative space-y-5 pl-6 before:absolute before:bottom-0 before:left-[9px] before:top-1 before:w-px before:bg-gradient-to-b before:from-[#7da4ff] before:to-white/10">
+          {hasTimeline ? (
+          <SectionFrame sectionId="career" number={sectionNumberFor("career")} title="CAREER TIMELINE" subtitle="Trajectory">
+              <ol className="relative space-y-7 pl-6 sm:space-y-8 sm:pl-7 before:absolute before:bottom-2 before:left-[9px] before:top-2 before:w-px before:bg-gradient-to-b before:from-[#7da4ff] before:to-white/10">
                 {member.careerHistory!.map((entry, index) => (
-                  <li key={`${entry.role ?? "role"}-${entry.organization ?? "org"}-${index}`} className="relative">
+                  <li key={`${entry.role ?? "role"}-${entry.organization ?? "org"}-${index}`} className="relative min-w-0">
                     <span aria-hidden className="absolute -left-[22px] top-1.5 h-3.5 w-3.5 rounded-full border border-[#84a8ff]/60 bg-[#0c172f]" />
-                    {entry.dateRange ? <p className="break-words text-[11px] uppercase tracking-[0.14em] text-[#8ca2d3]">{entry.dateRange}</p> : null}
-                    {(entry.role || entry.organization) ? (
-                      <p className="mt-1 break-words text-base font-medium text-white">{[entry.role, entry.organization].filter(Boolean).join(" · ")}</p>
+                    {entry.dateRange ? (
+                      <p className="break-words font-mono text-[11px] uppercase tracking-[0.14em] text-[#8ca2d3]">
+                        {entry.dateRange}
+                      </p>
                     ) : null}
-                    {entry.description ? <p className="mt-1 break-words text-sm text-[#b6c0d0]">{entry.description}</p> : null}
+                    {entry.role ? (
+                      <p className="mt-1 break-words text-base font-medium leading-snug text-white">{entry.role}</p>
+                    ) : null}
+                    {entry.organization ? (
+                      <p className="mt-0.5 break-words text-sm leading-snug text-[#c5d0e4]">{entry.organization}</p>
+                    ) : null}
+                    {entry.description ? (
+                      <p className="mt-2 max-w-prose break-words text-sm leading-relaxed text-[#b6c0d0]">{entry.description}</p>
+                    ) : null}
                   </li>
                 ))}
               </ol>
-            ) : (
-              <ProfileContentPlaceholder label="Details to be added" blocks={3} />
-            )}
           </SectionFrame>
+          ) : null}
 
           {hasAchievements ? (
-          <SectionFrame sectionId="achievements" number="05" title={member.achievementsTitle?.trim() || "SELECTED ACHIEVEMENTS"} subtitle="Verified Highlights">
+          <SectionFrame sectionId="achievements" number={sectionNumberFor("achievements")} title={member.achievementsTitle?.trim() || "SELECTED ACHIEVEMENTS"} subtitle="Verified Highlights">
+              {member.achievements!.every((item) => !item.title?.trim() && Boolean(item.description?.trim())) ? (
+              <ol className="space-y-0">
+                {member.achievements!.map((item, index) => (
+                  <li
+                    key={`achievement-${index}`}
+                    className="border-b border-white/[0.08] py-5 last:border-b-0 last:pb-0 first:pt-0"
+                  >
+                    <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-4 sm:gap-5">
+                      <p className="font-mono text-[13px] leading-none tracking-[0.16em] text-[#93C5FD] sm:text-[14px]">
+                        {String(index + 1).padStart(2, "0")}
+                      </p>
+                      <p className="min-w-0 break-words text-[15px] leading-relaxed text-[#d4dded] sm:text-base">
+                        {item.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              ) : (
               <div className="grid gap-3 sm:grid-cols-2">
                 {member.achievements!.map((item, index) => (
                   <article
@@ -1238,7 +1334,7 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     </p>
                     {item.year ? <p className="text-[11px] uppercase tracking-[0.14em] text-[#8aa0d1]">{item.year}</p> : null}
                     {item.title ? <h3 className="mt-1 break-words text-base font-semibold leading-snug text-white">{item.title}</h3> : null}
-                    {item.description ? <p className="mt-2 text-sm text-[#b6c1d3]">{item.description}</p> : null}
+                    {item.description ? <p className="mt-2 break-words text-sm leading-relaxed text-[#b6c1d3]">{item.description}</p> : null}
                     {item.link && (/^https?:\/\//.test(item.link) || item.link.startsWith("/")) ? (
                       <a
                         href={item.link}
@@ -1259,50 +1355,82 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                   </article>
                 ))}
               </div>
+              )}
           </SectionFrame>
           ) : null}
 
-          <SectionFrame sectionId="footprint" number="06" title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
-            <div data-chapter-row="footprint-languages" className="grid gap-3 md:grid-cols-3">
+          {hasFootprint ? (
+          <SectionFrame sectionId="footprint" number={sectionNumberFor("footprint")} title="GLOBAL FOOTPRINT" subtitle="Location / Languages / Markets">
+            <div
+              data-chapter-row="footprint-languages"
+              className={`grid gap-3 ${
+                [Boolean(locationLabel), hasLanguages, hasMarkets].filter(Boolean).length >= 3
+                  ? "md:grid-cols-3"
+                  : [Boolean(locationLabel), hasLanguages, hasMarkets].filter(Boolean).length === 2
+                    ? "md:grid-cols-2"
+                    : ""
+              }`}
+            >
+              {locationLabel ? (
               <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Location</p>
-                {locationLabel ? (
-                  <p className="mt-2 text-sm text-[#d4dded]">{locationLabel}</p>
-                ) : (
-                  <ProfileContentPlaceholder label="Details to be added" lines={1} className="mt-2 p-3" />
-                )}
+                  <p className="mt-2 break-words text-sm text-[#d4dded]">{locationLabel}</p>
               </article>
+              ) : null}
+              {hasLanguages ? (
               <article id="languages" className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Languages</p>
-                {hasLanguages ? (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {member.languages!.map((item) => (
-                      <span key={item} className={`rounded-full px-2.5 py-1 text-xs text-[#cad4e8] ${microSurface}`}>
+                      <span key={item} className={`max-w-full break-words rounded-full px-2.5 py-1 text-xs text-[#cad4e8] ${microSurface}`}>
                         {item}
                       </span>
                     ))}
                   </div>
-                ) : (
-                  <ProfileContentPlaceholder label="Profile data pending" pills={3} className="mt-2 p-3" />
-                )}
               </article>
+              ) : null}
+              {hasMarkets ? (
               <article className={`rounded-2xl p-4 ${secondaryGlass}`}>
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#8da3d3]">Markets / Regions</p>
-                {hasMarkets ? (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {member.markets!.map((item) => (
-                      <span key={item} className={`rounded-full px-2.5 py-1 text-xs text-[#cad4e8] ${microSurface}`}>
+                      <span key={item} className={`max-w-full break-words rounded-full px-2.5 py-1 text-xs text-[#cad4e8] ${microSurface}`}>
                         {item}
                       </span>
                     ))}
                   </div>
-                ) : (
-                  <ProfileContentPlaceholder label="Details to be added" pills={4} className="mt-2 p-3" />
-                )}
               </article>
+              ) : null}
             </div>
+            {footprintNote ? (
+              <p className="mt-5 max-w-prose break-words border-t border-white/[0.08] pt-5 text-sm leading-relaxed text-[#c0cad8]">
+                {footprintNote}
+              </p>
+            ) : null}
           </SectionFrame>
+          ) : null}
 
+          {hasSocialLinks ? (
+          <SectionFrame sectionId="professional-links" number={sectionNumberFor("professional-links")} title="SOCIAL & PROFESSIONAL LINKS" subtitle="Verified Channels">
+              <ul className="flex flex-wrap gap-2.5">
+                {socialIconLinks.map((item) => {
+                  const Icon = SOCIAL_ICON_MAP[item.iconKey];
+                  return (
+                  <li key={`${item.label}-${item.href}`} className="min-w-0">
+                      <a
+                        {...socialAnchorProps(item.href, item.platformName, member.name)}
+                        className={`inline-flex max-w-full items-center gap-2 rounded-full px-3 py-2 text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/70 motion-safe:hover:bg-[#60A5FA]/14 motion-safe:hover:shadow-[0_0_20px_rgba(125,211,252,0.22)] motion-safe:hover:text-[#e5f3ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${microSurface}`}
+                      >
+                        <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                        <span className="break-words text-xs uppercase tracking-[0.08em]">{item.platformName}</span>
+                      </a>
+                  </li>
+                )})}
+              </ul>
+          </SectionFrame>
+          ) : null}
+
+          {hasQuotes ? (
           <section
             id="personal-note"
             data-profile-section="personal-note"
@@ -1322,9 +1450,11 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
               ) : null}
             </div>
             <div className="relative z-10 min-w-0 max-w-full">
-              <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#88a8ff] sm:text-[11px] lg:text-[12px] xl:text-[13px]">07</p>
+              <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#88a8ff] sm:text-[11px] lg:text-[12px] xl:text-[13px]">
+                {sectionNumberFor("personal-note")}
+              </p>
               <h2 className="font-display mt-1 max-w-full text-[22px] font-semibold leading-[1.06] text-white sm:text-[24px] lg:text-[28px] xl:text-[30px]">
-                QUOTE / PERSONAL NOTE
+                PERSONAL NOTE
               </h2>
               {quotes.length > 1 ? (
                 <div className="mt-5 grid min-w-0 grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
@@ -1337,42 +1467,14 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                     </blockquote>
                   ))}
                 </div>
-              ) : quote ? (
+              ) : (
                 <blockquote className="mt-4 max-w-4xl border-l border-[#7da2ff]/50 pl-5 text-base leading-relaxed text-[#d2dcf0]">
                   &ldquo;{quote}&rdquo;
                 </blockquote>
-              ) : (
-                <ProfileContentPlaceholder label="Profile details pending" lines={2} className="mt-4" />
               )}
             </div>
           </section>
-
-          <SectionFrame number="08" title="SOCIAL & PROFESSIONAL LINKS" subtitle="Verified Channels">
-            {socialLinks.length ? (
-              <ul className="flex flex-wrap gap-2.5">
-                {socialIconLinks.map((item) => {
-                  const Icon = SOCIAL_ICON_MAP[item.iconKey];
-                  return (
-                  <li key={`${item.label}-${item.href}`}>
-                    <div className="group/social relative">
-                      <a
-                        {...socialAnchorProps(item.href, item.platformName, member.name)}
-                        className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-[#c8d7ff] motion-safe:transition-all motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-[#7DD3FC]/70 motion-safe:hover:bg-[#60A5FA]/14 motion-safe:hover:shadow-[0_0_20px_rgba(125,211,252,0.22)] motion-safe:hover:text-[#e5f3ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7DD3FC] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1323] ${microSurface}`}
-                      >
-                        <Icon className="h-4 w-4" aria-hidden="true" />
-                        <span className="sr-only">{item.platformName}</span>
-                      </a>
-                      <span className="pointer-events-none absolute -top-7 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/[0.14] bg-[rgba(9,13,22,0.92)] px-2 py-0.5 text-[10px] uppercase tracking-[0.1em] text-[#b8c6df] opacity-0 transition-opacity group-hover/social:opacity-100 group-focus-within/social:opacity-100">
-                        {item.platformName}
-                      </span>
-                    </div>
-                  </li>
-                )})}
-              </ul>
-            ) : (
-              <ProfileContentPlaceholder label="Profile data pending" pills={3} />
-            )}
-          </SectionFrame>
+          ) : null}
 
           <section
             id="contact"
@@ -1386,7 +1488,9 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
           >
             <DepthGlassLayers strength="soft" />
             <div className="relative z-10 min-w-0 max-w-full">
-            <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#8daeff] sm:text-[11px] lg:text-[12px] xl:text-[13px]">09</p>
+            <p className="font-mono text-[10px] leading-[1.3] tracking-[0.2em] text-[#8daeff] sm:text-[11px] lg:text-[12px] xl:text-[13px]">
+              {sectionNumberFor("contact")}
+            </p>
             <h2 className="font-display mt-1 max-w-full text-[22px] font-semibold leading-[1.06] text-white sm:text-[24px] lg:text-[28px] xl:text-[30px]">WORK WITH SIGMA</h2>
             <p className="mt-2 max-w-2xl text-sm leading-[1.62] text-[#b3c0d6] md:text-[15px]">Continue through Sigma’s official channel for partnerships and strategic collaboration.</p>
             <div className="mt-5 flex flex-wrap gap-3">
@@ -1405,6 +1509,19 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
             </div>
             </div>
           </section>
+
+          <aside
+            id="profile-disclaimer"
+            aria-label={TEAM_PROFILE_DISCLAIMER_LABEL}
+            className="relative z-10 mt-4 border-t border-white/[0.12] bg-[#07090f]/72 px-4 py-6 sm:mt-5 sm:px-5 sm:py-7 md:px-6"
+          >
+            <p className="font-mono text-[10px] font-medium uppercase leading-[1.3] tracking-[0.18em] text-[#8da3d6] sm:text-[11px]">
+              {TEAM_PROFILE_DISCLAIMER_LABEL}
+            </p>
+            <p className="mt-3 max-w-3xl text-[13px] leading-[1.7] text-[#a8b0ba] sm:text-[13.5px] sm:leading-[1.72] md:max-w-[42rem] md:text-sm md:leading-[1.7]">
+              {TEAM_PROFILE_DISCLAIMER}
+            </p>
+          </aside>
 
           <footer
             data-glass-depth="soft"

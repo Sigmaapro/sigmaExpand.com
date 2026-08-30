@@ -92,7 +92,7 @@ export function TeamMemberPersonStructuredData({ member }: Props) {
     ...(member.linkedin ? [member.linkedin] : []),
     ...(member.website ? [member.website] : []),
     ...((member.socialLinks ?? []).map((link) => link.href)),
-  ].filter((value) => /^https?:\/\//.test(value));
+  ].filter((value, index, list) => /^https?:\/\//.test(value) && list.indexOf(value) === index);
   const description = member.fullBio ?? member.shortBio ?? member.bio;
   const knowsAbout = member.skills?.filter((item) => item.trim().length > 0) ?? [];
   const image =

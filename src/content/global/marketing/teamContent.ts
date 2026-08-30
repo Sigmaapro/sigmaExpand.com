@@ -5,13 +5,15 @@ import { ROUTES } from "@/content/global/routes";
 const MALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-male.jpg";
 const FEMALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-female.jpg";
 const TEAM_PROFILE_MARKETS = ["Asia", "Americas", "Europe", "Africa"] as const;
-const UK_MEMBER_IDS = new Set(["omid-modaber", "shahrzad-rostami", "shahan-behkam-rad", "babak-ravanbakhsh"]);
+const UK_MEMBER_IDS = new Set(["shahrzad-rostami", "shahan-behkam-rad", "babak-ravanbakhsh"]);
 
 export type TeamMember = {
   id: string;
   slug?: string;
   name: string;
   role?: string;
+  /** Optional operating title distinct from the Sigma team-card role. */
+  currentPosition?: string;
   group: "core" | "innerCircle" | "contributors";
   eyebrow?: string;
   headline?: string;
@@ -53,6 +55,8 @@ export type TeamMember = {
     linkedin?: string;
   }>;
   markets?: string[];
+  /** Optional editorial note under the footprint section (network context, not a map). */
+  footprintNote?: string;
   location?: {
     city?: string;
     country: string;
@@ -155,21 +159,204 @@ export const teamPageMetaByLang: Record<LangCode, PageMeta> = {
 
 function buildCoreMembers(roleLabel: string): TeamMember[] {
   return [
-    withMemberProfileDefaults({
-      id: "omid-modaber",
-      name: "Omid Modaber",
-      role: roleLabel,
-      group: "core",
-      initials: "OM",
-      imageSrc: "/images/team/omid-modaber.jpg",
-      portrait: "/images/team/omid-modaber.jpg",
-      portraitObjectPosition: "center 18%",
-      profileStatus: "active",
-      bio: "Sets the long-term direction of Sigma. Focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
-      seoTitle: "Omid Modaber | Founder & Strategic Growth Consultant at Sigma",
-      metaDescription:
-        "Omid Modaber sets the long-term direction of Sigma, focused on strategy, exchange partnerships, regional expansion, and the operating principles the network runs on.",
-    }),
+    {
+      ...withMemberProfileDefaults({
+        id: "omid-modaber",
+        name: "Omid Modaber",
+        role: "Founder & Strategic Growth Consultant",
+        currentPosition: "Business Development Team Manager — LBank",
+        group: "core",
+        initials: "OM",
+        imageSrc: "/images/team/omid-modaber.jpg",
+        portrait: "/images/team/omid-modaber.jpg",
+        portraitObjectPosition: "center 18%",
+        profileStatus: "active",
+        headline:
+          "Founder of Sigma and Web3 business development leader managing a 30+ person team and a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels across MENA, LATAM, and global financial markets.",
+        shortBio:
+          "Omid Modaber is the Founder and Strategic Growth Consultant at Sigma and a Web3 business development leader with experience across crypto exchanges, financial platforms, KOL and IB ecosystems, and market analysis since 2017. He also serves as a Business Development Team Manager at LBank, leading a team of more than 30 business development and marketing professionals and working across a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels. His regional experience spans MENA, the GCC, Türkiye, Persian-speaking markets, LATAM, Europe, and wider international Web3 ecosystems.",
+        bio: "Omid Modaber is the Founder and Strategic Growth Consultant at Sigma and a Web3 business development leader with experience across crypto exchanges, financial platforms, KOL and IB ecosystems, and market analysis since 2017. He also serves as a Business Development Team Manager at LBank, leading a team of more than 30 business development and marketing professionals and working across a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels. His regional experience spans MENA, the GCC, Türkiye, Persian-speaking markets, LATAM, Europe, and wider international Web3 ecosystems.",
+        fullBio:
+          "Omid Modaber is the Founder of Sigma and a strategic growth consultant specialising in the operating systems behind Web3 and financial-platform expansion. His work covers exchange partnerships, KOL and IB ecosystems, creator and influencer networks, regional market entry, user acquisition, affiliate structures, business-development leadership, and performance-oriented commercial strategy.\n\nSince entering the cryptocurrency industry in 2017, Omid has progressed from trading, market research, fundamental analysis, and on-chain data analysis into business development and regional growth leadership. His professional background includes roles with LBank, BingX, ePlanet Brokers, Xiroco, MaxDigital Corporation, Max Holding, and other crypto and financial ventures.\n\nAcross these roles, he has designed affiliate and introducing-broker structures, built and managed business-development teams, developed strategic relationships with KOLs, creators, trading communities, and financial-industry decision-makers, and supported high-volume exchange growth across MENA, the GCC, Türkiye, Persian-speaking markets, LATAM, Europe, and other international markets.\n\nOmid currently leads and develops a distributed team of 30+ business development and marketing professionals. He works across a network of more than 1,000 KOLs, IBs, influencers, marketing partners, communities, and social channels, while maintaining an extensive network of high-impact operators and decision-makers across the financial and Web3 industries.\n\nDuring his time with BingX, Omid supported creator and artist sponsorship initiatives, including activity involving Persian hip-hop artist Gdaal, and contributed to regional business-development efforts around the period in which BingX launched its partnership with Chelsea FC. At LBank, he works within an international business-development organisation as the exchange expands its global visibility through major partnerships, including its official regional sponsorship of the Argentina National Team through the Argentine Football Association (AFA).\n\nOmid founded Sigma after identifying a recurring gap across the industry: exchanges, brokers, creators, affiliates, communities, traders, and liquidity partners were often operating independently rather than through a coordinated growth system. At Sigma, he helps set the organisation's long-term direction while focusing on strategic partnerships, network development, regional expansion, and the operating principles behind its financial and Web3 growth infrastructure.\n\nHis background in Bitcoin, market structure, sentiment, fundamental research, and on-chain data gives him a data-aware approach to business development. He has also trained and mentored hundreds of people across cryptocurrency trading, blockchain, Web3, market analysis, business development, and partner growth. His work prioritises long-term relationships, regional execution, transparent reporting, and sustainable commercial systems rather than short-lived campaigns or vanity metrics.",
+        skills: [
+          "Web3 and crypto business development",
+          "Exchange partnerships and strategic alliances",
+          "KOL, IB, influencer, creator, and social-channel ecosystem management",
+          "Regional market expansion across MENA, the GCC, Türkiye, Persian-speaking markets, and LATAM",
+          "Business development and marketing team leadership",
+          "Partnership negotiation and commercial deal structuring",
+          "Affiliate programme, commission, and incentive architecture",
+          "Sports, entertainment, artist, and creator partnership activation",
+          "User acquisition, trading activation, and community growth",
+          "Go-to-market strategy, localisation, and regional execution",
+          "Talent development, training, and mentorship",
+          "Market research, competitive intelligence, sentiment, and on-chain analysis",
+        ],
+        services: [
+          "Exchange growth strategy",
+          "Strategic partnership development",
+          "KOL, IB, influencer, creator, and social-channel network infrastructure",
+          "IB, affiliate, commission, and incentive programme development",
+          "Regional market expansion across MENA, the GCC, Türkiye, Persian-speaking markets, and LATAM",
+          "Business development and marketing team structuring",
+          "Commercial scheme, campaign, and partner-performance design",
+          "Sports, entertainment, artist, and creator partnership activation",
+          "VIP, trading-community, and social-channel partnerships",
+          "Localised go-to-market strategy and growth operations",
+          "BD talent training, enablement, and mentorship",
+          "Performance reporting, market intelligence, and partner optimisation",
+        ],
+        careerHistory: [
+          {
+            dateRange: "Current",
+            role: "Founder & Strategic Growth Consultant",
+            organization: "Sigma",
+            description:
+              "Sets Sigma's strategic direction and contributes to exchange and broker partnerships, regional expansion, KOL and IB infrastructure, network development, and commercial growth systems.",
+          },
+          {
+            dateRange: "2024-Present",
+            role: "Business Development Team Manager",
+            organization: "LBank",
+            description:
+              "Leads and develops a distributed team of more than 30 business development and marketing professionals and works across a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels. Oversees partner acquisition, commercial negotiations, campaign structures, performance management, regional expansion, and trading-volume growth across MENA, the GCC, Türkiye, Persian-speaking markets, LATAM, and other international markets.",
+          },
+          {
+            dateRange: "2023",
+            role: "MENA Business Development Manager",
+            organization: "BingX",
+            description:
+              "Managed KOL and stakeholder relationships, competitive analysis, regional growth, and market activation across MENA and adjacent markets. Supported creator and artist sponsorship initiatives, including activity involving Gdaal, and contributed to business-development efforts around the launch period of BingX's Chelsea FC partnership.",
+          },
+          {
+            dateRange: "2023",
+            role: "Business Development & IB Manager",
+            organization: "ePlanet Brokers",
+            description:
+              "Worked on introducing-broker development, commercial scheme design, team building, partner acquisition, and regional broker growth.",
+          },
+          {
+            dateRange: "2022-2023",
+            role: "DeFi & Web3 Business Development Manager",
+            organization: "Xiroco",
+            description:
+              "Contributed to the business plan, business model, KOL strategy, community development, research, and launch preparation for a Web3 and NFT marketplace venture.",
+          },
+          {
+            dateRange: "2021-2022",
+            role: "Lead Fundamental & On-Chain Analyst",
+            organization: "MaxDigital Corporation",
+            description:
+              "Led cryptocurrency market research, fundamental analysis, on-chain analysis, Bitcoin reporting, trading research, and coordination of an analytical team.",
+          },
+          {
+            dateRange: "2021",
+            role: "Cryptocurrency Business Consultant",
+            organization: "Max Holding",
+            description:
+              "Provided research and commercial insight related to blockchain, digital assets, cryptocurrency markets, and potential business opportunities.",
+          },
+          {
+            dateRange: "2020-2021",
+            role: "Founder & Trader",
+            organization: "Reliance Crew",
+            description:
+              "Built an independent trading and research initiative focused on cryptocurrency markets, market education, and trading analysis.",
+          },
+          {
+            dateRange: "2020",
+            role: "Blockchain & Trading Instructor",
+            organization: "Kharazmi Brokerage",
+            description:
+              "Delivered educational content relating to blockchain technology, cryptocurrency markets, market analysis, and trading fundamentals.",
+          },
+          {
+            dateRange: "2019-2020",
+            role: "Project Specialist & Market Analyst",
+            organization: "MRBRS",
+            description:
+              "Worked on market research, project evaluation, early-stage business analysis, and cryptocurrency and forex market studies.",
+          },
+          {
+            dateRange: "2017-Present",
+            role: "Independent Crypto and Forex Market Analyst",
+            description:
+              "Produces personal market research and analysis relating to Bitcoin, cryptocurrency, market structure, technical analysis, sentiment, and on-chain data.",
+          },
+        ],
+        achievements: [
+          {
+            description:
+              "Leads and develops a distributed team of 30+ business development and marketing professionals, combining partner acquisition, market development, campaign execution, and performance management.",
+          },
+          {
+            description:
+              "Works across a network of more than 1,000 KOLs, IBs, influencers, marketing partners, communities, and social channels in financial, crypto, and Web3 markets.",
+          },
+          {
+            description:
+              "Built an extensive professional network of high-impact decision-makers, operators, creators, traders, investors, marketers, and builders across the financial and Web3 industries.",
+          },
+          {
+            description:
+              "Supported high-volume exchange growth operations involving partner onboarding, affiliate development, user activation, and cross-regional expansion across MENA, the GCC, Türkiye, Persian-speaking markets, LATAM, and wider international ecosystems.",
+          },
+          {
+            description:
+              "Contributed to regional exchange operations associated with more than USD 10 million in daily trading volume.",
+          },
+          {
+            description:
+              "Supported and coordinated artist and creator sponsorship activity at BingX, including work involving Persian hip-hop artist Gdaal, and participated in regional business-development activity around the launch of BingX's Chelsea FC partnership.",
+          },
+          {
+            description:
+              "Currently contributes to LBank's international business-development organisation as the exchange strengthens mainstream visibility through global brand partnerships, including its official regional sponsorship of the Argentina National Team through AFA.",
+          },
+          {
+            description:
+              "Founded Sigma and developed its direction as a coordinated growth network connecting exchanges, brokers, KOLs, IBs, communities, traders, marketing partners, and Web3 platforms.",
+          },
+          {
+            description:
+              "Trained and mentored hundreds of people across cryptocurrency trading, blockchain, Web3, market analysis, business development, and partner growth.",
+          },
+          {
+            description:
+              "Developed the initial business plan and business model for Xiroco, helped organise a ten-person technical and research team, and contributed to bringing the product to launch within approximately six months.",
+          },
+          {
+            description:
+              "Helped build The Blockchain Nation, a crypto-focused Clubhouse community with more than 65,000 members, and published more than 100 public Bitcoin and cryptocurrency market-analysis ideas.",
+          },
+        ],
+        footprintNote:
+          "Extended network: 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels across international crypto, finance, and Web3 ecosystems",
+        linkedin: "https://www.linkedin.com/in/omidmd/",
+        socialLinks: [
+          { label: "Linktree", href: "https://linktr.ee/OmidMD" },
+          { label: "X", href: "https://x.com/OmidMD" },
+          { label: "Instagram", href: "https://www.instagram.com/crypto_md/" },
+          { label: "TradingView", href: "https://www.tradingview.com/u/OmidMD/" },
+          { label: "Telegram", href: "https://t.me/omidmd" },
+        ],
+        quote: "We are not here to be loud. We are here to be useful.",
+        seoTitle: "Omid Modaber | Founder & Strategic Growth Consultant at Sigma",
+        metaDescription:
+          "Meet Omid Modaber, Founder of Sigma and Web3 growth strategist leading global BD, KOL, IB, influencer, and market-expansion networks across MENA and LATAM.",
+      }),
+      location: {
+        city: "Dubai",
+        country: "United Arab Emirates",
+        countryCode: "AE",
+      },
+      languages: [
+        "Persian — Native",
+        "English — Professional proficiency",
+        "Turkish — B2 / Professional working proficiency",
+      ],
+      markets: ["MENA", "the GCC", "Türkiye", "Persian-speaking markets", "LATAM", "Europe"],
+    },
     {
       ...withMemberProfileDefaults(
         withPlaceholderImage(
@@ -1051,6 +1238,16 @@ export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
     ctaLabel: "شارك مع Sigma",
   },
 };
+
+/** Shared eyebrow for the individual team-profile professional disclaimer. */
+export const TEAM_PROFILE_DISCLAIMER_LABEL = "PROFILE DISCLAIMER";
+
+/**
+ * Shared professional/legal disclaimer shown on every individual team profile.
+ * Client-approved copy — do not rewrite, shorten, or paraphrase.
+ */
+export const TEAM_PROFILE_DISCLAIMER =
+  "This profile is provided for professional and informational purposes only. It does not constitute investment advice, a financial recommendation, an offer, or a solicitation to purchase or sell any virtual asset or financial product. Historical figures are provided for professional background and do not guarantee future results. Third-party company, artist, organisation and sports-related names are referenced solely for factual identification. Such references do not imply personal sponsorship, endorsement or participation in the negotiation of the relevant partnerships unless expressly stated.";
 
 export function getTeamMemberSlug(member: TeamMember): string {
   return member.slug?.trim() || member.id;

@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: { absolute: "SIGMA Team" },
   description: "Private SIGMA team space.",
   applicationName: "SIGMA Team",
+  manifest: "/internal/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     title: "SIGMA Team",
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     "apple-mobile-web-app-capable": "yes",
   },
   icons: {
+    icon: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   robots: {

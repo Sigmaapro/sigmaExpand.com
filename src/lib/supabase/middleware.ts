@@ -14,6 +14,19 @@ function copyAuthCookies(from: NextResponse, to: NextResponse): NextResponse {
   return to;
 }
 
+/** Forward request headers so the root layout can emit the SIGMA Team manifest. Auth gating is unchanged. */
+function nextPreservingRequest(request: NextRequest): NextResponse {
+  const requestHeaders = new Headers(request.headers);
+  if (!requestHeaders.has("x-sigma-internal-app")) {
+    requestHeaders.set("x-sigma-internal-app", "1");
+  }
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
+}
+
 function redirectWithAuthCookies(
   request: NextRequest,
   supabaseResponse: NextResponse,
@@ -30,7 +43,7 @@ function redirectWithAuthCookies(
  * Public marketing routes are never matched by the root middleware matcher.
  */
 export async function updateSession(request: NextRequest): Promise<NextResponse> {
-  let supabaseResponse = NextResponse.next({ request });
+  let supabaseResponse = nextPreservingRequest(request);
   const pathname = request.nextUrl.pathname;
   const isAuthPath = isPublicInternalAuthPath(pathname);
 
@@ -51,7 +64,7 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
         cookiesToSet.forEach(({ name, value }) => {
           request.cookies.set(name, value);
         });
-        supabaseResponse = NextResponse.next({ request });
+        supabaseResponse = nextPreservingRequest(request);
         cookiesToSet.forEach(({ name, value, options }) => {
           supabaseResponse.cookies.set(name, value, options);
         });

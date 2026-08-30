@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Inter, Noto_Sans_Arabic, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -93,9 +93,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
+  const headerStore = await headers();
   const initialLang = resolvePublicUiLang(langFromUnknown(cookieStore.get("sigma-lang")?.value));
   const htmlDir = isRtlLang(initialLang) ? "rtl" : "ltr";
   const htmlLang = HTML_LANG_BY_CODE[initialLang];
+  // Middleware sets this only for /internal/* so Home Screen install gets SIGMA Team.
+  const isInternalApp = headerStore.get("x-sigma-internal-app") === "1";
+  const manifestHref = isInternalApp
+    ? "/internal/manifest.webmanifest"
+    : "/manifest.webmanifest";
 
   return (
     <html
@@ -114,6 +120,7 @@ export default async function RootLayout({
         <meta name="publisher" content="Sigma" />
         <meta property="article:publisher" content={PUBLISHER_SITE_URL} />
         <meta name="author" content="Sigma" />
+        <link rel="manifest" href={manifestHref} />
       </head>
       <body className="relative min-h-screen bg-[#05070e] font-body text-cadet antialiased">
         <GlobalSigmaPageBackground />

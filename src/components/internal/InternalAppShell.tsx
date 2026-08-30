@@ -34,7 +34,7 @@ export function InternalAppShell({
         id="internal-main"
         ref={mainRef}
         tabIndex={-1}
-        className="internal-page relative z-20 mx-auto w-full max-w-[1180px] flex-1 px-0 pb-[var(--internal-dock-clearance)] pt-0 outline-none sm:px-6 sm:pt-6 lg:px-8 lg:pt-20"
+        className="internal-page relative z-20 mx-auto w-full max-w-[1180px] flex-1 px-[var(--internal-page-gutter)] pb-[var(--internal-dock-clearance)] pt-3 outline-none sm:pt-6 lg:pt-20"
       >
         {children}
       </main>

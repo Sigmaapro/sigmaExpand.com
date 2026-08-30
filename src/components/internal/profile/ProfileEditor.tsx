@@ -39,24 +39,26 @@ export function ProfileEditor({
 }: Props) {
   return (
     <form
-      className="internal-profile-enter pb-[calc(9.5rem+env(safe-area-inset-bottom))]"
+      className="internal-profile-enter pb-[calc(var(--internal-edit-bar-height)+var(--internal-edit-gap))]"
       onSubmit={(event) => {
         event.preventDefault();
         onSave();
       }}
     >
-      <GlassSurface className="rounded-none px-5 py-8 sm:rounded-[1.75rem] sm:px-8 sm:py-10 lg:px-12">
-        <header className="space-y-3 pb-8">
-          <p className="font-display text-[10px] uppercase tracking-[0.32em] text-[#bde0fe]/80">Edit profile</p>
-          <h1 className="font-display text-[1.85rem] font-medium leading-[1.08] tracking-tight text-white sm:text-[2.2rem]">
+      <GlassSurface className="rounded-2xl px-4 py-5 sm:rounded-[1.75rem] sm:px-8 sm:py-10 lg:px-12">
+        <header className="space-y-2 pb-5 sm:space-y-3 sm:pb-8">
+          <p className="font-display text-[10px] uppercase tracking-[0.28em] text-[#bde0fe]/80 sm:tracking-[0.32em]">
+            Edit profile
+          </p>
+          <h1 className="font-display text-[1.55rem] font-medium leading-[1.08] tracking-tight text-white sm:text-[2.2rem]">
             {draft.displayName}
           </h1>
-          <p className="max-w-xl text-[13px] leading-relaxed text-cadet/80">
+          <p className="max-w-xl text-[12px] leading-relaxed text-cadet/80 sm:text-[13px]">
             These fields save to your SIGMA team profile. They are not published to the public website yet.
           </p>
         </header>
 
-        <div className="space-y-10">
+        <div className="space-y-6 sm:space-y-10">
           <ProfileFormSection title="Profile photo">
             <ProfileImageUploader
               name={draft.displayName}
@@ -223,19 +225,13 @@ export function ProfileEditor({
         </div>
       </GlassSurface>
 
-      <div className="pointer-events-none internal-edit-actions fixed inset-x-0 z-40 px-3 sm:px-6">
-        <div className="pointer-events-auto glass-surface mx-auto flex max-w-[1180px] flex-col gap-2 rounded-2xl p-3 md:flex-row-reverse">
-          <GlassButton type="submit" disabled={saving} className="w-full md:flex-1">
-            {saving ? "Saving" : "Save changes"}
-          </GlassButton>
-          <GlassButton
-            type="button"
-            variant="secondary"
-            disabled={saving}
-            onClick={onCancel}
-            className="w-full md:flex-1"
-          >
+      <div className="pointer-events-none internal-edit-actions fixed z-40">
+        <div className="pointer-events-auto glass-surface internal-edit-actions-inner mx-auto max-w-[1180px]">
+          <GlassButton type="button" variant="secondary" disabled={saving} onClick={onCancel}>
             Cancel
+          </GlassButton>
+          <GlassButton type="submit" disabled={saving}>
+            {saving ? "Saving" : "Save changes"}
           </GlassButton>
         </div>
       </div>

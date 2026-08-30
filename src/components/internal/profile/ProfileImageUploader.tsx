@@ -29,11 +29,11 @@ export function ProfileImageUploader({
   const shown = previewUrl || imageSrc;
 
   return (
-    <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-      <div className="relative h-24 w-24 shrink-0">
+    <div className="flex flex-row items-center gap-3 sm:gap-4">
+      <div className="relative h-16 w-16 shrink-0 sm:h-24 sm:w-24">
         <div
           aria-hidden="true"
-          className="absolute -inset-1.5 rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.16)_0%,transparent_70%)]"
+          className="absolute -inset-1 rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.16)_0%,transparent_70%)] sm:-inset-1.5"
         />
         <div className="relative h-full w-full overflow-hidden rounded-full border border-white/20 bg-white/[0.04]">
           {shown ? (
@@ -43,7 +43,7 @@ export function ProfileImageUploader({
           ) : (
             <div
               aria-hidden="true"
-              className="flex h-full w-full items-center justify-center font-display text-xl tracking-[0.12em] text-white"
+              className="flex h-full w-full items-center justify-center font-display text-base tracking-[0.12em] text-white sm:text-xl"
             >
               {initials}
             </div>
@@ -51,7 +51,7 @@ export function ProfileImageUploader({
         </div>
       </div>
 
-      <div className="min-w-0 flex-1 space-y-2">
+      <div className="min-w-0 flex-1 space-y-1.5">
         <input
           ref={inputRef}
           id={inputId}
@@ -71,18 +71,23 @@ export function ProfileImageUploader({
           <GlassButton
             type="button"
             variant="secondary"
-            className="w-auto"
+            className="h-10 min-h-10 w-auto px-3 text-[10px] tracking-[0.14em] sm:h-12 sm:min-h-12 sm:px-5 sm:text-[11px]"
             onClick={() => inputRef.current?.click()}
           >
             {shown ? "Replace photo" : "Upload photo"}
           </GlassButton>
           {previewUrl ? (
-            <GlassButton type="button" variant="secondary" className="w-auto" onClick={onClearPreview}>
+            <GlassButton
+              type="button"
+              variant="secondary"
+              className="h-10 min-h-10 w-auto px-3 text-[10px] tracking-[0.14em] sm:h-12 sm:min-h-12 sm:px-5 sm:text-[11px]"
+              onClick={onClearPreview}
+            >
               Remove new photo
             </GlassButton>
           ) : null}
         </div>
-        <p className="text-[12px] leading-relaxed text-cadet/75">
+        <p className="text-[11px] leading-snug text-cadet/75 sm:text-[12px] sm:leading-relaxed">
           Preview only. Photo upload is not stored yet.
         </p>
         {error ? (

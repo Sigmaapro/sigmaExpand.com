@@ -49,44 +49,46 @@ export function ProfileView({
   const statusLabel = profile.profileStatus ?? "draft";
 
   return (
-    <article className="internal-profile-enter space-y-5">
-      <GlassSurface className="rounded-none sm:rounded-[1.75rem]">
-        <div className="grid gap-8 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(15rem,0.92fr)_1.2fr] lg:gap-12 lg:px-12 lg:py-11">
+    <article className="internal-profile-enter space-y-4 sm:space-y-5">
+      <GlassSurface className="rounded-2xl sm:rounded-[1.75rem]">
+        <div className="grid gap-5 px-4 py-5 sm:gap-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(15rem,0.92fr)_1.2fr] lg:gap-12 lg:px-12 lg:py-11">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <div className="relative h-28 w-28 shrink-0 sm:h-32 sm:w-32">
+            <div className="relative h-24 w-24 shrink-0 sm:h-32 sm:w-32">
               <div
                 aria-hidden="true"
-                className="absolute -inset-2 rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.18)_0%,transparent_68%)]"
+                className="absolute -inset-1.5 rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.18)_0%,transparent_68%)] sm:-inset-2"
               />
               <div className="relative h-full w-full overflow-hidden rounded-full border border-white/20 bg-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
                 {photo ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={photo} alt={`${profile.displayName} portrait`} className="h-full w-full object-cover" />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center font-display text-2xl tracking-[0.12em] text-white">
+                  <div className="flex h-full w-full items-center justify-center font-display text-xl tracking-[0.12em] text-white sm:text-2xl">
                     {profile.initials}
                   </div>
                 )}
               </div>
             </div>
 
-            <p className="mt-5 font-display text-[10px] uppercase tracking-[0.32em] text-[#bde0fe]/80">
+            <p className="mt-3.5 font-display text-[10px] uppercase tracking-[0.28em] text-[#bde0fe]/80 sm:mt-5 sm:tracking-[0.32em]">
               Profile
             </p>
-            <h1 className="mt-2.5 w-full break-words font-display text-[2rem] font-medium leading-[1.05] tracking-tight text-white sm:text-[2.35rem]">
+            <h1 className="mt-1.5 w-full break-words font-display text-[1.7rem] font-medium leading-[1.05] tracking-tight text-white sm:mt-2.5 sm:text-[2.35rem]">
               {profile.displayName}
             </h1>
             {profile.role ? (
-              <p className="mt-2.5 max-w-md text-[15px] leading-snug text-cadet">{profile.role}</p>
+              <p className="mt-2 max-w-md text-[14px] leading-snug text-cadet sm:mt-2.5 sm:text-[15px]">
+                {profile.role}
+              </p>
             ) : null}
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5 sm:mt-4 sm:gap-2 lg:justify-start">
               <GlassChip>{groupLabel(profile.group)}</GlassChip>
               <GlassChip className="capitalize">{statusLabel}</GlassChip>
               {location ? <GlassChip>{location}</GlassChip> : null}
             </div>
 
-            <div className="mt-6 flex w-full max-w-xs flex-col gap-2 lg:max-w-none">
+            <div className="mt-4 flex w-full max-w-xs flex-col gap-2 sm:mt-6 lg:max-w-none">
               <GlassButton type="button" className="w-full" onClick={onEdit}>
                 Edit profile
               </GlassButton>
@@ -101,7 +103,7 @@ export function ProfileView({
             </div>
           </div>
 
-          <div className="min-w-0 space-y-7 lg:border-l lg:border-white/[0.08] lg:pl-12">
+          <div className="min-w-0 space-y-5 sm:space-y-7 lg:border-l lg:border-white/[0.08] lg:pl-12">
             <GlassDivider className="lg:hidden" />
 
             {profile.shortBio ? (

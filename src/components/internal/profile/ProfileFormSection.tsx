@@ -11,11 +11,13 @@ export function ProfileFormSection({
   divider?: boolean;
 }) {
   return (
-    <section className="space-y-5">
+    <section className="space-y-3 sm:space-y-5">
       <header>
-        <h2 className="font-display text-[11px] uppercase tracking-[0.26em] text-[#bde0fe]/80">{title}</h2>
+        <h2 className="font-display text-[10px] uppercase tracking-[0.22em] text-[#bde0fe]/80 sm:text-[11px] sm:tracking-[0.26em]">
+          {title}
+        </h2>
       </header>
-      <div className="space-y-4">{children}</div>
+      <div className="space-y-3 sm:space-y-4">{children}</div>
       {divider ? <GlassDivider /> : null}
     </section>
   );
@@ -32,10 +34,10 @@ export function FieldLabel({
 }) {
   return (
     <div className="flex items-baseline justify-between gap-3">
-      <label htmlFor={htmlFor} className="text-[13px] font-medium text-white/90">
+      <label htmlFor={htmlFor} className="text-[12px] font-medium text-white/90 sm:text-[13px]">
         {children}
       </label>
-      {hint ? <span className="text-[11px] text-cadet/70">{hint}</span> : null}
+      {hint ? <span className="text-[10px] text-cadet/70 sm:text-[11px]">{hint}</span> : null}
     </div>
   );
 }

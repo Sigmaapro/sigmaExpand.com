@@ -41,7 +41,7 @@ export function SigmaFeedItem({ item }: { item: InternalFeedItem }) {
   );
 
   const className =
-    "relative block px-5 py-7 outline-none transition-colors duration-200 sm:px-8 lg:px-10 focus-visible:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#bde0fe]/30";
+    "relative block px-4 py-5 outline-none transition-colors duration-200 sm:px-8 sm:py-7 lg:px-10 focus-visible:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#bde0fe]/30";
 
   if (item.href) {
     return (

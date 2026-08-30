@@ -16,7 +16,7 @@ export function InternalLoginForm() {
     <div className="flex w-full flex-col items-center">
       <InternalLoginFace
         guarded={passwordFocused}
-        className="mb-6 h-[4.75rem] w-full sm:mb-8 sm:h-[5.5rem] lg:mb-10 lg:h-[6.25rem]"
+        className="mb-8 h-[4.75rem] w-full sm:mb-9 sm:h-[5.5rem] lg:mb-10 lg:h-[6.25rem]"
       />
 
       <div className="mb-5 w-full text-center sm:mb-6">

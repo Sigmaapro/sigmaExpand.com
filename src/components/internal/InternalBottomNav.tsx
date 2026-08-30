@@ -22,7 +22,7 @@ export function InternalBottomNav() {
   return (
     <nav aria-label="SIGMA apps" className="internal-dock">
       <div className="glass-surface internal-dock-shell">
-        <ul className="flex items-stretch gap-0.5 lg:gap-1.5">
+        <ul className="flex items-stretch gap-px lg:gap-1.5">
           {items.map((item) => {
             const active = item.id === activeId;
             return (
@@ -32,7 +32,7 @@ export function InternalBottomNav() {
                   aria-current={active ? "page" : undefined}
                   className={cn("internal-app-tile", active && "internal-app-tile-active")}
                 >
-                  <span className="flex h-5 w-5 items-center justify-center lg:h-8 lg:w-8">
+                  <span className="flex h-4 w-4 items-center justify-center lg:h-8 lg:w-8">
                     <InternalNavGlyph id={item.id} active={active} />
                   </span>
                   <span className="internal-app-tile-label font-display">{item.label}</span>

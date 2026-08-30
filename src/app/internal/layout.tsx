@@ -1,9 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./internal.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "SIGMA" },
+  title: { absolute: "SIGMA Team" },
   description: "Private SIGMA team space.",
+  applicationName: "SIGMA Team",
+  appleWebApp: {
+    capable: true,
+    title: "SIGMA Team",
+    statusBarStyle: "black-translucent",
+  },
+  // Explicit Apple tag — Next also emits mobile-web-app-capable.
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+  },
+  icons: {
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   robots: {
     index: false,
     follow: false,
@@ -14,6 +27,13 @@ export const metadata: Metadata = {
       noimageindex: true,
     },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#05070e",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function InternalLayout({ children }: { children: React.ReactNode }) {

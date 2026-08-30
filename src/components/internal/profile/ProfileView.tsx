@@ -51,7 +51,7 @@ export function ProfileView({
   return (
     <article className="internal-profile-enter space-y-4 sm:space-y-5">
       <GlassSurface className="rounded-2xl sm:rounded-[1.75rem]">
-        <div className="grid gap-5 px-4 py-5 sm:gap-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(15rem,0.92fr)_1.2fr] lg:gap-12 lg:px-12 lg:py-11">
+        <div className="grid gap-4 px-4 py-5 sm:gap-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(15rem,0.92fr)_1.2fr] lg:gap-12 lg:px-12 lg:py-11">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             <div className="relative h-24 w-24 shrink-0 sm:h-32 sm:w-32">
               <div
@@ -82,28 +82,32 @@ export function ProfileView({
               </p>
             ) : null}
 
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5 sm:mt-4 sm:gap-2 lg:justify-start">
+            <div className="mt-2.5 flex flex-wrap items-center justify-center gap-1.5 sm:mt-4 sm:gap-2 lg:justify-start">
               <GlassChip>{groupLabel(profile.group)}</GlassChip>
               <GlassChip className="capitalize">{statusLabel}</GlassChip>
               {location ? <GlassChip>{location}</GlassChip> : null}
             </div>
 
-            <div className="mt-4 flex w-full max-w-xs flex-col gap-2 sm:mt-6 lg:max-w-none">
-              <GlassButton type="button" className="w-full" onClick={onEdit}>
+            <div className="mx-auto mt-3 flex w-[86%] max-w-[20.5rem] flex-col items-stretch gap-1.5 sm:mx-0 sm:mt-6 sm:w-full sm:max-w-xs lg:max-w-none">
+              <GlassButton
+                type="button"
+                className="internal-profile-action h-12 min-h-12 w-full px-4 text-[10px] tracking-[0.12em] sm:px-5 sm:text-[11px] sm:tracking-[0.18em]"
+                onClick={onEdit}
+              >
                 Edit profile
               </GlassButton>
               <Link
                 href={profile.publicHref}
                 target="_blank"
                 rel="noreferrer"
-                className="glass-button glass-button-secondary w-full"
+                className="glass-button glass-button-secondary internal-profile-action h-12 min-h-12 w-full px-4 text-[10px] tracking-[0.12em] sm:px-5 sm:text-[11px] sm:tracking-[0.18em]"
               >
                 View public profile
               </Link>
             </div>
           </div>
 
-          <div className="min-w-0 space-y-5 sm:space-y-7 lg:border-l lg:border-white/[0.08] lg:pl-12">
+          <div className="min-w-0 space-y-4 sm:space-y-7 lg:border-l lg:border-white/[0.08] lg:pl-12">
             <GlassDivider className="lg:hidden" />
 
             {profile.shortBio ? (

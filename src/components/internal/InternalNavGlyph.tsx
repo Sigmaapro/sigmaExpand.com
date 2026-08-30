@@ -19,7 +19,7 @@ export function InternalNavGlyph({
         alt=""
         aria-hidden="true"
         className={cn(
-          "h-5 w-5 object-contain lg:h-7 lg:w-7",
+          "h-4 w-4 object-contain lg:h-7 lg:w-7",
           active ? "opacity-100" : "opacity-75",
         )}
       />
@@ -28,7 +28,7 @@ export function InternalNavGlyph({
 
   if (id === "profile") {
     return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4 lg:h-6 lg:w-6" aria-hidden="true" focusable="false">
+      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 lg:h-6 lg:w-6" aria-hidden="true" focusable="false">
         <circle cx="12" cy="8" r="3.25" fill="none" stroke="currentColor" strokeWidth="1.4" />
         <path
           d="M5.5 19.25c.9-3.2 3.2-4.75 6.5-4.75s5.6 1.55 6.5 4.75"
@@ -42,7 +42,7 @@ export function InternalNavGlyph({
   }
 
   return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 lg:h-6 lg:w-6" aria-hidden="true" focusable="false">
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 lg:h-6 lg:w-6" aria-hidden="true" focusable="false">
       <path
         d="M4.5 6.5h15v11H4.5z"
         fill="none"

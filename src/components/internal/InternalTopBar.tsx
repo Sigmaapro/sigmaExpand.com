@@ -9,19 +9,21 @@ export function InternalTopBar({ email }: { email: string | null }) {
   return (
     <>
       <header className="internal-account-header relative z-40 border-b border-white/[0.08] bg-white/[0.03] backdrop-blur-xl [-webkit-backdrop-filter:blur(20px)] lg:hidden">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex min-w-0 items-center gap-2">
+        <div className="flex min-w-0 items-center justify-between gap-1.5">
+          <div className="flex min-w-0 items-center gap-1.5">
             <span
               aria-hidden="true"
-              className="glass-chip h-8 w-8 justify-center rounded-full px-0 font-display text-[9px] tracking-[0.08em] text-white"
+              className="glass-chip h-7 w-7 shrink-0 justify-center rounded-full px-0 font-display text-[8px] tracking-[0.06em] text-white"
             >
               {initials}
             </span>
-            <p className="min-w-0 truncate font-display text-[9px] uppercase tracking-[0.12em] text-cadet/80">
+            <p className="min-w-0 truncate font-display text-[8px] uppercase tracking-[0.1em] text-cadet/75">
               {email ?? "Signed in"}
             </p>
           </div>
-          <InternalLogoutButton />
+          <div className="shrink-0">
+            <InternalLogoutButton />
+          </div>
         </div>
       </header>
 

@@ -19,9 +19,9 @@
   --internal-muted: rgba(173, 181, 189, 0.88);
   --internal-text: #f8f9fa;
   --internal-page-gutter: 1rem;
-  --internal-dock-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
-  --internal-dock-height: 4.25rem;
-  --internal-dock-gap: 0.5rem;
+  --internal-dock-bottom: max(0.4rem, env(safe-area-inset-bottom, 0px));
+  --internal-dock-height: 3.8rem;
+  --internal-dock-gap: 0.45rem;
   --internal-dock-clearance: calc(
     var(--internal-dock-bottom) + var(--internal-dock-height) + var(--internal-dock-gap)
   );
@@ -401,8 +401,8 @@ input.glass-field[type="file"] {
 }
 
 .internal-dock-shell {
-  border-radius: 1.2rem;
-  padding: 0.2rem;
+  border-radius: 1.05rem;
+  padding: 0.14rem;
 }
 
 @media (min-width: 1024px) {
@@ -422,16 +422,16 @@ input.glass-field[type="file"] {
 
 .internal-app-tile {
   display: flex;
-  min-height: 2.85rem;
+  min-height: 44px;
   min-width: 0;
   flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.12rem;
-  padding: 0.28rem 0.15rem 0.22rem;
+  gap: 0.08rem;
+  padding: 0.2rem 0.1rem 0.14rem;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.03);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   color: rgba(173, 181, 189, 0.88);
@@ -448,9 +448,9 @@ input.glass-field[type="file"] {
   max-width: 100%;
   overflow: visible;
   white-space: nowrap;
-  font-size: 9px;
+  font-size: 8px;
   line-height: 1;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
@@ -472,12 +472,12 @@ input.glass-field[type="file"] {
 
 .internal-app-tile-active {
   color: #fff;
-  border-color: rgba(189, 224, 254, 0.3);
-  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(189, 224, 254, 0.28);
+  background: rgba(255, 255, 255, 0.09);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 6px 14px rgba(0, 0, 0, 0.2);
-  transform: translateY(-1px);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.18);
+  transform: translateY(-0.5px);
 }
 
 @media (min-width: 1024px) {
@@ -562,6 +562,58 @@ input.glass-field[type="file"] {
   }
 
   .internal-account-header {
-    padding: 0.4rem var(--internal-page-gutter);
+    padding: 0.28rem var(--internal-page-gutter);
+  }
+
+  .internal-profile-action.glass-button {
+    min-height: 48px;
+    height: 48px;
+    min-width: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(28, 57, 187, 0.2);
+  }
+
+  .internal-profile-action.glass-button-secondary {
+    box-shadow: none;
+  }
+
+  .internal-logout-control.glass-button {
+    min-height: 44px;
+    height: 44px;
+    min-width: 0;
+    width: auto;
+    padding: 0 0.65rem;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.035);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .internal-logout-control.glass-button {
+    min-height: 44px;
+    height: 44px;
+    min-width: 0;
+    width: auto;
+    padding: 0 1rem;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .internal-logout-control.glass-button {
+    min-height: 44px;
+    height: 44px;
+    padding: 0 1rem;
+    font-size: 10px;
+    letter-spacing: 0.16em;
   }
 }

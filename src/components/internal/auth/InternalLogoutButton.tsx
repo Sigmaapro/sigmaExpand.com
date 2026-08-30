@@ -12,7 +12,7 @@ function LogoutSubmit() {
       type="submit"
       variant="secondary"
       disabled={pending}
-      className="h-8 min-h-8 w-auto px-2.5 text-[9px] tracking-[0.12em] lg:h-11 lg:min-h-11 lg:px-4 lg:text-[10px] lg:tracking-[0.16em]"
+      className="internal-logout-control"
     >
       {pending ? "Signing out" : "Sign out"}
     </GlassButton>

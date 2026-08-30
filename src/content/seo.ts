@@ -498,6 +498,13 @@ const ROBOTS: Metadata["robots"] = {
   googleBot: { index: true, follow: true },
 };
 
+/** Temporary: inactive `/ar` routes stay live but must not be indexed while the public UI is English-only. */
+const INACTIVE_ARABIC_ROBOTS: Metadata["robots"] = {
+  index: false,
+  follow: true,
+  googleBot: { index: false, follow: true },
+};
+
 /** Scalable hreflang alternates across all supported locales. */
 export type MarketingHrefRoute = "home" | "services" | "insights";
 
@@ -526,7 +533,7 @@ export function buildArabicHomeMetadata(): Metadata {
       canonical: "/ar",
       languages: marketingHreflangLanguages("home"),
     },
-    robots: ROBOTS,
+    robots: INACTIVE_ARABIC_ROBOTS,
     openGraph: {
       title,
       description,
@@ -559,7 +566,7 @@ export function buildArabicServicesMetadata(): Metadata {
       canonical: "/ar/services",
       languages: marketingHreflangLanguages("services"),
     },
-    robots: ROBOTS,
+    robots: INACTIVE_ARABIC_ROBOTS,
     openGraph: {
       title: p.title,
       description: p.description,
@@ -595,7 +602,7 @@ export function buildArabicInsightsIndexMetadata(): Metadata {
       canonical: "/ar/insights",
       languages: marketingHreflangLanguages("insights"),
     },
-    robots: ROBOTS,
+    robots: INACTIVE_ARABIC_ROBOTS,
     openGraph: {
       title: `${title} | Sigma`,
       description,

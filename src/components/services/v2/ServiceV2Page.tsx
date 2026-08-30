@@ -1,4 +1,5 @@
 import type { ServiceV2Content } from "@/content/services/v2/types";
+import { ServiceV2StructuredData } from "@/components/seo/ServiceV2StructuredData";
 import { ServiceV2Hero } from "./ServiceV2Hero";
 import { ServiceV2VisualInterlude } from "./ServiceV2Visual";
 import { ServiceV2Related } from "./ServiceV2Related";
@@ -24,6 +25,7 @@ import {
 export function ServiceV2Page({ content }: { content: ServiceV2Content }) {
   return (
     <article className="relative isolate min-h-0 flex-1 overflow-x-clip text-[rgba(228,235,245,0.9)]">
+      <ServiceV2StructuredData content={content} />
       <div
         className="pointer-events-none absolute inset-0 mix-blend-multiply bg-[linear-gradient(90deg,rgba(5,7,14,0.88)_0%,rgba(5,7,14,0.55)_44%,rgba(5,7,14,0.18)_72%,transparent_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,7,14,0.9)_0%,rgba(5,7,14,0.72)_100%)]"
         aria-hidden="true"

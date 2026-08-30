@@ -3,14 +3,16 @@ import type { NextConfig } from "next";
 /**
  * Observation-only CSP (does not block). Origins from the CSP pre-implementation audit.
  * Do not switch to Content-Security-Policy until Report-Only is clean in production.
+ * `*.supabase.co` is required so the internal app can reach Supabase Auth; public
+ * marketing pages do not use those connections.
  */
 const CONTENT_SECURITY_POLICY_REPORT_ONLY = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: https://blog.sigmaa.pro https://images.unsplash.com",
+  "img-src 'self' data: blob: https://blog.sigmaa.pro https://images.unsplash.com",
   "font-src 'self'",
-  "connect-src 'self' https://challenges.cloudflare.com",
+  "connect-src 'self' https://challenges.cloudflare.com https://*.supabase.co wss://*.supabase.co",
   "frame-src https://challenges.cloudflare.com https://calendly.com",
   "media-src 'self'",
   "object-src 'none'",
@@ -45,6 +47,23 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy-Report-Only",
             value: CONTENT_SECURITY_POLICY_REPORT_ONLY,
+          },
+        ],
+      },
+      {
+        source: "/internal",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+        ],
+      },
+      {
+        source: "/internal/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
           },
         ],
       },

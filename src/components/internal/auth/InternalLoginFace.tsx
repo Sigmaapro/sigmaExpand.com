@@ -161,18 +161,16 @@ function Eye({ guarded, size, reduceMotion, mode, sharedPupil }: EyeProps) {
         className="internal-login-face-lid absolute inset-x-0 top-0 z-[2]"
         style={{
           height: guarded ? "98%" : "0%",
-          background:
-            "linear-gradient(180deg, #0a0e18 0%, #111827 55%, #0c1220 100%)",
+          background: "#05070e",
           borderRadius: `${eyeH * 0.2}px ${eyeH * 0.2}px 0 0`,
           transition: reduceMotion ? "none" : "height 300ms cubic-bezier(0.55, 0, 0.45, 1)",
-          boxShadow: guarded ? "inset 0 -1px 0 rgba(189,224,254,0.12)" : undefined,
         }}
       />
       <div
         className="internal-login-face-lid absolute inset-x-0 bottom-0 z-[2]"
         style={{
           height: guarded ? "14%" : "0%",
-          background: "linear-gradient(0deg, #0a0e18 0%, #121a2a 100%)",
+          background: "#05070e",
           borderRadius: `0 0 ${eyeH * 0.55}px ${eyeH * 0.55}px`,
           transition: reduceMotion ? "none" : "height 300ms cubic-bezier(0.55, 0, 0.45, 1)",
         }}
@@ -334,19 +332,12 @@ export function InternalLoginFace({ guarded, className }: Props) {
       : "mouse";
 
   return (
-    <div className={cn("relative flex flex-col items-center", className)}>
+    <div className={cn("internal-login-face relative inline-flex flex-col items-center", className)}>
       <div
-        className="relative flex w-full flex-1 items-end justify-center"
+        className="relative flex items-end justify-center bg-transparent"
         aria-hidden="true"
       >
-        <div
-          className="pointer-events-none absolute inset-[-18%] rounded-full opacity-80"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 70%, rgba(189,224,254,0.1) 0%, rgba(28,57,187,0.12) 28%, rgba(12,16,24,0) 64%)",
-          }}
-        />
-        <div className="relative flex items-end" style={{ gap: eyeSize * 0.5 }}>
+        <div className="relative flex items-end bg-transparent" style={{ gap: eyeSize * 0.5 }}>
           <Eye
             guarded={guarded}
             size={eyeSize}

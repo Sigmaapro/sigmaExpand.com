@@ -123,6 +123,19 @@
 
 .internal-login-panel {
   animation: internal-enter 280ms ease-out;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.internal-login-face {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.internal-login-face-lid {
+  background: #05070e;
 }
 
 @media (prefers-reduced-motion: reduce) {

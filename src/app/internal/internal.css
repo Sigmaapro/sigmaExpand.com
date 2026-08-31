@@ -771,12 +771,365 @@ input.glass-field[type="file"] {
   }
 }
 
+
+/* Profile editor — shared structure; mobile polish below */
+.internal-profile-editor {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+  /* Main already reserves dock clearance; only lift last fields above the edit bar. */
+  padding-bottom: calc(var(--internal-edit-bar-height) + var(--internal-edit-gap) + 0.5rem);
+}
+
+.internal-profile-editor input,
+.internal-profile-editor textarea,
+.internal-profile-editor select,
+.internal-profile-editor label,
+.internal-profile-editor .glass-chip,
+.internal-profile-editor .internal-profile-field-label,
+.internal-profile-editor .internal-profile-field-hint,
+.internal-profile-editor .internal-profile-chip-editor,
+.internal-profile-editor .internal-profile-social-editor {
+  direction: ltr;
+  text-align: left;
+}
+
+.internal-profile-editor input,
+.internal-profile-editor textarea,
+.internal-profile-editor select {
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.internal-profile-editor input.glass-field:not([type="file"]),
+.internal-profile-input-long {
+  overflow-x: auto;
+  text-overflow: clip;
+}
+
+.internal-profile-editor-surface {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 1.15rem 0 1.35rem;
+  border-radius: 1.15rem;
+}
+
+.internal-profile-editor-sections {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2rem;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.internal-profile-photo-uploader {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.internal-profile-form-section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.95rem;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.internal-profile-form-section-title {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(189, 224, 254, 0.82);
+}
+
+.internal-profile-form-section-body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.1rem;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.internal-profile-form-section-divider {
+  margin-top: 0.45rem;
+}
+
+.internal-profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.internal-profile-field-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.internal-profile-field-label {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.internal-profile-field-hint {
+  font-size: 11px;
+  color: rgba(173, 181, 189, 0.72);
+}
+
+.internal-profile-textarea-quote,
+.internal-profile-editor textarea.internal-profile-textarea-quote {
+  min-height: 5.5rem;
+}
+
+.internal-profile-textarea-short,
+.internal-profile-editor textarea.internal-profile-textarea-short {
+  min-height: 7.5rem;
+}
+
+.internal-profile-textarea-long,
+.internal-profile-editor textarea.internal-profile-textarea-long {
+  min-height: 13.75rem;
+}
+
+.internal-profile-social-editor,
+.internal-profile-files-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.internal-profile-social-row,
+.internal-profile-files-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .internal-profile-editor-surface {
+    padding: 2.5rem 2rem;
+    border-radius: 1.75rem;
+  }
+
+  .internal-profile-editor-sections {
+    gap: 2.5rem;
+  }
+
+  .internal-profile-form-section {
+    gap: 1.15rem;
+  }
+
+  .internal-profile-form-section-title {
+    font-size: 11px;
+    letter-spacing: 0.26em;
+  }
+
+  .internal-profile-form-section-body {
+    gap: 1rem;
+  }
+
+  .internal-profile-field-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .internal-profile-files-row {
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .internal-profile-field-label {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 768px) {
+  .internal-profile-social-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+    align-items: stretch;
+  }
+}
+
+@media (min-width: 1024px) {
+  .internal-profile-editor-surface {
+    padding: 2.5rem 3rem;
+  }
+
+  .internal-profile-editor-sections {
+    gap: 2.5rem;
+  }
+}
+
+
 @media (max-width: 639px) {
   .glass-field {
     min-height: 48px;
     padding: 0.65rem 0.85rem;
     border-radius: 12px;
   }
+
+
+  .internal-page {
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+  }
+
+  .internal-profile-editor,
+  .internal-profile-editor-surface,
+  .internal-profile-editor-sections,
+  .internal-profile-form-section,
+  .internal-profile-form-section-body,
+  .internal-profile-field,
+  .internal-profile-field-grid,
+  .internal-profile-photo-uploader,
+  .internal-profile-social-editor,
+  .internal-profile-files-editor,
+  .internal-profile-chip-editor {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .internal-profile-editor {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+
+  .internal-profile-photo-uploader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .internal-profile-editor-surface {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    padding: 1.1rem 0 1.35rem;
+    border-radius: 1.15rem;
+  }
+
+  .internal-profile-editor-sections {
+    gap: 2rem;
+  }
+
+  .internal-profile-form-section {
+    gap: 0.95rem;
+  }
+
+  .internal-profile-form-section-body {
+    gap: 1.1rem;
+  }
+
+  .internal-profile-form-section-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+
+  .internal-profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .internal-profile-field-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .internal-profile-field-label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .internal-profile-editor .glass-field {
+    display: block;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 52px;
+    padding: 0.85rem 1rem;
+    border-radius: 13px;
+    font-size: 16px;
+    line-height: 1.45;
+    scroll-margin-bottom: calc(var(--internal-edit-clearance) + 1.25rem);
+    scroll-margin-top: calc(max(env(safe-area-inset-top, 0px), 12px) + var(--internal-header-chrome) + 0.75rem);
+  }
+
+  .internal-profile-editor textarea.glass-field {
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .internal-profile-editor .internal-profile-textarea-quote {
+    min-height: 5.5rem;
+  }
+
+  .internal-profile-editor .internal-profile-textarea-short {
+    min-height: 7.5rem;
+  }
+
+  .internal-profile-editor .internal-profile-textarea-long {
+    min-height: 13.75rem;
+  }
+
+  .internal-profile-photo-uploader-avatar {
+    height: 4.25rem;
+    width: 4.25rem;
+  }
+
+  .internal-profile-editor .glass-chip {
+    min-height: 2rem;
+    font-size: 12px;
+  }
+
 
   .glass-button {
     min-height: 44px;
@@ -820,6 +1173,51 @@ input.glass-field[type="file"] {
     box-shadow: none;
   }
 }
+
+
+/*
+  Global `.glass-surface` is display:flex; justify-content:center (row).
+  That parked the editor intro beside the form. Beat it on all widths,
+  and drop the intro column entirely below 640px.
+*/
+.internal-app .glass-surface.internal-profile-editor-surface {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 639px) {
+  .internal-app header.internal-profile-editor-intro {
+    display: none;
+  }
+
+  .internal-app .internal-profile-editor-sections,
+  .internal-app .internal-profile-form-section,
+  .internal-app .internal-profile-form-section-body,
+  .internal-app .internal-profile-field,
+  .internal-app .internal-profile-chip-editor,
+  .internal-app .internal-profile-social-editor {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .internal-app .internal-profile-field-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+}
+
 
 @media (min-width: 640px) {
   .internal-logout-control.glass-button {

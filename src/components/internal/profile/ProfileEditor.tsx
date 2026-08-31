@@ -39,26 +39,27 @@ export function ProfileEditor({
 }: Props) {
   return (
     <form
-      className="internal-profile-enter pb-[calc(var(--internal-edit-bar-height)+var(--internal-edit-gap))]"
+      dir="ltr"
+      className="internal-profile-editor internal-profile-enter"
       onSubmit={(event) => {
         event.preventDefault();
         onSave();
       }}
     >
-      <GlassSurface className="rounded-2xl px-4 py-5 sm:rounded-[1.75rem] sm:px-8 sm:py-10 lg:px-12">
-        <header className="space-y-2 pb-5 sm:space-y-3 sm:pb-8">
+      <GlassSurface className="internal-profile-editor-surface w-full min-w-0 flex-col items-stretch justify-start">
+        <header className="internal-profile-editor-intro hidden space-y-2 pb-5 sm:block sm:space-y-3 sm:pb-8">
           <p className="font-display text-[10px] uppercase tracking-[0.28em] text-[#bde0fe]/80 sm:tracking-[0.32em]">
             Edit profile
           </p>
           <h1 className="font-display text-[1.55rem] font-medium leading-[1.08] tracking-tight text-white sm:text-[2.2rem]">
             {draft.displayName}
           </h1>
-          <p className="max-w-xl text-[12px] leading-relaxed text-cadet/80 sm:text-[13px]">
+          <p className="max-w-xl text-[13px] leading-relaxed text-cadet/80 sm:text-[13px]">
             These fields save to your SIGMA team profile. They are not published to the public website yet.
           </p>
         </header>
 
-        <div className="space-y-6 sm:space-y-10">
+        <div className="internal-profile-editor-sections w-full min-w-0">
           <ProfileFormSection title="Profile photo">
             <ProfileImageUploader
               name={draft.displayName}
@@ -72,7 +73,7 @@ export function ProfileEditor({
           </ProfileFormSection>
 
           <ProfileFormSection title="Identity">
-            <div className="space-y-1.5">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="display-name">Display name</FieldLabel>
               <GlassField
                 id="display-name"
@@ -81,8 +82,8 @@ export function ProfileEditor({
                 onChange={(event) => onChange({ displayName: event.target.value })}
               />
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-1.5">
+            <div className="internal-profile-field-grid">
+              <div className="internal-profile-field">
                 <FieldLabel htmlFor="first-name">First name</FieldLabel>
                 <GlassField
                   id="first-name"
@@ -91,7 +92,7 @@ export function ProfileEditor({
                   onChange={(event) => onChange({ firstName: event.target.value })}
                 />
               </div>
-              <div className="space-y-1.5">
+              <div className="internal-profile-field">
                 <FieldLabel htmlFor="last-name">Last name</FieldLabel>
                 <GlassField
                   id="last-name"
@@ -101,16 +102,17 @@ export function ProfileEditor({
                 />
               </div>
             </div>
-            <div className="space-y-1.5">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="role">Role</FieldLabel>
               <GlassField
                 id="role"
                 autoComplete="organization-title"
                 value={draft.role}
+                className="internal-profile-input-long"
                 onChange={(event) => onChange({ role: event.target.value })}
               />
             </div>
-            <div className="space-y-1.5">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <GlassField
                 id="email"
@@ -124,8 +126,8 @@ export function ProfileEditor({
           </ProfileFormSection>
 
           <ProfileFormSection title="Location">
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-1.5">
+            <div className="internal-profile-field-grid">
+              <div className="internal-profile-field">
                 <FieldLabel htmlFor="city">City</FieldLabel>
                 <GlassField
                   id="city"
@@ -134,7 +136,7 @@ export function ProfileEditor({
                   onChange={(event) => onChange({ locationCity: event.target.value })}
                 />
               </div>
-              <div className="space-y-1.5">
+              <div className="internal-profile-field">
                 <FieldLabel htmlFor="country">Country</FieldLabel>
                 <GlassField
                   id="country"
@@ -147,42 +149,44 @@ export function ProfileEditor({
           </ProfileFormSection>
 
           <ProfileFormSection title="About">
-            <div className="space-y-1.5">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="status">Quote</FieldLabel>
-              <GlassField
+              <GlassTextarea
                 id="status"
+                rows={3}
                 value={draft.status}
                 onChange={(event) => onChange({ status: event.target.value })}
+                className="internal-profile-textarea-quote"
               />
             </div>
-            <div className="space-y-1.5">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="short-bio" hint="Public short">
                 Short bio
               </FieldLabel>
               <GlassTextarea
                 id="short-bio"
-                rows={4}
+                rows={5}
                 value={draft.shortBio}
                 onChange={(event) => onChange({ shortBio: event.target.value })}
-                className="min-h-[7rem]"
+                className="internal-profile-textarea-short"
               />
             </div>
-            <div className="space-y-1.5">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="full-bio" hint="Public long">
                 Long bio
               </FieldLabel>
               <GlassTextarea
                 id="full-bio"
-                rows={8}
+                rows={10}
                 value={draft.fullBio}
                 onChange={(event) => onChange({ fullBio: event.target.value })}
-                className="min-h-[12rem]"
+                className="internal-profile-textarea-long"
               />
             </div>
           </ProfileFormSection>
 
           <ProfileFormSection title="Expertise">
-            <div className="space-y-1.5">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="expertise">Specialties</FieldLabel>
               <ChipListEditor
                 id="expertise"
@@ -191,7 +195,10 @@ export function ProfileEditor({
                 placeholder="Add a specialty"
               />
             </div>
-            <div className="space-y-1.5">
+          </ProfileFormSection>
+
+          <ProfileFormSection title="Languages">
+            <div className="internal-profile-field">
               <FieldLabel htmlFor="languages">Languages</FieldLabel>
               <ChipListEditor
                 id="languages"
@@ -202,7 +209,7 @@ export function ProfileEditor({
             </div>
           </ProfileFormSection>
 
-          <ProfileFormSection title="Social">
+          <ProfileFormSection title="Social links">
             <SocialLinksEditor
               linkedin={draft.linkedin}
               x={draft.x}
@@ -227,10 +234,16 @@ export function ProfileEditor({
 
       <div className="pointer-events-none internal-edit-actions fixed z-40">
         <div className="pointer-events-auto glass-surface internal-edit-actions-inner mx-auto max-w-[1180px]">
-          <GlassButton type="button" variant="secondary" disabled={saving} onClick={onCancel}>
+          <GlassButton
+            type="button"
+            variant="secondary"
+            disabled={saving}
+            className="internal-edit-cancel"
+            onClick={onCancel}
+          >
             Cancel
           </GlassButton>
-          <GlassButton type="submit" disabled={saving}>
+          <GlassButton type="submit" disabled={saving} className="internal-edit-save">
             {saving ? "Saving" : "Save changes"}
           </GlassButton>
         </div>

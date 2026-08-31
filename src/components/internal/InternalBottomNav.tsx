@@ -21,18 +21,18 @@ export function InternalBottomNav() {
 
   return (
     <nav aria-label="SIGMA apps" className="internal-dock">
-      <div className="glass-surface internal-dock-shell">
-        <ul className="flex items-stretch gap-px lg:gap-1.5">
+      <div className="glass-surface internal-dock-shell w-full min-w-0 max-w-none lg:w-max">
+        <ul className="internal-dock-grid w-full min-w-0 lg:w-max">
           {items.map((item) => {
             const active = item.id === activeId;
             return (
-              <li key={item.id} className="min-w-0 flex-1 lg:flex-none">
+              <li key={item.id} className="min-w-0 w-full lg:w-auto">
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn("internal-app-tile", active && "internal-app-tile-active")}
                 >
-                  <span className="flex h-4 w-4 items-center justify-center lg:h-8 lg:w-8">
+                  <span className="internal-app-tile-icon">
                     <InternalNavGlyph id={item.id} active={active} />
                   </span>
                   <span className="internal-app-tile-label font-display">{item.label}</span>

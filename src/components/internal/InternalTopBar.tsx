@@ -8,20 +8,15 @@ export function InternalTopBar({ email }: { email: string | null }) {
 
   return (
     <>
-      <header className="internal-account-header relative z-40 border-b border-white/[0.08] bg-white/[0.03] backdrop-blur-xl [-webkit-backdrop-filter:blur(20px)] lg:hidden">
-        <div className="flex min-w-0 items-center justify-between gap-1.5">
-          <div className="flex min-w-0 items-center gap-1.5">
-            <span
-              aria-hidden="true"
-              className="glass-chip h-7 w-7 shrink-0 justify-center rounded-full px-0 font-display text-[8px] tracking-[0.06em] text-white"
-            >
+      <header className="internal-account-header sticky top-0 z-40 lg:hidden pt-[max(12px,env(safe-area-inset-top,0px))]">
+        <div className="internal-account-header-inner">
+          <div className="internal-account-identity">
+            <span aria-hidden="true" className="internal-account-avatar">
               {initials}
             </span>
-            <p className="min-w-0 truncate font-display text-[8px] uppercase tracking-[0.1em] text-cadet/75">
-              {email ?? "Signed in"}
-            </p>
+            <p className="internal-account-email">{email ?? "Signed in"}</p>
           </div>
-          <div className="shrink-0">
+          <div className="internal-account-actions">
             <InternalLogoutButton />
           </div>
         </div>

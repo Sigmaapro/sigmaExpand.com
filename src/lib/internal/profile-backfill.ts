@@ -1,3 +1,4 @@
+import { getInternalAuthUser } from "@/lib/internal/auth";
 import { profileRowToEditable, parseOtherSocials } from "@/lib/internal/profile-mapper";
 import { editableProfileToUpdatePayload, type ProfileUpdatePayload } from "@/lib/internal/profile-payload";
 import {
@@ -70,14 +71,14 @@ export async function backfillMissingOwnedProfileFields(
 
   const filled = profileRowToEditable(row);
   const patch = missingOwnedFieldsPayload(row, filled);
+  // Populated rows are a pure no-op: no Auth round-trip and no UPDATE.
   if (Object.keys(patch).length === 0) return row;
 
   try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getInternalAuthUser();
     if (!user || user.id !== userId) return row;
+
+    const supabase = await createClient();
 
     const { data, error } = await supabase
       .from("profiles")

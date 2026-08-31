@@ -1,4 +1,6 @@
+import { cache } from "react";
 import type { User } from "@supabase/supabase-js";
+import { getInternalAuthUser } from "@/lib/internal/auth";
 import {
   parseProfileRow,
   PROFILE_SELECT_COLUMNS,
@@ -15,21 +17,19 @@ export type AuthenticatedProfileLoad =
 /**
  * Load the signed-in user's own public.profiles row.
  * Identity is auth.getUser().id only — never slug, email, or static TeamMember id.
+ * Cached per request so layout auth + profile page share the same session lookup.
  */
-export async function getAuthenticatedProfile(): Promise<AuthenticatedProfileLoad> {
+export const getAuthenticatedProfile = cache(async (): Promise<AuthenticatedProfileLoad> => {
   let user: User | null = null;
 
   try {
-    const supabase = await createClient();
-    const {
-      data: { user: sessionUser },
-    } = await supabase.auth.getUser();
-    user = sessionUser;
+    user = await getInternalAuthUser();
 
     if (!user) {
       return { status: "unauthenticated" };
     }
 
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from("profiles")
       .select(PROFILE_SELECT_COLUMNS)
@@ -61,4 +61,4 @@ export async function getAuthenticatedProfile(): Promise<AuthenticatedProfileLoa
     console.error("[internal-profile] load unavailable");
     return user ? { status: "error" } : { status: "unauthenticated" };
   }
-}
+});

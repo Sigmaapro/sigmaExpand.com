@@ -29,6 +29,7 @@ export function InternalBottomNav() {
               <li key={item.id} className="min-w-0 w-full lg:w-auto">
                 <Link
                   href={item.href}
+                  prefetch={true}
                   aria-current={active ? "page" : undefined}
                   className={cn("internal-app-tile", active && "internal-app-tile-active")}
                 >

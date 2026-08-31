@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { InternalLoginForm } from "@/components/internal/auth/InternalLoginForm";
-import { RecoveryLinkBridge } from "@/components/internal/auth/RecoveryLinkBridge";
+import { cookies } from "next/headers";
+import { InternalResetPasswordForm } from "@/components/internal/auth/InternalResetPasswordForm";
 
 export const metadata: Metadata = {
-  title: { absolute: "Sign in · SIGMA" },
+  title: { absolute: "Reset password · SIGMA" },
   robots: { index: false, follow: false },
 };
 
-export default async function InternalLoginPage({
+export default async function InternalResetPasswordPage({
   searchParams,
 }: {
-  searchParams: Promise<{ reset?: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const params = await searchParams;
-  const passwordUpdated = params.reset === "1";
+  const cookieStore = await cookies();
+  const recoveryHint =
+    cookieStore.get("sigma-internal-recovery")?.value === "1" || params.from === "recovery";
 
   return (
     <div className="relative z-20 flex min-h-dvh flex-col px-4 text-cadet sm:px-6">
@@ -31,21 +33,19 @@ export default async function InternalLoginPage({
         </div>
 
         <div className="internal-login-panel mt-7 w-full sm:mt-9">
-          <RecoveryLinkBridge />
-          {passwordUpdated ? (
-            <p
-              className="mb-5 text-center text-[13px] leading-relaxed text-[#bde0fe]/90"
-              role="status"
-            >
-              Password updated. Sign in with your new password.
+          <div className="mb-5 w-full text-center sm:mb-6">
+            <p className="font-display text-[10px] uppercase tracking-[0.28em] text-[#bde0fe]/85">
+              Team access
             </p>
-          ) : null}
-          <InternalLoginForm />
+            <h2 className="mt-2 font-display text-[1.35rem] font-medium tracking-tight text-white">
+              Set a new password
+            </h2>
+            <p className="mt-2 text-[13px] leading-relaxed text-cadet/80">
+              This updates the password on your existing SIGMA account.
+            </p>
+          </div>
+          <InternalResetPasswordForm recoveryHint={recoveryHint} />
         </div>
-
-        <p className="mt-6 text-center text-[12px] leading-relaxed text-cadet/65 sm:mt-8">
-          Invite-only. No public registration.
-        </p>
       </main>
     </div>
   );

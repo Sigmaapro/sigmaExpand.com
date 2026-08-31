@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SigmaLanding from "@/components/sigma/SigmaLanding";
+import { RecoveryLinkBridge } from "@/components/internal/auth/RecoveryLinkBridge";
 import { buildPageMetadata } from "@/content/seo";
 
 /**
@@ -10,5 +11,10 @@ import { buildPageMetadata } from "@/content/seo";
 export const metadata: Metadata = buildPageMetadata("home");
 
 export default function Home() {
-  return <SigmaLanding />;
+  return (
+    <>
+      <RecoveryLinkBridge silent />
+      <SigmaLanding />
+    </>
+  );
 }

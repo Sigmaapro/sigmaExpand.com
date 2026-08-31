@@ -6,6 +6,7 @@ export const INTERNAL_ROUTES = {
   root: "/internal",
   login: "/internal/login",
   authCallback: "/internal/auth/callback",
+  resetPassword: "/internal/reset-password",
   /** Public install metadata only — no authenticated app data. */
   manifest: "/internal/manifest.webmanifest",
   sigma: "/internal/sigma",
@@ -17,6 +18,7 @@ export const INTERNAL_ROUTES = {
 export function isPublicInternalAuthPath(pathname: string): boolean {
   return (
     pathname === INTERNAL_ROUTES.login ||
+    pathname === INTERNAL_ROUTES.resetPassword ||
     pathname === INTERNAL_ROUTES.manifest ||
     pathname === INTERNAL_ROUTES.authCallback ||
     pathname.startsWith(`${INTERNAL_ROUTES.authCallback}/`)

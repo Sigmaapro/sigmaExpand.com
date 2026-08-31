@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { INTERNAL_ROUTES } from "@/lib/internal/routes";
 import { createClient } from "@/lib/supabase/server";
@@ -39,6 +40,58 @@ export async function loginAction(
 
   revalidatePath(INTERNAL_ROUTES.root, "layout");
   redirect(INTERNAL_ROUTES.sigma);
+}
+
+export async function completePasswordResetAction(
+  _prev: AuthFormState,
+  formData: FormData,
+): Promise<AuthFormState> {
+  const password = String(formData.get("password") ?? "");
+  const confirm = String(formData.get("confirm") ?? "");
+
+  if (!password || !confirm) {
+    return { error: "Enter and confirm your new password." };
+  }
+  if (password !== confirm) {
+    return { error: "Passwords do not match." };
+  }
+  if (password.length < 8 || password.length > 72) {
+    return { error: "Use a password between 8 and 72 characters." };
+  }
+
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      return { error: "This reset link is invalid or expired." };
+    }
+
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+      console.error("[internal-auth] password update failed");
+      return { error: "Could not update the password. Try the reset link again." };
+    }
+
+    const cookieStore = await cookies();
+    cookieStore.set("sigma-internal-recovery", "", {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/internal",
+      maxAge: 0,
+    });
+    await supabase.auth.signOut();
+  } catch (error) {
+    if (isAuthConfigError(error)) {
+      return { error: "Password reset is unavailable right now." };
+    }
+    console.error("[internal-auth] password update unavailable");
+    return { error: "Could not update the password. Try again." };
+  }
+
+  revalidatePath(INTERNAL_ROUTES.root, "layout");
+  redirect(`${INTERNAL_ROUTES.login}?reset=1`);
 }
 
 export async function logoutAction(): Promise<void> {

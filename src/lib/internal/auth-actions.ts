@@ -94,6 +94,53 @@ export async function completePasswordResetAction(
   redirect(`${INTERNAL_ROUTES.login}?reset=1`);
 }
 
+export async function establishRecoveryFromTokenHashAction(
+  tokenHash: string,
+  type: string,
+): Promise<AuthFormState> {
+  if (typeof tokenHash !== "string" || !tokenHash) {
+    return { error: "This reset link is invalid or expired." };
+  }
+  if (type !== "recovery" && type !== "invite") {
+    return { error: "This reset link is invalid or expired." };
+  }
+
+  try {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.verifyOtp({
+      type,
+      token_hash: tokenHash,
+    });
+    if (error) {
+      console.error("[internal-auth] recovery verify failed");
+      return { error: "This reset link is invalid or expired." };
+    }
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      return { error: "This reset link is invalid or expired." };
+    }
+
+    const cookieStore = await cookies();
+    cookieStore.set("sigma-internal-recovery", "1", {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/internal",
+      maxAge: 15 * 60,
+      secure: process.env.NODE_ENV === "production",
+    });
+    return { error: null };
+  } catch (error) {
+    if (isAuthConfigError(error)) {
+      return { error: "Password reset is unavailable right now." };
+    }
+    console.error("[internal-auth] recovery verify unavailable");
+    return { error: "This reset link is invalid or expired." };
+  }
+}
+
 export async function logoutAction(): Promise<void> {
   try {
     const supabase = await createClient();

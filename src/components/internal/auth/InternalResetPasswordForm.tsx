@@ -1,51 +1,114 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { GlassButton, GlassField } from "@/components/internal/glass/Glass";
-import { completePasswordResetAction, type AuthFormState } from "@/lib/internal/auth-actions";
+import {
+  completePasswordResetAction,
+  establishRecoveryFromTokenHashAction,
+  type AuthFormState,
+} from "@/lib/internal/auth-actions";
 import { createClient } from "@/lib/supabase/client";
 import { INTERNAL_ROUTES } from "@/lib/internal/routes";
+import { parseRecoveryUrl } from "@/lib/internal/recovery-url";
 
 const INITIAL_STATE: AuthFormState = { error: null };
 
-export function InternalResetPasswordForm({ recoveryHint = false }: { recoveryHint?: boolean }) {
+export function InternalResetPasswordForm({
+  recoveryHint = false,
+  expired = false,
+}: {
+  recoveryHint?: boolean;
+  expired?: boolean;
+}) {
+  const router = useRouter();
   const [state, action, pending] = useActionState(completePasswordResetAction, INITIAL_STATE);
-  const [sessionState, setSessionState] = useState<"checking" | "ready" | "missing">("checking");
+  const [sessionState, setSessionState] = useState<"checking" | "ready" | "missing" | "confirm">(
+    expired ? "missing" : "checking",
+  );
+  const [pendingToken, setPendingToken] = useState<{ tokenHash: string; type: "recovery" | "invite" } | null>(
+    null,
+  );
+  const [verifyError, setVerifyError] = useState<string | null>(null);
+  const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
-    const supabase = createClient();
-    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-    const url = new URL(window.location.href);
+    if (expired) {
+      setSessionState("missing");
+      return;
+    }
 
-    if (url.searchParams.get("code") || url.searchParams.get("token_hash")) {
+    const payload = parseRecoveryUrl(window.location.href);
+
+    if (payload?.kind === "error") {
+      window.history.replaceState(null, "", INTERNAL_ROUTES.resetPassword);
+      setSessionState("missing");
+      return;
+    }
+
+    if (payload?.kind === "code") {
       const next = new URL(INTERNAL_ROUTES.authCallback, window.location.origin);
-      const code = url.searchParams.get("code");
-      const tokenHash = url.searchParams.get("token_hash");
-      const type = url.searchParams.get("type");
-      if (code) next.searchParams.set("code", code);
-      if (tokenHash) next.searchParams.set("token_hash", tokenHash);
-      if (type) next.searchParams.set("type", type);
+      next.searchParams.set("code", payload.code);
+      if (payload.type) next.searchParams.set("type", payload.type);
       next.searchParams.set("next", INTERNAL_ROUTES.resetPassword);
       window.location.replace(`${next.pathname}${next.search}`);
       return;
     }
 
+    if (payload?.kind === "token_hash") {
+      window.history.replaceState(
+        null,
+        "",
+        `${INTERNAL_ROUTES.resetPassword}?type=${payload.type}`,
+      );
+      setPendingToken({ tokenHash: payload.tokenHash, type: payload.type });
+      setSessionState("confirm");
+      return;
+    }
+
+    if (payload?.kind === "implicit") {
+      const accessToken = payload.accessToken;
+      const refreshToken = payload.refreshToken;
+      window.history.replaceState(null, "", `${INTERNAL_ROUTES.resetPassword}?from=recovery`);
+      const supabase = createClient();
+      void supabase.auth
+        .setSession({ access_token: accessToken, refresh_token: refreshToken })
+        .then(({ error }) => {
+          if (error) {
+            setSessionState("missing");
+            return;
+          }
+          setSessionState("ready");
+        });
+      return;
+    }
+
+    const supabase = createClient();
     void supabase.auth.getUser().then(({ data }) => {
       const params = new URLSearchParams(window.location.search);
       const fromRecovery = recoveryHint || params.get("from") === "recovery";
-      if (data.user && fromRecovery) {
-        setSessionState("ready");
-        return;
-      }
-      if (hashParams.get("access_token") || hashParams.get("type") === "recovery") {
-        void supabase.auth.getSession().then(({ data: sessionData }) => {
-          setSessionState(sessionData.session ? "ready" : "missing");
-        });
-        return;
-      }
-      setSessionState("missing");
+      setSessionState(data.user && fromRecovery ? "ready" : "missing");
     });
-  }, [recoveryHint]);
+  }, [expired, recoveryHint]);
+
+  async function confirmTokenHash() {
+    if (!pendingToken) return;
+    setVerifying(true);
+    setVerifyError(null);
+    const result = await establishRecoveryFromTokenHashAction(
+      pendingToken.tokenHash,
+      pendingToken.type,
+    );
+    setVerifying(false);
+    if (result.error) {
+      setVerifyError(result.error);
+      setSessionState("missing");
+      return;
+    }
+    setPendingToken(null);
+    setSessionState("ready");
+    router.refresh();
+  }
 
   if (sessionState === "checking") {
     return (
@@ -55,12 +118,30 @@ export function InternalResetPasswordForm({ recoveryHint = false }: { recoveryHi
     );
   }
 
+  if (sessionState === "confirm") {
+    return (
+      <div className="space-y-4 text-center">
+        <p className="text-[14px] leading-relaxed text-cadet/85">
+          Continue to set a new password for your existing SIGMA account.
+        </p>
+        <GlassButton
+          type="button"
+          disabled={verifying}
+          className="h-12 min-h-12 w-full"
+          onClick={() => void confirmTokenHash()}
+        >
+          {verifying ? "Opening" : "Continue"}
+        </GlassButton>
+      </div>
+    );
+  }
+
   if (sessionState === "missing") {
     return (
       <div className="space-y-4 text-center">
         <p className="text-[14px] leading-relaxed text-cadet/85">
-          This reset link is invalid or expired. Request a new password recovery email and open it
-          on this device.
+          {verifyError ??
+            "This reset link is invalid or expired. Request a new password recovery email and open it on this device."}
         </p>
         <a
           href={INTERNAL_ROUTES.login}

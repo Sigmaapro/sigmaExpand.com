@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function InternalResetPasswordPage({
   searchParams,
 }: {
-  searchParams: Promise<{ from?: string }>;
+  searchParams: Promise<{ from?: string; expired?: string }>;
 }) {
   const params = await searchParams;
   const cookieStore = await cookies();
@@ -44,7 +44,7 @@ export default async function InternalResetPasswordPage({
               This updates the password on your existing SIGMA account.
             </p>
           </div>
-          <InternalResetPasswordForm recoveryHint={recoveryHint} />
+          <InternalResetPasswordForm recoveryHint={recoveryHint} expired={params.expired === "1"} />
         </div>
       </main>
     </div>

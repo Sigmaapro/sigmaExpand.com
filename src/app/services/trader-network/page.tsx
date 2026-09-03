@@ -4,7 +4,20 @@ import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { ServiceDetailPageView } from "@/components/site/marketing/ServiceDetailPageView";
 import { SEO_PAGES, buildPageMetadata } from "@/content/seo";
 
-export const metadata: Metadata = buildPageMetadata("serviceTraderNetwork");
+/** Pending FINAL taxonomy mapping — keep page live but stop indexing. */
+const PENDING_TAXONOMY_ROBOTS: Metadata["robots"] = {
+  index: false,
+  follow: true,
+  googleBot: {
+    index: false,
+    follow: true,
+  },
+};
+
+export const metadata: Metadata = {
+  ...buildPageMetadata("serviceTraderNetwork"),
+  robots: PENDING_TAXONOMY_ROBOTS,
+};
 
 export default function TraderNetworkServicePage() {
   const page = SEO_PAGES.serviceTraderNetwork;

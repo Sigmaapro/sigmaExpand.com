@@ -137,6 +137,57 @@ const nextConfig: NextConfig = {
         destination: "/markets",
         permanent: true,
       },
+      // Legacy service URLs → FINAL taxonomy (direct permanent; no chains).
+      {
+        source: "/services/crypto-exchange-marketing",
+        destination: "/services/crypto-exchange-growth-market-development",
+        permanent: true,
+      },
+      {
+        source: "/services/ib-affiliate-growth",
+        destination: "/services/affiliate-partner-program-management",
+        permanent: true,
+      },
+      {
+        source: "/services/ib-program",
+        destination: "/services/affiliate-partner-program-management",
+        permanent: true,
+      },
+      {
+        source: "/services/regional-market-expansion",
+        destination: "/services/web3-growth-strategy-market-expansion",
+        permanent: true,
+      },
+      {
+        source: "/services/crypto-marketing-agency",
+        destination: "/services/web3-marketing-strategy-campaign-management",
+        permanent: true,
+      },
+      {
+        source: "/services/kol-infrastructure",
+        destination: "/services/kol-influencer-marketing",
+        permanent: true,
+      },
+      {
+        source: "/services/market-maker-introductions",
+        destination: "/services/exchange-listing-readiness-partner-introductions",
+        permanent: true,
+      },
+      {
+        source: "/services/token-launch-listing",
+        destination: "/services/exchange-listing-readiness-partner-introductions",
+        permanent: true,
+      },
+      {
+        source: "/services/token-launch",
+        destination: "/services/exchange-listing-readiness-partner-introductions",
+        permanent: true,
+      },
+      {
+        source: "/services/platform-growth",
+        destination: "/services/crypto-exchange-growth-market-development",
+        permanent: true,
+      },
     ];
   },
   images: {

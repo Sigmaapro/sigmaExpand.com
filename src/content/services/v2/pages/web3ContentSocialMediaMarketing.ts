@@ -374,7 +374,7 @@ export const WEB3_CONTENT_SOCIAL_MEDIA_MARKETING_V2: ServiceV2Content = {
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
       "web3-branding-personal-brand-development",
-      "seo-ai-search-optimization",
+      "pr-media-relations",
       "community-management",
       "web3-marketing-strategy-campaign-management",
       "kol-influencer-marketing",

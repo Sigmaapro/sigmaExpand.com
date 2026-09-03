@@ -377,7 +377,7 @@ export const WEB3_CRM_AUTOMATION_PRODUCT_SOLUTIONS_V2: ServiceV2Content = {
       "affiliate-partner-program-management",
       "community-management",
       "crypto-exchange-growth-market-development",
-      "seo-ai-search-optimization",
+      "web3-growth-strategy-market-expansion",
       "web3-marketing-strategy-campaign-management",
     ],
     allServicesLabel: "View all Sigmaa layers",

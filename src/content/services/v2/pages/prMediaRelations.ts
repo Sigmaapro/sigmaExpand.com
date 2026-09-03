@@ -374,7 +374,7 @@ export const PR_MEDIA_RELATIONS_V2: ServiceV2Content = {
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
       "web3-branding-personal-brand-development",
-      "seo-ai-search-optimization",
+      "web3-content-social-media-marketing",
       "web3-marketing-strategy-campaign-management",
       "exchange-listing-readiness-partner-introductions",
     ],

@@ -6,6 +6,10 @@ export function ServiceV2Hero({ content }: { content: ServiceV2Content["hero"] }
   const highlightIndex = titleHighlight ? title.lastIndexOf(titleHighlight) : -1;
   const before = highlightIndex >= 0 ? title.slice(0, highlightIndex) : title;
   const highlight = highlightIndex >= 0 ? titleHighlight : null;
+  const after =
+    highlightIndex >= 0 && titleHighlight
+      ? title.slice(highlightIndex + titleHighlight.length)
+      : "";
 
   return (
     <section id="hero" className="relative z-[1] overflow-hidden" aria-labelledby="hero-heading">
@@ -27,6 +31,7 @@ export function ServiceV2Hero({ content }: { content: ServiceV2Content["hero"] }
           <h1 id="hero-heading" className={`mt-5 max-w-[18ch] ${v2Type.h1}`}>
             {before}
             {highlight ? <em className="not-italic text-[#dcecff]">{highlight}</em> : null}
+            {after}
           </h1>
           <p className={`mt-6 ${v2Type.lead}`}>{content.lead}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">

@@ -8,7 +8,7 @@ export const COMMUNITY_MANAGEMENT_V2: ServiceV2Content = {
   slug: "community-management",
   title: "Community Management",
   meta: {
-    title: "Web3 Community Management & Support Operations | Sigmaa",
+    title: "Web3 Community Management & Support Operations | Sigma",
     description: "Multilingual Telegram, Discord and X community operations plus support workflows for crypto and Web3 brands. Moderation, engagement, escalation and retention - run properly.",
   },
   hero: {
@@ -369,7 +369,7 @@ export const COMMUNITY_MANAGEMENT_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -379,7 +379,7 @@ export const COMMUNITY_MANAGEMENT_V2: ServiceV2Content = {
       "web3-crm-automation-product-solutions",
       "web3-marketing-strategy-campaign-management",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

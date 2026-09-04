@@ -8,7 +8,7 @@ export const WEB3_BRANDING_PERSONAL_BRAND_DEVELOPMENT_V2: ServiceV2Content = {
   slug: "web3-branding-personal-brand-development",
   title: "Web3 Branding & Personal Brand Development",
   meta: {
-    title: "Web3 Branding & Personal Brand Development | Sigmaa",
+    title: "Web3 Branding & Personal Brand Development | Sigma",
     description: "Brand strategy, positioning and visual identity for Web3 companies - plus founder and creator personal brand development. Build credibility that survives a bear market.",
   },
   hero: {
@@ -369,7 +369,7 @@ export const WEB3_BRANDING_PERSONAL_BRAND_DEVELOPMENT_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -379,7 +379,7 @@ export const WEB3_BRANDING_PERSONAL_BRAND_DEVELOPMENT_V2: ServiceV2Content = {
       "web3-growth-strategy-market-expansion",
       "kol-influencer-marketing",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

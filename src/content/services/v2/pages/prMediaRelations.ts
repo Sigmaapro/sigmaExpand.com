@@ -8,7 +8,7 @@ export const PR_MEDIA_RELATIONS_V2: ServiceV2Content = {
   slug: "pr-media-relations",
   title: "PR & Media Relations",
   meta: {
-    title: "Crypto PR & Media Relations Agency | Sigmaa",
+    title: "Crypto PR & Media Relations Agency | Sigma",
     description: "Coverage that builds credibility, not a list of paid placements nobody reads. Media strategy, press releases, thought leadership and regional outreach for Web3 and fintech brands.",
   },
   hero: {
@@ -369,7 +369,7 @@ export const PR_MEDIA_RELATIONS_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -378,7 +378,7 @@ export const PR_MEDIA_RELATIONS_V2: ServiceV2Content = {
       "web3-marketing-strategy-campaign-management",
       "exchange-listing-readiness-partner-introductions",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

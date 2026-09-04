@@ -8,8 +8,8 @@ export const KOL_INFLUENCER_MARKETING_V2: ServiceV2Content = {
   slug: "kol-influencer-marketing",
   title: "KOL & Influencer Marketing",
   meta: {
-    title: "Crypto KOL & Influencer Marketing Agency | Sigmaa",
-    description: "Screened creators, tracked campaigns, honest reporting. Sigmaa runs crypto KOL programs across MENA, GCC, Persian-speaking markets, Europe, LATAM and CIS. Get a free creator shortlist.",
+    title: "Crypto KOL & Influencer Marketing Agency | Sigma",
+    description: "Screened creators, tracked campaigns, honest reporting. Sigma runs crypto KOL programs across MENA, GCC, Persian-speaking markets, Europe, LATAM and CIS. Get a free creator shortlist.",
   },
   hero: {
     eyebrow: "KOL & Creator Programs · 6 Regions",
@@ -370,7 +370,7 @@ export const KOL_INFLUENCER_MARKETING_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -379,7 +379,7 @@ export const KOL_INFLUENCER_MARKETING_V2: ServiceV2Content = {
       "web3-content-social-media-marketing",
       "web3-market-research-competitive-intelligence",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

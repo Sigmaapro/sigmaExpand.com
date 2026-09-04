@@ -8,7 +8,7 @@ export const WEB3_CRM_AUTOMATION_PRODUCT_SOLUTIONS_V2: ServiceV2Content = {
   slug: "web3-crm-automation-product-solutions",
   title: "Web3 CRM, Automation & Product Solutions",
   meta: {
-    title: "Web3 CRM, Automation & Growth Technology | Sigmaa",
+    title: "Web3 CRM, Automation & Growth Technology | Sigma",
     description: "Affiliate CRM, partner attribution, Telegram bots, reporting automation and growth dashboards - plus web design and AI prototyping for Web3 and fintech operators.",
   },
   hero: {
@@ -370,7 +370,7 @@ export const WEB3_CRM_AUTOMATION_PRODUCT_SOLUTIONS_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -380,7 +380,7 @@ export const WEB3_CRM_AUTOMATION_PRODUCT_SOLUTIONS_V2: ServiceV2Content = {
       "web3-growth-strategy-market-expansion",
       "web3-marketing-strategy-campaign-management",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

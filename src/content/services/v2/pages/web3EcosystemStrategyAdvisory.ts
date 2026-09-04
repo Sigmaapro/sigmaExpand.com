@@ -8,7 +8,7 @@ export const WEB3_ECOSYSTEM_STRATEGY_ADVISORY_V2: ServiceV2Content = {
   slug: "web3-ecosystem-strategy-advisory",
   title: "Web3 Ecosystem Strategy & Advisory",
   meta: {
-    title: "Web3 Ecosystem Strategy & Advisory | Sigmaa",
+    title: "Web3 Ecosystem Strategy & Advisory | Sigma",
     description: "Token utility, ecosystem design, incentive models and business-model consultation for eligible Web3 projects - commercial advisory, not legal, tax or investment advice.",
   },
   hero: {
@@ -368,7 +368,7 @@ export const WEB3_ECOSYSTEM_STRATEGY_ADVISORY_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -378,7 +378,7 @@ export const WEB3_ECOSYSTEM_STRATEGY_ADVISORY_V2: ServiceV2Content = {
       "web3-business-development-strategic-partnerships",
       "community-management",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

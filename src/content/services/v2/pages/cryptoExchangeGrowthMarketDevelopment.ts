@@ -8,8 +8,8 @@ export const CRYPTO_EXCHANGE_GROWTH_MARKET_DEVELOPMENT_V2: ServiceV2Content = {
   slug: "crypto-exchange-growth-market-development",
   title: "Crypto Exchange Growth & Market Development",
   meta: {
-    title: "Crypto Exchange Growth & Market Development | Sigmaa",
-    description: "Enter a new region with local creators, IB partners and community - not a translated global campaign. Sigmaa builds regional growth systems for eligible exchanges, brokers and fintech platforms.",
+    title: "Crypto Exchange Growth & Market Development | Sigma",
+    description: "Enter a new region with local creators, IB partners and community - not a translated global campaign. Sigma builds regional growth systems for eligible exchanges, brokers and fintech platforms.",
   },
   hero: {
     eyebrow: "Exchange & Fintech Growth · Regional Execution",
@@ -367,7 +367,7 @@ export const CRYPTO_EXCHANGE_GROWTH_MARKET_DEVELOPMENT_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -377,7 +377,7 @@ export const CRYPTO_EXCHANGE_GROWTH_MARKET_DEVELOPMENT_V2: ServiceV2Content = {
       "community-management",
       "web3-business-development-strategic-partnerships",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

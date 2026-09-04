@@ -8,7 +8,7 @@ export const WEB3_CONTENT_SOCIAL_MEDIA_MARKETING_V2: ServiceV2Content = {
   slug: "web3-content-social-media-marketing",
   title: "Web3 Content & Social Media Marketing",
   meta: {
-    title: "Web3 Content & Social Media Marketing | Sigmaa",
+    title: "Web3 Content & Social Media Marketing | Sigma",
     description: "A content system that publishes on schedule, in every market language, and survives compliance review. Strategy, calendars, copy, scripts and short-form video for crypto and Web3 brands.",
   },
   hero: {
@@ -369,7 +369,7 @@ export const WEB3_CONTENT_SOCIAL_MEDIA_MARKETING_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -379,7 +379,7 @@ export const WEB3_CONTENT_SOCIAL_MEDIA_MARKETING_V2: ServiceV2Content = {
       "web3-marketing-strategy-campaign-management",
       "kol-influencer-marketing",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

@@ -8,7 +8,7 @@ export const WEB3_MARKET_RESEARCH_COMPETITIVE_INTELLIGENCE_V2: ServiceV2Content 
   slug: "web3-market-research-competitive-intelligence",
   title: "Web3 Market Research & Competitive Intelligence",
   meta: {
-    title: "Web3 Market Research & Competitive Intelligence | Sigmaa",
+    title: "Web3 Market Research & Competitive Intelligence | Sigma",
     description: "Competitor analysis, ecosystem mapping, creator research and market-entry intelligence for Web3 and fintech businesses - built for decisions, not for reading.",
   },
   hero: {
@@ -367,7 +367,7 @@ export const WEB3_MARKET_RESEARCH_COMPETITIVE_INTELLIGENCE_V2: ServiceV2Content 
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -377,7 +377,7 @@ export const WEB3_MARKET_RESEARCH_COMPETITIVE_INTELLIGENCE_V2: ServiceV2Content 
       "web3-branding-personal-brand-development",
       "web3-ecosystem-strategy-advisory",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

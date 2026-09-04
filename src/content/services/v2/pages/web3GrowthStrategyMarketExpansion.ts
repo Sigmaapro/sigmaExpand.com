@@ -8,8 +8,8 @@ export const WEB3_GROWTH_STRATEGY_MARKET_EXPANSION_V2: ServiceV2Content = {
   slug: "web3-growth-strategy-market-expansion",
   title: "Web3 Growth Strategy & Market Expansion",
   meta: {
-    title: "Web3 Growth Strategy & Market Expansion | Sigmaa",
-    description: "Know which market to enter, with which channel, in which order. Sigmaa builds go-to-market and expansion plans for Web3 businesses - then stays to execute them. Free strategy review.",
+    title: "Web3 Growth Strategy & Market Expansion | Sigma",
+    description: "Know which market to enter, with which channel, in which order. Sigma builds go-to-market and expansion plans for Web3 businesses - then stays to execute them. Free strategy review.",
   },
   hero: {
     eyebrow: "Growth Strategy · Market Entry · Expansion",
@@ -368,7 +368,7 @@ export const WEB3_GROWTH_STRATEGY_MARKET_EXPANSION_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -378,7 +378,7 @@ export const WEB3_GROWTH_STRATEGY_MARKET_EXPANSION_V2: ServiceV2Content = {
       "web3-business-development-strategic-partnerships",
       "web3-ecosystem-strategy-advisory",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

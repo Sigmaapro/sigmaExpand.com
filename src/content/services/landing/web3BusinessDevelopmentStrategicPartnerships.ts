@@ -8,9 +8,9 @@ export const WEB3_BUSINESS_DEVELOPMENT_STRATEGIC_PARTNERSHIPS_V2: ServiceV2Conte
   slug: "web3-business-development-strategic-partnerships",
   title: "Web3 Business Development & Strategic Partnerships",
   meta: {
-    title: "Web3 Business Development & Partnerships | Sigmaa",
+    title: "Web3 Business Development & Partnerships | Sigma",
     description:
-      "Get a working partnership pipeline - qualified targets, warm introductions, negotiation support and onboarding. Sigmaa runs Web3 business development as an operating system. Book a pipeline review.",
+      "Get a working partnership pipeline - qualified targets, warm introductions, negotiation support and onboarding. Sigma runs Web3 business development as an operating system. Book a pipeline review.",
   },
   hero: {
     eyebrow: "Business Development · Multi-Region Network Access",
@@ -350,7 +350,7 @@ export const WEB3_BUSINESS_DEVELOPMENT_STRATEGIC_PARTNERSHIPS_V2: ServiceV2Conte
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -359,7 +359,7 @@ export const WEB3_BUSINESS_DEVELOPMENT_STRATEGIC_PARTNERSHIPS_V2: ServiceV2Conte
       "affiliate-partner-program-management",
       "web3-ecosystem-strategy-advisory",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

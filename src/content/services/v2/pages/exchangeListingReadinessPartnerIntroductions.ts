@@ -8,7 +8,7 @@ export const EXCHANGE_LISTING_READINESS_PARTNER_INTRODUCTIONS_V2: ServiceV2Conte
   slug: "exchange-listing-readiness-partner-introductions",
   title: "Exchange Listing Readiness & Partner Introductions",
   meta: {
-    title: "Exchange Listing Readiness & Partner Introductions | Sigmaa",
+    title: "Exchange Listing Readiness & Partner Introductions | Sigma",
     description: "Arrive at a listing conversation prepared. Readiness assessment, application materials, exchange and launchpad research, and introductions - with no listing guarantees.",
   },
   hero: {
@@ -368,7 +368,7 @@ export const EXCHANGE_LISTING_READINESS_PARTNER_INTRODUCTIONS_V2: ServiceV2Conte
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -378,7 +378,7 @@ export const EXCHANGE_LISTING_READINESS_PARTNER_INTRODUCTIONS_V2: ServiceV2Conte
       "community-management",
       "web3-business-development-strategic-partnerships",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

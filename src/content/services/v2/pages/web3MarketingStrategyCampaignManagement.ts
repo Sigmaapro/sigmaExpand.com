@@ -8,8 +8,8 @@ export const WEB3_MARKETING_STRATEGY_CAMPAIGN_MANAGEMENT_V2: ServiceV2Content = 
   slug: "web3-marketing-strategy-campaign-management",
   title: "Web3 Marketing Strategy & Campaign Management",
   meta: {
-    title: "Web3 Marketing Strategy & Campaign Management | Sigmaa",
-    description: "One campaign engine instead of five disconnected channels. Sigmaa plans, runs and reports coordinated Web3 marketing campaigns - launch, growth and always-on. Free campaign review.",
+    title: "Web3 Marketing Strategy & Campaign Management | Sigma",
+    description: "One campaign engine instead of five disconnected channels. Sigma plans, runs and reports coordinated Web3 marketing campaigns - launch, growth and always-on. Free campaign review.",
   },
   hero: {
     eyebrow: "Campaign Strategy · Multi-Channel Operations",
@@ -369,7 +369,7 @@ export const WEB3_MARKETING_STRATEGY_CAMPAIGN_MANAGEMENT_V2: ServiceV2Content = 
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -379,7 +379,7 @@ export const WEB3_MARKETING_STRATEGY_CAMPAIGN_MANAGEMENT_V2: ServiceV2Content = 
       "pr-media-relations",
       "web3-growth-strategy-market-expansion",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

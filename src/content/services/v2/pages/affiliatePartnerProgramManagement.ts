@@ -8,7 +8,7 @@ export const AFFILIATE_PARTNER_PROGRAM_MANAGEMENT_V2: ServiceV2Content = {
   slug: "affiliate-partner-program-management",
   title: "Affiliate & Partner Program Management",
   meta: {
-    title: "Affiliate, IB & Partner Program Management | Sigmaa",
+    title: "Affiliate, IB & Partner Program Management | Sigma",
     description: "Turn scattered referrals into a managed channel - partner recruitment, commission design, onboarding, attribution and performance management for crypto exchanges and brokers.",
   },
   hero: {
@@ -368,7 +368,7 @@ export const AFFILIATE_PARTNER_PROGRAM_MANAGEMENT_V2: ServiceV2Content = {
     reassure: "Usually within one business day · No pressure pitch. Scope agreed before any paid work.",
   },
   relatedServices: {
-    eyebrow: "Sigmaa network",
+    eyebrow: "Sigma network",
     title: "Related operating layers",
     lead: "Cross-linked systems that usually run beside this engagement.",
     slugs: [
@@ -378,7 +378,7 @@ export const AFFILIATE_PARTNER_PROGRAM_MANAGEMENT_V2: ServiceV2Content = {
       "web3-business-development-strategic-partnerships",
       "community-management",
     ],
-    allServicesLabel: "View all Sigmaa layers",
+    allServicesLabel: "View all Sigma layers",
     allServicesHref: "/services",
   },
 };

@@ -366,7 +366,9 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
             role: "Business Development Manager | Growth Strategist | Web3 Partnerships",
             group: "core",
             initials: "NG",
-            imageSrc: null,
+            imageSrc: "/images/team/novin-ghasemi-nik.jpg",
+            portrait: "/images/team/novin-ghasemi-nik.jpg",
+            portraitObjectPosition: "center 18%",
             profileStatus: "active",
             headline:
               "Business Development Manager, Growth Strategist, and Web3 Partnerships lead focused on exchange growth, affiliate networks, and cross-border market expansion.",

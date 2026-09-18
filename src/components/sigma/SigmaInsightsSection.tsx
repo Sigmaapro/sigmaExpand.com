@@ -1425,12 +1425,32 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
   const { language } = useLanguage();
   const H = getHomeSectionLinks(language);
   const reduceMotion = useReducedMotion() ?? false;
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    return attachAtmosphericPlayback(video, reduceMotion);
+    const mq = window.matchMedia("(min-width: 768px)");
+    let detach: (() => void) | undefined;
+
+    const sync = () => {
+      detach?.();
+      const active = mq.matches ? desktopVideoRef.current : mobileVideoRef.current;
+      const idle = mq.matches ? mobileVideoRef.current : desktopVideoRef.current;
+      if (idle) {
+        idle.pause();
+        idle.preload = "none";
+      }
+      if (!active) return;
+      active.preload = "metadata";
+      detach = attachAtmosphericPlayback(active, reduceMotion);
+    };
+
+    sync();
+    mq.addEventListener("change", sync);
+    return () => {
+      mq.removeEventListener("change", sync);
+      detach?.();
+    };
   }, [reduceMotion]);
 
   return (
@@ -1440,18 +1460,31 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
     >
       <div className="relative z-10 mx-auto max-w-[90rem]">
         <SigmaBorderGlow borderRadius={20}>
-          <div className="sigma-what-is-media relative w-full rounded-[1.15rem] sm:rounded-[1.25rem] lg:rounded-[1.35rem]">
+          <div className="sigma-what-is-media relative w-full rounded-[1.25rem] sm:rounded-[1.25rem] lg:rounded-[1.35rem]">
             <div className="sigma-what-is-media__shade" aria-hidden />
 
             <video
-              ref={videoRef}
-              className="sigma-what-is-media__video"
-              src="/videos/what_is_sigma.mp4"
-              autoPlay={!reduceMotion}
+              ref={mobileVideoRef}
+              className="sigma-what-is-media__video sigma-what-is-media__video--mobile"
+              src="/videos/what_is_sigma_mobile_version.mp4"
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
+              controls={false}
+              disablePictureInPicture
+              disableRemotePlayback
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+            <video
+              ref={desktopVideoRef}
+              className="sigma-what-is-media__video sigma-what-is-media__video--desktop"
+              src="/videos/what_is_sigma.mp4"
+              muted
+              loop
+              playsInline
+              preload="none"
               controls={false}
               disablePictureInPicture
               disableRemotePlayback
@@ -1467,7 +1500,7 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
                   {t.whatIsSigma.label}
                 </p>
                 <h2
-                  className={`sigma-what-is-intro__title max-w-full font-display font-semibold uppercase tracking-normal text-white text-balance ${localeHeading(language)}`}
+                  className={`sigma-what-is-intro__title max-w-full font-display font-semibold uppercase text-white text-balance ${localeHeading(language)}`}
                 >
                   {t.whatIsSigma.headline}
                 </h2>
@@ -1507,6 +1540,9 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
                 transition={{ duration: 0.45, delay: idx * 0.06 }}
                 className="sigma-liquid-card sigma-what-is-glass group px-6 py-7 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[rgba(29,137,187,0.38)] hover:bg-[rgba(10,18,40,0.58)] hover:shadow-[0_0_36px_rgba(29,58,187,0.14)]"
               >
+                <span className="sigma-what-is-pillar-index" aria-hidden="true">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
                 <h3
                   className={`font-display text-sm font-semibold uppercase tracking-[0.06em] text-[#e9ecef] md:text-[15px] md:tracking-[0.12em] ${localeCardTitle(language)}`}
                 >
@@ -1519,8 +1555,13 @@ const WhatIsSigmaSection = ({ t }: { t: SiteTranslations }) => {
             </SigmaBorderGlow>
           ))}
         </div>
-        <div className="mt-10 flex justify-center">
-          <SectionDeepLink href={H.whatIsSigma.href} label={H.whatIsSigma.label} openInNewTab />
+        <div className="sigma-what-is-cta mt-10 flex justify-center">
+          <SectionDeepLink
+            href={H.whatIsSigma.href}
+            label={H.whatIsSigma.label}
+            openInNewTab
+            className="sigma-what-is-cta-link"
+          />
         </div>
       </div>
     </section>

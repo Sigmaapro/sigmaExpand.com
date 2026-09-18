@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { ROUTES } from "@/content/global/routes";
+import { getFinalServiceBySlug } from "@/content/services/finalServices";
 import { siteSettings } from "@/content/siteSettings";
 import { getCryptoAgency } from "@/content/sections/cryptoAgency";
 import type { LangCode, MobileNavSheetStrings } from "@/content/types";
@@ -189,10 +190,15 @@ export function SigmaMobileNavPanel({
 
   const serviceLinks = React.useMemo(() => {
     const blogHref = siteSettings.insightsUrl;
+    const growthHref =
+      getFinalServiceBySlug("web3-growth-strategy-market-expansion")?.href ?? ROUTES.services;
+    const liquidityHref =
+      getFinalServiceBySlug("exchange-listing-readiness-partner-introductions")?.href ??
+      ROUTES.services;
     return [
-      { label: mobileNav.linkGrowthEngine, href: `${ROUTES.services}#growth` },
+      { label: mobileNav.linkGrowthEngine, href: growthHref },
       { label: mobileNav.linkKolMarketing, href: blogHref },
-      { label: mobileNav.linkLiquidity, href: `${ROUTES.services}#liquidity` },
+      { label: mobileNav.linkLiquidity, href: liquidityHref },
     ] as const;
   }, [mobileNav.linkGrowthEngine, mobileNav.linkKolMarketing, mobileNav.linkLiquidity]);
 

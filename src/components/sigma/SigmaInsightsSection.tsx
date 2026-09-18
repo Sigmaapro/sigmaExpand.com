@@ -45,7 +45,7 @@ import { pickLang } from "@/content/global/marketing/helpers";
 import {
   servicesPageMetaByLang,
 } from "@/content/global/marketing/servicesContent";
-import { getFinalServices } from "@/content/services/finalServices";
+import { getPublicFinalServices } from "@/content/services/finalServices";
 import type { InfiniteMenuItem } from "@/components/react-bits/InfiniteMenu";
 import type { SkewedCarouselItem } from "@/components/react-bits/SkewedCarousel";
 import type { LenticularCarouselItem } from "@/components/react-bits/LenticularCarousel";
@@ -1863,7 +1863,7 @@ const HomepageServicesSection = () => {
   const meta = pickLang(servicesPageMetaByLang, language);
   const isDesktop = useClientMinWidth(768);
   const reduceMotion = useReducedMotion() ?? false;
-  const catalog = useMemo(() => getFinalServices(), []);
+  const catalog = useMemo(() => getPublicFinalServices(), []);
   const services = useMemo<InfiniteMenuItem[]>(
     () =>
       catalog.map((service) => ({

@@ -186,6 +186,19 @@ export function getFinalServices(): readonly FinalService[] {
   return FINAL_SERVICES;
 }
 
+/**
+ * Catalog entries that remain in the final taxonomy and keep their routes,
+ * but must not appear as completed public service cards until client content exists.
+ */
+const HIDDEN_FROM_PUBLIC_PRESENTATION: ReadonlySet<FinalServiceSlug> = new Set([
+  "seo-ai-search-optimization",
+]);
+
+/** Completed public service cards only — does not change taxonomy, routes, or sitemap. */
+export function getPublicFinalServices(): readonly FinalService[] {
+  return FINAL_SERVICES.filter((service) => !HIDDEN_FROM_PUBLIC_PRESENTATION.has(service.slug));
+}
+
 export function getFinalServiceBySlug(slug: string): FinalService | undefined {
   if (!isFinalServiceSlug(slug)) return undefined;
   return bySlug.get(slug);

@@ -1,5 +1,9 @@
 import { ROUTES } from "@/content/global/routes";
+import { getFinalServiceBySlug } from "@/content/services/finalServices";
 import type { LangCode } from "@/content/types";
+
+const PRODUCTS_TOOLS_SERVICE_HREF =
+  getFinalServiceBySlug("web3-crm-automation-product-solutions")?.href ?? ROUTES.contact;
 
 export type ProductsContent = {
   kicker: string;
@@ -47,7 +51,7 @@ const EN_CONTENT: ProductsContent = {
     },
   ],
   primaryCtaLabel: "Explore Sigma Tools",
-  primaryCtaHref: ROUTES.products,
+  primaryCtaHref: PRODUCTS_TOOLS_SERVICE_HREF,
   secondaryCtaLabel: "Partner with Sigma",
   secondaryCtaHref: ROUTES.contact,
 };

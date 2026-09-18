@@ -1,7 +1,7 @@
 import type { LangCode } from "@/content/types";
 import type { PageMeta } from "@/content/pages/meta";
 import type { ServiceIconName } from "@/content/services";
-import { getFinalServices } from "@/content/services/finalServices";
+import { getPublicFinalServices } from "@/content/services/finalServices";
 import { getFinalServiceTitle } from "@/content/services/localizedServiceUi";
 
 export type PrimaryServiceCard = {
@@ -29,21 +29,23 @@ export type ServicesMarketingBody = {
   sections: MarketingServiceSection[];
 };
 
-/** Client-approved final 15 services — exact titles only; no invented descriptions. */
-const primaryServicesEN: PrimaryServiceCard[] = getFinalServices().map((service) => ({
-  title: service.title,
-  icon: service.icon,
-  href: service.href,
-  coverImage: service.coverImage,
-}));
+function toPrimaryServiceCards(lang: LangCode): PrimaryServiceCard[] {
+  return getPublicFinalServices().map((service) => ({
+    title: getFinalServiceTitle(service.slug, lang),
+    icon: service.icon,
+    href: service.href,
+    coverImage: service.coverImage,
+  }));
+}
 
+/** Public service cards only — incomplete catalog entries stay off this list. */
 export const primaryServicesByLang: Record<LangCode, PrimaryServiceCard[]> = {
-  EN: primaryServicesEN,
-  FA: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "FA") })),
-  ZH: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "ZH") })),
-  ES: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "ES") })),
-  RU: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "RU") })),
-  AR: getFinalServices().map((service) => ({ ...primaryServicesEN[service.order - 1]!, title: getFinalServiceTitle(service.slug, "AR") })),
+  EN: toPrimaryServiceCards("EN"),
+  FA: toPrimaryServiceCards("FA"),
+  ZH: toPrimaryServiceCards("ZH"),
+  ES: toPrimaryServiceCards("ES"),
+  RU: toPrimaryServiceCards("RU"),
+  AR: toPrimaryServiceCards("AR"),
 };
 
 export const servicesPageMetaByLang: Record<LangCode, PageMeta> = {

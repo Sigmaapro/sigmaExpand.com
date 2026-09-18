@@ -44,6 +44,7 @@ export {
   getFinalServiceBySlug,
   getFinalServiceSlugs,
   getFinalServices,
+  getPublicFinalServices,
   isFinalServiceSlug,
 } from "./finalServices";
 export type { FinalService, FinalServiceSlug } from "./finalServices";

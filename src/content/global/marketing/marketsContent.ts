@@ -7,6 +7,24 @@ export type MarketsIndexRegion = {
   keywordFocus: string;
 };
 
+/** Existing region pages used by homepage tabs — do not invent routes. */
+export const MARKETS_INDEX_REGION_HREFS = {
+  "MENA / WANA": "/markets/wana",
+  CIS: "/markets/cis",
+  APAC: "/markets/apac",
+  Europe: "/markets/europe",
+  LATAM: "/markets/latam",
+} as const;
+
+export type MarketsIndexRegionTitle = keyof typeof MARKETS_INDEX_REGION_HREFS;
+
+export function getMarketsIndexRegionHref(title: string): string | undefined {
+  if (title in MARKETS_INDEX_REGION_HREFS) {
+    return MARKETS_INDEX_REGION_HREFS[title as MarketsIndexRegionTitle];
+  }
+  return undefined;
+}
+
 export type MarketsIndexContent = {
   kicker: string;
   title: string;

@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { MarketingSubpageScaffold } from "@/components/site/MarketingSubpageScaffold";
-import { marketsIndexContentByLang } from "@/content/global/marketing/marketsContent";
+import {
+  getMarketsIndexRegionHref,
+  marketsIndexContentByLang,
+} from "@/content/global/marketing/marketsContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeBody, localeCta, localeEyebrow, localeHeading, localeMeta } from "@/lib/localeTypography";
@@ -27,15 +30,34 @@ export function MarketsIndexPageView() {
         </header>
 
         <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-          {c.regions.map((region) => (
-            <li key={region.title} className="rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md">
-              <h2 className={`font-display text-lg font-semibold text-white ${localeHeading(language)}`}>{region.title}</h2>
-              <p className={`mt-3 text-sm leading-relaxed text-[#b6bcc4] ${localeBody(language)}`}>{region.body}</p>
-              <p className={`mt-3 text-[11px] uppercase tracking-[0.12em] text-[#8f98a3] ${localeMeta(language)}`}>
-                {region.keywordFocus}
-              </p>
-            </li>
-          ))}
+          {c.regions.map((region) => {
+            const href = getMarketsIndexRegionHref(region.title);
+            const cardClassName =
+              "rounded-2xl border border-white/[0.08] bg-[#07090f]/65 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md";
+            const cardBody = (
+              <>
+                <h2 className={`font-display text-lg font-semibold text-white ${localeHeading(language)}`}>{region.title}</h2>
+                <p className={`mt-3 text-sm leading-relaxed text-[#b6bcc4] ${localeBody(language)}`}>{region.body}</p>
+                <p className={`mt-3 text-[11px] uppercase tracking-[0.12em] text-[#8f98a3] ${localeMeta(language)}`}>
+                  {region.keywordFocus}
+                </p>
+              </>
+            );
+            return (
+              <li key={region.title}>
+                {href ? (
+                  <Link
+                    href={href}
+                    className={`block ${cardClassName} transition-colors hover:border-[#1c39bb]/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bde0fe]/55`}
+                  >
+                    {cardBody}
+                  </Link>
+                ) : (
+                  <div className={cardClassName}>{cardBody}</div>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <div className="mt-8 flex justify-center">

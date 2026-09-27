@@ -1,8 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { recoveryRedirectUrl } from "@/lib/internal/recovery-redirect";
 import { INTERNAL_ROUTES } from "@/lib/internal/routes";
 import { createClient } from "@/lib/supabase/server";
 
@@ -10,8 +11,66 @@ export type AuthFormState = {
   error: string | null;
 };
 
+export type RecoveryRequestState = {
+  error: string | null;
+  sent: boolean;
+};
+
 function isAuthConfigError(error: unknown): boolean {
   return error instanceof Error && error.message.includes("Missing Supabase environment variables");
+}
+
+function isPlausibleEmail(value: string): boolean {
+  if (value.length < 3 || value.length > 320) return false;
+  const at = value.indexOf("@");
+  if (at <= 0 || at !== value.lastIndexOf("@")) return false;
+  const domain = value.slice(at + 1);
+  return domain.includes(".") && !domain.startsWith(".") && !domain.endsWith(".");
+}
+
+function isOperationalResetError(error: { code?: string; message?: string; status?: number }): boolean {
+  const code = error.code ?? "";
+  const message = (error.message ?? "").toLowerCase();
+  if (code === "over_email_send_rate_limit" || code === "over_request_rate_limit") return true;
+  if (message.includes("rate limit")) return true;
+  if (message.includes("redirect") || message.includes("not allowed")) return true;
+  if (typeof error.status === "number" && error.status >= 500) return true;
+  return false;
+}
+
+function operationalResetMessage(error: { code?: string; message?: string }): string {
+  const code = error.code ?? "";
+  const message = (error.message ?? "").toLowerCase();
+  if (code === "over_email_send_rate_limit" || code === "over_request_rate_limit" || message.includes("rate limit")) {
+    return "Too many attempts. Try again shortly.";
+  }
+  return "Password reset is unavailable right now.";
+}
+
+function passwordUpdateError(error: { code?: string; message?: string }): string {
+  const code = error.code ?? "";
+  const message = (error.message ?? "").toLowerCase();
+  if (message.includes("different from the old")) {
+    return "Choose a password you have not used before.";
+  }
+  if (
+    code === "weak_password" ||
+    message.includes("weak") ||
+    message.includes("pwned") ||
+    message.includes("should be at least")
+  ) {
+    return "Choose a stronger password. Use at least 8 characters.";
+  }
+  if (
+    code === "session_not_found" ||
+    code === "session_expired" ||
+    message.includes("session") ||
+    message.includes("expired") ||
+    message.includes("auth session missing")
+  ) {
+    return "This reset link is invalid or expired.";
+  }
+  return "Could not update the password. Try again.";
 }
 
 export async function loginAction(
@@ -40,6 +99,39 @@ export async function loginAction(
 
   revalidatePath(INTERNAL_ROUTES.root, "layout");
   redirect(INTERNAL_ROUTES.sigma);
+}
+
+export async function requestPasswordResetAction(
+  _prev: RecoveryRequestState,
+  formData: FormData,
+): Promise<RecoveryRequestState> {
+  const email = String(formData.get("email") ?? "").trim();
+
+  if (!isPlausibleEmail(email)) {
+    return { error: "Enter a valid email address.", sent: false };
+  }
+
+  try {
+    const headerStore = await headers();
+    const redirectTo = recoveryRedirectUrl({
+      host: headerStore.get("host"),
+      forwardedHost: headerStore.get("x-forwarded-host"),
+    });
+    const supabase = await createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error && isOperationalResetError(error)) {
+      console.error("[internal-auth] reset request failed");
+      return { error: operationalResetMessage(error), sent: false };
+    }
+  } catch (error) {
+    if (isAuthConfigError(error)) {
+      return { error: "Password reset is unavailable right now.", sent: false };
+    }
+    console.error("[internal-auth] reset request unavailable");
+    return { error: "Could not send the reset email. Try again.", sent: false };
+  }
+
+  return { error: null, sent: true };
 }
 
 export async function completePasswordResetAction(
@@ -71,7 +163,7 @@ export async function completePasswordResetAction(
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
       console.error("[internal-auth] password update failed");
-      return { error: "Could not update the password. Try the reset link again." };
+      return { error: passwordUpdateError(error) };
     }
 
     const cookieStore = await cookies();

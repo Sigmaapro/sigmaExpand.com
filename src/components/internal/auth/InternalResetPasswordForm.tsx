@@ -1,16 +1,28 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { GlassButton, GlassField } from "@/components/internal/glass/Glass";
-import {
-  completePasswordResetAction,
-  establishRecoveryFromTokenHashAction,
-  type AuthFormState,
-} from "@/lib/internal/auth-actions";
+import { completePasswordResetAction, type AuthFormState } from "@/lib/internal/auth-actions";
 import { createClient } from "@/lib/supabase/client";
 import { INTERNAL_ROUTES } from "@/lib/internal/routes";
 import { parseRecoveryUrl } from "@/lib/internal/recovery-url";
+
+/**
+ * Update the address bar without notifying the Next.js router.
+ * Passing a null history state makes Next treat the call as a navigation,
+ * refetch the page, and remount this form — which drops the recovery session.
+ */
+function replaceRecoveryLocation(path: string) {
+  const current = window.history.state;
+  const state =
+    current && typeof current === "object" ? { ...current, __NA: true } : { __NA: true };
+  window.history.replaceState(state, "", path);
+}
+
+function markRecoveryCookie() {
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
+  document.cookie = `sigma-internal-recovery=1; Path=/internal; Max-Age=900; SameSite=Lax${secure}`;
+}
 
 const INITIAL_STATE: AuthFormState = { error: null };
 
@@ -21,7 +33,6 @@ export function InternalResetPasswordForm({
   recoveryHint?: boolean;
   expired?: boolean;
 }) {
-  const router = useRouter();
   const [state, action, pending] = useActionState(completePasswordResetAction, INITIAL_STATE);
   const [sessionState, setSessionState] = useState<"checking" | "ready" | "missing" | "confirm">(
     expired ? "missing" : "checking",
@@ -29,6 +40,8 @@ export function InternalResetPasswordForm({
   const [pendingToken, setPendingToken] = useState<{ tokenHash: string; type: "recovery" | "invite" } | null>(
     null,
   );
+  const pendingTokenRef = useRef(pendingToken);
+  pendingTokenRef.current = pendingToken;
   const [verifyError, setVerifyError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
 
@@ -41,73 +54,119 @@ export function InternalResetPasswordForm({
     const payload = parseRecoveryUrl(window.location.href);
 
     if (payload?.kind === "error") {
-      window.history.replaceState(null, "", INTERNAL_ROUTES.resetPassword);
+      replaceRecoveryLocation(INTERNAL_ROUTES.resetPassword);
       setSessionState("missing");
       return;
     }
 
     if (payload?.kind === "code") {
-      const next = new URL(INTERNAL_ROUTES.authCallback, window.location.origin);
-      next.searchParams.set("code", payload.code);
-      if (payload.type) next.searchParams.set("type", payload.type);
-      next.searchParams.set("next", INTERNAL_ROUTES.resetPassword);
-      window.location.replace(`${next.pathname}${next.search}`);
-      return;
+      // Exchange here. The PKCE verifier cookie was stored in this browser when
+      // the reset email was requested, and auth-js reads sb_flow_id from this URL.
+      // Sending the code to the server callback drops that pairing and, on failure,
+      // replaces this URL with ?expired=1 so the still-valid code is discarded.
+      const supabase = createClient();
+      let cancelled = false;
+      let recovered = false;
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((event) => {
+        if (cancelled || event !== "PASSWORD_RECOVERY") return;
+        recovered = true;
+        replaceRecoveryLocation(`${INTERNAL_ROUTES.resetPassword}?from=recovery`);
+        setSessionState("ready");
+      });
+      void supabase.auth.getUser().then(() => {
+        // PASSWORD_RECOVERY is emitted on a timer after the code exchange.
+        // Wait for that turn before deciding the link failed.
+        setTimeout(() => {
+          if (cancelled || recovered) return;
+          replaceRecoveryLocation(INTERNAL_ROUTES.resetPassword);
+          setSessionState((current) => (current === "ready" || current === "confirm" ? current : "missing"));
+        }, 0);
+      });
+      return () => {
+        cancelled = true;
+        subscription.unsubscribe();
+      };
     }
 
     if (payload?.kind === "token_hash") {
-      window.history.replaceState(
-        null,
-        "",
-        `${INTERNAL_ROUTES.resetPassword}?type=${payload.type}`,
-      );
+      replaceRecoveryLocation(`${INTERNAL_ROUTES.resetPassword}?type=${payload.type}`);
       setPendingToken({ tokenHash: payload.tokenHash, type: payload.type });
       setSessionState("confirm");
       return;
     }
 
+    // Strip implicit tokens before creating the browser client.
+    // @supabase/ssr rejects an implicit-grant URL still sitting in location.hash.
     if (payload?.kind === "implicit") {
-      const accessToken = payload.accessToken;
-      const refreshToken = payload.refreshToken;
-      window.history.replaceState(null, "", `${INTERNAL_ROUTES.resetPassword}?from=recovery`);
-      const supabase = createClient();
-      void supabase.auth
-        .setSession({ access_token: accessToken, refresh_token: refreshToken })
-        .then(({ error }) => {
-          if (error) {
-            setSessionState("missing");
-            return;
-          }
-          setSessionState("ready");
-        });
-      return;
+      replaceRecoveryLocation(`${INTERNAL_ROUTES.resetPassword}?from=recovery`);
     }
 
+    let cancelled = false;
     const supabase = createClient();
-    void supabase.auth.getUser().then(({ data }) => {
-      const params = new URLSearchParams(window.location.search);
-      const fromRecovery = recoveryHint || params.get("from") === "recovery";
-      setSessionState(data.user && fromRecovery ? "ready" : "missing");
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event) => {
+      if (cancelled || event !== "PASSWORD_RECOVERY") return;
+      replaceRecoveryLocation(`${INTERNAL_ROUTES.resetPassword}?from=recovery`);
+      setSessionState("ready");
     });
+
+    if (payload?.kind === "implicit") {
+      void supabase.auth
+        .setSession({
+          access_token: payload.accessToken,
+          refresh_token: payload.refreshToken,
+        })
+        .then(({ error }) => {
+          if (cancelled) return;
+          setSessionState(error ? "missing" : "ready");
+        });
+    } else {
+      void supabase.auth.getUser().then(({ data }) => {
+        if (cancelled) return;
+        const params = new URLSearchParams(window.location.search);
+        const fromRecovery =
+          recoveryHint ||
+          params.get("from") === "recovery" ||
+          params.get("type") === "recovery";
+        setSessionState((current) => {
+          if (current === "ready" || current === "confirm") return current;
+          if (pendingTokenRef.current) return "confirm";
+          return data.user && fromRecovery ? "ready" : "missing";
+        });
+      });
+    }
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
   }, [expired, recoveryHint]);
 
   async function confirmTokenHash() {
     if (!pendingToken) return;
     setVerifying(true);
     setVerifyError(null);
-    const result = await establishRecoveryFromTokenHashAction(
-      pendingToken.tokenHash,
-      pendingToken.type,
-    );
+    // Verify in this browser. A server action that sets the session cookie
+    // makes Next.js discard this component and rerun the check against
+    // ?type=recovery, which no longer contains the token.
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.verifyOtp({
+      type: pendingToken.type,
+      token_hash: pendingToken.tokenHash,
+    });
     setVerifying(false);
-    if (result.error) {
-      setVerifyError(result.error);
+    if (error || !data.session) {
+      setVerifyError("This reset link is invalid or expired.");
       setSessionState("missing");
       return;
     }
+    markRecoveryCookie();
     setPendingToken(null);
+    replaceRecoveryLocation(`${INTERNAL_ROUTES.resetPassword}?from=recovery`);
     setSessionState("ready");
-    router.refresh();
   }
 
   if (sessionState === "checking") {
@@ -143,6 +202,12 @@ export function InternalResetPasswordForm({
           {verifyError ??
             "This reset link is invalid or expired. Request a new password recovery email and open it on this device."}
         </p>
+        <a
+          href={INTERNAL_ROUTES.forgotPassword}
+          className="inline-flex min-h-12 w-full items-center justify-center text-[13px] text-[#bde0fe]/85 underline-offset-4 hover:underline"
+        >
+          Request a new link
+        </a>
         <a
           href={INTERNAL_ROUTES.login}
           className="inline-flex min-h-12 items-center justify-center text-[13px] text-[#bde0fe]/85 underline-offset-4 hover:underline"

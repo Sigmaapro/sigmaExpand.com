@@ -57,7 +57,11 @@ export async function GET(request: Request) {
     const supabase = await createClient();
 
     if (code) {
-      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      const flowId = searchParams.get("sb_flow_id");
+      const { error } = await supabase.auth.exchangeCodeForSession(
+        code,
+        flowId ? { flowId } : undefined,
+      );
       if (!error) {
         return redirectAfterSession(origin, next);
       }
@@ -71,8 +75,15 @@ export async function GET(request: Request) {
       }
     }
   } catch {
-    return NextResponse.redirect(`${origin}${INTERNAL_ROUTES.login}`);
+    return NextResponse.redirect(failureRedirect(origin, next));
   }
 
-  return NextResponse.redirect(`${origin}${INTERNAL_ROUTES.login}`);
+  return NextResponse.redirect(failureRedirect(origin, next));
+}
+
+function failureRedirect(origin: string, next: string): string {
+  if (next === INTERNAL_ROUTES.resetPassword) {
+    return `${origin}${INTERNAL_ROUTES.resetPassword}?expired=1`;
+  }
+  return `${origin}${INTERNAL_ROUTES.login}`;
 }

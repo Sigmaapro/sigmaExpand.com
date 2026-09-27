@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { INTERNAL_ROUTES } from "@/lib/internal/routes";
 import { parseRecoveryUrl } from "@/lib/internal/recovery-url";
 
-function callbackHref(code: string, type: string | null): string {
-  const next = new URL(INTERNAL_ROUTES.authCallback, window.location.origin);
+function resetHref(code: string, type: string | null, flowId: string | null): string {
+  const next = new URL(INTERNAL_ROUTES.resetPassword, window.location.origin);
   next.searchParams.set("code", code);
   if (type) next.searchParams.set("type", type);
-  next.searchParams.set("next", INTERNAL_ROUTES.resetPassword);
+  if (flowId) next.searchParams.set("sb_flow_id", flowId);
   return `${next.pathname}${next.search}`;
 }
 
@@ -34,7 +34,8 @@ export function RecoveryLinkBridge({ silent = false }: { silent?: boolean }) {
     }
 
     if (payload.kind === "code") {
-      window.location.replace(callbackHref(payload.code, payload.type));
+      const flowId = new URL(window.location.href).searchParams.get("sb_flow_id");
+      window.location.replace(resetHref(payload.code, payload.type, flowId));
       return;
     }
 

@@ -1,10 +1,12 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 import { GlassButton, GlassField } from "@/components/internal/glass/Glass";
 import { InternalLoginFace } from "@/components/internal/auth/InternalLoginFace";
 import { FieldLabel } from "@/components/internal/profile/ProfileFormSection";
 import { loginAction, type AuthFormState } from "@/lib/internal/auth-actions";
+import { INTERNAL_ROUTES } from "@/lib/internal/routes";
 
 const INITIAL_STATE: AuthFormState = { error: null };
 
@@ -60,6 +62,15 @@ export function InternalLoginForm() {
             onFocus={() => setPasswordFocused(true)}
             onBlur={() => setPasswordFocused(false)}
           />
+        </div>
+
+        <div className="flex justify-end">
+          <Link
+            href={INTERNAL_ROUTES.forgotPassword}
+            className="text-[12px] leading-none text-[#bde0fe]/85 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#bde0fe]/40"
+          >
+            Forgot password?
+          </Link>
         </div>
 
         {state.error ? (

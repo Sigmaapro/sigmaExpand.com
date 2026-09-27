@@ -83,9 +83,37 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
     return redirectWithAuthCookies(request, supabaseResponse, INTERNAL_ROUTES.login);
   }
 
+  // Recovery must stay on these screens. A signed-in recovery session is not
+  // the app session, and bouncing it to SIGMA drops the reset.
+  if (
+    pathname === INTERNAL_ROUTES.resetPassword ||
+    pathname === INTERNAL_ROUTES.forgotPassword
+  ) {
+    return supabaseResponse;
+  }
+
   if (user && pathname === INTERNAL_ROUTES.login) {
+    if (loginHasRecoveryLink(request)) {
+      return supabaseResponse;
+    }
+    if (request.cookies.get("sigma-internal-recovery")?.value === "1") {
+      return redirectWithAuthCookies(request, supabaseResponse, INTERNAL_ROUTES.resetPassword);
+    }
     return redirectWithAuthCookies(request, supabaseResponse, INTERNAL_ROUTES.sigma);
   }
 
   return supabaseResponse;
+}
+
+function loginHasRecoveryLink(request: NextRequest): boolean {
+  const params = request.nextUrl.searchParams;
+  const type = params.get("type");
+  return (
+    params.has("code") ||
+    params.has("token_hash") ||
+    params.has("error") ||
+    params.has("error_code") ||
+    type === "recovery" ||
+    type === "invite"
+  );
 }

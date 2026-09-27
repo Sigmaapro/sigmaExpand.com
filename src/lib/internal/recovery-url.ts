@@ -19,11 +19,12 @@ export function parseRecoveryUrl(href: string): RecoveryUrlPayload | null {
   const query = url.searchParams;
   const hash = new URLSearchParams(url.hash.replace(/^#/, ""));
 
-  if (query.has("error") || hash.has("error") || hash.has("error_code")) {
+  if (query.has("error") || query.has("error_code") || hash.has("error") || hash.has("error_code")) {
     const looksLikeAuthError =
       query.get("type") === "recovery" ||
       hash.get("type") === "recovery" ||
       hash.has("access_token") ||
+      query.has("error_code") ||
       hash.has("error_code");
     return looksLikeAuthError ? { kind: "error" } : null;
   }

@@ -30,6 +30,7 @@ export type SeoRouteKey =
   | "serviceTokenLaunch"
   | "markets"
   | "products"
+  | "token2049"
   | "riskDisclosure"
   | "contact"
   | "faq"
@@ -373,6 +374,16 @@ export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
     twitterTitle: "Sigma Helper Products — Tools, Bots, Dashboards & Analytics",
     twitterDescription:
       "Supporting product infrastructure for campaigns, affiliates, KOL operations, and execution telemetry.",
+  },
+  token2049: {
+    path: "/token2049",
+    title: "TOKEN2049 Singapore — Sigma",
+    description: "Sigma at TOKEN2049 Singapore.",
+    keywords: ["TOKEN2049", "TOKEN2049 Singapore", "Sigma"],
+    ogTitle: "TOKEN2049 Singapore — Sigma",
+    ogDescription: "Sigma at TOKEN2049 Singapore.",
+    twitterTitle: "TOKEN2049 Singapore — Sigma",
+    twitterDescription: "Sigma at TOKEN2049 Singapore.",
   },
   riskDisclosure: {
     path: "/risk-disclosure",

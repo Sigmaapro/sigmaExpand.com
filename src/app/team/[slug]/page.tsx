@@ -3,7 +3,13 @@ import { notFound } from "next/navigation";
 import { TeamMemberBreadcrumbStructuredData, TeamMemberPersonStructuredData } from "@/components/seo/TeamMemberStructuredData";
 import { InnerPageShell } from "@/components/site/InnerPageShell";
 import { TeamMemberProfilePageView } from "@/components/site/marketing/TeamMemberProfilePageView";
-import { getAllTeamMembers, getTeamMemberBySlug, getTeamMemberSlug, isTeamMemberPubliclyIndexable } from "@/content/global/marketing/teamContent";
+import {
+  getAllTeamMembers,
+  getTeamMemberBySlug,
+  getTeamMemberSlug,
+  isTeamMemberPubliclyIndexable,
+  type TeamMember,
+} from "@/content/global/marketing/teamContent";
 import { absoluteOgImage, getCanonicalUrl } from "@/content/seo";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -81,6 +87,42 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+function getPublicAdjacentMembers(members: TeamMember[], currentSlug: string) {
+  const publicMembers = members.filter(isTeamMemberPubliclyIndexable);
+  const cycle = publicMembers.length > 0 ? publicMembers : members;
+  const currentPublicIndex = cycle.findIndex((item) => getTeamMemberSlug(item) === currentSlug);
+
+  if (currentPublicIndex >= 0) {
+    return {
+      previous: cycle[(currentPublicIndex - 1 + cycle.length) % cycle.length]!,
+      next: cycle[(currentPublicIndex + 1) % cycle.length]!,
+    };
+  }
+
+  const currentIndex = members.findIndex((item) => getTeamMemberSlug(item) === currentSlug);
+  const length = members.length;
+  let previous = cycle[cycle.length - 1]!;
+  let next = cycle[0]!;
+
+  for (let step = 1; step < length; step += 1) {
+    const candidate = members[(currentIndex - step + length) % length]!;
+    if (isTeamMemberPubliclyIndexable(candidate)) {
+      previous = candidate;
+      break;
+    }
+  }
+
+  for (let step = 1; step < length; step += 1) {
+    const candidate = members[(currentIndex + step) % length]!;
+    if (isTeamMemberPubliclyIndexable(candidate)) {
+      next = candidate;
+      break;
+    }
+  }
+
+  return { previous, next };
+}
+
 export default async function TeamMemberProfilePage({ params }: PageProps) {
   const { slug } = await params;
   const member = getTeamMemberBySlug(slug, "EN");
@@ -90,8 +132,7 @@ export default async function TeamMemberProfilePage({ params }: PageProps) {
   const currentIndex = members.findIndex((item) => getTeamMemberSlug(item) === currentSlug);
   if (currentIndex < 0) notFound();
 
-  const previous = members[(currentIndex - 1 + members.length) % members.length]!;
-  const next = members[(currentIndex + 1) % members.length]!;
+  const { previous, next } = getPublicAdjacentMembers(members, currentSlug);
 
   return (
     <InnerPageShell>

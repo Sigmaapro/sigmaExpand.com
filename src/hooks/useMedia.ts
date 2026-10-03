@@ -57,9 +57,7 @@ export function useClientMinWidth(minWidth = 768): boolean | null {
 }
 
 export function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(() =>
-    readMatch("(prefers-reduced-motion: reduce)"),
-  );
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");

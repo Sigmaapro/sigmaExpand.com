@@ -1114,9 +1114,6 @@ export function TeamMemberProfilePageView({ member, previousMember, nextMember }
                 <div className="pointer-events-none absolute left-4 top-4 font-mono text-[11px] tracking-[0.24em] text-[#9cb6ff]">
                   {profileIndex} / {totalProfiles}
                 </div>
-                <div className="pointer-events-none absolute right-4 top-4 rounded-full border border-white/[0.14] bg-white/[0.04] px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-[#95a3ba]">
-                  {member.profileStatus ?? "draft"}
-                </div>
                 <div className="relative mx-auto mt-3 aspect-square w-full max-w-[350px]">
                   <div
                     aria-hidden="true"

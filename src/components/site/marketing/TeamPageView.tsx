@@ -6,7 +6,11 @@ import { useState } from "react";
 import { PartnerIntentTriggerButton } from "@/components/partner/PartnerIntentModal";
 import { MarketingPageShell } from "@/components/site/marketing/MarketingPageShell";
 import { PageIntroGlassCard } from "@/components/site/marketing/PageIntroGlassCard";
-import { getTeamMemberSlug, type TeamMember } from "@/content/global/marketing/teamContent";
+import {
+  getTeamMemberSlug,
+  isTeamMemberPubliclyIndexable,
+  type TeamMember,
+} from "@/content/global/marketing/teamContent";
 import { teamPageContentByLang } from "@/content/global/marketing/teamContent";
 import { pickLang } from "@/content/global/marketing/helpers";
 import { useLanguage } from "@/context/LanguageContext";
@@ -101,6 +105,9 @@ function MemberTile({
 export function TeamPageView() {
   const { language } = useLanguage();
   const c = pickLang(teamPageContentByLang, language);
+  const coreMembers = c.coreMembers.filter(isTeamMemberPubliclyIndexable);
+  const innerCircleMembers = c.innerCircleMembers.filter(isTeamMemberPubliclyIndexable);
+  const contributorsMembers = c.contributorsMembers.filter(isTeamMemberPubliclyIndexable);
 
   return (
     <MarketingPageShell>
@@ -125,32 +132,38 @@ export function TeamPageView() {
           </header>
 
           <div className="space-y-6">
-            <div className="rounded-2xl border border-[#1c39bb]/25 bg-[#0b0f18]/80 p-5 sm:p-6">
-              <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9bb4ff] ${localeMeta(language)}`}>{c.coreLabel}</p>
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-2">
-                {c.coreMembers.map((member) => (
-                  <MemberTile key={member.id} member={member} language={language} tone="core" />
-                ))}
+            {coreMembers.length > 0 ? (
+              <div className="rounded-2xl border border-[#1c39bb]/25 bg-[#0b0f18]/80 p-5 sm:p-6">
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9bb4ff] ${localeMeta(language)}`}>{c.coreLabel}</p>
+                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-2">
+                  {coreMembers.map((member) => (
+                    <MemberTile key={member.id} member={member} language={language} tone="core" />
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0a0d15]/75 p-5 sm:p-6">
-              <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#b8c0cb] ${localeMeta(language)}`}>{c.innerCircleLabel}</p>
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-3">
-                {c.innerCircleMembers.map((member) => (
-                  <MemberTile key={member.id} member={member} language={language} tone="secondary" />
-                ))}
+            {innerCircleMembers.length > 0 ? (
+              <div className="rounded-2xl border border-white/[0.08] bg-[#0a0d15]/75 p-5 sm:p-6">
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#b8c0cb] ${localeMeta(language)}`}>{c.innerCircleLabel}</p>
+                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-3">
+                  {innerCircleMembers.map((member) => (
+                    <MemberTile key={member.id} member={member} language={language} tone="secondary" />
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
 
-            <div className="rounded-2xl border border-white/[0.08] bg-[#090c13]/75 p-5 sm:p-6">
-              <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#acb7c6] ${localeMeta(language)}`}>{c.contributorsLabel}</p>
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-2">
-                {c.contributorsMembers.map((member) => (
-                  <MemberTile key={member.id} member={member} language={language} tone="secondary" />
-                ))}
+            {contributorsMembers.length > 0 ? (
+              <div className="rounded-2xl border border-white/[0.08] bg-[#090c13]/75 p-5 sm:p-6">
+                <p className={`text-[10px] font-semibold uppercase tracking-[0.18em] text-[#acb7c6] ${localeMeta(language)}`}>{c.contributorsLabel}</p>
+                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-2">
+                  {contributorsMembers.map((member) => (
+                    <MemberTile key={member.id} member={member} language={language} tone="secondary" />
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </section>
 

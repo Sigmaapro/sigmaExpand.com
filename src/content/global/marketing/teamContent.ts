@@ -5,7 +5,7 @@ import { ROUTES } from "@/content/global/routes";
 const MALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-male.jpg";
 const FEMALE_MEMBER_PLACEHOLDER = "/images/team/placeholders/member-placeholder-female.jpg";
 const TEAM_PROFILE_MARKETS = ["Asia", "Americas", "Europe", "Africa"] as const;
-const UK_MEMBER_IDS = new Set(["shahrzad-rostami", "shahan-behkam-rad", "babak-ravanbakhsh"]);
+const UK_MEMBER_IDS = new Set(["shahan-behkam-rad", "babak-ravanbakhsh"]);
 
 export type TeamMember = {
   id: string;
@@ -162,7 +162,7 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
     {
       ...withMemberProfileDefaults({
         id: "omid-modaber",
-        name: "Omid Modaber",
+        name: "OmidMD",
         role: "Founder & Strategic Growth Consultant",
         currentPosition: "Business Development Team Manager — LBank",
         group: "core",
@@ -336,12 +336,12 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
         socialLinks: [
           { label: "Linktree", href: "https://linktr.ee/OmidMD" },
           { label: "X", href: "https://x.com/OmidMD" },
-          { label: "Instagram", href: "https://www.instagram.com/crypto_md/" },
+          { label: "Instagram", href: "https://www.instagram.com/MDOmid_/" },
           { label: "TradingView", href: "https://www.tradingview.com/u/OmidMD/" },
           { label: "Telegram", href: "https://t.me/omidmd" },
         ],
         quote: "We are not here to be loud. We are here to be useful.",
-        seoTitle: "Omid Modaber | Founder & Strategic Growth Consultant at Sigma",
+        seoTitle: "OmidMD | Founder & Strategic Growth Consultant at Sigma",
         metaDescription:
           "Meet Omid Modaber, Founder of Sigma and Web3 growth strategist leading global BD, KOL, IB, influencer, and market-expansion networks across MENA and LATAM.",
       }),
@@ -376,7 +376,7 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
               "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across Finance and Web3, Novin helps exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.",
             bio: "Business Development Manager and Growth Strategist specializing in Web3 partnerships, exchange growth, and cross-border market expansion.",
             fullBio:
-              "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across the Finance and Web3 industries, I specialize in helping exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.\n\nThroughout my career, I have developed strategic partnerships with exchanges, brokers, KOLs, IB networks, institutional clients, and fintech companies across the Middle East, Europe, LATAM, Africa, and Asia.\n\nCurrently, I serve as a Business Development Manager at LBank Exchange, where I focus on global partnership development, affiliate growth, institutional collaboration, and market expansion.\n\nBeyond corporate business development, I have successfully launched and managed multiple entrepreneurial ventures within the crypto and fintech ecosystem, giving me a practical understanding of both startup execution and enterprise growth.\n\nI believe sustainable growth comes from building long-term relationships, understanding local markets, and creating partnership ecosystems that generate value for every stakeholder involved.",
+              "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across the Finance and Web3 industries, Novin specializes in helping exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.\n\nThroughout his career, he has developed strategic partnerships with exchanges, brokers, KOLs, IB networks, institutional clients, and fintech companies across the Middle East, Europe, LATAM, Africa, and Asia.\n\nCurrently, he serves as a Business Development Manager at LBank Exchange, where he focuses on global partnership development, affiliate growth, institutional collaboration, and market expansion.\n\nBeyond corporate business development, he has successfully launched and managed multiple entrepreneurial ventures within the crypto and fintech ecosystem, giving him a practical understanding of both startup execution and enterprise growth.\n\nHe believes sustainable growth comes from building long-term relationships, understanding local markets, and creating partnership ecosystems that generate value for every stakeholder involved.",
             skills: [
               "Business Development",
               "Strategic Partnerships",
@@ -489,20 +489,111 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       metaDescription:
         "Arad Moaf is a crypto business development and growth professional with more than 10 years of specialized experience across KuCoin, BingX, LBank, XT, Toobit, and WEEX.",
     }),
-    withMemberProfileDefaults(
-      withPlaceholderImage(
+    {
+      id: "hosein-rostami",
+      name: "Hosein Rostami",
+      role: "Fintech Growth & Business Strategy",
+      currentPosition: "Core Team / Strategic Growth",
+      group: "core",
+      initials: "HR",
+      imageSrc: "/images/team/hosein-rostami.webp",
+      portrait: "/images/team/hosein-rostami.webp",
+      portraitObjectPosition: "center 35%",
+      profileStatus: "active",
+      headline:
+        "Hosein Rostami operates at the intersection of fintech, business strategy, venture building, growth, product development, and commercial operations.",
+      shortBio:
+        "Hosein Rostami is a fintech business builder and growth strategist working across digital assets, investment platforms, payments, exchange ecosystems, and financial infrastructure. His current work focuses on building ventures, designing scalable growth systems, developing regional business operations, structuring KOL and affiliate networks, creating B2B and B2B2C models, and connecting product, distribution, partnerships, and operations around measurable commercial outcomes.",
+      bio:
+        "Hosein Rostami is a fintech business builder and growth strategist working across digital assets, investment platforms, payments, exchange ecosystems, and financial infrastructure.",
+      fullBio:
+        "Hosein Rostami operates at the intersection of fintech, business strategy, venture building, growth, product development, and commercial operations.\n\nAfter several years in senior marketing leadership roles within major Iranian fintech and cryptocurrency platforms, his career evolved from managing individual marketing functions toward building complete business and growth systems. Today, his work spans multiple financial ventures and operating environments, including digital-asset exchanges, investment platforms, payment services, commodity-backed products, KOL and affiliate ecosystems, and B2B financial infrastructure.\n\nAs Co-Founder and Board Member of Gerami, Hosein is involved in building a multi-asset investment platform designed to make access to commodities and alternative assets simpler and more accessible. His work covers business strategy, growth architecture, product direction, team development, partnership models, new asset opportunities, and the design of B2B and B2B2C services. At Gerami, he works across the boundaries of product, marketing, business development, operations, finance, support, risk, and compliance. His role is centered on identifying new opportunities, turning them into clear business models, assigning ownership, defining measurable outcomes, and creating the organizational structure required to execute them.\n\nA major part of his work involves designing growth systems that extend beyond short-term acquisition. These systems connect user onboarding, activation, first transaction, repeat activity, portfolio development, retention, reactivation, referral, and partner-driven distribution.\n\nWithin the international exchange ecosystem, Hosein works on regional business development, KOL partnerships, affiliate operations, high-volume trader acquisition, and strategic relationships with trading communities and financial businesses. His approach to KOL and affiliate growth is built around long-term commercial partnerships rather than one-off promotional campaigns. This includes partner identification, negotiation, onboarding, activation, technical enablement, incentive design, volume development, retention, and continuous relationship ownership.\n\nHe has also worked on developing separate commercial motions for KOLs and educators, high-volume direct traders, exchange and platform partnerships, and regional business-development teams, recognizing that each requires its own operating model, incentive structure, and performance indicators.\n\nThrough his roles across Gerami, LBank, PayStar, VisaPay, and Sigma, Hosein has developed a multidisciplinary perspective on how financial products scale. He combines business-model thinking with distribution strategy, product understanding, team design, data, partnerships, and operational execution. Rather than approaching growth as a collection of campaigns, he treats it as an operating system: a coordinated structure of people, processes, incentives, data, technology, and commercial relationships.\n\nHis earlier experience at ZarinPal provided the foundation for this work, giving him hands-on exposure to large-scale user growth, marketing leadership, sales development, customer analytics, brand transformation, and cross-functional execution. His current focus is on applying that experience to build new ventures, market infrastructure, and scalable financial-growth ecosystems.",
+      skills: [
+        "Fintech Venture Building",
+        "Business Model Development",
+        "Growth Operating Systems",
+        "Product & Growth Strategy",
+        "KOL & Affiliate Infrastructure",
+        "Regional Business Development",
+        "B2B & B2B2C Strategy",
+        "Strategic Partnerships",
+        "Team & Organizational Design",
+        "Commercial Model Development",
+        "Market Expansion",
+        "Cross-Functional Execution",
+      ],
+      services: [
+        "Fintech and digital-asset venture development",
+        "Growth operating-system design",
+        "Business-model and revenue-model development",
+        "KOL and affiliate infrastructure",
+        "Regional business-development operations",
+        "High-volume trader and VIP programs",
+        "B2B and B2B2C partnership models",
+        "Product, growth, and distribution alignment",
+        "Commercial incentive structures",
+        "Team design and ownership frameworks",
+        "Market-entry and expansion strategy",
+        "Strategic advisory for financial platforms",
+      ],
+      careerHistory: [
         {
-          id: "hosein-rostami",
-          name: "Hosein Rostami",
-          role: roleLabel,
-          group: "core",
-          initials: "HR",
-          imageSrc: null,
-          bio: "Connects the moving parts. Ensures that what is promised on the strategy side is actually executable on the operations side — across teams, regions, and partners.",
+          dateRange: "Present",
+          role: "Core Team / Strategic Growth",
+          organization: "Sigma",
+          description:
+            "As a member of Sigma’s core team, Hosein contributes to the development of growth infrastructure for exchanges, brokers, financial platforms, KOLs, affiliates, and trading communities. His work focuses on connecting business strategy with executable growth operations across partnerships, regional market expansion, KOL and affiliate systems, product requirements, commercial models, and organizational execution. Within Sigma, he brings an operator’s perspective shaped by experience on both sides of the ecosystem: building financial platforms internally and developing external distribution, partnership, and business-development networks around them.",
         },
-        MALE_MEMBER_PLACEHOLDER,
-      ),
-    ),
+        {
+          dateRange: "2025 — Present",
+          role: "Co-Founder & Board Member",
+          organization: "Gerami",
+          description:
+            "Co-founded Gerami, a financial platform focused on expanding access to commodity-backed and alternative investment products through simple, fractional, and digitally managed experiences. His responsibilities span business and growth strategy, product direction and new asset development, B2B and B2B2C opportunity design, affiliate and referral infrastructure, KOL and distribution-channel development, organizational and team design, partnership and commercial models, coordination across product, marketing, finance, operations, risk, legal, and support, and development of measurable acquisition, activation, retention, and referral systems. He also works on expanding Gerami beyond a consumer investment application by exploring infrastructure services, APIs, white-label solutions, embedded asset products, and strategic partnerships with other businesses.",
+        },
+        {
+          dateRange: "2024 — Present",
+          role: "Business Development Manager / Marketing Manager, Persian Market",
+          organization: "LBank",
+          description:
+            "Works across regional marketing, business development, exchange growth, KOL partnerships, affiliate operations, high-volume trader acquisition, and strategic partnerships. His work includes identifying and recruiting KOLs, traders, educators, and community operators; designing performance-based partnership structures; negotiating commissions, incentives, trial periods, and commercial terms; onboarding and activating partners; supporting technical and operational partner requirements; developing trading volume and partner-generated revenue; building retention and reactivation mechanisms; creating differentiated models for KOLs, VIP traders, and exchange partners; and supporting regional expansion and market-specific execution. His focus is not limited to partner acquisition. He works across the full relationship lifecycle from initial dialogue and trust-building to activation, volume development, problem-solving, and long-term commercial growth.",
+        },
+        {
+          dateRange: "2025 — Present",
+          role: "Sales & Marketing Lead",
+          organization: "PayStar",
+          description:
+            "Contributes to the development of PayStar’s commercial direction, sales and marketing structure, acquisition systems, and financial-service growth opportunities. His work focuses on aligning sales, marketing, customer acquisition, partnerships, and product positioning around measurable business outcomes.",
+        },
+        {
+          dateRange: "2024 — Present",
+          role: "Board Member",
+          organization: "VisaPay",
+          description:
+            "Supports VisaPay’s strategic direction across financial services, payments, digital assets, product opportunities, commercial partnerships, and long-term business development. His involvement includes evaluating new business models, strengthening the company’s market positioning, and connecting established operational capabilities with new fintech opportunities.",
+        },
+        {
+          dateRange: "2019 — 2024",
+          role: "Marketing Leadership",
+          organization: "ZarinPal",
+          description:
+            "Before moving into venture building and broader business leadership, Hosein held a senior marketing role at ZarinPal. This period gave him hands-on experience in large-scale user growth, performance marketing, branding, sales development, customer analytics, data-driven growth, team leadership, and cross-functional coordination. These experiences became the operating foundation for his later work across venture building, digital assets, partnerships, product strategy, and financial-growth infrastructure.",
+        },
+      ],
+      location: {
+        city: "Dubai",
+        country: "United Arab Emirates",
+        countryCode: "AE",
+      },
+      languages: ["English", "Persian"],
+      quote:
+        "I build the systems that connect financial products, distribution networks, commercial partnerships, and execution.",
+      linkedin: "https://www.linkedin.com/in/hrostami/",
+      socialLinks: [{ label: "Instagram", href: "https://www.instagram.com/h_r0stami/" }],
+      seoTitle: "Hosein Rostami | Fintech Growth & Business Strategy | Sigma",
+      metaDescription:
+        "Hosein Rostami is a fintech business builder and growth strategist working across digital assets, investment platforms, payments, exchange ecosystems, and financial infrastructure.",
+    },
     withMemberProfileDefaults(
       withPlaceholderImage(
         {
@@ -563,7 +654,7 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
             careerHistory: [
               { dateRange: "Current", role: "Business Development", organization: "LBANK" },
               { dateRange: "Current", role: "Business Development", organization: "Cryptic" },
-              { dateRange: "Former", role: "Head of Partnerships", organization: "walllet.com" },
+              { dateRange: "Former", role: "Head of Partnerships", organization: "wallet.com" },
             ],
             socialLinks: [
               { label: "X", href: "https://x.com/0naxes?s=11" },
@@ -807,7 +898,7 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
             group: "innerCircle",
             initials: "HM",
             imageSrc: null,
-            profileStatus: "active",
+            profileStatus: "draft",
             shortBio:
               "Hayyan builds products for people who participate in financial markets. He co-founded and ran a Telegram-native crypto exchange, and has spent seven years across exchanges, payments and prop trading on the side of the business where users actually arrive.",
             bio: "Hayyan builds products for people who participate in financial markets. He co-founded and ran a Telegram-native crypto exchange, and has spent seven years across exchanges, payments and prop trading on the side of the business where users actually arrive.",
@@ -868,7 +959,7 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
                 description: "KOL onboarding and partnerships",
               },
               {
-                dateRange: "[2024] – 2026",
+                dateRange: "2024 – 2026",
                 role: "Co-Founder & CEO, then Board Member",
                 organization: "SwapNet",
                 description: "Telegram-native crypto exchange",
@@ -921,12 +1012,104 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
       languages: ["English", "Persian", "Arabic"],
       markets: ["MENA", "Gulf", "Asia", "Europe"],
     },
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        { id: "shahrzad-rostami", name: "Shahrzad Rostami", role: roleLabel, group: "innerCircle", initials: "SR", imageSrc: null },
-        FEMALE_MEMBER_PLACEHOLDER,
-      ),
-    ),
+    {
+      id: "shahrzad-rostami",
+      slug: "shahrzad",
+      name: "Shahrzad",
+      role: "PR · Research · KOL Strategy · Web3",
+      group: "innerCircle",
+      initials: "S",
+      imageSrc: "/images/team/shahrzad-web3-pr-sigma.webp",
+      portrait: "/images/team/shahrzad-web3-pr-sigma.webp",
+      portraitObjectPosition: "center 18%",
+      profileStatus: "active",
+      headline:
+        "Shahrzad is a UAE-based Web3 PR and research professional. She helps projects find the right KOLs, creators, and communities, evaluate how well those collaborations are performing, and improve campaign execution through structured research, clear communication, and organized follow-through.",
+      shortBio:
+        "PR and research professional focused on Web3, creator intelligence, KOL strategy, campaign performance, and relationship-driven execution.",
+      bio:
+        "PR and research professional focused on Web3, creator intelligence, KOL strategy, campaign performance, and relationship-driven execution.",
+      fullBio:
+        "Shahrzad is a UAE-based Web3 PR and research professional working across PR, research, business support, and Web3 relationship development. Shahrzad's work centers on identifying relevant people, communities, creators, and opportunities; conducting structured research; supporting communications and campaigns; and helping teams evaluate and improve the effectiveness of their outreach.\n\nWithin Web3, Shahrzad has a particular interest in KOL research, creator evaluation, campaign performance, community positioning, PR, and relationship management. Her approach combines research, communication, organization, and creative thinking, with an emphasis on helping projects understand who to work with, how collaborations are performing, and where execution can be improved.\n\nShahrzad's KOL and creator work follows a clear sequence: discovering creators relevant to a project's market and audience; evaluating audience relevance, engagement quality, content performance, consistency, reach, community quality, and historical campaign performance; matching creators to campaign objectives; monitoring performance across creators and campaigns; identifying practical improvements to creator selection, communication, and content strategy; and reporting the results as clear comparisons and actionable observations.\n\nIn PR and communications, Shahrzad supports research, coordination, outreach, creator relations, campaign organization, and opportunity identification, including PR and media research, creator and KOL outreach research, brand and competitor research, community research, content and messaging research, partnership opportunity research, campaign reporting, and follow-up and relationship coordination.\n\nShahrzad's research spans creators, markets, campaigns, partnerships, and communities: audience and content analysis, competitor and narrative research, comparison of campaign approaches, evaluation of potential collaborators, and study of community activity and engagement patterns.\n\nShahrzad also supports teams with research, coordination, documentation, follow-ups, communication, scheduling, campaign organization, creator lists, KOL databases, performance reports, competitive research, partner research, information organization, and operational support.\n\nBeyond her professional work, Shahrzad is interested in Web3, creative culture, fashion, design, digital communities, and the evolving creator economy.",
+      skills: [
+        "Public Relations",
+        "PR Research & Planning",
+        "KOL Research & Discovery",
+        "KOL Evaluation",
+        "Campaign Performance Analysis",
+        "Creator & Influencer Research",
+        "Web3 Market Research",
+        "Community Research",
+        "Partner Research",
+        "Communication Support",
+        "Project Assistance",
+        "Campaign Coordination",
+        "Relationship Management",
+        "Performance Optimization",
+        "Creative & Brand Research",
+      ],
+      services: [
+        {
+          title: "PR Support",
+          description:
+            "Communication support, campaign coordination, outreach research, positioning assistance, and PR-related execution.",
+        },
+        {
+          title: "KOL Discovery & Research",
+          description:
+            "Identifying relevant KOLs, creators, influencers, communities, and partners based on campaign objectives and audience fit.",
+        },
+        {
+          title: "KOL Evaluation",
+          description:
+            "Assessing audience relevance, engagement quality, content performance, consistency, reach, community quality, and campaign history.",
+        },
+        {
+          title: "Performance Analysis",
+          description: "Reviewing campaign and creator performance using available marketing and business metrics.",
+        },
+        {
+          title: "Performance Optimization",
+          description:
+            "Improving creator selection, communication, campaign structure, content direction, audience targeting, and monitoring.",
+        },
+        {
+          title: "Research",
+          description: "Research across Web3 projects, creators, communities, competitors, markets, campaigns, and partnerships.",
+        },
+        {
+          title: "PR & Market Research",
+          description: "Market narratives, media opportunities, community sentiment, publications, creators, and communication channels.",
+        },
+        {
+          title: "Partnership Research",
+          description: "Identifying and evaluating collaborators, creators, communities, brands, and Web3 partners.",
+        },
+        {
+          title: "Creator & Community Intelligence",
+          description: "Audience quality, positioning, influence, content patterns, and campaign fit across creator ecosystems.",
+        },
+        {
+          title: "Project Assistance",
+          description: "Research, coordination, follow-ups, documentation, communications, scheduling, and operational execution.",
+        },
+      ],
+      location: {
+        country: "United Arab Emirates",
+        countryCode: "AE",
+      },
+      languages: ["Persian — Native", "English — Professional"],
+      footprintNote: "Web3 · PR · Research · KOL & Creator Ecosystem · Community · Digital Marketing · Partnerships",
+      quote: "Blending crypto with creativity — where finance meets design.",
+      linkedin: "https://www.linkedin.com/in/shahrzaad/",
+      socialLinks: [
+        { label: "X", href: "https://x.com/Shahrzadrostamy" },
+        { label: "Telegram", href: "https://t.me/shahrzadRST" },
+      ],
+      seoTitle: "Shahrzad | Web3 PR, Research & KOL Strategy | Sigma",
+      metaDescription:
+        "Shahrzad is a UAE-based Web3 PR and research professional focused on KOL discovery, creator evaluation, campaign performance, communications, and business support.",
+    },
   ];
 }
 
@@ -1005,7 +1188,7 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
       withPlaceholderImage(
         {
           id: "shahan-behkam-rad",
-          name: "Shahan BehkamRad",
+          name: "Shahan Behkamrad",
           role: "SEO Specialist & Digital Marketing Strategist",
           group: "contributors",
           imageSrc: "/images/team/shahan-behkamrad.jpg",
@@ -1129,7 +1312,7 @@ const EN_CONTENT: TeamMarketingBody = {
   innerCircleMembers: buildInnerCircleMembers("Inner Circle Partner"),
   contributorsMembers: buildContributorsMembers("Vibe Coding / UI/UX Designer"),
   extendedNetwork:
-    "Beyond the five core partners, Sigma operates with regional community managers, KOL managers, BD specialists, content collaborators, localization leads, and partner operators in every priority market.",
+    "Beyond the core team, Sigma operates with regional community managers, KOL managers, BD specialists, content collaborators, localization leads, and partner operators in every priority market.",
   ndaLine:
     "Several Sigma team members hold senior roles inside operating financial platforms. Specific platform affiliations are protected under NDA.",
   ctaLabel: "Partner with Sigma",

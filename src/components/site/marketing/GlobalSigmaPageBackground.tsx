@@ -6,11 +6,16 @@ import { SigmaTwilightLinesBackground } from "@/components/site/marketing/SigmaT
 
 /**
  * Homepage locales keep Gradient Blinds.
- * Every other internal route uses React Bits Pro Twilight Lines.
+ * Internal team app uses a solid dark surface.
+ * Every other public route uses React Bits Pro Twilight Lines.
  */
 export function GlobalSigmaPageBackground() {
   const pathname = usePathname();
   const isHomepage = pathname === "/" || pathname === "/ar";
+  const isInternalApp = pathname.startsWith("/internal");
+  const isExhibit = pathname.startsWith("/token2049");
+
+  if (isInternalApp || isExhibit) return null;
 
   return isHomepage ? <SigmaGradientBlindsBackground /> : <SigmaTwilightLinesBackground />;
 }

@@ -92,6 +92,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.62,
     },
     {
+      url: `${base}/token2049`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${base}/risk-disclosure`,
       lastModified: new Date(),
       changeFrequency: "monthly",

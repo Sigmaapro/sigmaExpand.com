@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SigmaLanding from "@/components/sigma/SigmaLanding";
 import { RecoveryLinkBridge } from "@/components/internal/auth/RecoveryLinkBridge";
+import { HomepagePromo } from "@/components/token2049/HomepagePromo";
 import { buildPageMetadata } from "@/content/seo";
 
 /**
@@ -15,6 +16,7 @@ export default function Home() {
     <>
       <RecoveryLinkBridge silent />
       <SigmaLanding />
+      <HomepagePromo />
     </>
   );
 }

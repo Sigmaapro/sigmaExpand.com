@@ -1,6 +1,6 @@
 "use client";
 
-import type { ElementType, HTMLAttributes } from "react";
+import { createElement, type ElementType, type HTMLAttributes, type ReactNode } from "react";
 import { getFinalServiceTitle, serviceUiByLang, type ServiceUiCopy } from "@/content/services/localizedServiceUi";
 import type { FinalServiceSlug } from "@/content/services/finalServices";
 import { useLanguage } from "@/context/LanguageContext";
@@ -19,7 +19,7 @@ export function LocalizedServiceText<T extends ElementType = "span">({
 }: Props<T>) {
   const { language } = useLanguage();
   const Component = (as ?? "span") as ElementType;
-  return <Component {...props}>{serviceUiByLang[language][kind]}</Component>;
+  return createElement(Component, props, serviceUiByLang[language][kind] as ReactNode);
 }
 
 export function LocalizedFinalServiceTitle({
@@ -32,5 +32,5 @@ export function LocalizedFinalServiceTitle({
 } & Omit<HTMLAttributes<HTMLElement>, "children">) {
   const { language } = useLanguage();
   const Component = (as ?? "span") as ElementType;
-  return <Component {...props}>{getFinalServiceTitle(slug, language)}</Component>;
+  return createElement(Component, props, getFinalServiceTitle(slug, language) as ReactNode);
 }

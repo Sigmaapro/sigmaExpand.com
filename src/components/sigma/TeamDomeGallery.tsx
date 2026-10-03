@@ -12,6 +12,7 @@ import {
 import {
   getTeamMemberSlug,
   getTeamMembersByLang,
+  isTeamMemberPubliclyIndexable,
   type TeamMember,
 } from "@/content/global/marketing/teamContent";
 import { useLanguage } from "@/context/LanguageContext";
@@ -38,7 +39,7 @@ export function TeamDomeGallery() {
   const [isCoarsePointer, setIsCoarsePointer] = useState(() =>
     typeof window !== "undefined" ? window.matchMedia("(pointer: coarse)").matches : false,
   );
-  const members = getTeamMembersByLang(language);
+  const members = getTeamMembersByLang(language).filter(isTeamMemberPubliclyIndexable);
   const domeInteractive = !isMobile && !isCoarsePointer;
 
   useEffect(() => {

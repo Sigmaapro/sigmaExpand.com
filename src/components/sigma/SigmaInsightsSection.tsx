@@ -717,19 +717,24 @@ const GlobalStyles = () => (
       }
     }
     /*
-     * Hero box metrics (single source of truth — this ID rule outranks the
-     * section's utility classes). The main element already offsets the fixed
-     * navbar, so the hero fills only the remaining first viewport and uses symmetric
-     * vertical padding, which lands the media card on the true optical center.
-     * Gutters stay narrow so the card reads as a large floating panel.
+     * Hero fills the first viewport. The video is the section background
+     * (edge to edge). Main already offsets the fixed navbar, so the hero
+     * pulls back under that offset; copy padding clears the floating nav.
      */
     .sigma-landing-root #hero {
-      min-height: min(calc(100svh - 4.25rem), 920px);
+      min-height: 100svh;
+      margin-top: calc(-1 * max(4.5rem, calc(env(safe-area-inset-top, 0px) + 3.25rem)));
       padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
       padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
-      padding-top: 1.25rem;
-      padding-bottom: 1.25rem;
+      padding-top: max(5.5rem, calc(env(safe-area-inset-top, 0px) + 4.25rem));
+      padding-bottom: 2rem;
       box-sizing: border-box;
+    }
+    @media (max-width: 767px) {
+      .sigma-landing-root #hero {
+        margin-top: calc(-1 * max(4.25rem, calc(env(safe-area-inset-top, 0px) + 3rem)));
+        padding-top: max(5.25rem, calc(env(safe-area-inset-top, 0px) + 4rem));
+      }
     }
     @media (min-width: 640px) {
       .sigma-landing-root #hero {
@@ -739,11 +744,9 @@ const GlobalStyles = () => (
     }
     @media (min-width: 768px) {
       .sigma-landing-root #hero {
-        min-height: min(calc(100svh - 4.5rem), 920px);
         padding-left: 2rem;
         padding-right: 2rem;
-        padding-top: 1.75rem;
-        padding-bottom: 1.75rem;
+        padding-bottom: 2.5rem;
       }
     }
 
@@ -1309,32 +1312,32 @@ const HeroSection = ({
   return (
     <section
       id="hero"
-      className="sigma-hero-shell relative flex scroll-mt-24 items-center justify-center overflow-x-clip"
+      className="sigma-hero-shell relative flex scroll-mt-24 items-center justify-center"
     >
+      <div className="sigma-hero-media" aria-hidden>
+        <video
+          ref={videoRef}
+          className="sigma-hero-card__video"
+          src="/videos/hero_section.mp4"
+          autoPlay={!reduceMotion}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          controls={false}
+          disablePictureInPicture
+          disableRemotePlayback
+          tabIndex={-1}
+        />
+        <div className="sigma-hero-card__shade" />
+      </div>
+
+      {/* Replace the simple slot inside SigmaHeroCurvedLoop when the new component is ready. */}
+      <SigmaHeroCurvedLoop text={t.hero.eyebrow} />
+
       <div className="sigma-hero-stage relative z-10 mx-auto w-full">
-        <SigmaBorderGlow borderRadius={28}>
-          <div className="sigma-hero-card relative w-full">
-            <video
-              ref={videoRef}
-              className="sigma-hero-card__video"
-              src="/videos/hero_section.mp4"
-              autoPlay={!reduceMotion}
-              muted
-              loop
-              playsInline
-              preload="auto"
-              controls={false}
-              disablePictureInPicture
-              disableRemotePlayback
-              aria-hidden="true"
-              tabIndex={-1}
-            />
-            <div className="sigma-hero-card__shade" aria-hidden />
-
-            {/* Replace the simple slot inside SigmaHeroCurvedLoop when the new component is ready. */}
-            <SigmaHeroCurvedLoop text={t.hero.eyebrow} />
-
-            <div className="sigma-hero-card__content mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center px-4 pt-10 pb-28 text-center sm:px-8 sm:pt-12 sm:pb-28 md:px-12 md:pt-14 md:pb-32">
+        <div className="sigma-hero-card relative w-full">
+            <div className="sigma-hero-card__content mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center px-4 pt-10 text-center sm:px-8 sm:pt-12 md:px-12 md:pt-14">
               <div className="mx-auto flex w-full min-w-0 max-w-5xl flex-col items-center">
                 <SigmaHeroCurvedLoopSpacer />
 
@@ -1352,28 +1355,14 @@ const HeroSection = ({
                     initial={reduceMotion ? false : { opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
-                    className={`mb-5 max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:mb-5 sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
+                    className={`max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
                   >
                     {t.hero.subtitle}
                   </motion.p>
-
-                  <motion.div
-                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="sigma-hero-supporting-glass"
-                  >
-                    <p
-                      className={`m-0 text-sm text-pretty sm:text-[15px] ${localeHeroSupporting(lang)}`}
-                    >
-                      {t.hero.supporting}
-                    </p>
-                  </motion.div>
                 </div>
               </div>
             </div>
-          </div>
-        </SigmaBorderGlow>
+        </div>
 
         <div className="sigma-hero-cta-row mx-auto flex w-full max-w-xl flex-col items-stretch px-4 sm:w-fit sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:px-0">
           <AnimatedContent
@@ -1415,6 +1404,19 @@ const HeroSection = ({
             </MagneticButton>
           </AnimatedContent>
         </div>
+
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className="sigma-hero-supporting-glass"
+        >
+          <p
+            className={`m-0 text-sm text-pretty sm:text-[15px] ${localeHeroSupporting(lang)}`}
+          >
+            {t.hero.supporting}
+          </p>
+        </motion.div>
       </div>
     </section>
   );

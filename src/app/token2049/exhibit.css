@@ -1606,8 +1606,7 @@
 
   .sg-film__list li:last-child {
     grid-template-columns: 2.55rem minmax(0, 1fr);
-    width: min(100%, 7.75rem);
-    font-size: clamp(0.95rem, 1.18vw, 1.08rem);
+    width: min(100%, 15rem);
     white-space: normal;
   }
 
@@ -2206,10 +2205,3 @@
   }
 }
 
-@media (min-width: 1400px) {
-  .sg-film__list li:last-child {
-    grid-template-columns: 2.55rem max-content;
-    width: auto;
-    white-space: nowrap;
-  }
-}

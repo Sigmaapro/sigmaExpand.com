@@ -70,13 +70,13 @@ export function UniverseInstall() {
 
   return (
     <section className="sg-universe" id="universe" aria-labelledby="universe-title">
-      <img className="sg-universe__bay" src={GARDENS} alt="" />
       <h2 id="universe-title" className="sg-universe__title">
         <span className="sg-kicker">04 —</span>
         <span className="sg-display">Universe</span>
       </h2>
       <div className="sg-universe__field">
         <p className="sg-universe__why">Why Meet Sigma</p>
+        <img className="sg-universe__bay" src={GARDENS} alt="" />
         <div className="sg-universe__stage">
         <svg className="sg-universe__leads sg-universe__leads--phone" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <line x1="24" y1="28" x2="24" y2="38" />

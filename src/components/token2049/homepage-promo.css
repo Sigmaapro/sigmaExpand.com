@@ -183,6 +183,25 @@
   transform: translate3d(5px, 0, 0);
 }
 
+@media (max-width: 767px) {
+  .t2049-promo {
+    left: max(1.125rem, env(safe-area-inset-left));
+    right: auto;
+    bottom: calc(1.125rem + env(safe-area-inset-bottom, 0px));
+    width: 60vw;
+    max-width: 60vw;
+    margin: 0;
+  }
+
+  .t2049-promo__frame {
+    height: 2.8rem;
+  }
+
+  .t2049-promo__year {
+    font-size: 2.3rem;
+  }
+}
+
 @media (min-width: 768px) {
   .t2049-promo {
     right: auto;

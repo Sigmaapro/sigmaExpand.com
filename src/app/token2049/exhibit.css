@@ -2037,6 +2037,10 @@
 }
 
 @media (max-width: 767px) {
+  .sg-arrival__year {
+    font-size: 70vw;
+  }
+
   .sg-film {
     display: flex;
     flex-direction: column;

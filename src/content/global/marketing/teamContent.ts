@@ -897,8 +897,10 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
             role: roleLabel,
             group: "innerCircle",
             initials: "HM",
-            imageSrc: null,
-            profileStatus: "draft",
+            imageSrc: "/images/team/hayyan-modir-rosta.jpg",
+            portrait: "/images/team/hayyan-modir-rosta.jpg",
+            portraitObjectPosition: "center 64%",
+            profileStatus: "active",
             shortBio:
               "Hayyan builds products for people who participate in financial markets. He co-founded and ran a Telegram-native crypto exchange, and has spent seven years across exchanges, payments and prop trading on the side of the business where users actually arrive.",
             bio: "Hayyan builds products for people who participate in financial markets. He co-founded and ran a Telegram-native crypto exchange, and has spent seven years across exchanges, payments and prop trading on the side of the business where users actually arrive.",

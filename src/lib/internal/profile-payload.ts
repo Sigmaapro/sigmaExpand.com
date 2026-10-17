@@ -53,7 +53,7 @@ function normalizeOtherSocials(value: unknown): Array<{ label: string; href: str
 
 /**
  * Allowlisted UPDATE payload. Never includes id, user_id, slug,
- * profile_status, or profile_image_url.
+ * profile_status, profile_image_url, or internal_role.
  */
 export function editableProfileToUpdatePayload(edited: EditableProfile): ProfileUpdatePayload {
   const fullName =

@@ -26,9 +26,9 @@ export function ChipListEditor({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="internal-profile-chip-editor space-y-3" dir="ltr">
       {values.length > 0 ? (
-        <ul className="flex flex-wrap gap-2">
+        <ul className="internal-profile-chip-row flex flex-wrap gap-2">
           {values.map((item) => (
             <li key={item}>
               <GlassChip className="min-h-11 gap-1 py-0 pr-0.5">

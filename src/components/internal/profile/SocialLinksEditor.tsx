@@ -37,7 +37,7 @@ function TextField({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="space-y-1.5">
+    <div className="internal-profile-field">
       <FieldLabel htmlFor={id}>{label}</FieldLabel>
       <GlassField
         id={id}
@@ -61,7 +61,7 @@ export function SocialLinksEditor({
   onChange,
 }: Props) {
   return (
-    <div className="space-y-4">
+    <div className="internal-profile-social-editor">
       <TextField
         id="profile-linkedin"
         label="LinkedIn"
@@ -90,12 +90,12 @@ export function SocialLinksEditor({
       />
 
       <div className="space-y-3">
-        <p className="text-[13px] font-medium text-white/90">Other links</p>
+        <p className="internal-profile-field-label">Other links</p>
         {otherSocials.length === 0 ? (
           <p className="text-[13px] text-cadet/70">None yet.</p>
         ) : null}
         {otherSocials.map((link, index) => (
-          <div key={link.id} className="grid gap-2 md:grid-cols-[1fr_1.4fr_auto]">
+          <div key={link.id} className="internal-profile-social-row">
             <label className="sr-only" htmlFor={`${link.id}-label`}>
               Link label {index + 1}
             </label>

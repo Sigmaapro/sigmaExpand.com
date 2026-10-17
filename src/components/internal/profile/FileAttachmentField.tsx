@@ -26,10 +26,10 @@ export function FileAttachmentField({ attachments, error, onAdd, onRemove }: Pro
   const kindRef = useRef<HTMLSelectElement>(null);
 
   return (
-    <div className="space-y-3">
-      <div className="grid gap-3 md:grid-cols-[8.5rem_1fr]">
-        <div className="space-y-1.5">
-          <label htmlFor={kindId} className="text-[13px] font-medium text-white/90">
+    <div className="internal-profile-files-editor">
+      <div className="internal-profile-files-row">
+        <div className="internal-profile-field">
+          <label htmlFor={kindId} className="internal-profile-field-label">
             Type
           </label>
           <GlassSelect id={kindId} ref={kindRef} defaultValue="cv">
@@ -38,14 +38,15 @@ export function FileAttachmentField({ attachments, error, onAdd, onRemove }: Pro
             <option value="document">Document</option>
           </GlassSelect>
         </div>
-        <div className="space-y-1.5">
-          <label htmlFor={inputId} className="text-[13px] font-medium text-white/90">
+        <div className="internal-profile-field">
+          <label htmlFor={inputId} className="internal-profile-field-label">
             File
           </label>
           <input
             ref={inputRef}
             id={inputId}
             type="file"
+            dir="ltr"
             accept={PROFILE_DOCUMENT_ACCEPT}
             className="glass-field py-2.5 file:mr-3 file:border-0 file:bg-transparent file:text-[12px] file:uppercase file:tracking-[0.14em] file:text-[#bde0fe]"
             aria-invalid={error ? true : undefined}

@@ -171,11 +171,17 @@ export function ProfileScreen({ profile: initialProfile }: Props) {
   }
 
   return (
-    <div className="internal-profile space-y-5 sm:space-y-6">
+    <div
+      className={
+        mode === "edit" && draft
+          ? "internal-profile internal-profile-editing space-y-5 sm:space-y-6"
+          : "internal-profile space-y-5 sm:space-y-6"
+      }
+    >
       {notice ? (
         <p
           role="status"
-          className="glass-panel mx-3 rounded-2xl px-4 py-3 text-[13px] leading-relaxed text-[#bde0fe] sm:mx-0"
+          className="glass-panel rounded-2xl px-4 py-3 text-[13px] leading-relaxed text-[#bde0fe] sm:mx-0"
         >
           {notice}
         </p>

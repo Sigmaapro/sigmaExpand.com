@@ -19,14 +19,19 @@
   --internal-muted: rgba(173, 181, 189, 0.88);
   --internal-text: #f8f9fa;
   --internal-page-gutter: 1rem;
+  --internal-safe-top: env(safe-area-inset-top, 0px);
+  --internal-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --internal-safe-left: env(safe-area-inset-left, 0px);
+  --internal-safe-right: env(safe-area-inset-right, 0px);
   --internal-header-chrome: 3.5rem;
-  --internal-dock-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  --internal-dock-bottom: calc(var(--internal-safe-bottom) + 0.5rem);
+  /* Mobile dock: ~70px chrome, then iOS home-indicator inset */
   --internal-dock-height: 4.375rem;
   --internal-dock-gap: 0.65rem;
   --internal-dock-clearance: calc(
     var(--internal-dock-bottom) + var(--internal-dock-height) + var(--internal-dock-gap)
   );
-  --internal-edit-bar-height: 3.65rem;
+  --internal-edit-bar-height: 3.75rem;
   --internal-edit-gap: 0.5rem;
   --internal-edit-clearance: calc(
     var(--internal-dock-clearance) + var(--internal-edit-bar-height) + var(--internal-edit-gap)
@@ -66,6 +71,9 @@
 
 .internal-page {
   animation: internal-enter 280ms ease-out;
+  padding-top: 0.75rem;
+  padding-left: max(var(--internal-page-gutter), var(--internal-safe-left));
+  padding-right: max(var(--internal-page-gutter), var(--internal-safe-right));
 }
 
 .internal-account-header {
@@ -141,6 +149,31 @@
   color: rgba(232, 236, 241, 0.88);
 }
 
+@media (max-width: 639px) {
+  .internal-app-shell {
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .internal-page {
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-top: 0.75rem;
+    padding-bottom: var(--internal-dock-clearance);
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 
 @keyframes internal-enter {
   from {
@@ -732,29 +765,45 @@ input.glass-field[type="file"] {
 }
 
 .internal-edit-actions {
-  right: var(--internal-page-gutter);
+  position: fixed;
+  right: max(var(--internal-page-gutter), var(--internal-safe-right));
   bottom: var(--internal-dock-clearance);
-  left: var(--internal-page-gutter);
+  left: max(var(--internal-page-gutter), var(--internal-safe-left));
   padding: 0;
 }
 
 .internal-edit-actions-inner {
   display: flex;
   flex-direction: row;
+  align-items: stretch;
   gap: 0.5rem;
-  padding: 0.45rem;
-  border-radius: 1rem;
+  padding: 0.4rem;
+  border-radius: 0.95rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .internal-edit-actions-inner .glass-button {
-  flex: 1 1 0;
   width: auto;
-  min-height: 44px;
-  height: 44px;
+  min-height: 48px;
+  height: 48px;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   font-size: 10px;
   letter-spacing: 0.12em;
+}
+
+.internal-edit-cancel {
+  flex: 0 0 39%;
+  max-width: 39%;
+}
+
+.internal-edit-save {
+  flex: 1 1 0;
 }
 
 @media (min-width: 640px) {
@@ -769,8 +818,13 @@ input.glass-field[type="file"] {
     font-size: 11px;
     letter-spacing: 0.18em;
   }
-}
 
+  .internal-edit-cancel,
+  .internal-edit-save {
+    flex: 1 1 0;
+    max-width: none;
+  }
+}
 
 /* Profile editor — shared structure; mobile polish below */
 .internal-profile-editor {
@@ -993,21 +1047,29 @@ input.glass-field[type="file"] {
   }
 }
 
-
 @media (max-width: 639px) {
-  .glass-field {
-    min-height: 48px;
-    padding: 0.65rem 0.85rem;
-    border-radius: 12px;
+  .internal-app,
+  .internal-app-shell {
+    width: 100%;
+    max-width: none;
   }
 
+  .internal-app-shell {
+    align-items: stretch;
+  }
 
   .internal-page {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
     padding-left: 16px;
     padding-right: 16px;
     box-sizing: border-box;
+    align-self: stretch;
   }
 
+  .internal-profile-editing,
   .internal-profile-editor,
   .internal-profile-editor-surface,
   .internal-profile-editor-sections,
@@ -1030,6 +1092,12 @@ input.glass-field[type="file"] {
     margin-right: 0;
   }
 
+  .internal-profile-editing {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+
   .internal-profile-editor {
     display: block;
     width: 100%;
@@ -1042,6 +1110,12 @@ input.glass-field[type="file"] {
     align-items: center;
   }
 
+  .glass-field {
+    min-height: 48px;
+    padding: 0.65rem 0.85rem;
+    border-radius: 12px;
+  }
+
   .internal-profile-editor-surface {
     display: flex;
     flex-direction: column;
@@ -1052,6 +1126,10 @@ input.glass-field[type="file"] {
     min-width: 0;
     padding: 1.1rem 0 1.35rem;
     border-radius: 1.15rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .internal-profile-editor-sections {
@@ -1130,6 +1208,16 @@ input.glass-field[type="file"] {
     font-size: 12px;
   }
 
+  .internal-edit-actions-inner {
+    padding: 0.35rem;
+    border-radius: 0.9rem;
+  }
+
+  .internal-edit-actions-inner .glass-button {
+    min-height: 48px;
+    height: 48px;
+    border-radius: 11px;
+  }
 
   .glass-button {
     min-height: 44px;
@@ -1142,15 +1230,14 @@ input.glass-field[type="file"] {
     font-size: 11px;
   }
 
-
   .internal-profile-action.glass-button {
-    min-height: 48px;
-    height: 48px;
+    min-height: 46px;
+    height: 46px;
     min-width: 0;
     padding-left: 1rem;
     padding-right: 1rem;
     font-size: 10px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     border-radius: 12px;
     box-shadow: 0 6px 16px rgba(28, 57, 187, 0.2);
   }
@@ -1162,18 +1249,20 @@ input.glass-field[type="file"] {
   .internal-logout-control.glass-button {
     min-height: 44px;
     height: 44px;
-    min-width: 0;
+    min-width: max-content;
     width: auto;
-    padding: 0 0.65rem;
-    font-size: 9px;
-    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    padding: 0 0.75rem;
+    font-size: 10px;
+    letter-spacing: 0.06em;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.035);
-    border-color: rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
     box-shadow: none;
+    color: #fff;
   }
 }
-
 
 /*
   Global `.glass-surface` is display:flex; justify-content:center (row).
@@ -1218,7 +1307,6 @@ input.glass-field[type="file"] {
   }
 }
 
-
 @media (min-width: 640px) {
   .internal-logout-control.glass-button {
     min-height: 44px;
@@ -1238,5 +1326,181 @@ input.glass-field[type="file"] {
     padding: 0 1rem;
     font-size: 10px;
     letter-spacing: 0.16em;
+  }
+}
+
+/* Mobile profile dashboard — canvas, not a document card */
+@media (max-width: 639px) {
+  .internal-profile-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .internal-profile-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.85rem 0.35rem 0.15rem;
+  }
+
+  .internal-profile-photo {
+    position: relative;
+    height: 5.5rem;
+    width: 5.5rem;
+    flex-shrink: 0;
+  }
+
+  .internal-profile-photo-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(189, 224, 254, 0.18) 0%, transparent 68%);
+  }
+
+  .internal-profile-photo-frame {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .internal-profile-eyebrow {
+    margin-top: 0.85rem;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(189, 224, 254, 0.8);
+  }
+
+  .internal-profile-name {
+    margin-top: 0.3rem;
+    width: 100%;
+    font-size: 1.55rem;
+    font-weight: 550;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: #fff;
+    overflow-wrap: anywhere;
+  }
+
+  .internal-profile-role {
+    margin-top: 0.35rem;
+    max-width: 22rem;
+    font-size: 13.5px;
+    line-height: 1.35;
+    color: rgba(173, 181, 189, 0.92);
+  }
+
+  .internal-profile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .internal-profile-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .internal-profile-shortbio {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: rgba(232, 236, 241, 0.78);
+  }
+
+  .internal-profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .internal-profile-section + .internal-profile-section {
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .internal-profile-section-title {
+    margin: 0;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(189, 224, 254, 0.72);
+  }
+
+  .internal-profile-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .internal-profile-more {
+    display: inline-flex;
+    min-height: 1.75rem;
+    align-items: center;
+    padding: 0 0.15rem;
+    border: 0;
+    background: transparent;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: rgba(189, 224, 254, 0.88);
+  }
+
+  .internal-profile-more:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(189, 224, 254, 0.28);
+    border-radius: 6px;
+  }
+
+  .internal-profile-row {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.15rem 0;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .internal-profile-row:last-child {
+    border-bottom: 0;
+  }
+
+  .internal-profile-row-label {
+    font-size: 14px;
+    letter-spacing: 0.01em;
+  }
+
+  .internal-profile-row-chevron {
+    flex-shrink: 0;
+    font-size: 16px;
+    color: rgba(173, 181, 189, 0.55);
+  }
+
+  .internal-profile-footnote {
+    margin: 0;
+    padding-top: 0.25rem;
+    font-size: 11px;
+    line-height: 1.45;
+    color: rgba(173, 181, 189, 0.58);
   }
 }

@@ -11,6 +11,9 @@ type DeviceOrientationConstructor = {
   requestPermission?: () => Promise<"granted" | "denied" | "default">;
 };
 
+/** Boolean-only preference — never store sensor values. */
+const MOTION_PREF_KEY = "sigma-internal-face-motion";
+
 const ZERO: Pupil = { x: 0, y: 0 };
 /** Usable tilt range (degrees) mapped into pupil travel. */
 const TILT_RANGE_DEG = 22;
@@ -45,6 +48,28 @@ function useOrientationApiAvailable() {
     () => "DeviceOrientationEvent" in window,
     () => false,
   );
+}
+
+function orientationPermissionRequired() {
+  if (typeof DeviceOrientationEvent === "undefined") return false;
+  const Orientation = DeviceOrientationEvent as unknown as DeviceOrientationConstructor;
+  return typeof Orientation.requestPermission === "function";
+}
+
+function readMotionPref() {
+  try {
+    return window.localStorage.getItem(MOTION_PREF_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function writeMotionPref() {
+  try {
+    window.localStorage.setItem(MOTION_PREF_KEY, "1");
+  } catch {
+    /* private mode / blocked storage */
+  }
 }
 
 function useEyeSize() {
@@ -200,6 +225,8 @@ export function InternalLoginFace({ guarded, className }: Props) {
   const currentRef = useRef<Pupil>(ZERO);
   const baselineRef = useRef<{ beta: number; gamma: number } | null>(null);
   const rafRef = useRef<number | null>(null);
+  const requestInFlightRef = useRef(false);
+  const motionDeniedRef = useRef(false);
 
   useEffect(() => {
     guardedRef.current = guarded;
@@ -221,7 +248,45 @@ export function InternalLoginFace({ guarded, className }: Props) {
   const canUseOrientation =
     !reduceMotion && coarsePointer && orientationSupported && !motionDenied;
   const motionActive = canUseOrientation && motionEnabled;
-  const showMotionOptIn = canUseOrientation && !motionEnabled;
+
+  const activateMotion = useCallback(() => {
+    baselineRef.current = null;
+    targetRef.current = ZERO;
+    currentRef.current = ZERO;
+    setSharedPupil(ZERO);
+    setMotionEnabled(true);
+    writeMotionPref();
+  }, []);
+
+  const enableFromUserGesture = useCallback(async () => {
+    if (!canUseOrientation || motionEnabled || motionDeniedRef.current || requestInFlightRef.current) {
+      return;
+    }
+
+    requestInFlightRef.current = true;
+    try {
+      const Orientation = DeviceOrientationEvent as unknown as DeviceOrientationConstructor;
+      if (typeof Orientation.requestPermission === "function") {
+        const result = await Orientation.requestPermission();
+        if (result !== "granted") {
+          motionDeniedRef.current = true;
+          setMotionDenied(true);
+          setMotionEnabled(false);
+          return;
+        }
+      }
+      activateMotion();
+    } catch {
+      motionDeniedRef.current = true;
+      setMotionDenied(true);
+      setMotionEnabled(false);
+    } finally {
+      requestInFlightRef.current = false;
+    }
+  }, [activateMotion, canUseOrientation, motionEnabled]);
+
+  const enableFromUserGestureRef = useRef(enableFromUserGesture);
+  enableFromUserGestureRef.current = enableFromUserGesture;
 
   const mapOrientation = useCallback((event: DeviceOrientationEvent): Pupil => {
     const beta = event.beta;
@@ -239,6 +304,36 @@ export function InternalLoginFace({ guarded, className }: Props) {
     const y = clamp(-(beta - base.beta) / TILT_RANGE_DEG, -1, 1) * travel;
     return { x, y };
   }, []);
+
+  useEffect(() => {
+    if (!canUseOrientation || motionEnabled) return;
+
+    if (!orientationPermissionRequired()) {
+      activateMotion();
+      return;
+    }
+
+    const onProbe = (event: DeviceOrientationEvent) => {
+      if (event.beta == null || event.gamma == null) return;
+      window.removeEventListener("deviceorientation", onProbe, true);
+      activateMotion();
+    };
+
+    window.addEventListener("deviceorientation", onProbe, true);
+    return () => window.removeEventListener("deviceorientation", onProbe, true);
+  }, [activateMotion, canUseOrientation, motionEnabled]);
+
+  useEffect(() => {
+    if (!canUseOrientation || motionEnabled || !readMotionPref()) return;
+    if (!orientationPermissionRequired()) return;
+
+    const onFirstInteract = () => {
+      void enableFromUserGestureRef.current();
+    };
+
+    window.addEventListener("pointerdown", onFirstInteract, { capture: true, once: true });
+    return () => window.removeEventListener("pointerdown", onFirstInteract, true);
+  }, [canUseOrientation, motionEnabled]);
 
   useEffect(() => {
     if (!motionActive) {
@@ -299,30 +394,6 @@ export function InternalLoginFace({ guarded, className }: Props) {
     };
   }, [mapOrientation, motionActive]);
 
-  const enableMotion = useCallback(async () => {
-    if (!canUseOrientation) return;
-
-    try {
-      const Orientation = DeviceOrientationEvent as unknown as DeviceOrientationConstructor;
-      if (typeof Orientation.requestPermission === "function") {
-        const result = await Orientation.requestPermission();
-        if (result !== "granted") {
-          setMotionDenied(true);
-          setMotionEnabled(false);
-          return;
-        }
-      }
-      baselineRef.current = null;
-      targetRef.current = ZERO;
-      currentRef.current = ZERO;
-      setSharedPupil(ZERO);
-      setMotionEnabled(true);
-    } catch {
-      setMotionDenied(true);
-      setMotionEnabled(false);
-    }
-  }, [canUseOrientation]);
-
   const trackingMode: TrackingMode = reduceMotion
     ? "static"
     : coarsePointer
@@ -331,11 +402,20 @@ export function InternalLoginFace({ guarded, className }: Props) {
         : "static"
       : "mouse";
 
+  const awaitingGesture = canUseOrientation && !motionEnabled;
+
   return (
     <div className={cn("internal-login-face relative inline-flex flex-col items-center", className)}>
       <div
         className="relative flex items-end justify-center bg-transparent"
         aria-hidden="true"
+        onPointerDown={
+          awaitingGesture
+            ? () => {
+                void enableFromUserGesture();
+              }
+            : undefined
+        }
       >
         <div className="relative flex items-end bg-transparent" style={{ gap: eyeSize * 0.5 }}>
           <Eye
@@ -354,16 +434,6 @@ export function InternalLoginFace({ guarded, className }: Props) {
           />
         </div>
       </div>
-
-      {showMotionOptIn ? (
-        <button
-          type="button"
-          onClick={enableMotion}
-          className="absolute left-1/2 top-[calc(100%+0.15rem)] z-10 -translate-x-1/2 rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 font-display text-[9px] uppercase tracking-[0.16em] text-cadet/55 backdrop-blur-sm transition-colors hover:border-white/[0.14] hover:text-cadet/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#bde0fe]/35"
-        >
-          Enable motion
-        </button>
-      ) : null}
     </div>
   );
 }

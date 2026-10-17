@@ -4,6 +4,8 @@
  */
 export type ProfileStatus = "draft" | "active" | "archived";
 
+export type InternalRole = "member" | "board_admin";
+
 export type ProfileRow = {
   id: string;
   user_id: string;
@@ -27,6 +29,8 @@ export type ProfileRow = {
   other_socials: unknown;
   quote: string | null;
   profile_status: ProfileStatus;
+  /** Board permission. Never user-editable. Default member if absent. */
+  internal_role: InternalRole;
   created_at: string;
   updated_at: string;
 };
@@ -54,6 +58,7 @@ export const PROFILE_SELECT_COLUMNS = [
   "other_socials",
   "quote",
   "profile_status",
+  "internal_role",
   "created_at",
   "updated_at",
 ].join(", ");
@@ -72,6 +77,15 @@ function asStringArray(value: unknown): string[] | null {
 function asProfileStatus(value: unknown): ProfileStatus {
   if (value === "draft" || value === "active" || value === "archived") return value;
   return "draft";
+}
+
+export function asInternalRole(value: unknown): InternalRole {
+  if (value === "board_admin") return "board_admin";
+  return "member";
+}
+
+export function isBoardAdminRole(value: unknown): boolean {
+  return asInternalRole(value) === "board_admin";
 }
 
 export function parseProfileRow(value: unknown): ProfileRow | null {
@@ -107,6 +121,7 @@ export function parseProfileRow(value: unknown): ProfileRow | null {
     other_socials: row.other_socials ?? [],
     quote: asNullableString(row.quote),
     profile_status: asProfileStatus(row.profile_status),
+    internal_role: asInternalRole(row.internal_role),
     created_at: row.created_at,
     updated_at: row.updated_at,
   };

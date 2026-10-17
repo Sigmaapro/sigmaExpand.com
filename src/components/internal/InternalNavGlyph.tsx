@@ -46,29 +46,27 @@ export function InternalNavGlyph({
     );
   }
 
-  return (
-    <svg
-      viewBox="0 0 24 24"
+  if (id === "leads") {
+    return (
+      <svg
+        viewBox="0 0 24 24"
         className="h-[22px] w-[22px] lg:h-6 lg:w-6"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M4.5 6.5h15v11H4.5z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="miter"
-      />
-      <path
-        d="M4.5 6.5 12 12.25 19.5 6.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="miter"
-      />
-    </svg>
-  );
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M5 7.25h14M5 12h14M5 16.75h8.5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="square"
+        />
+        <circle cx="17.25" cy="16.75" r="1.35" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  return null;
 }
 
 export function initialsFromEmail(email: string | null): string {

@@ -29,8 +29,8 @@ export function ProfileImageUploader({
   const shown = previewUrl || imageSrc;
 
   return (
-    <div className="flex flex-row items-center gap-3 sm:gap-4">
-      <div className="relative h-16 w-16 shrink-0 sm:h-24 sm:w-24">
+    <div className="internal-profile-photo-uploader flex w-full min-w-0 flex-row items-center gap-3 sm:gap-4">
+      <div className="internal-profile-photo-uploader-avatar relative h-16 w-16 shrink-0 sm:h-24 sm:w-24">
         <div
           aria-hidden="true"
           className="absolute -inset-1 rounded-full bg-[radial-gradient(circle,rgba(189,224,254,0.16)_0%,transparent_70%)] sm:-inset-1.5"

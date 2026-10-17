@@ -10,7 +10,7 @@ import {
 } from "@/lib/internal/routes";
 import { cn } from "@/lib/utils";
 
-const LAUNCHER_ORDER: InternalNavId[] = ["profile", "sigma", "messages"];
+const LAUNCHER_ORDER: InternalNavId[] = ["profile", "sigma", "leads"];
 
 export function InternalBottomNav() {
   const pathname = usePathname();

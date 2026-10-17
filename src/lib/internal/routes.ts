@@ -12,7 +12,8 @@ export const INTERNAL_ROUTES = {
   manifest: "/internal/manifest.webmanifest",
   sigma: "/internal/sigma",
   profile: "/internal/profile",
-  messages: "/internal/messages",
+  leads: "/internal/leads",
+  adminSources: "/internal/admin/sources",
 } as const;
 
 /** Unauthenticated visitors may reach these `/internal` paths. */
@@ -27,7 +28,7 @@ export function isPublicInternalAuthPath(pathname: string): boolean {
   );
 }
 
-export type InternalNavId = "profile" | "sigma" | "messages";
+export type InternalNavId = "profile" | "sigma" | "leads";
 
 export const INTERNAL_NAV: ReadonlyArray<{
   id: InternalNavId;
@@ -36,12 +37,12 @@ export const INTERNAL_NAV: ReadonlyArray<{
 }> = [
   { id: "profile", href: INTERNAL_ROUTES.profile, label: "Profile" },
   { id: "sigma", href: INTERNAL_ROUTES.sigma, label: "SIGMA" },
-  { id: "messages", href: INTERNAL_ROUTES.messages, label: "Messages" },
+  { id: "leads", href: INTERNAL_ROUTES.leads, label: "Leads" },
 ];
 
 export function internalNavIdFromPath(pathname: string): InternalNavId {
   if (pathname.startsWith(INTERNAL_ROUTES.profile)) return "profile";
-  if (pathname.startsWith(INTERNAL_ROUTES.messages)) return "messages";
+  if (pathname.startsWith(INTERNAL_ROUTES.leads) || pathname.startsWith("/internal/admin")) return "leads";
   return "sigma";
 }
 

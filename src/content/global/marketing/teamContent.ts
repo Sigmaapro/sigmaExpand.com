@@ -157,7 +157,7 @@ export const teamPageMetaByLang: Record<LangCode, PageMeta> = {
   },
 };
 
-function buildCoreMembers(roleLabel: string): TeamMember[] {
+function buildCoreMembers(): TeamMember[] {
   return [
     {
       ...withMemberProfileDefaults({
@@ -598,12 +598,59 @@ function buildCoreMembers(roleLabel: string): TeamMember[] {
       withPlaceholderImage(
         {
           id: "mostafa-moradi",
+          slug: "mostafa-moradi",
           name: "Mostafa Moradi",
-          role: roleLabel,
+          role: "Technology Entrepreneur | Crypto Exchange Executive | Product & Business Strategist",
+          currentPosition: "Business Development Director, WEEX",
           group: "core",
           initials: "MM",
           imageSrc: null,
-          bio: "Owns Sigma’s community side. Builds and maintains the human layer that turns campaigns into long-term loyalty and creators into compounding networks.",
+          profileStatus: "active",
+          headline:
+            "Dubai-based technology entrepreneur and crypto exchange executive connecting product leadership, trading infrastructure, and commercial strategy.",
+          shortBio:
+            "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive with a multidisciplinary background spanning software product management, cryptocurrency exchanges, financial technology, and business development. With over 12 years of experience in technology and digital products, including more than seven years in the cryptocurrency and blockchain industry, he bridges technical understanding, product leadership, and commercial strategy.",
+          bio: "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive spanning software product management, cryptocurrency exchanges, financial technology, and business development.",
+          fullBio:
+            "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive with a multidisciplinary background spanning software product management, cryptocurrency exchanges, financial technology, and business development.\n\nWith over 12 years of experience in technology and digital products, including more than seven years in the cryptocurrency and blockchain industry, Moradi has developed a professional profile that bridges technical understanding, product leadership, and commercial strategy.\n\nHis expertise lies in identifying market opportunities, translating business challenges into technology-driven solutions, and developing scalable products and business models. His ability to operate across both technical and commercial disciplines has been a defining characteristic of his career.\n\nEntrepreneurship has been a central part of Moradi's professional journey. His approach to building businesses combines market intelligence, product innovation, technical feasibility, and commercial execution.\n\nHe is particularly interested in opportunities where technology can simplify complex business operations, reduce barriers to market entry, and create new revenue streams.\n\nHis entrepreneurial perspective extends beyond identifying business opportunities. It includes understanding how products should be designed, how technology infrastructure supports commercial objectives, and how organizations can translate strategic ideas into operationally viable businesses.\n\nThis combination allows him to approach business development not simply as a sales function, but as an integrated discipline involving product strategy, technology, partnerships, and sustainable growth.\n\nA significant foundation of Moradi's career is his experience in software product management. Throughout his professional journey, he has worked at the intersection of business requirements, product development, and technology, developing an understanding of how digital products are conceived, structured, developed, launched, and scaled.\n\nHis product-oriented approach emphasizes aligning technical capabilities with market demand, user experience, operational efficiency, and business performance.\n\nRather than viewing technology and commercial strategy as separate functions, Moradi brings them together to evaluate opportunities from both perspectives. This enables him to communicate effectively with engineering and product teams while maintaining a clear focus on business objectives, customer needs, and commercial outcomes.\n\nHis areas of interest include software architecture, API-driven business models, trading infrastructure, platform ecosystems, product commercialization, and the application of emerging technologies to financial services.\n\nMoradi currently serves as Business Development Director at WEEX, an international cryptocurrency exchange, where he focuses on strategic partnerships, market expansion, and the development of new business opportunities within the digital asset trading ecosystem.\n\nHis work combines commercial leadership with a product and infrastructure-oriented perspective, particularly in exploring how exchange technology, liquidity, matching engines, and trading APIs can enable new business models for brokers and independent trading platforms.\n\nHe is involved in developing partnership strategies, evaluating market opportunities, and connecting the technical capabilities of trading infrastructure with the commercial requirements of exchange operators and financial businesses.\n\nPreviously, Moradi held a Senior Institutional Business Development position at ChainUp, a digital asset infrastructure and technology solutions provider. During his time at ChainUp, he worked with cryptocurrency exchanges, financial institutions, and blockchain businesses across exchange technology, liquidity solutions, digital asset custody, and institutional infrastructure.\n\nHis experience across both exchange operations and infrastructure providers has given him a broad perspective on the technological, operational, and commercial dynamics of the cryptocurrency exchange industry.\n\nMoradi's professional approach is built around a fundamental principle: successful technology businesses require a strong connection between product, technology, and commercial strategy.\n\nHe believes that understanding how technology works is just as important as understanding the market it serves—and that sustainable growth comes from combining both perspectives with disciplined execution.\n\nWith experience across product management, entrepreneurship, institutional technology solutions, and executive business development, Moradi continues to focus on opportunities that connect innovative technology with practical, scalable business models. Based in Dubai, his professional interests remain centered on cryptocurrency exchanges, digital financial infrastructure, technology entrepreneurship, and the evolution of global trading ecosystems.",
+          skills: [
+            "Technology Entrepreneurship & Business Model Development",
+            "Strategic Partnerships & Business Development",
+            "Market Expansion & Go-to-Market Strategy",
+            "B2B Ecosystem Development",
+            "Software Product Management & Strategy",
+            "Product Development Lifecycle",
+            "Technical & Commercial Product Evaluation",
+            "API-Driven Platforms & Integrations",
+            "Technology Commercialization",
+            "Crypto Exchange Business Strategy",
+            "Trading Platforms & Exchange Infrastructure",
+            "Liquidity & Broker Ecosystems",
+            "Institutional Digital Asset Solutions",
+            "FinTech & Blockchain Business Models",
+          ],
+          careerHistory: [
+            {
+              dateRange: "Current",
+              role: "Business Development Director",
+              organization: "WEEX",
+              description:
+                "Focuses on strategic partnerships, market expansion, and new business opportunities in the digital asset trading ecosystem. His work combines commercial leadership with a product and infrastructure perspective, including how exchange technology, liquidity, matching engines, and trading APIs can enable new business models for brokers and independent trading platforms.",
+            },
+            {
+              dateRange: "Previous",
+              role: "Senior Institutional Business Development",
+              organization: "ChainUp",
+              description:
+                "Worked with cryptocurrency exchanges, financial institutions, and blockchain businesses across exchange technology, liquidity solutions, digital asset custody, and institutional infrastructure.",
+            },
+          ],
+          quote:
+            "Successful technology businesses require a strong connection between product, technology, and commercial strategy.",
+          socialLinks: [{ label: "Telegram", href: "https://t.me/MustafaMrd" }],
+          seoTitle: "Mostafa Moradi | Technology Entrepreneur & Crypto Exchange Executive",
+          metaDescription:
+            "Mostafa Moradi is a Dubai-based technology entrepreneur and Business Development Director at WEEX, working across crypto exchanges, product strategy, and trading infrastructure.",
         },
         MALE_MEMBER_PLACEHOLDER,
       ),
@@ -1310,7 +1357,7 @@ const EN_CONTENT: TeamMarketingBody = {
   coreLabel: "Core",
   innerCircleLabel: "Inner Circle",
   contributorsLabel: "Contributors",
-  coreMembers: buildCoreMembers("Strategic Growth Consultant"),
+  coreMembers: buildCoreMembers(),
   innerCircleMembers: buildInnerCircleMembers("Inner Circle Partner"),
   contributorsMembers: buildContributorsMembers("Vibe Coding / UI/UX Designer"),
   extendedNetwork:
@@ -1334,7 +1381,7 @@ export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
     coreLabel: "هسته اصلی",
     innerCircleLabel: "حلقه داخلی",
     contributorsLabel: "مشارکت‌کنندگان",
-    coreMembers: buildCoreMembers("مشاور رشد استراتژیک"),
+    coreMembers: buildCoreMembers(),
     innerCircleMembers: buildInnerCircleMembers("شریک حلقه داخلی"),
     contributorsMembers: buildContributorsMembers("وایب کدینگ / طراح UI/UX"),
     extendedNetwork:
@@ -1354,7 +1401,7 @@ export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
     coreLabel: "核心团队",
     innerCircleLabel: "内圈",
     contributorsLabel: "贡献者",
-    coreMembers: buildCoreMembers("战略增长顾问"),
+    coreMembers: buildCoreMembers(),
     innerCircleMembers: buildInnerCircleMembers("内圈合作伙伴"),
     contributorsMembers: buildContributorsMembers("Vibe Coding / UI/UX 设计师"),
     extendedNetwork:
@@ -1374,7 +1421,7 @@ export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
     coreLabel: "Equipo Principal",
     innerCircleLabel: "Círculo Interno",
     contributorsLabel: "Colaboradores",
-    coreMembers: buildCoreMembers("Consultor de Crecimiento Estratégico"),
+    coreMembers: buildCoreMembers(),
     innerCircleMembers: buildInnerCircleMembers("Partner del Círculo Interno"),
     contributorsMembers: buildContributorsMembers("Vibe Coding / Diseñador UI/UX"),
     extendedNetwork:
@@ -1394,7 +1441,7 @@ export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
     coreLabel: "Основная команда",
     innerCircleLabel: "Внутренний круг",
     contributorsLabel: "Контрибьюторы",
-    coreMembers: buildCoreMembers("Стратегический консультант по росту"),
+    coreMembers: buildCoreMembers(),
     innerCircleMembers: buildInnerCircleMembers("Партнёр внутреннего круга"),
     contributorsMembers: buildContributorsMembers("Vibe Coding / UI/UX-дизайнер"),
     extendedNetwork:
@@ -1414,7 +1461,7 @@ export const teamPageContentByLang: Record<LangCode, TeamMarketingBody> = {
     coreLabel: "الفريق الأساسي",
     innerCircleLabel: "الدائرة الداخلية",
     contributorsLabel: "المساهمون",
-    coreMembers: buildCoreMembers("مستشار نمو استراتيجي"),
+    coreMembers: buildCoreMembers(),
     innerCircleMembers: buildInnerCircleMembers("شريك في الدائرة الداخلية"),
     contributorsMembers: buildContributorsMembers("Vibe Coding / مصمم UI/UX"),
     extendedNetwork:

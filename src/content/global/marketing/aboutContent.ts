@@ -177,7 +177,7 @@ const EN_CONTENT: AboutPageBody = {
       {
         name: "Mostafa Moradi",
         role: "Strategic Growth Consultant",
-        bio: "Owns Sigma’s community side. Builds and maintains the human layer that turns campaigns into long-term loyalty and creators into compounding networks.",
+        bio: "Connects product, technology, and commercial strategy. Focused on cryptocurrency exchanges, trading infrastructure, and technology-driven business models.",
       },
     ],
     extendedNetwork:

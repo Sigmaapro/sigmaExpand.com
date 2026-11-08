@@ -58,6 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: { absolute: title },
     description,
+    ...(member.seoKeywords && member.seoKeywords.length > 0 ? { keywords: member.seoKeywords } : {}),
     alternates: {
       canonical: canonicalPath,
     },

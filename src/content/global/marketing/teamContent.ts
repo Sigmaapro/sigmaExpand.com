@@ -71,6 +71,8 @@ export type TeamMember = {
   socialLinks?: Array<{ label: string; href: string }>;
   seoTitle?: string;
   metaDescription?: string;
+  /** Optional keyword list for the profile document head. */
+  seoKeywords?: string[];
   ogImage?: string;
   profileStatus?: "draft" | "active" | "archived";
   bio?: string;
@@ -600,34 +602,37 @@ function buildCoreMembers(): TeamMember[] {
           id: "mostafa-moradi",
           slug: "mostafa-moradi",
           name: "Mostafa Moradi",
-          role: "Technology Entrepreneur | Crypto Exchange Executive | Product & Business Strategist",
+          role: "Technology Entrepreneur | Crypto Exchange Executive | Business Strategist",
           currentPosition: "Business Development Director, WEEX",
           group: "core",
           initials: "MM",
-          imageSrc: null,
+          imageSrc: "/images/team/mostafa-moradi.jpg",
+          portrait: "/images/team/mostafa-moradi.jpg",
+          ogImage: "/images/team/mostafa-moradi.jpg",
+          portraitObjectPosition: "center 38%",
           profileStatus: "active",
           headline:
-            "Dubai-based technology entrepreneur and crypto exchange executive connecting product leadership, trading infrastructure, and commercial strategy.",
+            "Former Senior Institutional Business Development at ChainUp. Connects product leadership, trading infrastructure, and commercial strategy.",
           shortBio:
-            "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive with a multidisciplinary background spanning software product management, cryptocurrency exchanges, financial technology, and business development. With over 12 years of experience in technology and digital products, including more than seven years in the cryptocurrency and blockchain industry, he bridges technical understanding, product leadership, and commercial strategy.",
-          bio: "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive spanning software product management, cryptocurrency exchanges, financial technology, and business development.",
+            "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive with a multidisciplinary background in software product management, cryptocurrency exchanges, financial technology, and business development. With more than 12 years in technology and digital products, including over seven years in cryptocurrency and blockchain, he connects technical understanding, product leadership, and commercial strategy.",
+          bio: "Dubai-based technology entrepreneur and Business Development Director at WEEX, working across crypto exchanges, product strategy, and trading infrastructure.",
           fullBio:
-            "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive with a multidisciplinary background spanning software product management, cryptocurrency exchanges, financial technology, and business development.\n\nWith over 12 years of experience in technology and digital products, including more than seven years in the cryptocurrency and blockchain industry, Moradi has developed a professional profile that bridges technical understanding, product leadership, and commercial strategy.\n\nHis expertise lies in identifying market opportunities, translating business challenges into technology-driven solutions, and developing scalable products and business models. His ability to operate across both technical and commercial disciplines has been a defining characteristic of his career.\n\nEntrepreneurship has been a central part of Moradi's professional journey. His approach to building businesses combines market intelligence, product innovation, technical feasibility, and commercial execution.\n\nHe is particularly interested in opportunities where technology can simplify complex business operations, reduce barriers to market entry, and create new revenue streams.\n\nHis entrepreneurial perspective extends beyond identifying business opportunities. It includes understanding how products should be designed, how technology infrastructure supports commercial objectives, and how organizations can translate strategic ideas into operationally viable businesses.\n\nThis combination allows him to approach business development not simply as a sales function, but as an integrated discipline involving product strategy, technology, partnerships, and sustainable growth.\n\nA significant foundation of Moradi's career is his experience in software product management. Throughout his professional journey, he has worked at the intersection of business requirements, product development, and technology, developing an understanding of how digital products are conceived, structured, developed, launched, and scaled.\n\nHis product-oriented approach emphasizes aligning technical capabilities with market demand, user experience, operational efficiency, and business performance.\n\nRather than viewing technology and commercial strategy as separate functions, Moradi brings them together to evaluate opportunities from both perspectives. This enables him to communicate effectively with engineering and product teams while maintaining a clear focus on business objectives, customer needs, and commercial outcomes.\n\nHis areas of interest include software architecture, API-driven business models, trading infrastructure, platform ecosystems, product commercialization, and the application of emerging technologies to financial services.\n\nMoradi currently serves as Business Development Director at WEEX, an international cryptocurrency exchange, where he focuses on strategic partnerships, market expansion, and the development of new business opportunities within the digital asset trading ecosystem.\n\nHis work combines commercial leadership with a product and infrastructure-oriented perspective, particularly in exploring how exchange technology, liquidity, matching engines, and trading APIs can enable new business models for brokers and independent trading platforms.\n\nHe is involved in developing partnership strategies, evaluating market opportunities, and connecting the technical capabilities of trading infrastructure with the commercial requirements of exchange operators and financial businesses.\n\nPreviously, Moradi held a Senior Institutional Business Development position at ChainUp, a digital asset infrastructure and technology solutions provider. During his time at ChainUp, he worked with cryptocurrency exchanges, financial institutions, and blockchain businesses across exchange technology, liquidity solutions, digital asset custody, and institutional infrastructure.\n\nHis experience across both exchange operations and infrastructure providers has given him a broad perspective on the technological, operational, and commercial dynamics of the cryptocurrency exchange industry.\n\nMoradi's professional approach is built around a fundamental principle: successful technology businesses require a strong connection between product, technology, and commercial strategy.\n\nHe believes that understanding how technology works is just as important as understanding the market it serves—and that sustainable growth comes from combining both perspectives with disciplined execution.\n\nWith experience across product management, entrepreneurship, institutional technology solutions, and executive business development, Moradi continues to focus on opportunities that connect innovative technology with practical, scalable business models. Based in Dubai, his professional interests remain centered on cryptocurrency exchanges, digital financial infrastructure, technology entrepreneurship, and the evolution of global trading ecosystems.",
+            "Mostafa Moradi is a Dubai-based technology entrepreneur and business executive with a multidisciplinary professional background in software product management, cryptocurrency exchanges, financial technology, and business development.\n\nWith more than 12 years of experience in technology and digital products, including over seven years in the cryptocurrency and blockchain industry, he has developed expertise that connects technical understanding, product leadership, and commercial strategy. He currently serves as Business Development Director at WEEX, an international cryptocurrency exchange, where he focuses on strategic partnerships, market expansion, and business opportunities within the digital asset trading ecosystem. Previously, he held a Senior Institutional Business Development position at ChainUp, a provider of digital asset technology and infrastructure solutions.\n\nHis professional expertise centers on identifying market opportunities, translating business challenges into technology-driven solutions, and developing scalable products and business models.\n\nEntrepreneurship has been a central part of his professional journey. His approach to building technology businesses combines market intelligence, product innovation, technical feasibility, and commercial execution. He is particularly interested in opportunities where technology can simplify complex business operations, reduce barriers to market entry, and create new revenue streams.\n\nThat perspective extends beyond identifying business opportunities. It includes how products should be designed, how technology infrastructure supports commercial objectives, and how organizations turn strategic concepts into operationally viable businesses. He treats business development as an integrated discipline of product strategy, technology, partnerships, and sustainable growth, rather than a sales function alone.\n\nSoftware product management is a significant foundation of his experience. He has worked at the intersection of business requirements, product development, and technology, and understands how digital products are conceived, structured, developed, launched, and scaled. His product approach aligns technical capabilities with market demand, user experience, operational efficiency, and business performance.\n\nRather than treating technology and commercial strategy as separate functions, he evaluates opportunities from both sides. That lets him work directly with engineering and product teams while keeping commercial objectives, customer needs, and business outcomes in view. His interests include software architecture and digital product development, API-driven business models and technology integrations, cryptocurrency trading infrastructure, platform ecosystems and product commercialization, emerging technologies in financial services, and technical and commercial product evaluation.\n\nAt WEEX, his work combines commercial leadership with a product- and infrastructure-oriented perspective. He explores how exchange technology, liquidity solutions, matching engines, and trading APIs can support new business models for brokers and independent trading platforms, and he connects those technical capabilities with the commercial requirements of exchange operators and financial businesses.\n\nAt ChainUp, he worked with cryptocurrency exchanges, financial institutions, and blockchain businesses across exchange technology, liquidity solutions, digital asset custody, institutional trading infrastructure, and blockchain and financial technology solutions. Together with his work at WEEX, that background spans both cryptocurrency exchange operations and digital asset infrastructure providers, and the relationship between trading technology, financial infrastructure, institutional requirements, and commercial business development.\n\nHis professional approach rests on one principle: successful technology businesses require a strong connection between product, technology, and commercial strategy. Understanding how technology works is as important as understanding the market it serves, and sustainable growth depends on combining technical knowledge, market understanding, and disciplined commercial execution.\n\nBased in Dubai, United Arab Emirates, he continues to focus on opportunities that connect innovative technology with practical, scalable business models across cryptocurrency exchanges, digital financial infrastructure, technology entrepreneurship, and global trading ecosystems.",
           skills: [
-            "Technology Entrepreneurship & Business Model Development",
-            "Strategic Partnerships & Business Development",
-            "Market Expansion & Go-to-Market Strategy",
+            "Technology Entrepreneurship and Business Model Development",
+            "Strategic Partnerships and Business Development",
+            "Market Expansion and Go-to-Market Strategy",
             "B2B Ecosystem Development",
-            "Software Product Management & Strategy",
+            "Software Product Management and Strategy",
             "Product Development Lifecycle",
-            "Technical & Commercial Product Evaluation",
-            "API-Driven Platforms & Integrations",
+            "Technical and Commercial Product Evaluation",
+            "API-Driven Platforms and Integrations",
             "Technology Commercialization",
-            "Crypto Exchange Business Strategy",
-            "Trading Platforms & Exchange Infrastructure",
-            "Liquidity & Broker Ecosystems",
+            "Cryptocurrency Exchange Business Strategy",
+            "Trading Platforms and Exchange Infrastructure",
+            "Liquidity and Broker Ecosystems",
             "Institutional Digital Asset Solutions",
-            "FinTech & Blockchain Business Models",
+            "FinTech and Blockchain Business Models",
           ],
           careerHistory: [
             {
@@ -635,14 +640,14 @@ function buildCoreMembers(): TeamMember[] {
               role: "Business Development Director",
               organization: "WEEX",
               description:
-                "Focuses on strategic partnerships, market expansion, and new business opportunities in the digital asset trading ecosystem. His work combines commercial leadership with a product and infrastructure perspective, including how exchange technology, liquidity, matching engines, and trading APIs can enable new business models for brokers and independent trading platforms.",
+                "Leads strategic partnerships, market expansion, and new business opportunities in the cryptocurrency and digital asset trading ecosystem. His work combines commercial leadership with a product and infrastructure perspective, including how exchange technology, liquidity solutions, matching engines, and trading APIs can support new business models for brokers and independent trading platforms.",
             },
             {
               dateRange: "Previous",
               role: "Senior Institutional Business Development",
               organization: "ChainUp",
               description:
-                "Worked with cryptocurrency exchanges, financial institutions, and blockchain businesses across exchange technology, liquidity solutions, digital asset custody, and institutional infrastructure.",
+                "Worked with cryptocurrency exchanges, financial institutions, and blockchain businesses across exchange technology, liquidity solutions, digital asset custody, institutional trading infrastructure, and blockchain and financial technology solutions.",
             },
           ],
           quote:
@@ -650,7 +655,7 @@ function buildCoreMembers(): TeamMember[] {
           socialLinks: [{ label: "Telegram", href: "https://t.me/MustafaMrd" }],
           seoTitle: "Mostafa Moradi | Technology Entrepreneur & Crypto Exchange Executive",
           metaDescription:
-            "Mostafa Moradi is a Dubai-based technology entrepreneur and Business Development Director at WEEX, working across crypto exchanges, product strategy, and trading infrastructure.",
+            "Mostafa Moradi is a Dubai-based technology entrepreneur and Business Development Director at WEEX, with 12+ years in technology and 7+ years in crypto and blockchain.",
         },
         MALE_MEMBER_PLACEHOLDER,
       ),
@@ -929,12 +934,6 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
       },
       languages: ["English"],
     },
-    withMemberProfileDefaults(
-      withPlaceholderImage(
-        { id: "hamed-ghasemi", name: "Hamed Ghasemi", role: roleLabel, group: "innerCircle", initials: "HG", imageSrc: null },
-        MALE_MEMBER_PLACEHOLDER,
-      ),
-    ),
     {
       ...withMemberProfileDefaults(
         withPlaceholderImage(
@@ -1158,6 +1157,162 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
       seoTitle: "Shahrzad | Web3 PR, Research & KOL Strategy | Sigma",
       metaDescription:
         "Shahrzad is a UAE-based Web3 PR and research professional focused on KOL discovery, creator evaluation, campaign performance, communications, and business support.",
+    },
+    {
+      id: "hamed-ghasemi",
+      slug: "hamed-ghasemi",
+      name: "Hamed Ghasemi",
+      role: "Advertising Strategist | Digital Marketing Executive | Brand Communications Specialist",
+      currentPosition: "Managing Director, Hamed Tech",
+      group: "innerCircle",
+      initials: "HG",
+      imageSrc: "/images/team/hamed-ghasemi.jpg",
+      portrait: "/images/team/hamed-ghasemi.jpg",
+      ogImage: "/images/team/hamed-ghasemi.jpg",
+      portraitObjectPosition: "center 42%",
+      profileStatus: "active",
+      headline:
+        "Advertising leadership across celebrity and influencer marketing, integrated campaigns, banking and fintech, and entertainment.",
+      shortBio:
+        "Hamed Ghasemi is an Iranian advertising strategist, digital marketing executive, and brand communications professional. He develops and executes campaigns across banking, financial technology, consumer electronics, transportation, entertainment, and media.",
+      bio: "Iranian advertising strategist and Managing Director of Hamed Tech, working across digital campaigns, celebrity marketing, and brand communications.",
+      fullBio:
+        "Hamed Ghasemi is an Iranian advertising strategist, digital marketing executive, and brand communications professional with experience developing and executing advertising campaigns across banking, financial technology, consumer electronics, transportation, entertainment, and media.\n\nHis background includes managing digital advertising initiatives, developing celebrity- and athlete-led marketing campaigns, coordinating brand communications, and supporting advertising projects for established Iranian companies and entertainment productions. He has contributed to campaigns associated with Bank Melli Iran, Sadad Electronic Payment, Entekhab Service, Snowa, Daewoo, Tapsi, and Borj Tamas, and to digital advertising for Iranian feature films and streaming series.\n\nHis approach brings together advertising strategy, creative communication, social media marketing, and campaign execution in support of a brand's commercial and communication objectives.\n\nHe has served as Managing Director of Hamed Tech, a company focused on advertising across digital platforms and social media, including online promotion, social communications, and advertising consulting. That leadership work covers how businesses use digital channels to reach audiences, introduce products and services, and coordinate campaigns, combining strategic planning with practical execution.\n\nIn banking and financial services, his work includes social and digital advertising connected to Bank Melli Iran, including the IVA banking application, and digital advertising for Sadad Electronic Payment from 2016 to 2019. During his time with Idea.Saeed he also worked on advertising projects for Bank Melli Iran and the Asian Games.\n\nFrom 2019 to 2020 his campaign work included Entekhab Service and the Snowa and Daewoo brands, adding consumer electronics and home appliances to the portfolio. In 2023 he worked on campaign activity for Tapsi, an Iranian transportation platform, and from 2021 to 2023 on digital advertising for Borj Tamas.\n\nCelebrity and athlete-led advertising is a distinct part of his experience. At Roma Ads he planned and executed campaigns with celebrities and professional football players, covering celebrity-based advertising, influencer partnerships, campaign messaging, and the coordination required to connect public personalities with commercial campaigns.\n\nFrom 2014 to 2024 he also worked on digital advertising for Iranian cinema and streaming entertainment, including feature films and series. That work covers entertainment advertising, digital promotion, and the different communication needs of a cinematic release and a streaming campaign.\n\nAt Ayeeneh Jadoo, an advertising agency, he worked as a Social Media Strategy Consultant on campaign communication and advertising messages for major brands. At WebAmooz he managed editorial and advertising work, including organizational communication channels. At Sarmayex he was Public Relations Manager, working on organizational communications inside a digital-asset business.\n\nAcross agencies, digital businesses, and campaign projects, his perspective stays centered on audience communication, campaign planning, and the effective use of digital advertising channels.",
+      skills: [
+        "Digital Advertising Strategy",
+        "Integrated Advertising Campaigns",
+        "Social Media Advertising",
+        "Advertising Campaign Management",
+        "Brand Communication Strategy",
+        "Campaign Messaging and Creative Planning",
+        "Celebrity Marketing",
+        "Professional Athlete and Footballer Campaigns",
+        "Influencer Marketing",
+        "Film Advertising and Digital Promotion",
+        "Streaming Series Marketing",
+        "Entertainment Campaign Communications",
+        "Banking and Financial Services Advertising",
+        "Electronic Payment Industry Campaigns",
+        "Consumer Electronics Advertising",
+        "Transportation Platform Marketing",
+        "Telecommunications-Related Advertising",
+        "Media and Entertainment Promotion",
+        "Advertising Business Management",
+        "Marketing Consulting",
+        "Strategic Communications",
+        "Public Relations",
+        "Editorial and Media Communications",
+        "Business Development",
+      ],
+      careerHistory: [
+        {
+          dateRange: "Current",
+          role: "Managing Director",
+          organization: "Hamed Tech",
+          description:
+            "Leads a company focused on advertising across digital platforms and social media, including digital advertising, online promotion, social communications, and advertising consulting.",
+        },
+        {
+          dateRange: "2014 — 2024",
+          role: "Digital Advertising",
+          organization: "Iranian Film and Streaming Productions",
+          description:
+            "Digital advertising for Iranian feature films and streaming series, including Track 143, When the Moon Was Full, Confiscation, Ablagh, Sag Band, Khatoon, Frog, Hayoola, Bi Gonah, and Salhaye Door Az Khaneh.",
+        },
+        {
+          dateRange: "2023",
+          role: "Advertising Campaign",
+          organization: "Tapsi",
+          description: "Campaign activity for Tapsi, an Iranian transportation platform.",
+        },
+        {
+          dateRange: "2021 — 2023",
+          role: "Digital Advertising",
+          organization: "Borj Tamas",
+          description: "Digital advertising activities for Borj Tamas.",
+        },
+        {
+          dateRange: "2019 — 2020",
+          role: "Advertising Campaigns",
+          organization: "Entekhab Service, Snowa & Daewoo",
+          description: "Campaign work for Entekhab Service, including the Snowa and Daewoo consumer electronics and home appliance brands.",
+        },
+        {
+          dateRange: "2016 — 2019",
+          role: "Digital Advertising",
+          organization: "Sadad Electronic Payment",
+          description: "Digital advertising initiatives for Sadad Electronic Payment Company.",
+        },
+        {
+          role: "Advertising Campaigns and Digital Communications",
+          organization: "Bank Melli Iran",
+          description:
+            "Social media and digital advertising for Bank Melli Iran, including the IVA banking application, and related campaign work during his time with Idea.Saeed.",
+        },
+        {
+          role: "Celebrity and Professional Footballer Campaigns",
+          organization: "Roma Ads",
+          description:
+            "Planned and executed advertising campaigns with celebrities and professional football players, connecting public personalities with brand communication.",
+        },
+        {
+          role: "Advertising Campaigns",
+          organization: "Idea.Saeed",
+          description: "Advertising initiatives associated with Bank Melli Iran and the Asian Games.",
+        },
+        {
+          role: "Social Media Strategy Consultant",
+          organization: "Ayeeneh Jadoo",
+          description:
+            "Contributed to campaign communication strategies and advertising messages for major brands at the advertising agency.",
+        },
+        {
+          role: "Editorial and Advertising Management",
+          organization: "WebAmooz",
+          description: "Managed editorial and advertising work, including organizational communication channels.",
+        },
+        {
+          role: "Public Relations Manager",
+          organization: "Sarmayex",
+          description: "Public relations and organizational communications inside a digital-asset business.",
+        },
+      ],
+      achievementsTitle: "FILM & STREAMING ADVERTISING",
+      achievements: [
+        { title: "Track 143 (Shiar 143)", description: "Feature film" },
+        { title: "When the Moon Was Full (Shabi Ke Mah Kamel Shod)", description: "Feature film" },
+        { title: "Confiscation (Mosaadereh)", description: "Feature film" },
+        { title: "Ablagh", description: "Feature film" },
+        { title: "Sag Band", description: "Feature film" },
+        { title: "Khatoon", description: "Streaming series" },
+        { title: "Frog (Ghoorbagheh)", description: "Streaming series" },
+        { title: "Hayoola", description: "Streaming series" },
+        { title: "Bi Gonah", description: "Streaming series" },
+        { title: "Salhaye Door Az Khaneh", description: "Streaming series" },
+      ],
+      location: {
+        country: "Iran",
+        countryCode: "IR",
+      },
+      languages: ["Persian", "English"],
+      markets: ["Iran"],
+      footprintNote: "Advertising · Digital campaigns · Celebrity and sports · Entertainment · Financial services",
+      linkedin: "https://www.linkedin.com/in/hamedghasemii",
+      socialLinks: [
+        { label: "Instagram", href: "https://www.instagram.com/hamedtech.ir" },
+        { label: "X", href: "https://x.com/hamedtechir" },
+      ],
+      seoTitle: "Hamed Ghasemi | Marketing Strategist & Business Development Professional",
+      metaDescription:
+        "Discover Hamed Ghasemi, a marketing strategist and business development professional with experience in advertising, digital campaigns, public relations and media.",
+      seoKeywords: [
+        "Hamed Ghasemi",
+        "Hamed Gasemi",
+        "Hamed Tech",
+        "Hamed Ghasemi Marketing",
+        "Hamed Ghasemi Advertising",
+        "Hamed Ghasemi Business Development",
+      ],
     },
   ];
 }

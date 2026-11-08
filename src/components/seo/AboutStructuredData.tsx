@@ -27,7 +27,7 @@ export function AboutStructuredData() {
         { "@type": "Person", name: "Arad Moaf", jobTitle: "Core Partner, Market Expansion" },
         { "@type": "Person", name: "Novin Ghasemi", jobTitle: "Core Partner, Growth & Partnerships" },
         { "@type": "Person", name: "Hosein Rostami", jobTitle: "Core Partner, Strategic Operations" },
-        { "@type": "Person", name: "Mostafa Moradi", jobTitle: "Core Partner, Community & Growth" },
+        { "@type": "Person", name: "Mostafa Moradi", jobTitle: "Technology Entrepreneur and Crypto Exchange Executive" },
       ],
       foundingLocation: { "@type": "Place", name: "Dubai, UAE" },
       location: [

@@ -76,28 +76,23 @@ function asTemplateSafeTitle(title: string): Metadata["title"] {
 export const SEO_PAGES: Record<SeoRouteKey, SeoPageDefinition> = {
   home: {
     path: "/",
-    title: "Sigma | Crypto, Forex & Web3 Growth Network (40+ Markets)",
+    title: "Sigma | Crypto Marketing Agency & Web3 Growth Network",
     description:
-      "Sigma is a global growth network for crypto exchanges, forex brokers, Web3 protocols, KOLs, and IBs. Built by operators. Active across 40+ markets.",
+      "Sigma is a crypto marketing agency and growth network for exchanges, brokers, KOLs and Web3 projects: KOL campaigns, partner programs, PR, SEO and market entry.",
     keywords: [
-      "finance and web3 growth partner",
-      "financial growth infrastructure",
-      "crypto exchange growth",
-      "forex broker marketing",
-      "crypto KOL agency",
-      "crypto IB program",
-      "crypto exchange marketing agency",
-      "crypto user acquisition",
-      "liquidity activation",
-      "web3 growth agency",
-      "operator-led crypto marketing",
+      "sigma",
+      "sigma crypto marketing",
+      "sigma crypto marketing agency",
+      "crypto marketing",
+      "crypto agency",
+      "marketing agency",
     ],
-    ogTitle: "Sigma — Growth Infrastructure for Crypto, Forex, Stocks & Web3",
+    ogTitle: "Sigma | Crypto Marketing Agency & Web3 Growth Network",
     ogDescription:
-      "1,500+ KOLs across crypto, forex & Web3. 40+ markets. $7B+ supported volume. Built by operators inside exchanges, not agencies outside them.",
-    twitterTitle: "Sigma — Growth Infrastructure for Crypto, Forex, Stocks & Web3",
+      "Sigma is a crypto marketing agency and growth network for exchanges, brokers, KOLs and Web3 projects: KOL campaigns, partner programs, PR, SEO and market entry.",
+    twitterTitle: "Sigma | Crypto Marketing Agency & Web3 Growth Network",
     twitterDescription:
-      "1,500+ KOLs across crypto, forex & Web3. 40+ markets. $7B+ supported volume. Built by operators inside exchanges, not agencies outside them.",
+      "Sigma is a crypto marketing agency and growth network for exchanges, brokers, KOLs and Web3 projects: KOL campaigns, partner programs, PR, SEO and market entry.",
   },
   about: {
     path: "/about",

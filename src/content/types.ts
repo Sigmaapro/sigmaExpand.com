@@ -35,6 +35,8 @@ export type NavContent = {
 export type HeroContent = {
   eyebrow: string;
   title: string;
+  /** Primary page heading shown under the SIGMA wordmark. */
+  headline?: string;
   subtitle: string;
   supporting: string;
   primaryCta: string;

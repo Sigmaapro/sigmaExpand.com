@@ -1348,14 +1348,25 @@ const HeroSection = ({
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                     className="w-full"
                   >
-                    <SigmaHeroTitleMark title={t.hero.title} />
+                    <SigmaHeroTitleMark title={t.hero.title} asHeading={!t.hero.headline} />
                   </motion.div>
+
+                  {t.hero.headline ? (
+                    <motion.h1
+                      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
+                      className={`m-0 max-w-4xl px-1 font-display text-[1.65rem] font-semibold leading-[1.15] text-white text-balance sm:px-0 sm:text-4xl sm:leading-[1.12] md:text-5xl ${localeHeroSubtitle(lang)}`}
+                    >
+                      {t.hero.headline}
+                    </motion.h1>
+                  ) : null}
 
                   <motion.p
                     initial={reduceMotion ? false : { opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}
-                    className={`max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${localeHeroSubtitle(lang)}`}
+                    transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    className={`max-w-3xl px-1 font-display text-[0.95rem] font-medium leading-snug text-[#f1f3f5] text-balance sm:px-0 sm:text-lg sm:leading-[1.35] md:text-xl ${t.hero.headline ? "mt-3" : ""} ${localeHeroSubtitle(lang)}`}
                   >
                     {t.hero.subtitle}
                   </motion.p>

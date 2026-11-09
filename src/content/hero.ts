@@ -4,10 +4,10 @@ import { ROUTES } from "./global/routes";
 const EN: HeroContent = {
   eyebrow: "Finance & Web3 Growth Infrastructure · 40+ Markets · 1,500+ Network",
   title: "SIGMA",
-  subtitle:
-    "The Finance and Web3 Growth Partner for Exchanges, Brokers, KOLs, and Trading Communities",
+  headline: "Sigma Crypto Marketing Agency",
+  subtitle: "Growth Network for Exchanges, Brokers, KOLs and Web3",
   supporting:
-    "We are not a marketing agency. Sigma is the operating layer between your product, your distribution, and your liquidity — built by operators who have grown exchanges, run BD desks, and onboarded whales.",
+    "More than a crypto marketing agency. Sigma is the growth layer between your product, your distribution and your liquidity, built by operators who have grown exchanges, run BD desks and onboarded high-volume traders.",
   primaryCta: "Partner with Sigma",
   secondaryCta: "Request a Growth Consultation",
   primaryHref: ROUTES.contact,

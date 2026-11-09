@@ -174,16 +174,16 @@ function buildCoreMembers(): TeamMember[] {
         portraitObjectPosition: "center 18%",
         profileStatus: "active",
         headline:
-          "Founder of Sigma and Web3 business development leader managing a 30+ person team and a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels across MENA, LATAM, and global financial markets.",
+          "Founder of Sigma and Web3 business development leader managing a 30+ person team and a network of 1,000+ KOLs, partners, influencers, marketing partners, communities, and social channels across MENA, LATAM, and global financial markets.",
         shortBio:
-          "Omid Modaber is the Founder and Strategic Growth Consultant at Sigma and a Web3 business development leader with experience across crypto exchanges, financial platforms, KOL and IB ecosystems, and market analysis since 2017. He also serves as a Business Development Team Manager at LBank, leading a team of more than 30 business development and marketing professionals and working across a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels. His regional experience spans MENA, the GCC, Persian-speaking markets, LATAM, Europe, and wider international Web3 ecosystems.",
-        bio: "Omid Modaber is the Founder and Strategic Growth Consultant at Sigma and a Web3 business development leader with experience across crypto exchanges, financial platforms, KOL and IB ecosystems, and market analysis since 2017. He also serves as a Business Development Team Manager at LBank, leading a team of more than 30 business development and marketing professionals and working across a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels. His regional experience spans MENA, the GCC, Persian-speaking markets, LATAM, Europe, and wider international Web3 ecosystems.",
+          "Omid Modaber is the Founder and Strategic Growth Consultant at Sigma and a Web3 business development leader with experience across crypto exchanges, financial platforms, KOL and partner ecosystems, and market analysis since 2017. He also serves as a Business Development Team Manager at LBank, leading a team of more than 30 business development and marketing professionals and working across a network of 1,000+ KOLs, partners, influencers, marketing partners, communities, and social channels. His regional experience spans MENA, the GCC, Persian-speaking markets, LATAM, Europe, and wider international Web3 ecosystems.",
+        bio: "Omid Modaber is the Founder and Strategic Growth Consultant at Sigma and a Web3 business development leader with experience across crypto exchanges, financial platforms, KOL and partner ecosystems, and market analysis since 2017. He also serves as a Business Development Team Manager at LBank, leading a team of more than 30 business development and marketing professionals and working across a network of 1,000+ KOLs, partners, influencers, marketing partners, communities, and social channels. His regional experience spans MENA, the GCC, Persian-speaking markets, LATAM, Europe, and wider international Web3 ecosystems.",
         fullBio:
-          "Omid Modaber is the Founder of Sigma and a strategic growth consultant specialising in the operating systems behind Web3 and financial-platform expansion. His work covers exchange partnerships, KOL and IB ecosystems, creator and influencer networks, regional market entry, user acquisition, affiliate structures, business-development leadership, and performance-oriented commercial strategy.\n\nSince entering the cryptocurrency industry in 2017, Omid has progressed from trading, market research, fundamental analysis, and on-chain data analysis into business development and regional growth leadership. His professional background includes roles with LBank, BingX, ePlanet Brokers, Xiroco, MaxDigital Corporation, Max Holding, and other crypto and financial ventures.\n\nAcross these roles, he has designed affiliate and introducing-broker structures, built and managed business-development teams, developed strategic relationships with KOLs, creators, trading communities, and financial-industry decision-makers, and supported high-volume exchange growth across MENA, the GCC, Persian-speaking markets, LATAM, Europe, and other international markets.\n\nOmid currently leads and develops a distributed team of 30+ business development and marketing professionals. He works across a network of more than 1,000 KOLs, IBs, influencers, marketing partners, communities, and social channels, while maintaining an extensive network of high-impact operators and decision-makers across the financial and Web3 industries.\n\nDuring his time with BingX, Omid supported creator and artist sponsorship initiatives, including activity involving Persian hip-hop artist Gdaal, and contributed to regional business-development efforts around the period in which BingX launched its partnership with Chelsea FC. At LBank, he works within an international business-development organisation as the exchange expands its global visibility through major partnerships, including its official regional sponsorship of the Argentina National Team through the Argentine Football Association (AFA).\n\nOmid founded Sigma after identifying a recurring gap across the industry: exchanges, brokers, creators, affiliates, communities, traders, and liquidity partners were often operating independently rather than through a coordinated growth system. At Sigma, he helps set the organisation's long-term direction while focusing on strategic partnerships, network development, regional expansion, and the operating principles behind its financial and Web3 growth infrastructure.\n\nHis background in Bitcoin, market structure, sentiment, fundamental research, and on-chain data gives him a data-aware approach to business development. He has also trained and mentored hundreds of people across cryptocurrency trading, blockchain, Web3, market analysis, business development, and partner growth. His work prioritises long-term relationships, regional execution, transparent reporting, and sustainable commercial systems rather than short-lived campaigns or vanity metrics.",
+          "Omid Modaber is the Founder of Sigma and a strategic growth consultant specialising in the operating systems behind Web3 and financial-platform expansion. His work covers exchange partnerships, KOL and partner ecosystems, creator and influencer networks, regional market entry, user acquisition, affiliate structures, business-development leadership, and performance-oriented commercial strategy.\n\nSince entering the cryptocurrency industry in 2017, Omid has progressed from trading, market research, fundamental analysis, and on-chain data analysis into business development and regional growth leadership. His professional background includes roles with LBank, BingX, ePlanet Brokers, Xiroco, MaxDigital Corporation, Max Holding, and other crypto and financial ventures.\n\nAcross these roles, he has designed affiliate and introducing-broker structures, built and managed business-development teams, developed strategic relationships with KOLs, creators, trading communities, and financial-industry decision-makers, and supported high-volume exchange growth across MENA, the GCC, Persian-speaking markets, LATAM, Europe, and other international markets.\n\nOmid currently leads and develops a distributed team of 30+ business development and marketing professionals. He works across a network of more than 1,000 KOLs, partners, influencers, marketing partners, communities, and social channels, while maintaining an extensive network of high-impact operators and decision-makers across the financial and Web3 industries.\n\nDuring his time with BingX, Omid supported creator and artist sponsorship initiatives, including activity involving Persian hip-hop artist Gdaal, and contributed to regional business-development efforts around the period in which BingX launched its partnership with Chelsea FC. At LBank, he works within an international business-development organisation as the exchange expands its global visibility through major partnerships, including its official regional sponsorship of the Argentina National Team through the Argentine Football Association (AFA).\n\nOmid founded Sigma after identifying a recurring gap across the industry: exchanges, brokers, creators, affiliates, communities, traders, and liquidity partners were often operating independently rather than through a coordinated growth system. At Sigma, he helps set the organisation's long-term direction while focusing on strategic partnerships, network development, regional expansion, and the operating principles behind its financial and Web3 growth infrastructure.\n\nHis background in Bitcoin, market structure, sentiment, fundamental research, and on-chain data gives him a data-aware approach to business development. He has also trained and mentored hundreds of people across cryptocurrency trading, blockchain, Web3, market analysis, business development, and partner growth. His work prioritises long-term relationships, regional execution, transparent reporting, and sustainable commercial systems rather than short-lived campaigns or vanity metrics.",
         skills: [
           "Web3 and crypto business development",
           "Exchange partnerships and strategic alliances",
-          "KOL, IB, influencer, creator, and social-channel ecosystem management",
+          "KOL, partner, influencer, creator, and social-channel ecosystem management",
           "Regional market expansion across MENA, the GCC, Persian-speaking markets, and LATAM",
           "Business development and marketing team leadership",
           "Partnership negotiation and commercial deal structuring",
@@ -197,8 +197,8 @@ function buildCoreMembers(): TeamMember[] {
         services: [
           "Exchange growth strategy",
           "Strategic partnership development",
-          "KOL, IB, influencer, creator, and social-channel network infrastructure",
-          "IB, affiliate, commission, and incentive programme development",
+          "KOL, partner, influencer, creator, and social-channel network infrastructure",
+          "Partner, affiliate, commission, and incentive programme development",
           "Regional market expansion across MENA, the GCC, Persian-speaking markets, and LATAM",
           "Business development and marketing team structuring",
           "Commercial scheme, campaign, and partner-performance design",
@@ -214,14 +214,14 @@ function buildCoreMembers(): TeamMember[] {
             role: "Founder & Strategic Growth Consultant",
             organization: "Sigma",
             description:
-              "Sets Sigma's strategic direction and contributes to exchange and broker partnerships, regional expansion, KOL and IB infrastructure, network development, and commercial growth systems.",
+              "Sets Sigma's strategic direction and contributes to exchange and broker partnerships, regional expansion, KOL and partner infrastructure, network development, and commercial growth systems.",
           },
           {
             dateRange: "2024-Present",
             role: "Business Development Team Manager",
             organization: "LBank",
             description:
-              "Leads and develops a distributed team of more than 30 business development and marketing professionals and works across a network of 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels. Oversees partner acquisition, commercial negotiations, campaign structures, performance management, regional expansion, and trading-volume growth across MENA, the GCC, Persian-speaking markets, LATAM, and other international markets.",
+              "Leads and develops a distributed team of more than 30 business development and marketing professionals and works across a network of 1,000+ KOLs, partners, influencers, marketing partners, communities, and social channels. Oversees partner acquisition, commercial negotiations, campaign structures, performance management, regional expansion, and trading-volume growth across MENA, the GCC, Persian-speaking markets, LATAM, and other international markets.",
           },
           {
             dateRange: "2023",
@@ -232,7 +232,7 @@ function buildCoreMembers(): TeamMember[] {
           },
           {
             dateRange: "2023",
-            role: "Business Development & IB Manager",
+            role: "Business Development & Partner Manager",
             organization: "ePlanet Brokers",
             description:
               "Worked on introducing-broker development, commercial scheme design, team building, partner acquisition, and regional broker growth.",
@@ -293,7 +293,7 @@ function buildCoreMembers(): TeamMember[] {
           },
           {
             description:
-              "Works across a network of more than 1,000 KOLs, IBs, influencers, marketing partners, communities, and social channels in financial, crypto, and Web3 markets.",
+              "Works across a network of more than 1,000 KOLs, partners, influencers, marketing partners, communities, and social channels in financial, crypto, and Web3 markets.",
           },
           {
             description:
@@ -317,7 +317,7 @@ function buildCoreMembers(): TeamMember[] {
           },
           {
             description:
-              "Founded Sigma and developed its direction as a coordinated growth network connecting exchanges, brokers, KOLs, IBs, communities, traders, marketing partners, and Web3 platforms.",
+              "Founded Sigma and developed its direction as a coordinated growth network connecting exchanges, brokers, KOLs, partners, communities, traders, marketing partners, and Web3 platforms.",
           },
           {
             description:
@@ -333,7 +333,7 @@ function buildCoreMembers(): TeamMember[] {
           },
         ],
         footprintNote:
-          "Extended network: 1,000+ KOLs, IBs, influencers, marketing partners, communities, and social channels across international crypto, finance, and Web3 ecosystems",
+          "Extended network: 1,000+ KOLs, partners, influencers, marketing partners, communities, and social channels across international crypto, finance, and Web3 ecosystems",
         linkedin: "https://www.linkedin.com/in/omidmd/",
         socialLinks: [
           { label: "Linktree", href: "https://linktr.ee/OmidMD" },
@@ -345,7 +345,7 @@ function buildCoreMembers(): TeamMember[] {
         quote: "We are not here to be loud. We are here to be useful.",
         seoTitle: "OmidMD | Founder & Strategic Growth Consultant at Sigma",
         metaDescription:
-          "Meet Omid Modaber, Founder of Sigma and Web3 growth strategist leading global BD, KOL, IB, influencer, and market-expansion networks across MENA and LATAM.",
+          "Meet Omid Modaber, Founder of Sigma and Web3 growth strategist leading global BD, KOL, partner, influencer, and market-expansion networks across MENA and LATAM.",
       }),
       location: {
         city: "Dubai",
@@ -378,7 +378,7 @@ function buildCoreMembers(): TeamMember[] {
               "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across Finance and Web3, Novin helps exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.",
             bio: "Business Development Manager and Growth Strategist specializing in Web3 partnerships, exchange growth, and cross-border market expansion.",
             fullBio:
-              "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across the Finance and Web3 industries, Novin specializes in helping exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.\n\nThroughout his career, he has developed strategic partnerships with exchanges, brokers, KOLs, IB networks, institutional clients, and fintech companies across the Middle East, Europe, LATAM, Africa, and Asia.\n\nCurrently, he serves as a Business Development Manager at LBank Exchange, where he focuses on global partnership development, affiliate growth, institutional collaboration, and market expansion.\n\nBeyond corporate business development, he has successfully launched and managed multiple entrepreneurial ventures within the crypto and fintech ecosystem, giving him a practical understanding of both startup execution and enterprise growth.\n\nHe believes sustainable growth comes from building long-term relationships, understanding local markets, and creating partnership ecosystems that generate value for every stakeholder involved.",
+              "With over 5 years of experience in Business Development, Partnerships, and Growth Strategy across the Finance and Web3 industries, Novin specializes in helping exchanges, brokers, fintech companies, and blockchain projects expand into new markets and build sustainable growth.\n\nThroughout his career, he has developed strategic partnerships with exchanges, brokers, KOLs, partner networks, institutional clients, and fintech companies across the Middle East, Europe, LATAM, Africa, and Asia.\n\nCurrently, he serves as a Business Development Manager at LBank Exchange, where he focuses on global partnership development, affiliate growth, institutional collaboration, and market expansion.\n\nBeyond corporate business development, he has successfully launched and managed multiple entrepreneurial ventures within the crypto and fintech ecosystem, giving him a practical understanding of both startup execution and enterprise growth.\n\nHe believes sustainable growth comes from building long-term relationships, understanding local markets, and creating partnership ecosystems that generate value for every stakeholder involved.",
             skills: [
               "Business Development",
               "Strategic Partnerships",
@@ -388,7 +388,7 @@ function buildCoreMembers(): TeamMember[] {
               "Institutional Relations",
               "KOL Marketing",
               "Affiliate Programs",
-              "IB Networks",
+              "Partner Networks",
               "Market Expansion",
               "B2B Sales",
               "Growth Strategy",
@@ -401,7 +401,7 @@ function buildCoreMembers(): TeamMember[] {
             ],
             services: [
               "Global Partnership Development",
-              "Affiliate & IB Network Growth",
+              "Affiliate & Partner Network Growth",
               "Institutional Collaboration",
               "Exchange Market Expansion",
               "Web3 Go-to-Market Strategy",
@@ -509,7 +509,7 @@ function buildCoreMembers(): TeamMember[] {
       bio:
         "Hosein Rostami is a fintech business builder and growth strategist working across digital assets, investment platforms, payments, exchange ecosystems, and financial infrastructure.",
       fullBio:
-        "Hosein Rostami operates at the intersection of fintech, business strategy, venture building, growth, product development, and commercial operations.\n\nAfter several years in senior marketing leadership roles within major Iranian fintech and cryptocurrency platforms, his career evolved from managing individual marketing functions toward building complete business and growth systems. Today, his work spans multiple financial ventures and operating environments, including digital-asset exchanges, investment platforms, payment services, commodity-backed products, KOL and affiliate ecosystems, and B2B financial infrastructure.\n\nAs Co-Founder and Board Member of Gerami, Hosein is involved in building a multi-asset investment platform designed to make access to commodities and alternative assets simpler and more accessible. His work covers business strategy, growth architecture, product direction, team development, partnership models, new asset opportunities, and the design of B2B and B2B2C services. At Gerami, he works across the boundaries of product, marketing, business development, operations, finance, support, risk, and compliance. His role is centered on identifying new opportunities, turning them into clear business models, assigning ownership, defining measurable outcomes, and creating the organizational structure required to execute them.\n\nA major part of his work involves designing growth systems that extend beyond short-term acquisition. These systems connect user onboarding, activation, first transaction, repeat activity, portfolio development, retention, reactivation, referral, and partner-driven distribution.\n\nWithin the international exchange ecosystem, Hosein works on regional business development, KOL partnerships, affiliate operations, high-volume trader acquisition, and strategic relationships with trading communities and financial businesses. His approach to KOL and affiliate growth is built around long-term commercial partnerships rather than one-off promotional campaigns. This includes partner identification, negotiation, onboarding, activation, technical enablement, incentive design, volume development, retention, and continuous relationship ownership.\n\nHe has also worked on developing separate commercial motions for KOLs and educators, high-volume direct traders, exchange and platform partnerships, and regional business-development teams, recognizing that each requires its own operating model, incentive structure, and performance indicators.\n\nThrough his roles across Gerami, LBank, PayStar, VisaPay, and Sigma, Hosein has developed a multidisciplinary perspective on how financial products scale. He combines business-model thinking with distribution strategy, product understanding, team design, data, partnerships, and operational execution. Rather than approaching growth as a collection of campaigns, he treats it as an operating system: a coordinated structure of people, processes, incentives, data, technology, and commercial relationships.\n\nHis earlier experience at ZarinPal provided the foundation for this work, giving him hands-on exposure to large-scale user growth, marketing leadership, sales development, customer analytics, brand transformation, and cross-functional execution. His current focus is on applying that experience to build new ventures, market infrastructure, and scalable financial-growth ecosystems.",
+        "Hosein Rostami operates at the intersection of fintech, business strategy, venture building, growth, product development, and commercial operations.\n\nAfter several years in senior marketing leadership roles within major fintech and cryptocurrency platforms, his career evolved from managing individual marketing functions toward building complete business and growth systems. Today, his work spans multiple financial ventures and operating environments, including digital-asset exchanges, investment platforms, payment services, commodity-backed products, KOL and affiliate ecosystems, and B2B financial infrastructure.\n\nA major part of his work involves designing growth systems that extend beyond short-term acquisition. These systems connect user onboarding, activation, first transaction, repeat activity, portfolio development, retention, reactivation, referral, and partner-driven distribution.\n\nWithin the international exchange ecosystem, Hosein works on regional business development, KOL partnerships, affiliate operations, high-volume trader acquisition, and strategic relationships with trading communities and financial businesses. His approach to KOL and affiliate growth is built around long-term commercial partnerships rather than one-off promotional campaigns. This includes partner identification, negotiation, onboarding, activation, technical enablement, incentive design, volume development, retention, and continuous relationship ownership.\n\nHe has also worked on developing separate commercial motions for KOLs and educators, high-volume direct traders, exchange and platform partnerships, and regional business-development teams, recognizing that each requires its own operating model, incentive structure, and performance indicators.\n\nThrough his roles across LBank and Sigma, Hosein has developed a multidisciplinary perspective on how financial products scale. He combines business-model thinking with distribution strategy, product understanding, team design, data, partnerships, and operational execution. Rather than approaching growth as a collection of campaigns, he treats it as an operating system: a coordinated structure of people, processes, incentives, data, technology, and commercial relationships.\n\nHis current focus is on building new ventures, market infrastructure, and scalable financial-growth ecosystems.",
       skills: [
         "Fintech Venture Building",
         "Business Model Development",
@@ -547,39 +547,11 @@ function buildCoreMembers(): TeamMember[] {
             "As a member of Sigma’s core team, Hosein contributes to the development of growth infrastructure for exchanges, brokers, financial platforms, KOLs, affiliates, and trading communities. His work focuses on connecting business strategy with executable growth operations across partnerships, regional market expansion, KOL and affiliate systems, product requirements, commercial models, and organizational execution. Within Sigma, he brings an operator’s perspective shaped by experience on both sides of the ecosystem: building financial platforms internally and developing external distribution, partnership, and business-development networks around them.",
         },
         {
-          dateRange: "2025 — Present",
-          role: "Co-Founder & Board Member",
-          organization: "Gerami",
-          description:
-            "Co-founded Gerami, a financial platform focused on expanding access to commodity-backed and alternative investment products through simple, fractional, and digitally managed experiences. His responsibilities span business and growth strategy, product direction and new asset development, B2B and B2B2C opportunity design, affiliate and referral infrastructure, KOL and distribution-channel development, organizational and team design, partnership and commercial models, coordination across product, marketing, finance, operations, risk, legal, and support, and development of measurable acquisition, activation, retention, and referral systems. He also works on expanding Gerami beyond a consumer investment application by exploring infrastructure services, APIs, white-label solutions, embedded asset products, and strategic partnerships with other businesses.",
-        },
-        {
           dateRange: "2024 — Present",
           role: "Business Development Manager / Marketing Manager, Persian Market",
           organization: "LBank",
           description:
             "Works across regional marketing, business development, exchange growth, KOL partnerships, affiliate operations, high-volume trader acquisition, and strategic partnerships. His work includes identifying and recruiting KOLs, traders, educators, and community operators; designing performance-based partnership structures; negotiating commissions, incentives, trial periods, and commercial terms; onboarding and activating partners; supporting technical and operational partner requirements; developing trading volume and partner-generated revenue; building retention and reactivation mechanisms; creating differentiated models for KOLs, VIP traders, and exchange partners; and supporting regional expansion and market-specific execution. His focus is not limited to partner acquisition. He works across the full relationship lifecycle from initial dialogue and trust-building to activation, volume development, problem-solving, and long-term commercial growth.",
-        },
-        {
-          dateRange: "2025 — Present",
-          role: "Sales & Marketing Lead",
-          organization: "PayStar",
-          description:
-            "Contributes to the development of PayStar’s commercial direction, sales and marketing structure, acquisition systems, and financial-service growth opportunities. His work focuses on aligning sales, marketing, customer acquisition, partnerships, and product positioning around measurable business outcomes.",
-        },
-        {
-          dateRange: "2024 — Present",
-          role: "Board Member",
-          organization: "VisaPay",
-          description:
-            "Supports VisaPay’s strategic direction across financial services, payments, digital assets, product opportunities, commercial partnerships, and long-term business development. His involvement includes evaluating new business models, strengthening the company’s market positioning, and connecting established operational capabilities with new fintech opportunities.",
-        },
-        {
-          dateRange: "2019 — 2024",
-          role: "Marketing Leadership",
-          organization: "ZarinPal",
-          description:
-            "Before moving into venture building and broader business leadership, Hosein held a senior marketing role at ZarinPal. This period gave him hands-on experience in large-scale user growth, performance marketing, branding, sales development, customer analytics, data-driven growth, team leadership, and cross-functional coordination. These experiences became the operating foundation for his later work across venture building, digital assets, partnerships, product strategy, and financial-growth infrastructure.",
         },
       ],
       location: {
@@ -817,9 +789,9 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
             headline:
               "Crypto & Web3 product manager, NFT and market strategist, and community builder leading West Asia KOL community operations at LBank.",
             shortBio:
-              "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder. With an MBA from the University of Tehran and an engineering background, he has built crypto departments, led product development, advised blockchain ventures, and helped grow Web3 communities across multiple regions. Today, he leads West Asia KOL community management at LBank exchange.",
+              "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder. With an MBA and an engineering background, he has built crypto departments, led product development, advised blockchain ventures, and helped grow Web3 communities across multiple regions. Today, he leads West Asia KOL community management at LBank exchange.",
             fullBio:
-              "Mahdiyar Mehmandoust works at the intersection of business strategy, product development, and emerging technology.\n\nHis path began early with multiple awards in high school robotics competitions and a top rank in the national university entrance exam. Instead of following the conventional academic path immediately, he entered the job market to learn by building.\n\nHis crypto career started in 2019 as a fundamental researcher at Ethlance, where he studied crypto projects from the inside out. He later joined ALPHA Currency Exchange and founded its crypto department from scratch, growing it into a full team and leading OTC trading and sales operations.\n\nAt Max Digital, he worked as a Crypto Market Research Analyst, specializing in tokenomics, project growth, and user sentiment. In parallel, at Max Holding, he served as a Blockchain Strategy & Data Analyst, advising startups and venture-focused businesses on Web3 and blockchain strategy.\n\nMahdiyar combines an MBA in Business and Managerial Economics from the University of Tehran with a background in Biomedical Engineering. His work has included investment strategy, product leadership, quality assurance, NFT adoption, crypto payment gateways, and real estate tokenization.\n\nAs Product Delivery & QA Lead at Xiroco, he managed projects from planning to launch and oversaw both manual and automated quality assurance. At Khooneh Metri, he led a tokenized home-buying product from idea to public showcase at the Tehran International Exhibition in 2024.\n\nToday, Mahdiyar is the West Asia Community Manager Leader at LBank exchange, where he manages and supports KOL communities across multiple regions, executes public and private campaigns, onboards new KOLs, and builds operational tools for community verification and access management.\n\nHis profile combines product thinking, market strategy, community execution, and a builder mindset focused on turning complex Web3 ideas into working systems.",
+              "Mahdiyar Mehmandoust works at the intersection of business strategy, product development, and emerging technology.\n\nHis path began early with multiple awards in high school robotics competitions. Instead of following the conventional academic path immediately, he entered the job market to learn by building.\n\nHis crypto career started in 2019 as a fundamental researcher at Ethlance, where he studied crypto projects from the inside out. He later joined ALPHA Currency Exchange and founded its crypto department from scratch, growing it into a full team and leading OTC trading and sales operations.\n\nAt Max Digital, he worked as a Crypto Market Research Analyst, specializing in tokenomics, project growth, and user sentiment. In parallel, at Max Holding, he served as a Blockchain Strategy & Data Analyst, advising startups and venture-focused businesses on Web3 and blockchain strategy.\n\nMahdiyar combines an MBA in Business and Managerial Economics with a background in Biomedical Engineering. His work has included investment strategy, product leadership, quality assurance, NFT adoption, and crypto payment gateways.\n\nAs Product Delivery & QA Lead at Xiroco, he managed projects from planning to launch and oversaw both manual and automated quality assurance.\n\nToday, Mahdiyar is the West Asia Community Manager Leader at LBank exchange, where he manages and supports KOL communities across multiple regions, executes public and private campaigns, onboards new KOLs, and builds operational tools for community verification and access management.\n\nHis profile combines product thinking, market strategy, community execution, and a builder mindset focused on turning complex Web3 ideas into working systems.",
             skills: [
               "Crypto & Web3 Product Management",
               "Community Marketing",
@@ -858,13 +830,6 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
                   "Manages and supports diverse KOL communities across multiple regions; executes public and private campaigns to drive engagement and trading volume; onboards, interviews, and maintains relationships with new and existing KOLs; coordinates upfront payment requests for BD and KOL partners; developed a Telegram bot for user ID verification, KOL community membership checks, and minimum balance validation.",
               },
               {
-                dateRange: "February 2024 - November 2024",
-                role: "Product Development Manager",
-                organization: "Khooneh Metri",
-                description:
-                  "Led product development from idea to launch for a real estate platform; helped launch a tokenized home-buying project with a market-leading construction company; showcased the platform at the Tehran International Exhibition 2024; managed tight deadlines and limited resources while aligning cross-functional teams.",
-              },
-              {
                 dateRange: "May 2022 - February 2024",
                 role: "Product Delivery & QA Lead",
                 organization: "Xiroco",
@@ -897,33 +862,23 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
                 role: "Fundamental Researcher, Crypto Market",
                 organization: "Ethlance",
               },
-              {
-                dateRange: "October 2018 - July 2020",
-                role: "Teaching Assistant",
-                organization: "IAU, Tehran Medical Branch",
-                description:
-                  "Conducted weekly Introduction to Programming classes, supported students during office hours, tracked progress, graded assignments, and collaborated with course professors.",
-              },
             ],
             achievements: [
               { title: "Won multiple awards in robotics competitions during high school" },
-              { title: "Earned a top rank in the national university entrance exam" },
               { title: "Founded and scaled the crypto department of ALPHA Currency Exchange" },
               { title: "Raised investor funding for product ventures" },
-              { title: "Launched a tokenized real estate investment project with a market-leading construction company" },
-              { title: "Led a real estate platform from idea to showcase at Tehran International Exhibition 2024" },
               { title: "Built a custom Telegram bot for user and KOL community verification at LBank" },
               { title: "Managed KOL communities across multiple regions" },
               { title: "Provided strategic guidance to blockchain startups and venture-focused businesses" },
               { title: "Donated project source code to charities" },
               { title: "Helped charitable organizations adopt NFTs and crypto payment gateways" },
-              { title: "Combined an MBA from the University of Tehran with a Biomedical Engineering background" },
+              { title: "Combined an MBA in Business and Managerial Economics with a Biomedical Engineering background" },
             ],
             linkedin: "https://www.linkedin.com/in/mahdiyar-mehmandoust",
             profileStatus: "active",
             seoTitle: "Mahdiyar Mehmandoust | Crypto & Web3 Product Manager & Community Builder",
             metaDescription:
-              "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder with an MBA from the University of Tehran. From founding a crypto department at a currency exchange to launching a tokenized real estate project, he builds products and communities side by side — today leading West Asia KOL communities at LBank.",
+              "Mahdiyar Mehmandoust is a Crypto & Web3 product manager, market strategist, and community builder. From founding a crypto department at a currency exchange to leading product and community work, he builds products and communities side by side — today leading West Asia KOL communities at LBank.",
           },
           MALE_MEMBER_PLACEHOLDER,
         ),
@@ -1174,10 +1129,10 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
       headline:
         "Advertising leadership across celebrity and influencer marketing, integrated campaigns, banking and fintech, and entertainment.",
       shortBio:
-        "Hamed Ghasemi is an Iranian advertising strategist, digital marketing executive, and brand communications professional. He develops and executes campaigns across banking, financial technology, consumer electronics, transportation, entertainment, and media.",
-      bio: "Iranian advertising strategist and Managing Director of Hamed Tech, working across digital campaigns, celebrity marketing, and brand communications.",
+        "Hamed Ghasemi is an advertising strategist, digital marketing executive, and brand communications professional. He develops and executes campaigns across banking, financial technology, consumer electronics, transportation, entertainment, and media.",
+      bio: "Advertising strategist and Managing Director of Hamed Tech, working across digital campaigns, celebrity marketing, and brand communications.",
       fullBio:
-        "Hamed Ghasemi is an Iranian advertising strategist, digital marketing executive, and brand communications professional with experience developing and executing advertising campaigns across banking, financial technology, consumer electronics, transportation, entertainment, and media.\n\nHis background includes managing digital advertising initiatives, developing celebrity- and athlete-led marketing campaigns, coordinating brand communications, and supporting advertising projects for established Iranian companies and entertainment productions. He has contributed to campaigns associated with Bank Melli Iran, Sadad Electronic Payment, Entekhab Service, Snowa, Daewoo, Tapsi, and Borj Tamas, and to digital advertising for Iranian feature films and streaming series.\n\nHis approach brings together advertising strategy, creative communication, social media marketing, and campaign execution in support of a brand's commercial and communication objectives.\n\nHe has served as Managing Director of Hamed Tech, a company focused on advertising across digital platforms and social media, including online promotion, social communications, and advertising consulting. That leadership work covers how businesses use digital channels to reach audiences, introduce products and services, and coordinate campaigns, combining strategic planning with practical execution.\n\nIn banking and financial services, his work includes social and digital advertising connected to Bank Melli Iran, including the IVA banking application, and digital advertising for Sadad Electronic Payment from 2016 to 2019. During his time with Idea.Saeed he also worked on advertising projects for Bank Melli Iran and the Asian Games.\n\nFrom 2019 to 2020 his campaign work included Entekhab Service and the Snowa and Daewoo brands, adding consumer electronics and home appliances to the portfolio. In 2023 he worked on campaign activity for Tapsi, an Iranian transportation platform, and from 2021 to 2023 on digital advertising for Borj Tamas.\n\nCelebrity and athlete-led advertising is a distinct part of his experience. At Roma Ads he planned and executed campaigns with celebrities and professional football players, covering celebrity-based advertising, influencer partnerships, campaign messaging, and the coordination required to connect public personalities with commercial campaigns.\n\nFrom 2014 to 2024 he also worked on digital advertising for Iranian cinema and streaming entertainment, including feature films and series. That work covers entertainment advertising, digital promotion, and the different communication needs of a cinematic release and a streaming campaign.\n\nAt Ayeeneh Jadoo, an advertising agency, he worked as a Social Media Strategy Consultant on campaign communication and advertising messages for major brands. At WebAmooz he managed editorial and advertising work, including organizational communication channels. At Sarmayex he was Public Relations Manager, working on organizational communications inside a digital-asset business.\n\nAcross agencies, digital businesses, and campaign projects, his perspective stays centered on audience communication, campaign planning, and the effective use of digital advertising channels.",
+        "Hamed Ghasemi is an advertising strategist, digital marketing executive, and brand communications professional with experience developing and executing advertising campaigns across banking, financial technology, consumer electronics, transportation, entertainment, and media.\n\nHis background includes managing digital advertising initiatives, developing celebrity- and athlete-led marketing campaigns, coordinating brand communications, and supporting advertising projects for established companies and entertainment productions.\n\nHis approach brings together advertising strategy, creative communication, social media marketing, and campaign execution in support of a brand's commercial and communication objectives.\n\nHe has served as Managing Director of Hamed Tech, a company focused on advertising across digital platforms and social media, including online promotion, social communications, and advertising consulting. That leadership work covers how businesses use digital channels to reach audiences, introduce products and services, and coordinate campaigns, combining strategic planning with practical execution.\n\nCelebrity and athlete-led advertising is a distinct part of his experience. At Roma Ads he planned and executed campaigns with celebrities and professional football players, covering celebrity-based advertising, influencer partnerships, campaign messaging, and the coordination required to connect public personalities with commercial campaigns.\n\nAcross agencies, digital businesses, and campaign projects, his perspective stays centered on audience communication, campaign planning, and the effective use of digital advertising channels.",
       skills: [
         "Digital Advertising Strategy",
         "Integrated Advertising Campaigns",
@@ -1213,89 +1168,18 @@ function buildInnerCircleMembers(roleLabel: string): TeamMember[] {
             "Leads a company focused on advertising across digital platforms and social media, including digital advertising, online promotion, social communications, and advertising consulting.",
         },
         {
-          dateRange: "2014 — 2024",
-          role: "Digital Advertising",
-          organization: "Iranian Film and Streaming Productions",
-          description:
-            "Digital advertising for Iranian feature films and streaming series, including Track 143, When the Moon Was Full, Confiscation, Ablagh, Sag Band, Khatoon, Frog, Hayoola, Bi Gonah, and Salhaye Door Az Khaneh.",
-        },
-        {
-          dateRange: "2023",
-          role: "Advertising Campaign",
-          organization: "Tapsi",
-          description: "Campaign activity for Tapsi, an Iranian transportation platform.",
-        },
-        {
-          dateRange: "2021 — 2023",
-          role: "Digital Advertising",
-          organization: "Borj Tamas",
-          description: "Digital advertising activities for Borj Tamas.",
-        },
-        {
-          dateRange: "2019 — 2020",
-          role: "Advertising Campaigns",
-          organization: "Entekhab Service, Snowa & Daewoo",
-          description: "Campaign work for Entekhab Service, including the Snowa and Daewoo consumer electronics and home appliance brands.",
-        },
-        {
-          dateRange: "2016 — 2019",
-          role: "Digital Advertising",
-          organization: "Sadad Electronic Payment",
-          description: "Digital advertising initiatives for Sadad Electronic Payment Company.",
-        },
-        {
-          role: "Advertising Campaigns and Digital Communications",
-          organization: "Bank Melli Iran",
-          description:
-            "Social media and digital advertising for Bank Melli Iran, including the IVA banking application, and related campaign work during his time with Idea.Saeed.",
-        },
-        {
           role: "Celebrity and Professional Footballer Campaigns",
           organization: "Roma Ads",
           description:
             "Planned and executed advertising campaigns with celebrities and professional football players, connecting public personalities with brand communication.",
         },
-        {
-          role: "Advertising Campaigns",
-          organization: "Idea.Saeed",
-          description: "Advertising initiatives associated with Bank Melli Iran and the Asian Games.",
-        },
-        {
-          role: "Social Media Strategy Consultant",
-          organization: "Ayeeneh Jadoo",
-          description:
-            "Contributed to campaign communication strategies and advertising messages for major brands at the advertising agency.",
-        },
-        {
-          role: "Editorial and Advertising Management",
-          organization: "WebAmooz",
-          description: "Managed editorial and advertising work, including organizational communication channels.",
-        },
-        {
-          role: "Public Relations Manager",
-          organization: "Sarmayex",
-          description: "Public relations and organizational communications inside a digital-asset business.",
-        },
-      ],
-      achievementsTitle: "FILM & STREAMING ADVERTISING",
-      achievements: [
-        { title: "Track 143 (Shiar 143)", description: "Feature film" },
-        { title: "When the Moon Was Full (Shabi Ke Mah Kamel Shod)", description: "Feature film" },
-        { title: "Confiscation (Mosaadereh)", description: "Feature film" },
-        { title: "Ablagh", description: "Feature film" },
-        { title: "Sag Band", description: "Feature film" },
-        { title: "Khatoon", description: "Streaming series" },
-        { title: "Frog (Ghoorbagheh)", description: "Streaming series" },
-        { title: "Hayoola", description: "Streaming series" },
-        { title: "Bi Gonah", description: "Streaming series" },
-        { title: "Salhaye Door Az Khaneh", description: "Streaming series" },
       ],
       location: {
-        country: "Iran",
-        countryCode: "IR",
+        country: "UAE",
+        countryCode: "AE",
       },
       languages: ["Persian", "English"],
-      markets: ["Iran"],
+      markets: ["UAE"],
       footprintNote: "Advertising · Digital campaigns · Celebrity and sports · Entertainment · Financial services",
       linkedin: "https://www.linkedin.com/in/hamedghasemii",
       socialLinks: [
@@ -1432,7 +1316,7 @@ function buildContributorsMembers(roleLabel: string): TeamMember[] {
               role: "Entrepreneur & Founder",
               organization: "Shahan",
               description:
-                "Built a digital growth practice from the ground up and scaled it into a multi-country operation. Collaborated with more than 65 international companies on SEO and digital marketing projects across Iran, Northern Cyprus, Russia, Uzbekistan, Tajikistan, and London.",
+                "Built a digital growth practice from the ground up and scaled it into a multi-country operation. Collaborated with more than 65 international companies on SEO and digital marketing projects across Northern Cyprus, Russia, Uzbekistan, Tajikistan, and London.",
             },
             {
               dateRange: "2023 to Present",

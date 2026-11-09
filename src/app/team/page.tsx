@@ -5,7 +5,7 @@ import { buildPageMetadata } from "@/content/seo";
 
 const TEAM_TITLE = "Sigma Team | Crypto, Forex & Web3 Growth Operators";
 const TEAM_DESCRIPTION =
-  "Meet Sigma’s operators, Inner Circle partners, and contributors building growth infrastructure for crypto exchanges, forex brokers, KOLs, IBs, and Web3.";
+  "Meet Sigma’s operators, Inner Circle partners, and contributors building growth infrastructure for crypto exchanges, forex brokers, KOLs, partners, and Web3.";
 
 const teamBaseMetadata = buildPageMetadata("team");
 

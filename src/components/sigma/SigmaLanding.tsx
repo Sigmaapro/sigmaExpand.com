@@ -132,9 +132,127 @@ function mapWpPostToCard(post: WpPost): HomeInsightCard | null {
   };
 }
 
+const BLOG_SITEMAP_URL = "https://blog.sigmaa.pro/post-sitemap.xml";
+
+function decodeEntities(value: string): string {
+  return value
+    .replace(/&#(\d+);/g, (_, code: string) => String.fromCharCode(Number(code)))
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#0*39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+}
+
+function latestPostUrlsFromSitemap(xml: string): string[] {
+  const blocks = xml.match(/<url>[\s\S]*?<\/url>/g) ?? [];
+  const rows: { lastmod: string; loc: string }[] = [];
+  for (const block of blocks) {
+    const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1]?.trim();
+    const lastmod = block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1]?.trim() ?? "";
+    if (!loc?.startsWith("https://blog.sigmaa.pro/")) continue;
+    const path = loc.slice("https://blog.sigmaa.pro/".length).replace(/\/$/, "");
+    if (!path || path.includes("/")) continue;
+    rows.push({ lastmod, loc: loc.endsWith("/") ? loc : `${loc}/` });
+  }
+  rows.sort((a, b) => (a.lastmod < b.lastmod ? 1 : a.lastmod > b.lastmod ? -1 : 0));
+  return rows.slice(0, 6).map((row) => row.loc);
+}
+
+function metaContent(html: string, property: string): string {
+  const pattern = new RegExp(
+    `<meta[^>]+(?:property|name)="${property}"[^>]+content="([^"]*)"|<meta[^>]+content="([^"]*)"[^>]+(?:property|name)="${property}"`,
+    "i",
+  );
+  const match = html.match(pattern);
+  return decodeEntities(match?.[1] || match?.[2] || "");
+}
+
+function cardFromPublicPost(url: string, html: string): HomeInsightCard | null {
+  const scripts = html.match(/<script type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/g) ?? [];
+  let headline = "";
+  let description = "";
+  let section = "";
+  let published = "";
+  let image: string | null = null;
+
+  for (const script of scripts) {
+    const raw = script.replace(/^<script[^>]*>/, "").replace(/<\/script>$/, "");
+    let data: unknown;
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      continue;
+    }
+    const record = data as { "@graph"?: unknown };
+    const nodes = Array.isArray(record["@graph"]) ? record["@graph"] : [data];
+    for (const node of nodes) {
+      if (!node || typeof node !== "object") continue;
+      const entry = node as Record<string, unknown>;
+      const type = entry["@type"];
+      const types = Array.isArray(type) ? type.map(String) : [String(type ?? "")];
+      if (types.includes("BlogPosting") || types.includes("Article")) {
+        headline = decodeEntities(String(entry.headline ?? ""));
+        description = decodeEntities(String(entry.description ?? ""));
+        section = decodeEntities(String(entry.articleSection ?? ""));
+        const img = entry.image;
+        if (typeof img === "string") image = img;
+        else if (img && typeof img === "object" && "url" in img && typeof img.url === "string") {
+          image = img.url;
+        }
+      }
+      if (!published && typeof entry.datePublished === "string") published = entry.datePublished;
+    }
+  }
+
+  if (!headline) headline = metaContent(html, "og:title");
+  if (!description) description = metaContent(html, "og:description");
+  if (!image) image = metaContent(html, "og:image") || null;
+  if (!headline) return null;
+
+  const { label, dateTime } = formatPostDate(published);
+  const slug = url.replace(/\/$/, "").split("/").pop() || url;
+  return {
+    id: slug,
+    category: (section || "Insights").toUpperCase(),
+    date: label,
+    dateTime,
+    title: headline,
+    summary: truncateText(stripHtml(description)),
+    href: url,
+    imageSrc: preferBlogHost(image),
+  };
+}
+
+/** Public pages stay readable when the WordPress REST API requires a login. */
+async function fetchPublicBlogCards(): Promise<HomeInsightCard[]> {
+  const sitemap = await fetch(BLOG_SITEMAP_URL, {
+    headers: { Accept: "application/xml,text/xml" },
+    next: { revalidate: REVALIDATE_SECONDS },
+  });
+  if (!sitemap.ok) return [];
+  const urls = latestPostUrlsFromSitemap(await sitemap.text());
+  const cards = await Promise.all(
+    urls.map(async (url) => {
+      try {
+        const res = await fetch(url, {
+          headers: { Accept: "text/html" },
+          next: { revalidate: REVALIDATE_SECONDS },
+        });
+        if (!res.ok) return null;
+        return cardFromPublicPost(url, await res.text());
+      } catch {
+        return null;
+      }
+    }),
+  );
+  return cards.filter((card): card is HomeInsightCard => Boolean(card));
+}
+
 /**
  * Live WP REST fetch — primary Insights data source.
  * Cached by Next.js for REVALIDATE_SECONDS, then revalidated.
+ * If REST is locked, the public sitemap and post pages supply the same cards.
  */
 async function fetchHomeInsights(): Promise<InsightsPayload> {
   try {
@@ -142,24 +260,26 @@ async function fetchHomeInsights(): Promise<InsightsPayload> {
       headers: { Accept: "application/json" },
       next: { revalidate: REVALIDATE_SECONDS },
     });
-    if (!res.ok) {
-      return { cards: [], error: true };
+    if (res.ok) {
+      const data = (await res.json()) as unknown;
+      if (Array.isArray(data)) {
+        const cards = data
+          .map((item) => mapWpPostToCard(item as WpPost))
+          .filter((card): card is HomeInsightCard => Boolean(card));
+        if (cards.length > 0) return { cards, error: false };
+      }
     }
-    const data = (await res.json()) as unknown;
-    if (!Array.isArray(data)) {
-      return { cards: [], error: true };
-    }
-    const cards = data
-      .map((item) => mapWpPostToCard(item as WpPost))
-      .filter((card): card is HomeInsightCard => Boolean(card));
-    if (cards.length === 0) {
-      return { cards: [], error: true };
-    }
-    return { cards, error: false };
   } catch {
-    // Safe fallback — homepage must not crash if WordPress is down.
-    return { cards: [], error: true };
+    // REST can be closed; the public pages below are the backup.
   }
+
+  try {
+    const cards = await fetchPublicBlogCards();
+    if (cards.length > 0) return { cards, error: false };
+  } catch {
+    // Homepage must not crash if WordPress is down.
+  }
+  return { cards: [], error: true };
 }
 
 export default async function SigmaLanding() {

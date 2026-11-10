@@ -39,6 +39,7 @@ import {
 import type { ServiceIconId, SiteTranslations } from "@/content/types";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { HomepageContactSection } from "@/components/sigma/HomepageContactSection";
+import { HomeFaqSection } from "@/components/sigma/HomeFaqSection";
 import { SectionDeepLink } from "@/components/site/SectionDeepLink";
 import { getHomeSectionLinks } from "@/content/global/homeSectionLinks";
 import { pickLang } from "@/content/global/marketing/helpers";
@@ -2028,6 +2029,8 @@ export function SigmaLandingClient({
             />
           </>
         ) : null}
+
+        <HomeFaqSection />
 
         <div id="connect" className="h-0" aria-hidden />
         <HomepageContactSection />

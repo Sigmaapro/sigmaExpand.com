@@ -5,6 +5,8 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { ProductionAnalytics } from "@/components/ProductionAnalytics";
 import { GlobalStructuredData } from "@/components/seo/GlobalStructuredData";
+import { HomeFaqJsonLd } from "@/components/seo/HomeFaqJsonLd";
+import { HomePageStructuredData } from "@/components/seo/HomePageStructuredData";
 import { GlobalSigmaPageBackground } from "@/components/site/marketing/GlobalSigmaPageBackground";
 import { SEO_PAGES } from "@/content/seo";
 import { buildLanguageAlternates, HTML_LANG_BY_CODE, isRtlLang, langFromUnknown, resolvePublicUiLang } from "@/lib/i18n";
@@ -116,7 +118,8 @@ export default async function RootLayout({
             __html: `(function(){try{var p=new URLSearchParams(window.location.search);var l=(p.get("lang")||"").toUpperCase();if(l!=="EN")return;document.documentElement.lang="en";document.documentElement.dir="ltr";}catch(e){}})();`,
           }}
         />
-        <GlobalStructuredData />
+        {headerStore.get("x-sigma-home-faq") === "1" ? <HomePageStructuredData /> : <GlobalStructuredData />}
+        {headerStore.get("x-sigma-home-faq") === "1" ? <HomeFaqJsonLd /> : null}
         <meta name="publisher" content="Sigma" />
         <meta property="article:publisher" content={PUBLISHER_SITE_URL} />
         <meta name="author" content="Sigma" />

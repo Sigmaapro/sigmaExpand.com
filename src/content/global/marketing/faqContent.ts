@@ -47,12 +47,12 @@ export const faqPageContentByLang: Record<LangCode, FaqMarketingBody> = {
     kicker: "Frequently Asked",
     headline: "Sigma — Common Questions",
     intro:
-      "Answers to the questions we hear most from exchanges, brokers, creators, IB networks, and Web3 operators.",
+      "Answers to the questions we hear most from exchanges, brokers, creators, partner networks, and Web3 operators.",
     items: [
       {
         question: "What is Sigma?",
         answer:
-          "Sigma is a global financial growth infrastructure network that helps crypto exchanges, forex brokers, KOLs, IBs, traders, and Web3 platforms grow through user acquisition, KOL marketing, IB programs, liquidity activation, and regional market expansion across 40+ markets.",
+          "Sigma is a global financial growth infrastructure network that helps crypto exchanges, forex brokers, KOLs, partners, traders, and Web3 platforms grow through user acquisition, KOL marketing, partner programs, liquidity activation, and regional market expansion across 40+ markets.",
       },
       {
         question: "Is Sigma a crypto marketing agency?",
@@ -70,9 +70,9 @@ export const faqPageContentByLang: Record<LangCode, FaqMarketingBody> = {
           "Sigma operates a vetted 1,500+ KOL and BD network across crypto, forex, stock, and Web3. Beyond placing campaigns, Sigma builds infrastructure for KOLs — bots, affiliate stacks, SEO, premium platform deals, and data-tool partnerships — so creator economics compound.",
       },
       {
-        question: "How do crypto and forex IB programs work with Sigma?",
+        question: "How do crypto and forex partner programs work with Sigma?",
         answer:
-          "Sigma designs custom commission structures, connects IBs directly to top-tier exchanges and brokers, and provides content, SEO, conversion playbooks, and retention systems. IBs move from scattered referrals to structured BD operations.",
+          "Sigma designs custom commission structures, connects partners directly to top-tier exchanges and brokers, and provides content, SEO, conversion playbooks, and retention systems. Partners move from scattered referrals to structured BD operations.",
       },
       {
         question: "Which regions does Sigma operate in?",

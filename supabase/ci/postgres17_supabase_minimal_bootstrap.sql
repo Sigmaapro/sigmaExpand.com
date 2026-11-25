@@ -28,6 +28,14 @@ create table if not exists auth.users (
 comment on table auth.users is
   'Stub users table for FK references. No auth provider, no RLS.';
 
+-- CI browser-path actor: must match SIGMA_CI_JWT_SUB default in scripts/ci/guard-replay-postgres17.sh
+insert into auth.users (id, email)
+values (
+  '00000000-0000-4000-8000-000000000001'::uuid,
+  'ci-guard-replay-actor@sigma-leads.invalid'
+)
+on conflict (id) do nothing;
+
 do $roles$
 begin
   if not exists (select 1 from pg_catalog.pg_roles where rolname = 'anon') then

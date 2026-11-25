@@ -94,6 +94,12 @@ begin
     return;
   end if;
 
+  -- Fixture owned by postgres session role; read before SET ROLE for Case 7.
+  select lead_low_id, lead_high_id into v_lead_low, v_lead_high from phase237_duplicate_pair;
+  if v_lead_low is null or v_lead_high is null then
+    raise exception 'duplicate pair fixture missing';
+  end if;
+
   begin
     execute 'set local role authenticated';
     v_role_ok := true;
@@ -148,10 +154,6 @@ begin
   end if;
 
   -- Case 7: authenticated INSERT with status merged must hit leads_guard_duplicate_review (42501), not CHECK ordering.
-  select lead_low_id, lead_high_id into v_lead_low, v_lead_high from phase237_duplicate_pair;
-  if v_lead_low is null or v_lead_high is null then
-    raise exception 'duplicate pair fixture missing';
-  end if;
   begin
     insert into public.duplicate_candidates (lead_low_id, lead_high_id, status)
     values (v_lead_low, v_lead_high, 'merged');

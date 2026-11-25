@@ -1,0 +1,74 @@
+# Disposable PostgreSQL 17 replay for SIGMA CRM guard migrations (Phase 23.9).
+# Manual trigger only. No Supabase. No deployment. No secrets required.
+name: SIGMA Leads guard replay (PostgreSQL 17)
+
+on:
+  workflow_dispatch:
+    inputs:
+      set_jwt_claim_for_browser_tests:
+        description: Set request.jwt.claim.sub before behavior SQL (browser path)
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sigma-leads-guard-replay-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  guard-replay:
+    name: Guard migration replay
+    # Service container is ephemeral; destroyed when the job completes.
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: postgres
+      POSTGRES_PASSWORD: postgres
+      SIGMA_CI_SET_JWT_CLAIM: ${{ inputs.set_jwt_claim_for_browser_tests && '1' || '0' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Verify no Supabase env leakage
+        run: |
+          if env | grep -qiE 'SUPABASE|SIGMA_TEST'; then
+            echo 'Refusing to run: Supabase-related environment variables are set.'
+            exit 1
+          fi
+          echo 'No Supabase env vars detected in runner environment.'
+
+      - name: Static guard migration structure
+        run: sh scripts/phase23_7_static_validate.sh
+
+      - name: Run guard replay sequence
+        run: sh scripts/ci/guard-replay-postgres17.sh
+
+      - name: Summary
+        if: success()
+        run: |
+          echo 'Disposable replay PASSED on PostgreSQL 17 service container.'
+          echo 'Migrations: foundation, merge integrity, assignment, guards x2.'
+          echo 'Tests: phase23_5_guard_catalog_checks.sql, phase23_5_guard_behavior_tests.sql.'
